@@ -7,15 +7,17 @@ public class CharacterInfo : MonoBehaviour
     public CharacterInfoInventory inventory;
     public CharacterInfoStat chaStatPanal;
     public CharacterInfoList chaListPanal;
+    public ItemInfo info;
     public int currentCharacterIndex;
     public ItemType currentItemType;
+    public CharacterData curCharacter;
     private void OnEnable()
     {
-        GameData.userData.LoadUserData(1);
+        //GameData.userData.LoadUserData(1);
     }
     public void OnChaIcon()
     {
-        chaListPanal.gameObject.SetActive(false);
+        //chaListPanal.gameObject.SetActive(false);
         chaStatPanal.gameObject.SetActive(true);
     }
     public void OnExitStat()
@@ -33,5 +35,11 @@ public class CharacterInfo : MonoBehaviour
     {
         chaStatPanal.gameObject.SetActive(true);
         inventory.gameObject.SetActive(false);
+    }
+
+    public void OnItemButton(int index)
+    {
+        currentItemType = (ItemType)index;
+        OnInventory();
     }
 }

@@ -5,17 +5,31 @@ using System;
 
 public class UserData : MySaveData
 {
+    //상점레벨, 캐릭터 상점 레벨에 따른 데이터 테이블도 존재할테고 그에 따라 바꿔줘야하는데 일단 ! 그냥 박자
+    public int maxCharacter = 30;
+    public int maxItem = 30;
+
+    public int gold;
     public int slot;
     public string userName;
-    public List<WeaponData> weaponItemList
-        = new List<WeaponData>();
-    public List<ConsumableItemData> consumableItemList
-        = new List<ConsumableItemData>();
+    //public List<WeaponData> weaponItemList
+    //    = new List<WeaponData>();
+    //public List<ConsumableItemData> consumableItemList
+    //    = new List<ConsumableItemData>();
+
+    public List<HoseData> hoseList
+        = new List<HoseData>();
+    public List<BunkerGearData> bunkerGearList
+        = new List<BunkerGearData>();
+    public List<OxygenTankData> oxygenTankList
+        = new List<OxygenTankData>();
+
     public List<CharacterData> characterList
         = new List<CharacterData>();
 
-    public List<ItemTableDataBase> shopItemList
-        = new List<ItemTableDataBase>();
+    public List<ItemDataBase> shopItemList
+        = new List<ItemDataBase>();
+
     public int shopLevel;
     public DateTime shopTime;
 
@@ -33,41 +47,99 @@ public class UserData : MySaveData
         {
             GameData.userData = new UserData();
         }
-        if(GameData.userData.characterList != null)
+        if (GameData.userData.characterList != null)
+        {
             foreach (var character in GameData.userData.characterList)
             {
                 character.StatInit();
             }
-        if (GameData.userData.consumableItemList != null)
-            foreach (var item in GameData.userData.consumableItemList)
-            {
-                item.dataTable.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{item.itemData.iconID}");
-            }
-        if (GameData.userData.weaponItemList != null)
-            foreach (var item in GameData.userData.weaponItemList)
-            {
-                item.dataTable.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{item.weaponData.iconID}");
-            }
-        if(GameData.userData.shopItemList != null)
-            foreach (var item in GameData.userData.shopItemList)
-            {
-                item.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{item.iconID}");
-            }
+        }
+
     }
     public void AddItem(string id, ItemType type, int count = 1)
     {
         switch (type)
         {
-            case ItemType.Consumable:
-                var item = new ConsumableItemData(MyDataTableMgr.consumItemTable.GetTable(id));
-                item.count = count;
-                consumableItemList.Add(item);
+            case ItemType.Hose:
+                var hoseItem = new HoseData(MyDataTableMgr.hoseTable.GetTable(id), count);
+                hoseList.Add(hoseItem);
                 break;
-            case ItemType.Weapon:
-                var weaponItem = new WeaponData(MyDataTableMgr.weaponTable.GetTable(id));
-                weaponItem.count = count;
-                weaponItemList.Add(weaponItem);
+            case ItemType.BunkerGear:
+                var bukerGearItem = new BunkerGearData(MyDataTableMgr.bunkerGearTable.GetTable(id), count);
+                bunkerGearList.Add(bukerGearItem);
                 break;
+            case ItemType.OxygenTank:
+                var oxygenTankItem = new OxygenTankData(MyDataTableMgr.oxygenTankTable.GetTable(id), count);
+                oxygenTankList.Add(oxygenTankItem);
+                break;
+
+            //case ItemType.Consumable:
+            //    var item = new ConsumableItemData(MyDataTableMgr.consumItemTable.GetTable(id),count);
+            //    //item.count = count;
+            //    var index = consumableItemList.FindIndex((x) => x.dataTable.id == id);
+            //    if(index == -1)
+            //    {
+            //        consumableItemList.Add(item);
+            //    }
+            //    else
+            //    {
+            //        consumableItemList[index].count += count;
+            //    }
+            //    break;
+            //case ItemType.Weapon:
+            //    var weaponItem = new WeaponData(MyDataTableMgr.weaponTable.GetTable(id),count);
+            //    //weaponItem.count = count;
+            //    weaponItemList.Add(weaponItem);
+            default:
+                break;
+        }
+    }
+    public void RemoveItem(ItemDataBase itemData, ItemType type, int count = 1)
+    {
+        switch (type)
+        {
+            case ItemType.Hose:
+                var hoseItem = hoseList.Find((x) => x == itemData);
+                hoseItem.count -= count;
+                if (hoseItem.count == 0)
+                {
+                    hoseList.Remove(hoseItem);
+                }
+                break;
+            case ItemType.BunkerGear:
+                var bunkerGearItem = bunkerGearList.Find((x) => x == itemData);
+                bunkerGearItem.count -= count;
+                if (bunkerGearItem.count == 0)
+                {
+                    bunkerGearList.Remove(bunkerGearItem);
+                }
+                break;
+            case ItemType.OxygenTank:
+                var oxygenTankItem = oxygenTankList.Find((x) => x == itemData);
+                oxygenTankItem.count -= count;
+                if (oxygenTankItem.count == 0)
+                {
+                    oxygenTankList.Remove(oxygenTankItem);
+                }
+                break;
+            //case ItemType.Consumable:
+            //    var item = consumableItemList.Find((x) => x == itemData);
+            //    item.count -= count;
+            //    if(item.count == 0)
+            //    {
+            //        consumableItemList.Remove(item);
+            //    }
+            //    break;
+            //case ItemType.Weapon:
+            //    var weaponItem = weaponItemList.Find((x) => x == itemData);
+            //    weaponItem.count -= count;
+            //    if(weaponItem.count == 0)
+            //    {
+            //        weaponItemList.Remove(weaponItem);
+            //    }
+            //    break;
+            //case ItemType.max:
+            //    break;
             default:
                 break;
         }

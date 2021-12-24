@@ -5,6 +5,7 @@ using UnityEngine;
 public static class GameData
 {
     public static UserData userData = new UserData();
+
     public static ShopData shopData = new ShopData();
     
 

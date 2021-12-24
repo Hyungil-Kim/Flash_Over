@@ -15,19 +15,8 @@ public class ItemPrefab : MonoBehaviour
     public void Init(ItemDataBase data, ItemType type)
     {
         itemData = data;
-        switch (type)
-        {
-            case ItemType.Consumable:
-                var consumableData = itemData as ConsumableItemData;
-                number.text = consumableData.count.ToString();
-                break;
-            case ItemType.Weapon:
-                var weaponData = itemData as WeaponData;
-                number.text = weaponData.count.ToString();
-                break;
-            default:
-                break;
-        }
+
+        number.text = itemData.count.ToString();
         image.sprite = itemData.dataTable.iconSprite;
         itemName.text = itemData.dataTable.itemName;
         gameObject.SetActive(true);

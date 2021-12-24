@@ -33,7 +33,7 @@ public class Personality
     }
     public void SetPersonality(int min, int max)
     {
-        var psCount = UnityEngine.Random.Range(min, max);
+        var psCount = UnityEngine.Random.Range(min, max+1);
         var psList = Enum.GetNames(typeof(CharacterPersonality)).ToList();
         for (int i = 0; i < psCount; i++)
         {

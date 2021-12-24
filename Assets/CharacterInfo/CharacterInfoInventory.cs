@@ -10,18 +10,21 @@ public class CharacterInfoInventory : MonoBehaviour
     public GameObject itemPrefab;
     public List<GameObject> itemObjects = 
         new List<GameObject>();
-    private List<WeaponData> weaponItems = 
-        new List<WeaponData>();
-    private List<ConsumableItemData> consumableItems = 
-        new List<ConsumableItemData>();
-    public int maxItem = 50;
+    //private List<WeaponData> weaponItems = 
+    //    new List<WeaponData>();
+    //private List<ConsumableItemData> consumableItems = 
+    //    new List<ConsumableItemData>();
+    private int maxItem = GameData.userData.maxItem;
 
+    //private ItemType curType;
+    //private ItemDataBase curData;
     private void Start()
     {
 
     }
     public void Init(ItemType type)
     {
+        itemInfo.None(type);
         if(itemObjects.Count == 0)
         {
             for (int i = 0; i < maxItem; i++)
@@ -38,23 +41,32 @@ public class CharacterInfoInventory : MonoBehaviour
         {
             item.SetActive(false);
         }
-        consumableItems = GameData.userData.consumableItemList;
-        weaponItems = GameData.userData.weaponItemList;
+        var hoses = GameData.userData.hoseList;
+        var bunkerGears = GameData.userData.bunkerGearList;
+        var oxygenTanks = GameData.userData.oxygenTankList;
         switch (type)
         {
-            case ItemType.Consumable:
-                for (int i = 0; i < consumableItems.Count; i++)
+            case ItemType.Hose:
+                for (int i = 0; i < hoses.Count; i++)
                 {
                     var itemObject = itemObjects[i].GetComponent<InfoInventoryItem>();
-                    itemObject.Init(consumableItems[i],type);
+                    itemObject.Init(hoses[i],type);
                     itemObjects[i].SetActive(true);
                 }
                 break;
-            case ItemType.Weapon:
-                for (int i = 0; i < weaponItems.Count; i++)
+            case ItemType.BunkerGear:
+                for (int i = 0; i < bunkerGears.Count; i++)
                 {
                     var itemObject = itemObjects[i].GetComponent<InfoInventoryItem>();
-                    itemObject.Init(weaponItems[i],type);
+                    itemObject.Init(bunkerGears[i],type);
+                    itemObjects[i].SetActive(true);
+                }
+                break;
+            case ItemType.OxygenTank:
+                for (int i = 0; i < oxygenTanks.Count; i++)
+                {
+                    var itemObject = itemObjects[i].GetComponent<InfoInventoryItem>();
+                    itemObject.Init(oxygenTanks[i], type);
                     itemObjects[i].SetActive(true);
                 }
                 break;

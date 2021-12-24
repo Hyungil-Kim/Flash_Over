@@ -1,7 +1,8 @@
 
 public enum ItemType
 {
-    Consumable,
-    Weapon,
-    max
+    Hose,
+    BunkerGear,
+    OxygenTank,
+    Max
 }

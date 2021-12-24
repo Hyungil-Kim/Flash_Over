@@ -20,7 +20,7 @@ public class CharacterStatsTable : MyDataTableBase<CharacterStatsData>
             tableData.id = table["ID"];
             tableData.min = int.Parse(table["MIN"]);
             tableData.max = int.Parse(table["MAX"]);
-
+            
             tables.Add(tableData);
         }
     }

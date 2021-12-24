@@ -7,18 +7,21 @@ using TMPro;
 public class ChaButton : MonoBehaviour
 {
     public TextMeshProUGUI chaName;
-    Image icon;
-    
-    public void Init(CharacterData data)
+    public Image icon;
+    public Button button;
+    //private int chaIndex;
+    public void Init(CharacterData cd)//, int index)
     {
-        icon = GetComponent<Image>();
+        chaName.text = cd.totalStats.str.ToString();
+        //chaIndex = index;
+        //button.onClick.AddListener(() => OnChaButton());
         //icon.sprite = ***;
-        //chaName = data. ***;
+        //chaName = cd. ***;
     }
-    public void OnChaButton(int index)
-    {
-        var parent = GetComponentInParent<CharacterInfo>();
-        parent.currentCharacterIndex = index;
-        parent.OnChaIcon();
-    }
+    //public void OnChaButton()
+    //{
+    //    var parent = GetComponentInParent<CharacterInfo>();
+    //    //parent.currentCharacterIndex = chaIndex;
+    //    parent.OnChaIcon();
+    //}
 }

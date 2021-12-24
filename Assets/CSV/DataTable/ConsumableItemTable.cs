@@ -10,9 +10,9 @@ public class ConsumableItemTableData : ItemTableDataBase
     public string statStr;
     public string description;
     public int cost;
-    public int hp;
     public int duration;
 }
+[System.Serializable]
 public class ConsumableItemTable : MyDataTableBase<ConsumableItemTableData>
 {
     public List<ConsumableItemTableData> normalItem = new List<ConsumableItemTableData>();
@@ -36,9 +36,11 @@ public class ConsumableItemTable : MyDataTableBase<ConsumableItemTableData>
             tableData.statStr = table["STAT_STR"];
             tableData.duration = int.Parse(table["DURATION"]);
             tableData.grade = table["GRADE"];
-            tableData.count = 1;
-            tableData.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{tableData.iconID}");
+            //tableData.count = 1;
 
+            //tableData.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{tableData.iconID}");
+
+            tableData.price = int.Parse(table["COST"]);
             tables.Add(tableData);
         }
         normalItem = tables.Where((x) => x.grade == ItemGrade.Normal.ToString()).ToList();

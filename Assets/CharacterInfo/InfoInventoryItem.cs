@@ -7,6 +7,7 @@ using TMPro;
 public class InfoInventoryItem : MonoBehaviour
 {
     public ItemDataBase itemData;
+    public GameObject equipImage;
     public ItemType itemType;
     public void Init(ItemDataBase data ,ItemType type)
     {
@@ -14,6 +15,12 @@ public class InfoInventoryItem : MonoBehaviour
         itemType = type;
         var icon = GetComponent<Image>();
         icon.sprite = itemData.dataTable.iconSprite;
+
+        equipImage.SetActive(false);
+        if (itemData.owner != null)
+        {
+            equipImage.SetActive(true);
+        }
     }
     //public void OnItemIcon()
     //{

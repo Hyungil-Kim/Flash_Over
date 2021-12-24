@@ -6,10 +6,11 @@ public class ConsumableItemData : ItemDataBase
 {
     public ConsumableItemTableData itemData;
 
-    public ConsumableItemData(ItemTableDataBase itemDataBase)
+    public ConsumableItemData(ItemTableDataBase itemDataBase, int itemCount = 1)
     {
         dataTable = itemDataBase;
         itemData = dataTable as ConsumableItemTableData;
+        count = itemCount;
     }
     //public ItemTableData Itemdata
     //{

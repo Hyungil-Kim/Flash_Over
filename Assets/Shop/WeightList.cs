@@ -6,6 +6,7 @@ public class WeightList<T>
 {
     Dictionary<T, double> gradeDic = new Dictionary<T, double>();
     double totalWeight = 0d;
+    //
     public void WeightInit()
     {
         totalWeight = 0d;

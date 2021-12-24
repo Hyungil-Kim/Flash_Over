@@ -21,12 +21,12 @@ public class ShopData : MySaveData
         {
             GameData.shopData = new ShopData();
         }
-        if (GameData.shopData.shopItemList != null)
-        {
-            foreach (var item in GameData.shopData.shopItemList)
-            {
-                item.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{item.iconID}");
-            }
-        }
+        //if (GameData.shopData.shopItemList != null)
+        //{
+        //    foreach (var item in GameData.shopData.shopItemList)
+        //    {
+        //        item.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{item.iconID}");
+        //    }
+        //}
     }
 }
