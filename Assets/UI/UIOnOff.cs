@@ -5,14 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class UIOnOff : MonoBehaviour
 {
-    public GameObject mainLobby;
-    public GameObject chiefRoom;
-    public GameObject shop;
-    public GameObject shopBuy;
-    public GameObject shopSell;
-    public GameObject hireFireMan;
-    public GameObject fireManInfo;
-    public GameObject daewonList;
+
 
     public GameObject[] uiArray;
     private Dictionary<string, GameObject> uiDict = new Dictionary<string, GameObject>();
@@ -31,6 +24,11 @@ public class UIOnOff : MonoBehaviour
             ui.SetActive(false);
         }
         uiDict[uiName].SetActive(true);
+    }
+
+    public void OnStart()
+    {
+        SceneManager.LoadScene("SampleTileMap");
     }
     #region scean...babo
     //public void OnInventoryButton()

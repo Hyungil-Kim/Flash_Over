@@ -38,7 +38,7 @@ public class CharacterInfoList : MonoBehaviour
         switch (characterSort)
         {
             case CharacterOrder.Default:
-                sortUserCharacter = userCharacterList;
+                sortUserCharacter = userCharacterList.Select((x) =>x).ToList();
                 break;
             case CharacterOrder.Str:
                 sortUserCharacter = userCharacterList.OrderBy((x) => x.baseStats.str).ToList();

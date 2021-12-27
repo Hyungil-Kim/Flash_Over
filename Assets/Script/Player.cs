@@ -15,6 +15,7 @@ public class Player : FSM<PlayerState>
     public float damege = 10f;
     public int move = 5;
 
+
 	private void Awake()
 	{
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -26,6 +27,10 @@ public class Player : FSM<PlayerState>
         AddState(PlayerState.Attack, new PlayerAttackState(this));
         AddState(PlayerState.End, new PlayerEndState(this));
         SetState(PlayerState.Idle);
+
+        var character = GameData.userData.characterList[0];
+        damege = character.totalStats.dmg;
+        move = character.totalStats.move;
     }
 
     void Update()
