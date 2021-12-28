@@ -28,9 +28,9 @@ public class Player : FSM<PlayerState>
         AddState(PlayerState.End, new PlayerEndState(this));
         SetState(PlayerState.Idle);
 
-        var character = GameData.userData.characterList[0];
-        damege = character.totalStats.dmg;
-        move = character.totalStats.move;
+        //var character = GameData.userData.characterList[0];
+        //damege = character.totalStats.dmg;
+        //move = character.totalStats.move;
     }
 
     void Update()
