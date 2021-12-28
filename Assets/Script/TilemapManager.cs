@@ -7,10 +7,11 @@ public class TilemapManager : MonoBehaviour
 {
 	public Tilemap tilemap;
 	private GameManager gameManager;
-	private Queue<GroundTile> resetQueue = new Queue<GroundTile>();
 	private FloodFillAlgorism floodFill = new FloodFillAlgorism();
 	private AstarAlgoritm astarAlgoritm = new AstarAlgoritm();
-	private PlayerAtackRange playerAtackRange = new PlayerAtackRange();
+	private AttackRange attackRange = new AttackRange();
+	private MonsterAttackRange testAttackRange = new MonsterAttackRange();
+	private List<GroundTile> attackList = new List<GroundTile>();
 	public void Awake()
 	{
 		gameManager = GetComponent<GameManager>();
@@ -34,9 +35,9 @@ public class TilemapManager : MonoBehaviour
 		var newPos = tilemap.WorldToCell(position);
 		return tilemap.GetInstantiatedObject(newPos).transform.position;// 타일저장
 	}
-	public void ShowMoveRange(GroundTile target,Player player,Player prePlayer,Color moveSetColor) /// 기본 이동 플로드필
+	public void ShowMoveRange(GroundTile target, Player player, Player prePlayer, Color moveSetColor) /// 기본 이동 플로드필
 	{
-		if (prePlayer==null)
+		if (prePlayer == null)
 		{
 			floodFill.FloodFill(tilemap, target.transform.position, moveSetColor, player.move);//숫자에 범위크기
 		}
@@ -50,6 +51,7 @@ public class TilemapManager : MonoBehaviour
 	public void MoveEnd(Player targetplayer)
 	{
 		floodFill.ResetTile(tilemap);
+		gameManager.playerMove.moveList.Clear();
 		targetplayer.SetState(PlayerState.Attack);
 
 	}
@@ -57,7 +59,7 @@ public class TilemapManager : MonoBehaviour
 	{
 		floodFill.ResetTile(tilemap);
 	}
-	public void SetAstar(GroundTile pretargetTile,GroundTile targetTile,Color astarSetColor,Color moveSetColor)
+	public void SetAstar(GroundTile pretargetTile, GroundTile targetTile, Color astarSetColor, Color moveSetColor)
 	{
 		if (astarAlgoritm.finalList != null)//처음 예외처리
 		{
@@ -65,13 +67,50 @@ public class TilemapManager : MonoBehaviour
 		}
 		astarAlgoritm.PathFinding(pretargetTile, targetTile, astarSetColor);
 	}
-	public void ChangeColorAttack(GameObject target,int weapontype,Color attackSetColor)
+	public void ChangeColorAttack(GameObject target, int weapontype, Color attackSetColor)//숫자 무기 사거리로 바꿔야함
 	{
-		playerAtackRange.AttackReset(tilemap, weapontype);
-		playerAtackRange.Attack(target,this, weapontype, 5, attackSetColor);
+		attackRange.AttackReset(tilemap, weapontype);
+		attackRange.Attack(target, this, weapontype, 5, attackSetColor);
+	}
+	public void FireAttack(Monster target, Color attackSetColor)
+	{
+		var list = testAttackRange.CrossFloodFill(this,target.gameObject, attackSetColor,target.level);
+		FireDamage(target, list);
+		for (int i = 0; i < list.Count; i++)
+		{
+			attackList.Add(list[i]);
+		}
+		testAttackRange.CrossResetTile(tilemap, list);
+		list.Clear();
+	}
+	public void FireDamage(Monster target,List<GroundTile> list)
+	{
+		foreach(var elem in list)
+		{
+			var damage = target.damage / (Mathf.Pow(2f,elem.checkSum));
+			damage = damage > 0 ? damage : 0;
+			var iDamage = Mathf.CeilToInt(damage);
+			elem.exp += iDamage;
+			foreach(var defender in elem.fillList)
+			{
+				if(defender.tag == "Player")
+				{
+					Debug.Log(iDamage);
+					defender.GetComponent<Player>().hp -= iDamage;
+				}
+			}
+		}
+	}
+	public void EndMonsterAttack()
+	{
+		for(int i =0; i < attackList.Count;i++)
+		{
+			attackList[i].Reset();
+		}
+		attackList.Clear();
 	}
 
-	public void ColorPath(GroundTile targetTile,GroundTile preTargetTile,List<GroundTile> moveList,Player player,Color moveSetColor)
+	public void ColorPath(GroundTile targetTile, GroundTile preTargetTile, List<GroundTile> moveList, Player player, Color moveSetColor)
 	{
 		if (preTargetTile != targetTile)
 		{
@@ -86,20 +125,20 @@ public class TilemapManager : MonoBehaviour
 		return astarAlgoritm.finalList;
 	}
 
-	public void DrawFloodFill(Vector3 targetPos, List<Vector3> moveList, int move, Color moveSetColor,Color pathColor)
+	public void DrawFloodFill(Vector3 targetPos, List<Vector3> moveList, int move, Color moveSetColor, Color pathColor)
 	{
-		floodFill.ResetTileExecptPath(tilemap,moveList, pathColor);
-		floodFill.FloodFillExceptColor(tilemap, targetPos, moveSetColor,pathColor,move,moveList);
+		floodFill.ResetTileExecptPath(tilemap, moveList, pathColor);
+		floodFill.FloodFillExceptColor(tilemap, targetPos, moveSetColor, pathColor, move, moveList);
 	}
 	public void ResetAttackRange(int type)
 	{
-		playerAtackRange.AttackReset(tilemap, type);
+		attackRange.AttackReset(tilemap, type);
 	}
 
 	public bool CheckPlayer(GameObject moveHelper)
 	{
 		var helperTile = ReturnTile(moveHelper);
-		if(helperTile.isPlayer)
+		if (helperTile.isPlayer)
 		{
 			return true;
 		}
@@ -108,14 +147,14 @@ public class TilemapManager : MonoBehaviour
 
 
 
-	public void DoAttack(int num, Player targetPlayer)
+	public void DoAttack(Player attacker, int num)
 	{
 		switch (num)
 		{
 			case 0:
 				break;
 			case 1:
-				foreach (var elemList in playerAtackRange.LineResetQueue)
+				foreach (var elemList in attackRange.LineResetQueue)
 				{
 					foreach (var elem in elemList.fillList)
 					{
@@ -123,15 +162,15 @@ public class TilemapManager : MonoBehaviour
 						{
 							var targetPos = tilemap.WorldToCell(elem.transform.position);
 							var targetTile = tilemap.GetInstantiatedObject(targetPos);
-							var damage = targetPlayer.GetComponent<Player>().damege * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
+							var damage = attacker.damege * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
 							damage = damage > 0 ? damage : 0;
-							elem.GetComponent<TestMon>().hp -= Mathf.RoundToInt((float)damage);
+							elem.GetComponent<Monster>().hp -= Mathf.RoundToInt((float)damage);
 						}
 					}
 				}
 				break;
 			case 2:
-				foreach (var elemList in playerAtackRange.TriResetQueue)
+				foreach (var elemList in attackRange.TriResetQueue)
 				{
 					foreach (var elem in elemList.fillList)
 					{
@@ -139,9 +178,9 @@ public class TilemapManager : MonoBehaviour
 						{
 							var targetPos = tilemap.WorldToCell(elem.transform.position);
 							var targetTile = tilemap.GetInstantiatedObject(targetPos);
-							var damage = targetPlayer.GetComponent<Player>().damege * 0.4;
+							var damage = attacker.damege * 0.4;
 							damage = damage > 0 ? damage : 0;
-							elem.GetComponent<TestMon>().hp -= Mathf.RoundToInt((float)damage);
+							elem.GetComponent<Monster>().hp -= Mathf.RoundToInt((float)damage);
 						}
 					}
 				}
@@ -150,7 +189,24 @@ public class TilemapManager : MonoBehaviour
 		ResetAttackRange(num);
 	}
 
-
+	public void DoAttack(Monster attacker)
+	{
+		foreach (var elemList in attackRange.crossQueue)
+		{
+			foreach (var elem in elemList.fillList)
+			{
+				if (elem.tag == "Monster")
+				{
+					var targetPos = tilemap.WorldToCell(elem.transform.position);
+					var targetTile = tilemap.GetInstantiatedObject(targetPos);
+					var damage = attacker.GetComponent<Player>().damege * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
+					damage = damage > 0 ? damage : 0;
+					elem.GetComponent<Monster>().hp -= Mathf.RoundToInt((float)damage);
+				}
+			}
+		}
+		ResetAttackRange(0);
+	}
 
 
 

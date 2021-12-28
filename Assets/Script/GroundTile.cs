@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class GroundTile : MonoBehaviour
 {
-	public bool isFill;
+	public bool isWall;
 	public GroundTile ParentTile;
 	public bool attackfloodFill = false;
 	public bool movefloodFill = false;
@@ -19,6 +19,12 @@ public class GroundTile : MonoBehaviour
 	public List<GroundTile> nextTileList = new List<GroundTile>();
 	public List<GameObject> fillList;
 	public Tilemap tilemap;
+
+	public int area;
+	public float mesh =0.5f ;//юс╫ц
+	public int exp;
+
+
 
 	public GroundTile(int x , int y)
 	{
@@ -68,20 +74,31 @@ public class GroundTile : MonoBehaviour
 		}
 		if(fillList.Count > 0)
 		{
-			isFill = true;
 			foreach(var elem in fillList)
 			{
-				if (elem.layer == LayerMask.NameToLayer("Player"))
+				if (elem.tag == "Player")
 				{
 					isPlayer = true;
 					break;
 				}
+				else
+				{
 					isPlayer = false;
+				}
+				if(elem.tag == "Wall")
+				{
+					isWall = true;
+					break;
+				}
+				else
+				{
+					isWall = false;
+				}
 			}
 		}
 		else
 		{
-			isFill = false;
+			isWall = false;
 			isPlayer = false;
 		}
 	}
@@ -97,12 +114,11 @@ public class GroundTile : MonoBehaviour
 		checkSum = 0;
 		colorTile.GetComponent<Renderer>().material.color = oldColor;
 	}
-	public void ResetExceptColor(Color pathColor)
+	public void ResetExceptColor()
 	{
 		attackfloodFill = false;
 		movefloodFill = false;
 		checkSum = 0;
-		colorTile.GetComponent<Renderer>().material.color = pathColor;
 	}
 
 }

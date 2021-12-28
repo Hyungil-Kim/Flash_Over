@@ -13,6 +13,9 @@ public class PlayerIdleState : State
 	{
 		fsm.moveHelper.transform.position = fsm.transform.position;
 		fsm.moveHelper.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.attack.gameObject.SetActive(false);
 	}
 
 	public override void Exit()
@@ -89,6 +92,7 @@ public class PlayerEndState : State
 	{
 		fsm.gameManager.uIManager.battleUiManager.attack.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
+		fsm.StartCoroutine(Turn.CoTurnSystem());
 	}
 
 	public override void Exit()
