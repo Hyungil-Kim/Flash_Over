@@ -61,7 +61,7 @@ public class AstarAlgoritm
 
 	private void OpenListAdd(GroundTile nextTile)
 	{
-		if((!nextTile.isFill || nextTile.isPlayer) && !closedList.Contains(nextTile) && nextTile.gameObject.activeSelf)
+		if(!nextTile.isWall && !closedList.Contains(nextTile) && nextTile.gameObject.activeSelf)
 		{
 			GroundTile neighborTile = nextTile;
 			int moveCost = curTile.G + 10;

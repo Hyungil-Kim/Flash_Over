@@ -14,6 +14,7 @@ public class Player : FSM<PlayerState>
     public GameObject moveHelper;
     public float damege = 10f;
     public int move = 5;
+    public int hp = 20;
 
 
 	private void Awake()
@@ -27,10 +28,14 @@ public class Player : FSM<PlayerState>
         AddState(PlayerState.Attack, new PlayerAttackState(this));
         AddState(PlayerState.End, new PlayerEndState(this));
         SetState(PlayerState.Idle);
+<<<<<<< HEAD
 
         //var character = GameData.userData.characterList[0];
         //damege = character.totalStats.dmg;
         //move = character.totalStats.move;
+=======
+        Turn.players.Add(this);
+>>>>>>> test1branch
     }
 
     void Update()
