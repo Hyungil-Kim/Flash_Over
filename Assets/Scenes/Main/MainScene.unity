@@ -3612,8 +3612,9 @@ GameObject:
   - component: {fileID: 262727059}
   - component: {fileID: 262727061}
   - component: {fileID: 262727060}
+  - component: {fileID: 262727062}
   m_Layer: 5
-  m_Name: ConsumShop (1)
+  m_Name: ConsumShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3678,6 +3679,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262727058}
   m_CullTransparentMesh: 1
+--- !u!114 &262727062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262727058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f4304ee0624a24e818ad97e5cafd94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &267309000
 GameObject:
   m_ObjectHideFlags: 0
@@ -11788,6 +11801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireTruckInventory: {fileID: 207547192}
+  consumShop: {fileID: 262727062}
 --- !u!1 &893087287
 GameObject:
   m_ObjectHideFlags: 0
@@ -16710,13 +16724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79f4304ee0624a24e818ad97e5cafd94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxItemCount: 10
-  initSecondTime: 200
-  info: {fileID: 302450779}
-  shopItemPrefab: {fileID: 7090780857606047155, guid: 346920486f547b04da37c0ec037039da, type: 3}
-  content: {fileID: 2008933554}
-  notEnoughGold: {fileID: 1445152485}
-  gold: {fileID: 1015261078}
 --- !u!1 &1306499581
 GameObject:
   m_ObjectHideFlags: 0

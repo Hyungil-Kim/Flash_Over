@@ -561,6 +561,8 @@ MonoBehaviour:
   oxygenTank: {fileID: 6679277585980744382}
   info: {fileID: 8328587921704836489}
   stat: {fileID: 8522397266367399570}
+  consum1: {fileID: 0}
+  consum2: {fileID: 0}
 --- !u!1001 &1576686243093453154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -568,6 +570,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2741476227051122438}
     m_Modifications:
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2160630251944026438}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FireManItem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2945483872781803879, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
       propertyPath: m_Name
       value: FiremanItem
@@ -795,6 +825,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2741476227051122438}
     m_Modifications:
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5568157687828868687}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FireManItem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2945483872781803879, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
       propertyPath: m_Name
       value: FiremanItem (1)
@@ -920,6 +982,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2741476227051122438}
     m_Modifications:
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6679277585980744382}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FireManItem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929736154264807832, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2945483872781803879, guid: 2b23da63f36c9694bbea1773f87f099d, type: 3}
       propertyPath: m_Name
       value: FiremanItem (2)

@@ -13,6 +13,6 @@ public class FireTruckItem : MonoBehaviour
     public void Init(ItemDataBase item)
     {
         icon.sprite = item.dataTable.iconSprite;
-        itemName.name = item.dataTable.itemName;
+        itemName.text = item.dataTable.itemName;
     }
 }

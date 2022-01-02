@@ -13,6 +13,10 @@ public class FireManInfoPrefab : MonoBehaviour
     public FireManItem oxygenTank;
     public TextMeshProUGUI info;
     public TextMeshProUGUI stat;
+
+    public ConsumShop consum1;
+    public ConsumShop consum2;
+
     //public TextMeshProUGUI personality;
     public void Init(CharacterData cd)
     {
@@ -32,6 +36,10 @@ public class FireManInfoPrefab : MonoBehaviour
         statSB.Append(string.Format($"Def : {cd.totalStats.def}\n"));
         statSB.Append(string.Format($"Sta : {cd.totalStats.sta}"));
         stat.text = statSB.ToString();
+        var firemanInfo = GetComponentInParent<FireManInfo>();
+        hose.GetComponent<Button>().onClick.AddListener(() => firemanInfo.InventoryInit(ItemType.Hose));
+        bunkerGear.GetComponent<Button>().onClick.AddListener(() => firemanInfo.InventoryInit(ItemType.BunkerGear));
+        oxygenTank.GetComponent<Button>().onClick.AddListener(() => firemanInfo.InventoryInit(ItemType.OxygenTank));
 
     }
 }

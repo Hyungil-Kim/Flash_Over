@@ -41,8 +41,9 @@ public class FireManItem : MonoBehaviour
                 break;
         }
     }
-    public void OnClick(ItemType type)
+    public void OnClick(int index)
     {
+        var type = (ItemType)index;
         var firemanInfo = GetComponentInParent<FireManInfo>();
         firemanInfo.InventoryInit(type);
 
