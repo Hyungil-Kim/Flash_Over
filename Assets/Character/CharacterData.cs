@@ -16,9 +16,9 @@ public enum CharacterStatType
 [System.Serializable]
 public class CharacterStat
 {
-    public int hp;
-    public int str;
-    public int lung;
+    public TrainingStat hp = new TrainingStat();
+    public TrainingStat str = new TrainingStat();
+    public TrainingStat lung = new TrainingStat();
     public int move;
     public int vision;
     public int dmg;
@@ -39,16 +39,57 @@ public class CharacterStat
         return copy;
     }
 }
+[System.Serializable]
+public class TrainingStat
+{
+    public int stat;
+    public int exp;
+    public int level;
+    public int statIncrease;
+
+    public int maxExp = 100;
+    private int maxLevel = 99;
+
+    //경험치를 얻었을때 호출돼야할것같음
+    public void CheakExp()
+    {
+        //exp가 현재 필요한 경험치보다 크다면 쭉 레벨업
+        while (exp >= maxExp)
+        {
+            LevelUp();
+        }
+    }
+    public void LevelUp()
+    {
+        //exp 차감
+        exp = exp - maxExp;
+
+        // level 이 최대레밸이면 레벨업 x
+        if (level == maxLevel)
+        {
+            return;
+        }
+
+        //level up 렌덤 스텟 증가
+        level++;
+        level = Mathf.Clamp(level, 0, maxLevel);
+        stat += statIncrease;
+
+ 
+    }
+}
 
 public class CharacterData
 {
     public bool isHire;
 
-    public int level;
+    public bool isSelected;
 
-    private int maxLevel = 99;
+    //public int level;
 
-    public double exp;
+    //private int maxLevel = 99;
+
+    //public double exp;
 
     public CharacterStat baseStats = new CharacterStat();
 
@@ -119,63 +160,63 @@ public class CharacterData
             ApplyItemStat(oxygenTank);
         }
     }
-    public void LevelUp()
-    {
-        //exp 차감
-        exp = exp - MyDataTableMgr.levelUpTable.GetTable(level - 1).exp;
+    //public void LevelUp()
+    //{
+    //    //exp 차감
+    //    exp = exp - MyDataTableMgr.levelUpTable.GetTable(level - 1).exp;
         
-        // level 이 최대레밸이면 레벨업 x
-        if(level == maxLevel)
-        {
-            return;
-        }
+    //    // level 이 최대레밸이면 레벨업 x
+    //    if(level == maxLevel)
+    //    {
+    //        return;
+    //    }
 
-        //level up 렌덤 스텟 증가
-        level++;
-        level = Mathf.Clamp(level, 0, maxLevel);
-        var levelUpStat = MyDataTableMgr.chaStatTable.GetTable("LEVELUPSTAT");
-        var statPoints = Random.Range(levelUpStat.min, levelUpStat.max);
-        var levelUpStatList = new List<int>();
-        var deficientStatList = new List<int>();
+    //    //level up 렌덤 스텟 증가
+    //    level++;
+    //    level = Mathf.Clamp(level, 0, maxLevel);
+    //    var levelUpStat = MyDataTableMgr.chaStatTable.GetTable("LEVELUPSTAT");
+    //    var statPoints = Random.Range(levelUpStat.min, levelUpStat.max);
+    //    var levelUpStatList = new List<int>();
+    //    var deficientStatList = new List<int>();
 
-        //스텟별로 max 증가량이 있기 때문에 비교해주기 위해 리스트 생성 ...
-        for (int i = 0; i < (int)CharacterStatType.Move; i++)
-        {
-            levelUpStatList.Add(0);
-            deficientStatList.Add(i);
-        }
+    //    //스텟별로 max 증가량이 있기 때문에 비교해주기 위해 리스트 생성 ...
+    //    for (int i = 0; i < (int)CharacterStatType.Move; i++)
+    //    {
+    //        levelUpStatList.Add(0);
+    //        deficientStatList.Add(i);
+    //    }
 
-        // statPoint가 있으면 랜덤으로 스탯 증가
-        // 스텟이 max 값만큼 올랐으면 그 스텟을 리스트에서 제거해줌 
-        while (statPoints > 0)
-        {
-            var randomIndex = Random.Range(0, deficientStatList.Count);
-            var index = deficientStatList[randomIndex];
-            var type = (CharacterStatType)index;
-            var statTable = MyDataTableMgr.chaStatTable.GetTable($"LEVELUP{type}");
+    //    // statPoint가 있으면 랜덤으로 스탯 증가
+    //    // 스텟이 max 값만큼 올랐으면 그 스텟을 리스트에서 제거해줌 
+    //    while (statPoints > 0)
+    //    {
+    //        var randomIndex = Random.Range(0, deficientStatList.Count);
+    //        var index = deficientStatList[randomIndex];
+    //        var type = (CharacterStatType)index;
+    //        var statTable = MyDataTableMgr.chaStatTable.GetTable($"LEVELUP{type}");
             
-            AddStat(type, 1, baseStats);
-            levelUpStatList[randomIndex] += 1;
+    //        AddStat(type, 1, baseStats);
+    //        levelUpStatList[randomIndex] += 1;
             
-            if (levelUpStatList[randomIndex] == statTable.max)
-            {
-                deficientStatList.RemoveAt(randomIndex);
-            }
-            statPoints--;
-        }
-        //스탯 최신화
-        StatInit();
-    }
+    //        if (levelUpStatList[randomIndex] == statTable.max)
+    //        {
+    //            deficientStatList.RemoveAt(randomIndex);
+    //        }
+    //        statPoints--;
+    //    }
+    //    //스탯 최신화
+    //    StatInit();
+    //}
 
-    //경험치를 얻었을때 호출돼야할것같음
-    public void CheakExp()
-    {
-        //exp가 현재 필요한 경험치보다 크다면 쭉 레벨업
-        while(exp >= MyDataTableMgr.levelUpTable.GetTable(level-1).exp)
-        {
-            LevelUp();
-        }
-    }
+    ////경험치를 얻었을때 호출돼야할것같음
+    //public void CheakExp()
+    //{
+    //    //exp가 현재 필요한 경험치보다 크다면 쭉 레벨업
+    //    while(exp >= MyDataTableMgr.levelUpTable.GetTable(level-1).exp)
+    //    {
+    //        LevelUp();
+    //    }
+    //}
 
     //처음 세팅 init이라고 봐야할듯 ?
     public void SetCharacter()
@@ -191,7 +232,7 @@ public class CharacterData
         //list : 랜덤하게 뽑아올려고 만듬..맨 위 스탯부터 랜덤배정되면 아래 스탯은 비교적 적게 낮을 확률이 늘어날것같아서
         //deficientStatList : 부족한 스탯 확인하려고 만듬
         //total : 들어갈 능력치의 총합
-        level = 1;
+        //level = 1;
 
         var list = new List<int>();
         var deficientStatList = new List<int>();
@@ -264,13 +305,13 @@ public class CharacterData
         switch (statType)
         {
             case CharacterStatType.Hp:
-                stats.hp += (int)statValue;
+                stats.hp.stat += (int)statValue;
                 break;
             case CharacterStatType.Str:
-                stats.str += (int)statValue;
+                stats.str.stat += (int)statValue;
                 break;
             case CharacterStatType.Lung:
-                stats.lung += (int)statValue;
+                stats.lung.stat += (int)statValue;
                 break;
             case CharacterStatType.Move:
                 stats.move += (int)statValue;
@@ -298,13 +339,13 @@ public class CharacterData
         switch (statType)
         {
             case CharacterStatType.Hp:
-                var hp = isBase ? baseStats.hp : totalStats.hp;
+                var hp = isBase ? baseStats.hp.stat : totalStats.hp.stat;
                 return hp;
             case CharacterStatType.Str:
-                var str = isBase ? baseStats.str : totalStats.str;
+                var str = isBase ? baseStats.str.stat : totalStats.str.stat;
                 return str;
             case CharacterStatType.Lung:
-                var lung = isBase ? baseStats.lung : totalStats.lung;
+                var lung = isBase ? baseStats.lung.stat : totalStats.lung.stat;
                 return lung;
             case CharacterStatType.Move:
                 var move = isBase ? baseStats.move : totalStats.move;

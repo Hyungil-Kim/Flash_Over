@@ -5,7 +5,7 @@ using UnityEngine;
 public static class MyDataTableMgr
 {
     //public static WeaponTable weaponTable = new WeaponTable();
-    //public static ConsumableItemTable consumItemTable = new ConsumableItemTable();
+    public static ConsumableItemTable consumItemTable = new ConsumableItemTable();
 
     public static HoseTable hoseTable = new HoseTable();
     public static BunkerGearTable bunkerGearTable = new BunkerGearTable();

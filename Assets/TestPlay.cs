@@ -13,10 +13,10 @@ public class TestPlay : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameData.userData.characterList[0].exp += 10;
-            GameData.userData.characterList[0].CheakExp();
+            //GameData.userData.characterList[0].exp += 10;
+            //GameData.userData.characterList[0].CheakExp();
             var cd = GameData.userData.characterList[0];
-            Debug.Log($"Level : {cd.level}");
+            //Debug.Log($"Level : {cd.level}");
             Debug.Log($"HP : {cd.GetStat(CharacterStatType.Hp)}");
             Debug.Log($"STR : {cd.GetStat(CharacterStatType.Str)}");
             Debug.Log($"LUNG : {cd.GetStat(CharacterStatType.Lung)}");

@@ -33,10 +33,10 @@ public class HireInfo : MonoBehaviour
         chaName.text = cd.characterName;
         chaGrade.text = cd.characterGrade;
         chaClass.text = cd.characterClass;
-        hp.text = $"Hp : {cd.baseStats.hp}";
+        hp.text = $"Hp : {cd.baseStats.hp.stat}";
         move.text = $"Move : {cd.baseStats.move}";
-        def.text = $"Lung : {cd.baseStats.lung}";
-        stat.text = $"Str : {cd.baseStats.str}";
+        def.text = $"Lung : {cd.baseStats.lung.stat}";
+        stat.text = $"Str : {cd.baseStats.str.stat}";
 
         personality.text = "";
         foreach (var type in cd.personality.CheakAllPersonality())

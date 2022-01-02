@@ -4,5 +4,6 @@ public enum ItemType
     Hose,
     BunkerGear,
     OxygenTank,
-    Max
+    Max,
+    Consumable
 }

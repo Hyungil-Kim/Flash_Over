@@ -14,8 +14,9 @@ public class UserData : MySaveData
     public string userName;
     //public List<WeaponData> weaponItemList
     //    = new List<WeaponData>();
-    //public List<ConsumableItemData> consumableItemList
-    //    = new List<ConsumableItemData>();
+
+    public List<ConsumableItemData> consumableItemList
+        = new List<ConsumableItemData>();
 
     public List<HoseData> hoseList
         = new List<HoseData>();
@@ -30,12 +31,18 @@ public class UserData : MySaveData
     public List<ItemDataBase> shopItemList
         = new List<ItemDataBase>();
 
-    public int shopLevel;
+    public int shopLevel = 1;
     public DateTime shopTime;
 
     public List<CharacterData> shopChaList
         = new List<CharacterData>();
 
+    public int trainingRoomLevel = 1;
+
+    public int maxFireMan = 9;
+
+    public Dictionary<int,CharacterData> fireManList
+        = new Dictionary<int, CharacterData>();
     public void SaveUserData(int slot)
     {
         MySaveLoadSystem<UserData>.Save(GameData.userData, SaveDataType.PlayerData,slot);
@@ -73,19 +80,19 @@ public class UserData : MySaveData
                 oxygenTankList.Add(oxygenTankItem);
                 break;
 
-            //case ItemType.Consumable:
-            //    var item = new ConsumableItemData(MyDataTableMgr.consumItemTable.GetTable(id),count);
-            //    //item.count = count;
-            //    var index = consumableItemList.FindIndex((x) => x.dataTable.id == id);
-            //    if(index == -1)
-            //    {
-            //        consumableItemList.Add(item);
-            //    }
-            //    else
-            //    {
-            //        consumableItemList[index].count += count;
-            //    }
-            //    break;
+            case ItemType.Consumable:
+                var item = new ConsumableItemData(MyDataTableMgr.consumItemTable.GetTable(id),count);
+                //item.count = count;
+                var index = consumableItemList.FindIndex((x) => x.dataTable.id == id);
+                if(index == -1)
+                {
+                    consumableItemList.Add(item);
+                }
+                else
+                {
+                    consumableItemList[index].count += count;
+                }
+                break;
             //case ItemType.Weapon:
             //    var weaponItem = new WeaponData(MyDataTableMgr.weaponTable.GetTable(id),count);
             //    //weaponItem.count = count;
