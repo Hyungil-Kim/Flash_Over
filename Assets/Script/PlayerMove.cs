@@ -70,11 +70,11 @@ public class PlayerMove : MonoBehaviour
 			{
 				var targetTile = tilemapManager.ReturnTile(raycastHit.transform.position);
 				var tilePos = targetTile.transform.position;
-				var curTile = tilemapManager.ReturnTile(moveList[moveList.Count - 1]);
+				//var curTile = tilemapManager.ReturnTile(moveList[moveList.Count - 1]);
 
 		
 				//현재타일인지 // (이동범위 안 인지 || 이전타일인지) //다음 이동리스트에 있는지
-				if (tilePos != moveList[moveList.Count-1] && (targetTile.movefloodFill || (moveList.Count > 1 && tilePos == moveList[moveList.Count - 2])) && targetTile.nextTileList.Contains(curTile))
+				if (tilePos != moveList[moveList.Count-1] && (targetTile.movefloodFill || (moveList.Count > 1 && tilePos == moveList[moveList.Count - 2])) && targetTile.nextTileList.Contains(tilemapManager.ReturnTile(moveList[moveList.Count - 1])))
 				{
 					if ((moveList.Count > 1 && tilePos == moveList[moveList.Count - 2]))
 					{

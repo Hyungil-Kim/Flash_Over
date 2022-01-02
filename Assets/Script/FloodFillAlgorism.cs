@@ -26,7 +26,7 @@ public class FloodFillAlgorism
 			var curQueue = objectQueue.Peek();
 			var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 
-			if (!curTile.isFill || curTile.isPlayer)
+			if (!curTile.isWall)
 			{
 				curTile.SetTileColor(newColor);
 			}
@@ -43,7 +43,7 @@ public class FloodFillAlgorism
 					{
 						resetQueue.Enqueue(nextQueue);
 					}
-					if (nextQueue.checkSum <= speed  && (!nextQueue.isFill || nextQueue.isPlayer))
+					if (nextQueue.checkSum <= speed  && !nextQueue.isWall)
 					{
 						objectQueue.Enqueue(nextQueue);
 					}
@@ -51,10 +51,6 @@ public class FloodFillAlgorism
 				}
 			}
 				curTile.movefloodFill = true;
-		}
-		foreach (var elem in resetQueue)
-		{
-			
 		}
 	}
 	public void FloodFillExceptColor(Tilemap tilemap, Vector3 startPos, Color newColor,Color pathColor, int speed, List<Vector3> movelist)
@@ -68,7 +64,7 @@ public class FloodFillAlgorism
 			var curQueue = objectQueue.Peek();
 			var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 
-			if (!curTile.isFill || curTile.isPlayer)
+			if (!curTile.isWall)
 			{
 				if(movelist.Contains(curTile.transform.position))
 				{
@@ -93,14 +89,10 @@ public class FloodFillAlgorism
 					{
 						resetQueue.Enqueue(nextQueue);
 					}
-					if (nextQueue.checkSum <= speed && (!nextQueue.isFill || nextQueue.isPlayer))
+					if (nextQueue.checkSum <= speed && !nextQueue.isWall)
 					{
 						objectQueue.Enqueue(nextQueue);
 					}
-					//else if (nextQueue.checkSum <= speed && nextQueue.isFill)
-					//{
-					//	nextQueue.movefloodFill = true;
-					//}
 				}
 			}
 			curTile.movefloodFill = true;
@@ -131,8 +123,7 @@ public class FloodFillAlgorism
 			var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 			if (moveList.Contains(curTile.transform.position))
 			{
-				curTile.ResetExceptColor(pathColor);
-				
+				curTile.ResetExceptColor();		
 			}
 			else
 			{
