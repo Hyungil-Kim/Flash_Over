@@ -19,6 +19,7 @@ public class TilemapManager : MonoBehaviour
 	public void Start()
 	{
 	}
+	//타일맵관련
 	public GroundTile ReturnTile(GameObject gameObject)
 	{
 		var pos = gameObject.transform.position;
@@ -35,6 +36,7 @@ public class TilemapManager : MonoBehaviour
 		var newPos = tilemap.WorldToCell(position);
 		return tilemap.GetInstantiatedObject(newPos).transform.position;// 타일저장
 	}
+	//floodfill 관련
 	public void ShowMoveRange(GroundTile target, Player player, Player prePlayer, Color moveSetColor) /// 기본 이동 플로드필
 	{
 		if (prePlayer == null)
@@ -59,6 +61,12 @@ public class TilemapManager : MonoBehaviour
 	{
 		floodFill.ResetTile(tilemap);
 	}
+	public void DrawFloodFill(Vector3 targetPos, List<Vector3> moveList, int move, Color moveSetColor, Color pathColor)
+	{
+		floodFill.ResetTileExecptPath(tilemap, moveList, pathColor);
+		floodFill.FloodFillExceptColor(tilemap, targetPos, moveSetColor, pathColor, move, moveList);
+	}
+	// astar관련
 	public void SetAstar(GroundTile pretargetTile, GroundTile targetTile, Color astarSetColor, Color moveSetColor)
 	{
 		if (astarAlgoritm.finalList != null)//처음 예외처리
@@ -67,74 +75,149 @@ public class TilemapManager : MonoBehaviour
 		}
 		astarAlgoritm.PathFinding(pretargetTile, targetTile, astarSetColor);
 	}
+	public List<GroundTile> ReturnFinalList()
+	{
+		return astarAlgoritm.finalList;
+	}
+
+	//attack관련
 	public void ChangeColorAttack(GameObject target, int weapontype, Color attackSetColor)//숫자 무기 사거리로 바꿔야함
 	{
-		attackRange.AttackReset(tilemap, weapontype);
+		ResetAttackRange(weapontype);
 		attackRange.Attack(target, this, weapontype, 5, attackSetColor);
 	}
-	public void FireAttack(Monster target, Color attackSetColor)
+	public void FireAttack(Fire target, Color attackSetColor)
 	{
-		var list = testAttackRange.CrossFloodFill(this,target.gameObject, attackSetColor,target.level);
+		var list = testAttackRange.CrossFloodFill(this, target.gameObject, attackSetColor, target.fireLevel);
 		FireDamage(target, list);
-		for (int i = 0; i < list.Count; i++)
+		for (int i = 0; i < list.Count; i++) //확인? 왜 있어야하는지
 		{
 			attackList.Add(list[i]);
 		}
 		testAttackRange.CrossResetTile(tilemap, list);
 		list.Clear();
 	}
-	public void FireDamage(Monster target,List<GroundTile> list)
+	public void FireDamage(Fire target, List<GroundTile> list)
 	{
-		foreach(var elem in list)
+		foreach (var elem in list)
 		{
-			var damage = target.damage / (Mathf.Pow(2f,elem.checkSum));
+			var damage = target.fireDamage / (Mathf.Pow(2f, elem.checkSum));
 			damage = damage > 0 ? damage : 0;
 			var iDamage = Mathf.CeilToInt(damage);
-			elem.exp += iDamage;
-			foreach(var defender in elem.fillList)
+			foreach (var defender in elem.fillList)
 			{
-				if(defender.tag == "Player")
+				if (defender.tag == "Player")
 				{
 					Debug.Log(iDamage);
 					defender.GetComponent<Player>().hp -= iDamage;
 				}
+				//오브젝트 추가
 			}
+			elem.ChangeTileState(elem, iDamage);
+			elem.CheckParticleOn(elem);
 		}
 	}
 	public void EndMonsterAttack()
 	{
-		for(int i =0; i < attackList.Count;i++)
+		for (int i = 0; i < attackList.Count; i++)
 		{
 			attackList[i].Reset();
 		}
 		attackList.Clear();
 	}
-
-	public void ColorPath(GroundTile targetTile, GroundTile preTargetTile, List<GroundTile> moveList, Player player, Color moveSetColor)
-	{
-		if (preTargetTile != targetTile)
-		{
-			player.move--;
-			targetTile.SetTileColor(moveSetColor);
-			moveList.Add(targetTile);
-		}
-	}
-
-	public List<GroundTile> ReturnFinalList()
-	{
-		return astarAlgoritm.finalList;
-	}
-
-	public void DrawFloodFill(Vector3 targetPos, List<Vector3> moveList, int move, Color moveSetColor, Color pathColor)
-	{
-		floodFill.ResetTileExecptPath(tilemap, moveList, pathColor);
-		floodFill.FloodFillExceptColor(tilemap, targetPos, moveSetColor, pathColor, move, moveList);
-	}
 	public void ResetAttackRange(int type)
 	{
 		attackRange.AttackReset(tilemap, type);
 	}
+	public void DoAttack(Player attacker, int num)
+	{
+		switch (num)
+		{
+			case 0:
+				break;
+			case 1:
+				foreach (var elem in attackRange.LineResetQueue)
+				{
+					if (elem.tileIsFire)
+					{
+						var targetPos = tilemap.WorldToCell(elem.transform.position);
+						var targetTile = tilemap.GetInstantiatedObject(targetPos);
+						var damage = attacker.damege * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
+						damage = damage > 0 ? damage : 0;
+						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
+					}
+				}
+				break;
+			case 2:
+				foreach (var elem in attackRange.TriResetQueue)
+				{
 
+					if (elem.tileIsFire)
+					{
+						var targetPos = tilemap.WorldToCell(elem.transform.position);
+						var targetTile = tilemap.GetInstantiatedObject(targetPos);
+						var damage = attacker.damege * 0.4;
+						damage = damage > 0 ? damage : 0;
+						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
+					}
+
+				}
+				break;
+		}
+		ResetAttackRange(num);
+	}
+	//smoke
+	public int CheckDivideSmoke(Smoke smoke)//꺼져있어서 못찾을수도있음 실행부분 예외필요
+	{
+		var ground = smoke.GetComponentInParent<GroundTile>();
+		var divideTile = 1;
+		var divideSmoke = 0;
+		for (int i = 0; i < ground.nextTileList.Count; i++)
+		{
+			if (ground.nextTileList[i].tileSmokeValue < ground.tileSmokeValue)
+			{
+				divideTile++;
+			}
+		}
+		divideSmoke = Mathf.FloorToInt(ground.tileSmokeValue / divideTile);
+		return divideSmoke;
+	}
+	public void SaveSmokeValue(Smoke smoke)
+	{
+		var ground = smoke.GetComponentInParent<GroundTile>();
+		var divideSmoke = CheckDivideSmoke(smoke);
+
+		for (int i = 0; i < ground.nextTileList.Count; i++)
+		{
+			if (ground.nextTileList[i].tileSmokeValue < ground.tileSmokeValue)
+			{
+				ground.nextTileList[i].tileSaveSmokeValue += divideSmoke;
+			}
+		}
+		ground.tileSaveSmokeValue += divideSmoke;
+
+	}
+	public void SpreadSmoke(Smoke smoke)
+	{
+		var ground = smoke.GetComponentInParent<GroundTile>();
+
+		foreach (var elem in ground.nextTileList)
+		{
+			elem.tileSmokeValue += elem.tileSaveSmokeValue;
+		}
+		ground.tileSmokeValue += ground.tileSaveSmokeValue;
+	}
+	public void ResetSmokeValue(Smoke smoke)
+	{
+		var ground = smoke.GetComponentInParent<GroundTile>();
+		//초기화
+		foreach (var elem in ground.nextTileList)
+		{
+			elem.tileSaveSmokeValue = 0;
+		}
+		ground.tileSaveSmokeValue = 0;
+	}
+	//ex
 	public bool CheckPlayer(GameObject moveHelper)
 	{
 		var helperTile = ReturnTile(moveHelper);
@@ -144,70 +227,5 @@ public class TilemapManager : MonoBehaviour
 		}
 		return false;
 	}
-
-
-
-	public void DoAttack(Player attacker, int num)
-	{
-		switch (num)
-		{
-			case 0:
-				break;
-			case 1:
-				foreach (var elemList in attackRange.LineResetQueue)
-				{
-					foreach (var elem in elemList.fillList)
-					{
-						if (elem.tag == "Monster")
-						{
-							var targetPos = tilemap.WorldToCell(elem.transform.position);
-							var targetTile = tilemap.GetInstantiatedObject(targetPos);
-							var damage = attacker.damege * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
-							damage = damage > 0 ? damage : 0;
-							elem.GetComponent<Monster>().hp -= Mathf.RoundToInt((float)damage);
-						}
-					}
-				}
-				break;
-			case 2:
-				foreach (var elemList in attackRange.TriResetQueue)
-				{
-					foreach (var elem in elemList.fillList)
-					{
-						if (elem.tag == "Monster")
-						{
-							var targetPos = tilemap.WorldToCell(elem.transform.position);
-							var targetTile = tilemap.GetInstantiatedObject(targetPos);
-							var damage = attacker.damege * 0.4;
-							damage = damage > 0 ? damage : 0;
-							elem.GetComponent<Monster>().hp -= Mathf.RoundToInt((float)damage);
-						}
-					}
-				}
-				break;
-		}
-		ResetAttackRange(num);
-	}
-
-	public void DoAttack(Monster attacker)
-	{
-		foreach (var elemList in attackRange.crossQueue)
-		{
-			foreach (var elem in elemList.fillList)
-			{
-				if (elem.tag == "Monster")
-				{
-					var targetPos = tilemap.WorldToCell(elem.transform.position);
-					var targetTile = tilemap.GetInstantiatedObject(targetPos);
-					var damage = attacker.GetComponent<Player>().damege * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
-					damage = damage > 0 ? damage : 0;
-					elem.GetComponent<Monster>().hp -= Mathf.RoundToInt((float)damage);
-				}
-			}
-		}
-		ResetAttackRange(0);
-	}
-
-
 
 }

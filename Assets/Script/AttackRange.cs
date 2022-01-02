@@ -39,7 +39,6 @@ public class AttackRange
 			{
 				var nextQueue = curQueue.nextTileList[dir];
 				var ischeck = nextQueue.attackfloodFill;
-
 				if (!ischeck)
 				{
 					nextQueue.checkSum = curTile.checkSum + 1;
@@ -52,6 +51,7 @@ public class AttackRange
 			}
 			curTile.attackfloodFill = true;
 		}
+		Debug.Log(crossQueue.Count);
 	}
 	public void CrossResetTile(Tilemap tilemap)
 	{
@@ -59,6 +59,13 @@ public class AttackRange
 		{
 			var curQueue = crossResetQueue.Peek();
 			var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
+			foreach(var elem in curTile.nextTileList)
+			{
+				if(elem.checkSum != 0)
+				{
+					elem.Reset();
+				}
+			}
 			curTile.Reset();
 			crossResetQueue.Dequeue();
 		}
@@ -93,12 +100,14 @@ public class AttackRange
 					   (tileObject.transform.position.x == nextQueue.transform.position.x ^ tileObject.transform.position.z == nextQueue.transform.position.z) &&
 						!nextQueue.attackfloodFill)
 					{
-						LineCheckLookPos(curQueue, nextQueue, (Move)targetObject.transform.rotation.eulerAngles.y); 
+						LineCheckLookPos(curQueue, nextQueue,(Move)Mathf.RoundToInt(targetObject.transform.rotation.eulerAngles.y)); 
 					}
 				}
 			}
 			curTile.attackfloodFill = true;
 		}
+		Debug.Log(LineResetQueue.Count);
+		Debug.Log(targetObject.transform.rotation.eulerAngles.y);
 	}
 	public void LineResetTile(Tilemap tilemap)
 	{
@@ -106,7 +115,14 @@ public class AttackRange
 			{
 				var curQueue = LineResetQueue.Peek();
 				var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
-				curTile.Reset();
+			foreach (var elem in curTile.nextTileList)
+			{
+				if (elem.checkSum != 0)
+				{
+					elem.Reset();
+				}
+			}
+			curTile.Reset();
 				LineResetQueue.Dequeue();
 			}
 	}
@@ -144,7 +160,7 @@ public class AttackRange
 					{
 						if (!(curQueue.checkSum == 1 && !nextLineCondition))
 						{
-							TriCheckLookPos(curQueue, nextQueue, (Move)targetObject.transform.rotation.eulerAngles.y);
+							TriCheckLookPos(curQueue, nextQueue, (Move)Mathf.RoundToInt(targetObject.transform.rotation.eulerAngles.y));
 						}
 					}
 				}
@@ -152,6 +168,7 @@ public class AttackRange
 
 			curTile.attackfloodFill = true;
 		}
+		Debug.Log(TriResetQueue.Count);
 	}
 	public void TriResetTile(Tilemap tilemap)
 	{
@@ -159,7 +176,14 @@ public class AttackRange
 			{
 				var curQueue = TriResetQueue.Peek();
 				var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
-				curTile.Reset();
+			foreach (var elem in curTile.nextTileList)
+			{
+				if (elem.checkSum != 0)
+				{
+					elem.Reset();
+				}
+			}
+			curTile.Reset();
 				TriResetQueue.Dequeue();
 			}
 	}

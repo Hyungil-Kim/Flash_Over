@@ -93,10 +93,6 @@ public class FloodFillAlgorism
 					{
 						objectQueue.Enqueue(nextQueue);
 					}
-					//else if (nextQueue.checkSum <= speed && nextQueue.isFill)
-					//{
-					//	nextQueue.movefloodFill = true;
-					//}
 				}
 			}
 			curTile.movefloodFill = true;

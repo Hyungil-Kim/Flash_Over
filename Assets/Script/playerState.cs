@@ -92,6 +92,7 @@ public class PlayerEndState : State
 	{
 		fsm.gameManager.uIManager.battleUiManager.attack.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
+		fsm.gameManager.targetPlayer = null;
 		fsm.StartCoroutine(Turn.CoTurnSystem());
 	}
 

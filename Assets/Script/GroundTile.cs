@@ -19,11 +19,26 @@ public class GroundTile : MonoBehaviour
 	public List<GroundTile> nextTileList = new List<GroundTile>();
 	public List<GameObject> fillList;
 	public Tilemap tilemap;
+	public GameObject firePrefab;
 
-	public int area;
-	public float mesh =0.5f ;//임시
-	public int exp;
 
+	//tileState
+	public int tileArea;
+	
+	public int tileMesh;//임시
+	public bool tileIsWeat;//임시
+	public int tileWeatValue;
+	public int tileExp;
+	public float tileHp;
+	public int tileGrowthExp;
+	public bool tileIsFire;
+
+
+	//smoke
+	public GameObject smokePrefab;
+	public bool tileIsSmoke;
+	public int tileSaveSmokeValue;
+	public int tileSmokeValue;
 
 
 	public GroundTile(int x , int y)
@@ -33,6 +48,7 @@ public class GroundTile : MonoBehaviour
 	}
 	public void Awake()
 	{
+		//firePrefab = GetComponentInChildren<Fire>();
 	}
 	public void Start()
 	{
@@ -51,6 +67,10 @@ public class GroundTile : MonoBehaviour
 				var nextTile = nextTileOb.GetComponent<GroundTile>();
 				nextTileList.Add(nextTile);
 			}
+		}
+		if(tileIsFire || tileIsSmoke)
+		{
+			Turn.smokes.Add(this.GetComponentInChildren<Smoke>(true));
 		}
 	}
 	public int F { get { return G + H; } }
@@ -121,4 +141,75 @@ public class GroundTile : MonoBehaviour
 		checkSum = 0;
 	}
 
+	public void ChangeTileState(GroundTile tile,int damage)
+	{
+		var objectsMesh = 0;
+		for (int i = 0; i < tile.fillList.Count; i++)//오브젝트매질 검사
+		{
+			if (tile.fillList[i].GetComponent<Obstacle>() != null)
+			{
+				objectsMesh = tile.fillList[i].GetComponent<Obstacle>().obstacleMesh;
+				break;
+			}
+			objectsMesh = 0;
+		}
+		var fire = tile.GetComponentInChildren<Fire>(true);
+		var weat = 0;
+		if(tile.tileIsWeat)
+		{
+			weat = tileWeatValue;
+		}
+		else
+		{
+			weat = 0;
+		}
+		if (tile.tileIsFire)
+		{
+			if (tile.tileHp > 0)
+			{ 
+				tile.tileHp -= fire.fireDamage;
+			}
+			
+			tile.tileHp = tile.tileHp < 0 ? 0 : tileHp;
+			
+			if(tile.tileHp < 0 && tile.tileGrowthExp >=0)
+			{
+				tile.tileGrowthExp *= -1;
+			}
+
+		}
+		tile.tileExp += damage * (tile.tileMesh - weat + objectsMesh);
+
+		if (tile.tileIsFire)
+		{
+			tile.tileSmokeValue = fire.fireMakeSmoke +tile.tileSaveSmokeValue;
+		}
+		else
+		{
+			tile.tileSmokeValue = tile.tileSaveSmokeValue;
+		}
+	}
+	public void CheckParticleOn(GroundTile tile)
+	{
+		if (tile.tileExp <= 0)
+		{
+			tile.tileIsFire = false;
+			tile.firePrefab.SetActive(false);
+		}
+		else if (tile.tileExp >= 100)
+		{
+			tile.tileIsFire = true;
+			tile.firePrefab.SetActive(true);
+		}
+		if (tile.tileSmokeValue < 10)//임시 연기 표시기준
+		{
+			tile.tileIsSmoke = false;
+			tile.smokePrefab.SetActive(false);
+		}
+		else
+		{
+			tile.tileIsSmoke = true;
+			tile.smokePrefab.SetActive(true);
+		}
+	}
 }

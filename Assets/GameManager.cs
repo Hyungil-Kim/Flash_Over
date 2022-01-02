@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
-	[HideInInspector]
 	public Player targetPlayer;
 	private Player pretargetPlayer;
 	public GroundTile preTile;
@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 	////////////////////////////////////////////////////////////////////////////////
 	public int num = -1;
 	public int move =0;
+	private Vector3 mouse3DPos;
+	private bool point;
 	//////////////////////////////////////////////////////////////////////////////////
 
 
@@ -36,7 +38,6 @@ public class GameManager : MonoBehaviour
 	}
 	public void Start()
 	{
-		
 	}
 	public void GetTilePosition(Vector2 mousePosition)
 	{
@@ -44,91 +45,137 @@ public class GameManager : MonoBehaviour
 	}
 	public void GetClickedStartMouse()
 	{
-		
 	}
 	public void GetClickedEndMouse()
 	{
-		press = false;
-		Debug.Log("Start");
-		/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
-		Ray ray = Camera.main.ScreenPointToRay(mousePos);
-		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel"));
-		layerMask = ~layerMask;
-		if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
+		if (!point)
 		{
-			target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
-			targetTile = tilemapManager.ReturnTile(target);
-			
-		}
-		else
-		{
-			target = null;
-			targetTile = null;
-		}
-		/////////////////////////////////////////////////////////////////////////////////////////////// 
-		if (target != null)
-		{
-			if (target.tag == "Player")
+			press = false;
+			Debug.Log("Start");
+			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
+			Ray ray = Camera.main.ScreenPointToRay(mousePos);
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel"));
+			layerMask = ~layerMask;
+			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
-				if (targetPlayer == null || targetPlayer.curStateName != PlayerState.Move)
+				target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+				targetTile = tilemapManager.ReturnTile(target);
+				mouse3DPos = raycastHit.point;
+			}
+			else
+			{
+				target = null;
+				targetTile = null;
+			}
+			/////////////////////////////////////////////////////////////////////////////////////////////// 
+			if (target != null)
+			{
+				if (target.tag == "Player")
 				{
-					targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
-					Debug.Log(targetPlayer);
-					//Debug.Log(pretargetPlayer);
+					if (targetPlayer == null || targetPlayer.curStateName != PlayerState.Move)
+					{
+						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
+						Debug.Log(targetPlayer);
+						//Debug.Log(pretargetPlayer);
+						switch (targetPlayer.curStateName)
+						{
+							case PlayerState.Idle:
+								tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
+								playerMove.ResetMoveList();
+								playerMove.AddMoveList(targetTile.transform.position, setPathColor);
+								targetPlayer.ChangeState(PlayerState.Move);
+								break;
+							case PlayerState.Move:
+								break;
+							case PlayerState.Attack:
+								tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
+								break;
+							case PlayerState.End:
+								break;
+						}
+						pretargetPlayer = targetPlayer;
+						preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+					}
+				}
+				else if (target.tag == "Ground" && targetTile.movefloodFill && preTile.fillList.Contains(targetTile.gameObject))//땅클릭 + 이동범위인지
+				{
 					switch (targetPlayer.curStateName)
 					{
 						case PlayerState.Idle:
-							tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
-							playerMove.ResetMoveList();
-							playerMove.AddMoveList(targetTile.transform.position, setPathColor);
-							targetPlayer.ChangeState(PlayerState.Move);
 							break;
 						case PlayerState.Move:
+							targetPlayer.moveHelper.SetActive(true);
+							targetPlayer.moveHelper.transform.position = new Vector3(targetTile.transform.position.x, targetPlayer.transform.position.y, targetTile.transform.position.z);
 							break;
 						case PlayerState.Attack:
-							tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
 							break;
 						case PlayerState.End:
 							break;
 					}
-					pretargetPlayer = targetPlayer;
-					preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-				}
-			}
-			else if (target.tag == "Ground" && targetTile.movefloodFill && preTile.fillList.Contains(targetTile.gameObject))//땅클릭 + 이동범위인지
-			{
-				
-				switch (targetPlayer.curStateName)
-				{
-					case PlayerState.Idle:
-						break;
-					case PlayerState.Move:
-						targetPlayer.moveHelper.SetActive(true);
-						targetPlayer.moveHelper.transform.position = new Vector3(targetTile.transform.position.x, targetPlayer.transform.position.y, targetTile.transform.position.z);
-						break;
-					case PlayerState.Attack:
-						break;
-					case PlayerState.End:
-						break;
-				}
 
-				preTile = tilemapManager.ReturnTile(mousePos);	
+					preTile = tilemapManager.ReturnTile(mousePos);
+				}
+				if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Attack)
+				{
+					var fixedPos = mouse3DPos - targetPlayer.transform.position;
+					if (0 < fixedPos.x && Mathf.Abs(fixedPos.x) > Mathf.Abs(fixedPos.z))//오
+					{
+						Debug.Log("right");
+						targetPlayer.transform.rotation = Quaternion.Euler(0, 90, 0);
+						tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
+					}
+					else if (0 > fixedPos.x && Mathf.Abs(fixedPos.x) >= Mathf.Abs(fixedPos.z))//왼
+					{
+						Debug.Log("left");
+						targetPlayer.transform.rotation = Quaternion.Euler(0, 270, 0);
+						tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
+					}
+					else if (0 < fixedPos.z && Mathf.Abs(fixedPos.z) > Mathf.Abs(fixedPos.x))//위
+					{
+						Debug.Log("up");
+						targetPlayer.transform.rotation = Quaternion.Euler(0, 0, 0);
+						tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
+					}
+					else if (0 > fixedPos.z && Mathf.Abs(fixedPos.z) >= Mathf.Abs(fixedPos.x))//아래
+					{
+						Debug.Log("down");
+						targetPlayer.transform.rotation = Quaternion.Euler(0, 180, 0);
+						tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
+					}
+				}
 			}
-		}
-		else
-		{
-			Debug.Log("No Target");
+			else
+			{
+				Debug.Log("No Target");
+			}
 		}
 	}
 	public void GetClickingMouse()
 	{
-		press = true;
-
-		if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Move && (targetPlayer == pretargetPlayer || pretargetPlayer == null))
+		if (!point)
 		{
-			StartCoroutine(playerMove.Move(setPathColor, setMoveColor, targetPlayer,move));
+			press = true;
+
+			if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Move && (targetPlayer == pretargetPlayer || pretargetPlayer == null))
+			{
+				StartCoroutine(playerMove.Move(setPathColor, setMoveColor, targetPlayer, move));
+			}
 		}
 	}
-
-	
+	private bool IsPointerOverUI()
+	{
+		return EventSystem.current.IsPointerOverGameObject();
+	}
+	public void Update()
+	{
+		var pointer = IsPointerOverUI();
+		if (pointer)
+		{
+			point = true;
+		}
+		else
+		{
+			point = false;
+		}
+	}
 }

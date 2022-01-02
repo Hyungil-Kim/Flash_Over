@@ -28,6 +28,7 @@ public class BattleUiManager : MonoBehaviour
 		tilemapManager.ResetAttackRange(gameManager.num);
 		gameManager.num = 1;
 		tilemapManager.ChangeColorAttack(gameManager.targetPlayer.gameObject, gameManager.num, gameManager.setAttackColor);
+
 	}
     public void OnClickWeapon2()
     {
