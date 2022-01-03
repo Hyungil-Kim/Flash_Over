@@ -14,8 +14,8 @@ public class FireManInfoPrefab : MonoBehaviour
     public TextMeshProUGUI info;
     public TextMeshProUGUI stat;
 
-    public ConsumShop consum1;
-    public ConsumShop consum2;
+    public FireManItem consum1;
+    public FireManItem consum2;
 
     //public TextMeshProUGUI personality;
     public void Init(CharacterData cd)
@@ -23,6 +23,9 @@ public class FireManInfoPrefab : MonoBehaviour
         hose.Init(cd.hose, ItemType.Hose);
         bunkerGear.Init(cd.bunkerGear, ItemType.BunkerGear);
         oxygenTank.Init(cd.oxygenTank, ItemType.OxygenTank);
+        consum1.Init(cd.consum1, ItemType.Consumable);
+        consum2.Init(cd.consum2, ItemType.Consumable);
+
 
         info.text = $"{cd.characterClass}\n{cd.characterGrade}  {cd.characterName}";
 
@@ -37,9 +40,11 @@ public class FireManInfoPrefab : MonoBehaviour
         statSB.Append(string.Format($"Sta : {cd.totalStats.sta}"));
         stat.text = statSB.ToString();
         var firemanInfo = GetComponentInParent<FireManInfo>();
-        hose.GetComponent<Button>().onClick.AddListener(() => firemanInfo.InventoryInit(ItemType.Hose));
-        bunkerGear.GetComponent<Button>().onClick.AddListener(() => firemanInfo.InventoryInit(ItemType.BunkerGear));
-        oxygenTank.GetComponent<Button>().onClick.AddListener(() => firemanInfo.InventoryInit(ItemType.OxygenTank));
 
+        hose.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
+        bunkerGear.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
+        oxygenTank.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
+        consum1.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
+        consum2.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
     }
 }

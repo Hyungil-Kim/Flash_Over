@@ -37,7 +37,7 @@ public class FireTruckInventory : MonoBehaviour
                 for (int i = 0; i < hoses.Count; i++)
                 {
                     var itemObject = itemObjects[i].GetComponent<FireTruckItem>();
-                    itemObject.Init(hoses[i]);
+                    itemObject.Init(hoses[i],ItemType.Hose);
                     itemObjects[i].SetActive(true);
                 }
                 break;
@@ -45,7 +45,7 @@ public class FireTruckInventory : MonoBehaviour
                 for (int i = 0; i < bunkerGears.Count; i++)
                 {
                     var itemObject = itemObjects[i].GetComponent<FireTruckItem>();
-                    itemObject.Init(bunkerGears[i]);
+                    itemObject.Init(bunkerGears[i], ItemType.BunkerGear);
                     itemObjects[i].SetActive(true);
                 }
                 break;
@@ -53,7 +53,7 @@ public class FireTruckInventory : MonoBehaviour
                 for (int i = 0; i < oxygenTanks.Count; i++)
                 {
                     var itemObject = itemObjects[i].GetComponent<FireTruckItem>();
-                    itemObject.Init(oxygenTanks[i]);
+                    itemObject.Init(oxygenTanks[i], ItemType.OxygenTank);
                     itemObjects[i].SetActive(true);
                 }
                 break;

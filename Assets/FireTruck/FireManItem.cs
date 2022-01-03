@@ -43,9 +43,19 @@ public class FireManItem : MonoBehaviour
     }
     public void OnClick(int index)
     {
-        var type = (ItemType)index;
         var firemanInfo = GetComponentInParent<FireManInfo>();
-        firemanInfo.InventoryInit(type);
-
+        switch (index)
+        {
+            case 3:
+                firemanInfo.ConsumShopInit();
+                break;
+            case 4:
+                firemanInfo.ConsumShopInit();
+                break;
+            default:
+                var type = (ItemType)index;
+                firemanInfo.InventoryInit(type);
+                break;
+        }
     }
 }

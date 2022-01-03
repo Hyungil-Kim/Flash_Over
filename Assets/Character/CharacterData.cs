@@ -104,6 +104,9 @@ public class CharacterData
     public BunkerGearData bunkerGear;
     public OxygenTankData oxygenTank;
 
+    public ConsumableItemData consum1;
+    public ConsumableItemData consum2;
+
     public string characterName;
     public string characterClass;
     public string characterGrade;
@@ -369,7 +372,7 @@ public class CharacterData
     //Àåºñ Âø¿ë
     public void EquipItem(ItemDataBase itemData, ItemType itemType)
     {
-        
+
         if (itemData != null)
         {
             if (itemData.owner != null)

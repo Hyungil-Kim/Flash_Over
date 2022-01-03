@@ -32,4 +32,15 @@ public class FireManCharacter : MonoBehaviour
             count++;
         }
     }
+    public void Init()
+    {
+        int count = 0;
+        foreach (var cd in GameData.userData.fireManList)
+        {
+            prefabList[count].SetActive(true);
+            var fireManInfo = prefabList[count].GetComponent<FireManInfoPrefab>();
+            fireManInfo.Init(cd.Value);
+            count++;
+        }
+    }
 }
