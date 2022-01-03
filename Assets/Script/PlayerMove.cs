@@ -64,7 +64,7 @@ public class PlayerMove : MonoBehaviour
 		{
 			var mousePos = gameManager.mousePos;
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel"));
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel")|1 << LayerMask.NameToLayer("Fade"));
 			layerMask = ~layerMask;
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
