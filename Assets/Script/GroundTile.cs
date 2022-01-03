@@ -17,10 +17,24 @@ public class GroundTile : MonoBehaviour
 	public Color oldColor;
 	public Vector3Int cellpos;
 	public List<GroundTile> nextTileList = new List<GroundTile>();
+	public List<GroundTile> nextVisionList = new List<GroundTile>();
 	public List<GameObject> fillList;
 	public Tilemap tilemap;
 	public GameObject firePrefab;
 
+	public bool cheakVision = false;
+	public bool CheakVision
+    {
+        get { return cheakVision; }
+		set { cheakVision = value; }
+    }
+	public int cheakSumVision = 0;
+	public int CheakVisionSum
+    {
+        get { return cheakSumVision; }
+		set { cheakSumVision = value; }
+    }
+	//public int sumVision;
 
 	//tileState
 	public int tileArea;
@@ -68,10 +82,123 @@ public class GroundTile : MonoBehaviour
 				nextTileList.Add(nextTile);
 			}
 		}
+        
 		if(tileIsFire || tileIsSmoke)
 		{
 			Turn.smokes.Add(this.GetComponentInChildren<Smoke>(true));
 		}
+	}
+	public List<GroundTile> SetNextVision(GroundTile playerTile)
+    {
+		nextVisionList.Clear();
+		cellpos = tilemap.WorldToCell(transform.position);
+		//if(this == playerTile)
+		//{
+		//	for (int dir = 0; dir < 4; dir++)
+		//	{
+		//		int[] indexX = { 1, 0, -1, 0 };
+		//		int[] indexY = { 0, 1, 0, -1 };
+		//		int nextX = Mathf.FloorToInt(cellpos.x) + indexX[dir];
+		//		int nextY = Mathf.FloorToInt(cellpos.y) + indexY[dir];
+		//		var nextTileOb = tilemap.GetInstantiatedObject(new Vector3Int(nextX, nextY, 0));
+		//		if (nextTileOb != null)
+		//		{
+		//			var nextTile = nextTileOb.GetComponent<GroundTile>();
+		//			nextVisionList.Add(nextTile);
+		//		}
+		//	}
+		//	return nextVisionList;
+		//}
+		if (this == playerTile)
+		{
+			
+			int[] indexX = { 0, 1, -1 };
+			int[] indexY = { 0, 1, -1 };
+
+			for (int i = 0; i < indexX.Length; i++)
+			{
+				for (int j = 0; j < indexY.Length; j++)
+				{
+					int nextX = Mathf.FloorToInt(cellpos.x) + indexX[i];
+					int nextY = Mathf.FloorToInt(cellpos.y) + indexY[j];
+					var nextTileOb = tilemap.GetInstantiatedObject(new Vector3Int(nextX, nextY, 0));
+					if (nextTileOb != null)
+					{
+						var nextTile = nextTileOb.GetComponent<GroundTile>();
+						nextTile.cheakSumVision = Mathf.Abs(indexX[i]) + Mathf.Abs(indexY[j]);
+
+						var cheakTileSideOb = tilemap.GetInstantiatedObject(new Vector3Int(nextX, Mathf.FloorToInt(cellpos.y), 0));
+						var cheakTileDownOb = tilemap.GetInstantiatedObject(new Vector3Int(Mathf.FloorToInt(cellpos.x), nextY, 0));
+
+						if (nextTile.cheakSumVision == 2 && cheakTileSideOb != null && cheakTileDownOb != null)
+                        {
+							var cheakTileSide = cheakTileSideOb.GetComponent<GroundTile>();
+							var cheakTileDown = cheakTileDownOb.GetComponent<GroundTile>();
+							nextTile.cheakSumVision += Mathf.Min(cheakTileSide.tileSmokeValue, cheakTileDown.tileSmokeValue) / 10;
+						}
+						else if(nextTile.cheakSumVision == 2 && cheakTileSideOb != null)
+                        {
+							var cheakTileSide = cheakTileSideOb.GetComponent<GroundTile>();
+							nextTile.cheakSumVision += cheakTileSide.tileSmokeValue / 10;
+						}
+						else if (nextTile.cheakSumVision == 2 && cheakTileDownOb != null)
+						{
+							var cheakTileDown = cheakTileDownOb.GetComponent<GroundTile>();
+							nextTile.cheakSumVision += cheakTileDown.tileSmokeValue / 10;
+						}
+						nextVisionList.Add(nextTile);
+					}
+				}
+			}
+			
+			if (nextVisionList.Contains(this))
+			{
+				nextVisionList.Remove(this);
+			}
+			return nextVisionList;
+		}
+		var checkX = cellpos.x - playerTile.cellpos.x > 0 ? 1 : -1;
+		var checkY = cellpos.y - playerTile.cellpos.y > 0 ? 1 : -1;
+		checkX = cellpos.x - playerTile.cellpos.x == 0 ? 0 : checkX;
+		checkY = cellpos.y - playerTile.cellpos.y == 0 ? 0 : checkY;
+
+        for (int i = 0; i < 2; i++)
+        {
+			int nextX = 0;
+			int nextY = 0;
+			switch (i)
+            {
+				case 0:
+					nextX = Mathf.FloorToInt(cellpos.x);
+					nextY = Mathf.FloorToInt(cellpos.y) + checkY;
+					break;
+				case 1:
+					nextX = Mathf.FloorToInt(cellpos.x) + checkX;
+					nextY = Mathf.FloorToInt(cellpos.y);
+					break;
+				case 2:
+					nextX = Mathf.FloorToInt(cellpos.x) + checkX;
+					nextY = Mathf.FloorToInt(cellpos.y) + checkY;
+					break;
+				default:
+                    break;
+            }
+			var nextTileOb = tilemap.GetInstantiatedObject(new Vector3Int(nextX, nextY, 0));
+			if (nextTileOb != null)
+			{
+				var nextTile = nextTileOb.GetComponent<GroundTile>();
+				if (!nextVisionList.Contains(nextTile))
+				{
+					//nextTile.sumVision = Mathf.Abs(checkX) + Mathf.Abs(checkY);
+					nextVisionList.Add(nextTile);
+				}
+			}
+		}
+		if(nextVisionList.Contains(this))
+        {
+			nextVisionList.Remove(this);
+        }
+		return nextVisionList;
 	}
 	public int F { get { return G + H; } }
 
