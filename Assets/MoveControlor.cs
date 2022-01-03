@@ -44,6 +44,15 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Drag"",
+                    ""type"": ""Button"",
+                    ""id"": ""be723986-11d2-45df-8e8d-d412d93b2b8f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -60,12 +69,45 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""6d5ea021-41c4-44fb-b889-7817be238261"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""touch"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8d5bb63b-48ff-41f7-b579-14fe1c2878ff"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse"",
                     ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a52d1215-d5ed-45fd-8fed-4b5d54a0e9d3"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""touch"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4aa7d5ae-5b02-42bd-988f-8881f48cf55a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Drag"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -599,6 +641,17 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""touch"",
+            ""bindingGroup"": ""touch"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Touchscreen>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -606,6 +659,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
         m_Mouse_Click = m_Mouse.FindAction("Click", throwIfNotFound: true);
         m_Mouse_Move = m_Mouse.FindAction("Move", throwIfNotFound: true);
+        m_Mouse_Drag = m_Mouse.FindAction("Drag", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -679,12 +733,14 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
     private IMouseActions m_MouseActionsCallbackInterface;
     private readonly InputAction m_Mouse_Click;
     private readonly InputAction m_Mouse_Move;
+    private readonly InputAction m_Mouse_Drag;
     public struct MouseActions
     {
         private @MoveControlor m_Wrapper;
         public MouseActions(@MoveControlor wrapper) { m_Wrapper = wrapper; }
         public InputAction @Click => m_Wrapper.m_Mouse_Click;
         public InputAction @Move => m_Wrapper.m_Mouse_Move;
+        public InputAction @Drag => m_Wrapper.m_Mouse_Drag;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -700,6 +756,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnMove;
+                @Drag.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnDrag;
+                @Drag.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnDrag;
+                @Drag.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnDrag;
             }
             m_Wrapper.m_MouseActionsCallbackInterface = instance;
             if (instance != null)
@@ -710,6 +769,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Drag.started += instance.OnDrag;
+                @Drag.performed += instance.OnDrag;
+                @Drag.canceled += instance.OnDrag;
             }
         }
     }
@@ -828,10 +890,20 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_MouseSchemeIndex];
         }
     }
+    private int m_touchSchemeIndex = -1;
+    public InputControlScheme touchScheme
+    {
+        get
+        {
+            if (m_touchSchemeIndex == -1) m_touchSchemeIndex = asset.FindControlSchemeIndex("touch");
+            return asset.controlSchemes[m_touchSchemeIndex];
+        }
+    }
     public interface IMouseActions
     {
         void OnClick(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnDrag(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

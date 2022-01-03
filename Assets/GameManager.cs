@@ -30,8 +30,15 @@ public class GameManager : MonoBehaviour
 	private Vector3 mouse3DPos;
 	private bool point;
 	//////////////////////////////////////////////////////////////////////////////////
-
-
+	public MouseInput multiTouch;
+	private float maxZoom = 60f;
+	private float minZoom = 100f;
+	/// ///////////////////////////////////////////////////////////////////////////////
+	private Vector3 firstDragPos;
+	public Camera camera1;
+	public Vector3 mouseMove;
+	public bool drag;
+	/// 
 	public void Awake()
 	{
 		tilemapManager = GetComponent<TilemapManager>();
@@ -155,7 +162,7 @@ public class GameManager : MonoBehaviour
 		if (!point)
 		{
 			press = true;
-
+			
 			if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Move && (targetPlayer == pretargetPlayer || pretargetPlayer == null))
 			{
 				StartCoroutine(playerMove.Move(setPathColor, setMoveColor, targetPlayer, move));
@@ -166,6 +173,10 @@ public class GameManager : MonoBehaviour
 	{
 		return EventSystem.current.IsPointerOverGameObject();
 	}
+
+	private Vector3 prevPos;
+
+
 	public void Update()
 	{
 		var pointer = IsPointerOverUI();
@@ -177,5 +188,48 @@ public class GameManager : MonoBehaviour
 		{
 			point = false;
 		}
+
+		if (multiTouch.Zoom != 0f)
+		{
+			var view = Camera.main.fieldOfView;
+			var change = view * (1 + multiTouch.Zoom);
+			Camera.main.fieldOfView = (change > minZoom) ? minZoom : change;
+			Camera.main.fieldOfView = (change < maxZoom) ? maxZoom : change;
+		}
+		if (drag)
+		{
+			CameraMove();
+		}
+	} 
+	public void GetDragStartMouse()
+	{
+		prevPos = mousePos;
+		drag = true;
+		Debug.Log(prevPos);
+	}
+	public void GetDragingMouse()
+	{
+
+	}
+	
+	public void GetDragEndMouse()
+	{
+		drag = false;
+	}
+	public void CameraMove()
+	{
+		var currPos = mousePos;
+		currPos.z = 10f;
+		var pos1 = camera1.ScreenToWorldPoint(currPos);
+		prevPos.z = 10f;
+		var pos2 = camera1.ScreenToWorldPoint(prevPos);
+
+		var delta = pos1 - pos2;
+		Debug.Log(delta);
+
+		delta.y = 0f;
+		camera1.transform.position += delta;
+
+		prevPos = currPos;
 	}
 }
