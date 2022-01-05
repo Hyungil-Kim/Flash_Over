@@ -872,11 +872,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 307e08d334201c74aa199762a754dd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCharacter: 20
+  alreadyEquip: {fileID: 0}
   currentInventory: {fileID: 3952521842592403526}
   characterIconPrepab: {fileID: 645279990920768879, guid: fd164dea71412734284deaafd93fb897, type: 3}
   content: {fileID: 3952521843788188334}
-  characterIcons: []
 --- !u!1 &3952521842584019208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1102,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxItem: 10
+  optionDropdown: {fileID: 0}
+  info: {fileID: 0}
   itemPrefab: {fileID: 8158728359963520320, guid: 4b3647ba5f2cb994c8ce34c6cfa222f9, type: 3}
   content: {fileID: 3952521842717904437}
 --- !u!1 &3952521842717904437
