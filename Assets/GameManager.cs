@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log("Start");
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel")| 1 << LayerMask.NameToLayer("Fade"));
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
 			layerMask = ~layerMask;
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
