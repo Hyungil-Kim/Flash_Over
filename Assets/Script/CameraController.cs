@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
         }   
     }
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
         for (int i = 0; i < players.Length; i++)
         {
@@ -36,6 +36,5 @@ public class CameraController : MonoBehaviour
     public void CameraRotateLeft()
     {
         transform.RotateAround(transform.position, Vector3.up, -90.0f);
-
     }
 }
