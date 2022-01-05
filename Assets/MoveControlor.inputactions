@@ -6,15 +6,6 @@
             "id": "d8bdd9d1-9c0e-4b53-b2fa-2278a986a3fe",
             "actions": [
                 {
-                    "name": "Click",
-                    "type": "Button",
-                    "id": "64a0306b-1229-4c03-8cf1-452987145472",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Move",
                     "type": "Value",
                     "id": "25831983-8d0e-4a36-a04d-0f7137ab0d14",
@@ -22,27 +13,36 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "64a0306b-1229-4c03-8cf1-452987145472",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "a839547f-2936-4074-a44e-a52318975f14",
-                    "path": "*/{PrimaryAction}",
+                    "id": "6d5ea021-41c4-44fb-b889-7817be238261",
+                    "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Mouse",
+                    "groups": "touch",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "8d5bb63b-48ff-41f7-b579-14fe1c2878ff",
-                    "path": "<Mouse>/position",
+                    "id": "a52d1215-d5ed-45fd-8fed-4b5d54a0e9d3",
+                    "path": "<Touchscreen>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Mouse",
+                    "groups": "touch",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -573,6 +573,17 @@
             "devices": [
                 {
                     "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "touch",
+            "bindingGroup": "touch",
+            "devices": [
+                {
+                    "devicePath": "<Touchscreen>",
                     "isOptional": false,
                     "isOR": false
                 }

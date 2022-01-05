@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
-
+using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
+	public static GameManager instance;
+
 	public Player targetPlayer;
 	private Player pretargetPlayer;
 	public GroundTile preTile;
@@ -32,24 +34,49 @@ public class GameManager : MonoBehaviour
 	//////////////////////////////////////////////////////////////////////////////////
 
 
+
 	public MyMeshCreate myMeshCreate;
+
+
+	public MouseInput multiTouch;
+	private float maxZoom = 60f;
+	private float minZoom = 100f;
+	/// ///////////////////////////////////////////////////////////////////////////////
+	private Vector3 firstDragPos;
+	public Camera camera1;
+	public Vector3 mouseMove;
+	public bool drag;
+	/// 
+	private Vector3 prevPos;
+	private bool firstclick = true;
 
 	public void Awake()
 	{
+		instance = this;
 		tilemapManager = GetComponent<TilemapManager>();
 	}
 	public void Start()
 	{
+
 	}
 	public void GetTilePosition(Vector2 mousePosition)
 	{
 		mousePos = mousePosition;
+		
 	}
-	public void GetClickedStartMouse()
+	public void GetClickedStartMouse(Vector2 callBack)
 	{
+		prevPos = callBack;
+		if (firstclick)
+		{
+			firstclick = false;
+			return;
+		}
+		drag = true;
 	}
 	public void GetClickedEndMouse()
 	{
+
 		if (!point)
 		{
 			press = false;
@@ -157,19 +184,24 @@ public class GameManager : MonoBehaviour
 		if (!point)
 		{
 			press = true;
-
 			if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Move && (targetPlayer == pretargetPlayer || pretargetPlayer == null))
 			{
 				StartCoroutine(playerMove.Move(setPathColor, setMoveColor, targetPlayer, move));
 			}
 		}
+		
 	}
 	private bool IsPointerOverUI()
 	{
 		return EventSystem.current.IsPointerOverGameObject();
 	}
+
+
+
+
 	public void Update()
 	{
+		//mousePos = multiTouch.mousePoint.Mouse.Move.ReadValue<Vector2>();
 		var pointer = IsPointerOverUI();
 		if (pointer)
 		{
@@ -179,5 +211,36 @@ public class GameManager : MonoBehaviour
 		{
 			point = false;
 		}
+
+		if (multiTouch.Zoom != 0f)
+		{
+			var view = Camera.main.fieldOfView;
+			var change = view * (1 + multiTouch.Zoom);
+			Camera.main.fieldOfView = (change > minZoom) ? minZoom : change;
+			Camera.main.fieldOfView = (change < maxZoom) ? maxZoom : change;
+		}
+	}
+	public void LateUpdate()
+	{
+		if(drag)
+		{
+			CameraMove();
+		}
+	}
+	public void CameraMove()
+	{
+		var currPos = mousePos;
+		currPos.z = 10f;
+		var pos1 = Camera.main.ScreenToWorldPoint(currPos);
+		prevPos.z = 10f;
+		var pos2 = Camera.main.ScreenToWorldPoint(prevPos);
+
+		var delta = pos2 - pos1;
+		
+		delta.y = 0f;
+
+		Camera.main.transform.position = Camera.main.transform.position + delta;
+
+		prevPos = currPos;
 	}
 }

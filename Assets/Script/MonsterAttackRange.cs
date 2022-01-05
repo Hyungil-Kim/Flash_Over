@@ -15,7 +15,6 @@ public class MonsterAttackRange
 		crossResetQueue.Add(tileObject);
 		while (crossQueue.Count > 0)
 		{
-
 			var curQueue = crossQueue.Peek();
 			var curTile = tilemapManager.tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 

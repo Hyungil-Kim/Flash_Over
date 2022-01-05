@@ -28,15 +28,6 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
             ""id"": ""d8bdd9d1-9c0e-4b53-b2fa-2278a986a3fe"",
             ""actions"": [
                 {
-                    ""name"": ""Click"",
-                    ""type"": ""Button"",
-                    ""id"": ""64a0306b-1229-4c03-8cf1-452987145472"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""25831983-8d0e-4a36-a04d-0f7137ab0d14"",
@@ -44,27 +35,36 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""64a0306b-1229-4c03-8cf1-452987145472"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""a839547f-2936-4074-a44e-a52318975f14"",
-                    ""path"": ""*/{PrimaryAction}"",
+                    ""id"": ""6d5ea021-41c4-44fb-b889-7817be238261"",
+                    ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Mouse"",
+                    ""groups"": ""touch"",
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8d5bb63b-48ff-41f7-b579-14fe1c2878ff"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""a52d1215-d5ed-45fd-8fed-4b5d54a0e9d3"",
+                    ""path"": ""<Touchscreen>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Mouse"",
+                    ""groups"": ""touch"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -599,13 +599,24 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""touch"",
+            ""bindingGroup"": ""touch"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Touchscreen>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
-        m_Mouse_Click = m_Mouse.FindAction("Click", throwIfNotFound: true);
         m_Mouse_Move = m_Mouse.FindAction("Move", throwIfNotFound: true);
+        m_Mouse_Click = m_Mouse.FindAction("Click", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -677,14 +688,14 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
     // Mouse
     private readonly InputActionMap m_Mouse;
     private IMouseActions m_MouseActionsCallbackInterface;
-    private readonly InputAction m_Mouse_Click;
     private readonly InputAction m_Mouse_Move;
+    private readonly InputAction m_Mouse_Click;
     public struct MouseActions
     {
         private @MoveControlor m_Wrapper;
         public MouseActions(@MoveControlor wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Click => m_Wrapper.m_Mouse_Click;
         public InputAction @Move => m_Wrapper.m_Mouse_Move;
+        public InputAction @Click => m_Wrapper.m_Mouse_Click;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -694,22 +705,22 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_MouseActionsCallbackInterface != null)
             {
-                @Click.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
-                @Click.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
-                @Click.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
                 @Move.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnMove;
+                @Click.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
             }
             m_Wrapper.m_MouseActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Click.started += instance.OnClick;
-                @Click.performed += instance.OnClick;
-                @Click.canceled += instance.OnClick;
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
             }
         }
     }
@@ -828,10 +839,19 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_MouseSchemeIndex];
         }
     }
+    private int m_touchSchemeIndex = -1;
+    public InputControlScheme touchScheme
+    {
+        get
+        {
+            if (m_touchSchemeIndex == -1) m_touchSchemeIndex = asset.FindControlSchemeIndex("touch");
+            return asset.controlSchemes[m_touchSchemeIndex];
+        }
+    }
     public interface IMouseActions
     {
-        void OnClick(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
