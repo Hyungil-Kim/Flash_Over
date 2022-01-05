@@ -10,7 +10,10 @@ public class VisionRange : MonoBehaviour
 	private List<GroundTile> prevTileList = new List<GroundTile>();
 	public TilemapManager tilemapManager;
 	public int vision = 5;
-
+    private void Start()
+    {
+		tilemapManager = GameManager.instance.tilemapManager;
+    }
     public List<GroundTile> CheackVision()
 	{
 		crossQueue = new Queue<GroundTile>();

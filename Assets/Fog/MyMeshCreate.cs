@@ -5,8 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class MyMeshCreate : MonoBehaviour
 {
-    public GameManager gm;
-    public TilemapManager tilemapManager;
+    private GameManager gm;
+    private TilemapManager tilemapManager;
     public VisionRange[] visionRanges;
     public FogProjector fogProjector;
 
@@ -17,6 +17,8 @@ public class MyMeshCreate : MonoBehaviour
 
     private void Start()
     {
+        gm = GameManager.instance;
+        tilemapManager = gm.tilemapManager;
         tilemap = gm.tilemap;
         viewMesh = new Mesh { name = "View Mesh" };
         meshFilter = GetComponent<MeshFilter>();

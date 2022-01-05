@@ -124,7 +124,6 @@ public class PlayerMove : MonoBehaviour
 					moveObject.transform.position = Vector3.MoveTowards(moveObject.transform.position, newPos, speed * Time.deltaTime);
 					moveObject.transform.LookAt(newPos);
 				}
-				
 			}
 			else
 			{
