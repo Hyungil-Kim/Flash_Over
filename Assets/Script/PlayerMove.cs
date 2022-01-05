@@ -127,7 +127,7 @@ public class PlayerMove : MonoBehaviour
 			}
 			else
 			{
-				gameManager.myMeshCreate.Test();
+				//gameManager.myMeshCreate.Test();
 				if (num < moveList.Count - 1)
 				{
 					num++;

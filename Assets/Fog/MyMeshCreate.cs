@@ -54,7 +54,7 @@ public class MyMeshCreate : MonoBehaviour
     }
     public void DrawMesh()
     {
-        viewMesh.Clear();
+        viewMesh.Clear();   
 
         Vector3[] vertices = new Vector3[tileList.Count * 4];
         int[] tris = new int[tileList.Count*6];

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 [ExecuteInEditMode]
 public class FogProjector : MonoBehaviour
@@ -18,7 +19,7 @@ public class FogProjector : MonoBehaviour
     Material blurMaterial;
     public float blur=1;
 
-    Projector projector;
+    DecalProjector projector;
 
     public float blendSpeed = 1;
     float blend;
@@ -26,7 +27,7 @@ public class FogProjector : MonoBehaviour
 
     void OnEnable()
     {
-        projector = GetComponent<Projector>();
+        projector = GetComponent<DecalProjector>();
 
         blurMaterial = new Material(blurShader);
         blurMaterial.SetVector("_Parameter", new Vector4(blur, -blur, 0, 0));
