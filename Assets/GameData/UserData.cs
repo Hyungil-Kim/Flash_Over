@@ -47,7 +47,8 @@ public class UserData : MySaveData
     public int restRoomLevel = 0;
     public Dictionary<int, CharacterData> restList
     = new Dictionary<int, CharacterData>();
-
+    public List<CharacterData> restEndList
+        = new List<CharacterData>();
     public void SaveUserData(int slot)
     {
         MySaveLoadSystem<UserData>.Save(GameData.userData, SaveDataType.PlayerData,slot);

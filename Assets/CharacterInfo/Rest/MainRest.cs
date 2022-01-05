@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class MainRest : MonoBehaviour
 {
     public int maxSlot = 4;
     public int baseSlot = 2;
     public GameObject restPrefab;
-
-
 
     List<GameObject> restPrefabList = new List<GameObject>();
     List<CharacterData> restCharacterList = new List<CharacterData>();
@@ -24,6 +21,7 @@ public class MainRest : MonoBehaviour
                 restPrefabList.Add(newGo);
             }
         }
+        
         Init();
     }
     public void Init()
@@ -52,6 +50,7 @@ public class MainRest : MonoBehaviour
             {
                 cd.Value.tiredScore = 0;
                 keyList.Add(cd.Key);
+                GameData.userData.restEndList.Add(cd.Value);
             }
         }
         foreach (var key in keyList)
