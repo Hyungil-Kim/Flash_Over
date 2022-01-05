@@ -20,12 +20,9 @@ public class MouseInput : MonoBehaviour
 		gameManager = GetComponent<GameManager>();
 		mousePoint = new MoveControlor();
 		mousePoint.Mouse.Move.performed += val => gameManager.GetTilePosition(val.ReadValue<Vector2>());
-		mousePoint.Mouse.Click.started += val => gameManager.GetClickedStartMouse();
+		mousePoint.Mouse.Click.started += val => gameManager.GetClickedStartMouse(mousePoint.Mouse.Move.ReadValue<Vector2>());
 		mousePoint.Mouse.Click.performed += val => gameManager.GetClickingMouse();
 		mousePoint.Mouse.Click.canceled += val => gameManager.GetClickedEndMouse();
-		mousePoint.Mouse.Drag.started += val => gameManager.GetDragStartMouse();
-		mousePoint.Mouse.Drag.performed += val => gameManager.GetDragingMouse();
-		mousePoint.Mouse.Drag.canceled += val => gameManager.GetDragEndMouse();
 	}
 
 	public void OnEnable()

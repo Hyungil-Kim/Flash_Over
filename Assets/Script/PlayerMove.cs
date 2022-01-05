@@ -59,41 +59,50 @@ public class PlayerMove : MonoBehaviour
 	}
 	public IEnumerator Move(Color setPathColor,Color setMoveColor,Player player,int movePoint)
 	{
-		var moveHelper = player.moveHelper;
-		while (gameManager.press)
+		if (!go)
 		{
-			var mousePos = gameManager.mousePos;
-			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel"));
-			layerMask = ~layerMask;
-			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
+			var moveHelper = player.moveHelper;
+			var helperTile = tilemapManager.ReturnTile(moveHelper);
+			Debug.Log(helperTile.transform.position);
+			while (gameManager.press)
 			{
-				var targetTile = tilemapManager.ReturnTile(raycastHit.transform.position);
-				var tilePos = targetTile.transform.position;
-				//var curTile = tilemapManager.ReturnTile(moveList[moveList.Count - 1]);
-
-		
-				//현재타일인지 // (이동범위 안 인지 || 이전타일인지) //다음 이동리스트에 있는지
-				if (tilePos != moveList[moveList.Count-1] && (targetTile.movefloodFill || (moveList.Count > 1 && tilePos == moveList[moveList.Count - 2])) && targetTile.nextTileList.Contains(tilemapManager.ReturnTile(moveList[moveList.Count - 1])))
+				var mousePos = gameManager.mousePos;
+				Ray ray = Camera.main.ScreenPointToRay(mousePos);
+				int layerMask = (1 << LayerMask.NameToLayer("GroundPanel"));
+				layerMask = ~layerMask;
+				if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 				{
-					if ((moveList.Count > 1 && tilePos == moveList[moveList.Count - 2]))
+					var targetTile = tilemapManager.ReturnTile(raycastHit.transform.position);
+					var tilePos = targetTile.transform.position;
+					if (targetTile.nextTileList.Contains(helperTile))
 					{
-						var preTile = tilemapManager.ReturnTile(moveList[moveList.Count - 2]);
-						RemoveMoveList(moveList, setMoveColor);
-						movePoint += 1;
+						gameManager.drag = false;
 					}
-					else
+					//var curTile = tilemapManager.ReturnTile(moveList[moveList.Count - 1]);
+					if (moveList.Count == 0) yield break;
+					//현재타일인지 // (이동범위 안 인지 || 이전타일인지) //다음 이동리스트에 있는지
+					if (tilePos != moveList[moveList.Count - 1] && (targetTile.movefloodFill || (moveList.Count > 1 && tilePos == moveList[moveList.Count - 2])) && targetTile.nextTileList.Contains(tilemapManager.ReturnTile(moveList[moveList.Count - 1])))
 					{
-						AddMoveList(tilePos, setPathColor);
-						movePoint -=1;
+						if ((moveList.Count > 1 && tilePos == moveList[moveList.Count - 2]))
+						{
+							var preTile = tilemapManager.ReturnTile(moveList[moveList.Count - 2]);
+							RemoveMoveList(moveList, setMoveColor);
+							movePoint += 1;
+
+						}
+						else
+						{
+							AddMoveList(tilePos, setPathColor);
+							movePoint -= 1;
+						}
+						moveHelper.transform.position = new Vector3(tilePos.x, player.transform.position.y, tilePos.z);
+						//moveHelper.transform.LookAt();--분신 보는방향
+						tilemapManager.DrawFloodFill(tilePos, moveList, movePoint, setMoveColor, setPathColor);
 					}
-					moveHelper.transform.position = new Vector3(tilePos.x, player.transform.position.y, tilePos.z);
-					//moveHelper.transform.LookAt();--분신 보는방향
-					tilemapManager.DrawFloodFill(tilePos,moveList,movePoint,setMoveColor, setPathColor);
 				}
+				ReturnMovePoint(movePoint);
+				yield return 0;
 			}
-			ReturnMovePoint(movePoint);
-			yield return 0;
 		}
 	}
 	public int ReturnMovePoint(int movePoint)

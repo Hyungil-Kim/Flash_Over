@@ -7,12 +7,28 @@ public enum ClaimantState
 	Idle,
 	Move,
 	End,
-
 }
+public enum ClaimantInjure
+{
+	Idle,
+	little,
+	hard
+}
+
 
 public class Claimant : FSM<ClaimantState>
 {
 	public GameManager gameManager;
+	public Player targetPlayer;
+	public bool stun;
+	public bool confuse;
+	public bool eventOn;
+	public int claimantArea;
+	public int hp;
+	public int airGauge;//산소통 이름변경 필요
+	public int speed =5;
+	public int weight;
+	private ClaimantMove claimantMove = new ClaimantMove();
 	public void Awake()
 	{
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -20,8 +36,14 @@ public class Claimant : FSM<ClaimantState>
 	public void Start()
 	{
 		AddState(ClaimantState.Idle, new ClaimantIdleState(this));
-		AddState(ClaimantState.Idle, new ClaimantMoveState(this));
+		AddState(ClaimantState.Move, new ClaimantMoveState(this));
 		AddState(ClaimantState.End, new ClaimantEndState(this));
 		SetState(ClaimantState.Idle);
+		Turn.claimants.Add(this);
+	}
+	public void ClimantAct()
+	{
+		StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer));
+		//StartCoroutine(claimantMove.MoveConfuse(this));
 	}
 }

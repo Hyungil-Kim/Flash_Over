@@ -8,7 +8,7 @@ public static class Turn
 	public static List<Player> players = new List<Player>();
 	public static List<Fire> fires = new List<Fire>();
 	public static List<Smoke> smokes = new List<Smoke>();
-	//public static List<Npc> npcs = new List<Npc>();
+	public static List<Claimant> claimants = new List<Claimant>();
 	public static List<Window> windows = new List<Window>();
 
 	public static int maxArea = 4;
@@ -51,6 +51,22 @@ public static class Turn
 
 			ChangeStateIdle(i);
 		}
+		for(int i =0; i<= maxArea;i++)
+		{
+			var sorClaimant = claimants.Where((x) => x.claimantArea == i);
+			if (sorClaimant.ToList().Count == 0)// 시야 조건 추가필요
+			{
+				ChangeStateIdle(i);
+				continue;
+			}
+			foreach (var claimant in sorClaimant)
+			{
+				claimant.ClimantAct();
+				claimant.ChangeState(ClaimantState.End);
+			}
+			yield return new WaitForSeconds(0.5f);
+
+		}
 		foreach (var smoke in smokes)
 		{
 			var ground = smoke.GetComponentInParent<GroundTile>();
@@ -66,7 +82,6 @@ public static class Turn
 		{
 			smokes.Add(elem);
 		}
-
 		foreach (var smoke in smokes)
 		{
 			smoke.ResetSmokeValue();
@@ -103,6 +118,10 @@ public static class Turn
 			foreach (var fire in fires)
 			{
 				fire.ChangeState(FireState.Idle);
+			}
+			foreach (var claimant in claimants)
+			{
+				claimant.ChangeState(ClaimantState.Idle);
 			}
 		}
 	}

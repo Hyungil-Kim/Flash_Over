@@ -11,7 +11,7 @@ public class AstarAlgoritm
 	private List<GroundTile> openList;
 	private List<GroundTile> closedList;
 	public List<GroundTile> finalList;
-	public void PathFinding(GroundTile startTile ,GroundTile endTile,Color setColor)
+	public List<GroundTile> PathFinding(GroundTile startTile ,GroundTile endTile)
 	{
 		openList = new List<GroundTile>();
 		closedList = new List<GroundTile>();
@@ -42,12 +42,7 @@ public class AstarAlgoritm
 				}
 				finalList.Add(startTile);
 				finalList.Reverse();
-				foreach (var elem in finalList)
-				{
-					elem.SetTileColor(setColor);
-					
-				}
-				return;
+				return finalList;
 			}
 
 			for(int i =0; i < curTile.nextTileList.Count; i++)
@@ -56,12 +51,12 @@ public class AstarAlgoritm
 			}
 
 		}
-		
+		return finalList;
 	}
 
 	private void OpenListAdd(GroundTile nextTile)
 	{
-		if(!nextTile.isWall && !closedList.Contains(nextTile) && nextTile.gameObject.activeSelf)
+		if(!nextTile.isWall && !closedList.Contains(nextTile) && nextTile.gameObject.activeSelf && !nextTile.tileIsFire)
 		{
 			GroundTile neighborTile = nextTile;
 			int moveCost = curTile.G + 10;
@@ -83,4 +78,5 @@ public class AstarAlgoritm
 			elem.SetTileColor(resetColor);
 		}
 	}
+
 }

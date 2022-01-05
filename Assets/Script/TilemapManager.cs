@@ -67,13 +67,9 @@ public class TilemapManager : MonoBehaviour
 		floodFill.FloodFillExceptColor(tilemap, targetPos, moveSetColor, pathColor, move, moveList);
 	}
 	// astar관련
-	public void SetAstar(GroundTile pretargetTile, GroundTile targetTile, Color astarSetColor, Color moveSetColor)
+	public List<GroundTile> SetAstar(GroundTile pretargetTile, GroundTile targetTile)
 	{
-		if (astarAlgoritm.finalList != null)//처음 예외처리
-		{
-			astarAlgoritm.ResetRootColor(moveSetColor);//색변화
-		}
-		astarAlgoritm.PathFinding(pretargetTile, targetTile, astarSetColor);
+		return astarAlgoritm.PathFinding(pretargetTile, targetTile);
 	}
 	public List<GroundTile> ReturnFinalList()
 	{
@@ -108,7 +104,6 @@ public class TilemapManager : MonoBehaviour
 			{
 				if (defender.tag == "Player")
 				{
-					Debug.Log(iDamage);
 					defender.GetComponent<Player>().hp -= iDamage;
 				}
 				//오브젝트 추가
