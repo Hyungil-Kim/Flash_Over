@@ -5,14 +5,13 @@ using UnityEngine;
 public class VisionRange : MonoBehaviour
 {
 	public Queue<GroundTile> crossQueue;
+
 	public List<GroundTile> crossResetQueue = new List<GroundTile>();
+	private List<GroundTile> prevTileList = new List<GroundTile>();
 	public TilemapManager tilemapManager;
-    public void Test ()
-    {
-		ResetTile();
-		CheackVision(Color.black, 4);
-    }
-    public List<GroundTile> CheackVision(Color newColor, int vision)
+	public int vision = 5;
+
+    public List<GroundTile> CheackVision()
 	{
 		crossQueue = new Queue<GroundTile>();
 		var tileObject = tilemapManager.ReturnTile(transform.position);
@@ -25,7 +24,7 @@ public class VisionRange : MonoBehaviour
 
 		if (!curTile.isWall)
 		{
-			curTile.SetTileColor(newColor);
+
 		}
 		crossQueue.Dequeue();
 		var nextVisionList = curQueue.SetNextVision(tileObject);
@@ -56,7 +55,6 @@ public class VisionRange : MonoBehaviour
 
 			if (!curTile.isWall)
 			{
-				curTile.SetTileColor(newColor);
 			}
 			crossQueue.Dequeue();
 			nextVisionList = curQueue.SetNextVision(tileObject);
@@ -86,7 +84,16 @@ public class VisionRange : MonoBehaviour
 		{
 			crossResetQueue[i].CheakVision = false;
 			crossResetQueue[i].CheakVisionSum = 0;
+			prevTileList.Add(crossResetQueue[i]);
 		}
 		crossResetQueue.Clear();
+	}
+	public void CheckPrevTile()
+    {
+        for (int i = 0; i < prevTileList.Count; i++)
+        {
+			prevTileList[i].CheckParticle();
+		}
+		prevTileList.Clear();
 	}
 }

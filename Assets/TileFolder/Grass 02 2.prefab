@@ -222,9 +222,12 @@ MonoBehaviour:
   oldColor: {r: 1, g: 1, b: 1, a: 0.5254902}
   cellpos: {x: 0, y: 0, z: 0}
   nextTileList: []
+  nextVisionList: []
   fillList: []
   tilemap: {fileID: 0}
   firePrefab: {fileID: 1548992407958487742}
+  cheakVision: 0
+  cheakSumVision: 0
   tileArea: 2
   tileMesh: 2
   tileIsWeat: 0
@@ -358,11 +361,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325397940032486462, guid: 477aa294bf5ea544d987fe4c4163e1e4, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1325397940032486462, guid: 477aa294bf5ea544d987fe4c4163e1e4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5299549098185773179, guid: 477aa294bf5ea544d987fe4c4163e1e4, type: 3}
       propertyPath: fireLevel
@@ -438,6 +441,10 @@ PrefabInstance:
     - target: {fileID: 2656448762285885171, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_Name
       value: Smoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 2656448762285885171, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2656448762285885171, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_IsActive

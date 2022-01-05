@@ -318,25 +318,59 @@ public class GroundTile : MonoBehaviour
 	}
 	public void CheckParticleOn(GroundTile tile)
 	{
+
 		if (tile.tileExp <= 0)
 		{
 			tile.tileIsFire = false;
-			tile.firePrefab.SetActive(false);
+
+			//tile.firePrefab.SetActive(false);
 		}
 		else if (tile.tileExp >= 100)
 		{
 			tile.tileIsFire = true;
-			tile.firePrefab.SetActive(true);
+			if (tile.cheakVision)
+			{
+				tile.firePrefab.SetActive(true);
+			}
+			//tile.firePrefab.SetActive(true);
 		}
 		if (tile.tileSmokeValue < 10)//임시 연기 표시기준
 		{
 			tile.tileIsSmoke = false;
-			tile.smokePrefab.SetActive(false);
+			//tile.smokePrefab.SetActive(false);
 		}
 		else
 		{
 			tile.tileIsSmoke = true;
-			tile.smokePrefab.SetActive(true);
+			if (tile.cheakVision)
+			{
+				tile.smokePrefab.SetActive(true);
+			}
+			//tile.smokePrefab.SetActive(true);
 		}
+	}
+	public void CheckParticle()
+    {
+		if(tileIsFire && cheakVision)
+        {
+			firePrefab.SetActive(true);
+        }
+		else
+        {
+			firePrefab.SetActive(false);
+		}
+		if(tileIsSmoke && cheakVision)
+        {
+			smokePrefab.SetActive(true);
+        }
+		else
+        {
+			smokePrefab.SetActive(false);
+        }
+	}
+	public void ParticleOff()
+    {
+		firePrefab.SetActive(false);
+		smokePrefab.SetActive(false);
 	}
 }

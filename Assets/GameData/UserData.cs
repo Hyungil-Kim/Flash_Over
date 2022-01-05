@@ -31,7 +31,7 @@ public class UserData : MySaveData
     public List<ItemDataBase> shopItemList
         = new List<ItemDataBase>();
 
-    public int shopLevel = 1;
+    public int shopLevel = 0;
     public DateTime shopTime;
 
     public List<CharacterData> shopChaList
@@ -43,6 +43,11 @@ public class UserData : MySaveData
 
     public Dictionary<int,CharacterData> fireManList
         = new Dictionary<int, CharacterData>();
+
+    public int restRoomLevel = 0;
+    public Dictionary<int, CharacterData> restList
+    = new Dictionary<int, CharacterData>();
+
     public void SaveUserData(int slot)
     {
         MySaveLoadSystem<UserData>.Save(GameData.userData, SaveDataType.PlayerData,slot);

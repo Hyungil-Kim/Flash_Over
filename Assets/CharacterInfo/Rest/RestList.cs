@@ -77,9 +77,9 @@ public class RestList : MonoBehaviour
     }
     public void OnChaButton(int index)
     {
-        var parent = GetComponentInParent<TrainingCharacter>();
-        parent.curCharacter = sortUserCharacter[index];
-        parent.OnChaIcon();
+        var parent = GetComponentInParent<Rest>();
+        parent.CurCd = sortUserCharacter[index];
+        parent.OnClickCharacter();
     }
     public void OptionSort(int index)
     {

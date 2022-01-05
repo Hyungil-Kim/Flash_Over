@@ -13,6 +13,9 @@ public static class Turn
 
 	public static int maxArea = 4;
 	public static List<Smoke> copylist = new List<Smoke>();
+
+	public delegate void turnOff();
+	public static turnOff TurnOff;
 	public static IEnumerator CoTurnSystem()
 	{
 		foreach (var player in players)
@@ -80,6 +83,7 @@ public static class Turn
 			window.WindowTurn();
 		}
 
+		TurnOff();
 		//for (int i = 1; i <= maxArea; i++)
 		//{
 		//    var sortNpc = npcs.Where((x) => x.areaNumber == i);

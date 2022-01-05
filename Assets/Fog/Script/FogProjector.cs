@@ -51,7 +51,10 @@ public class FogProjector : MonoBehaviour
         Graphics.Blit(fogTexture, projecTexture);
         UpdateFog();
     }
-
+    private void Update()
+    {
+        UpdateFog();
+    }
     public void UpdateFog()
     {
         Graphics.Blit(projecTexture, oldTexture);

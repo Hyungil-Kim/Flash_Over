@@ -85,12 +85,6 @@ public class CharacterData
 
     public bool isSelected;
 
-    //public int level;
-
-    //private int maxLevel = 99;
-
-    //public double exp;
-
     public CharacterStat baseStats = new CharacterStat();
 
     public CharacterStat totalStats = new CharacterStat();
@@ -110,6 +104,12 @@ public class CharacterData
     public string characterName;
     public string characterClass;
     public string characterGrade;
+
+    public bool isFireAble;
+    public int tiredScore;
+
+    public bool isRest;
+    public int restCount;
     public void ApplyItemStat(ItemDataBase item)
     {
         item.owner = this;

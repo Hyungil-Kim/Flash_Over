@@ -42,17 +42,15 @@ public class PlayerMoveState : State
 		fsm.moveHelper.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(true);
-
 	}
 
 	public override void Exit()
 	{
-
+		
 	}
 
 	public override void Update()
 	{
-
 	}
 
 }

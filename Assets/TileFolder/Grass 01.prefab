@@ -125,9 +125,12 @@ MonoBehaviour:
   oldColor: {r: 1, g: 1, b: 1, a: 1}
   cellpos: {x: 0, y: 0, z: 0}
   nextTileList: []
+  nextVisionList: []
   fillList: []
   tilemap: {fileID: 0}
   firePrefab: {fileID: 2958782525857796908}
+  cheakVision: 0
+  cheakSumVision: 0
   tileArea: 1
   tileMesh: 3
   tileIsWeat: 0
@@ -360,6 +363,10 @@ PrefabInstance:
       value: Smoke
       objectReference: {fileID: 0}
     - target: {fileID: 2656448762285885171, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2656448762285885171, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -384,7 +391,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curStateName: 0
   prevStateName: 0
-  gameManager: {fileID: 0}
   level: 0
   damage: 0
   smokeArea: 0

@@ -11,6 +11,8 @@ public enum PlayerState
 public class Player : FSM<PlayerState>
 {
     public GameManager gameManager;
+    public FogProjector fogProjector;
+    public MyMeshCreate meshCreate;
     public GameObject moveHelper;
     public float damege = 10f;
     public int move = 5;
@@ -32,6 +34,6 @@ public class Player : FSM<PlayerState>
 
     void Update()
     {
-       // FSMUpdate();
+        FSMUpdate();
     }
 }

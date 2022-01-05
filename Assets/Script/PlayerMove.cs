@@ -101,6 +101,7 @@ public class PlayerMove : MonoBehaviour
 		gameManager.move = movePoint;
 		return move;
 	}
+
 	public void Update()
 	{
 		if (go)
@@ -114,9 +115,11 @@ public class PlayerMove : MonoBehaviour
 					moveObject.transform.position = Vector3.MoveTowards(moveObject.transform.position, newPos, speed * Time.deltaTime);
 					moveObject.transform.LookAt(newPos);
 				}
+				
 			}
 			else
 			{
+				gameManager.myMeshCreate.Test();
 				if (num < moveList.Count - 1)
 				{
 					num++;
@@ -129,6 +132,7 @@ public class PlayerMove : MonoBehaviour
 				}
 			}
 		}
+		
 	}
 
 		//public void CopyList()

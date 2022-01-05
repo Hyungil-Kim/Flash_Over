@@ -57,15 +57,15 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
-    void LateUpdate()
-    {
-        DrawFieldOfView();
-        if (Vector3.Distance(transform.position, lastUpdatePos) > updateDistance || Time.time<.5f)
-        {
-            lastUpdatePos = transform.position;
-            fogProjector.UpdateFog();
-        }
-    }
+    //void LateUpdate()
+    //{
+    //    DrawFieldOfView();
+    //    if (Vector3.Distance(transform.position, lastUpdatePos) > updateDistance || Time.time<.5f)
+    //    {
+    //        lastUpdatePos = transform.position;
+    //        fogProjector.UpdateFog();
+    //    }
+    //}
 
     void FindVisibleTargets()
     {

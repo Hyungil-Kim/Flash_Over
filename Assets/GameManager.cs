@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
 	//////////////////////////////////////////////////////////////////////////////////
 
 
+	public MyMeshCreate myMeshCreate;
+
 	public void Awake()
 	{
 		tilemapManager = GetComponent<TilemapManager>();
