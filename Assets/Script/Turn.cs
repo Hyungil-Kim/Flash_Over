@@ -64,7 +64,7 @@ public static class Turn
 			}
 			foreach (var claimant in sorClaimant)
 			{
-				claimant.ClimantAct();
+				claimant.ClimantAct(claimant.targetPlayer.eventNum);
 				claimant.ChangeState(ClaimantState.End);
 			}
 			yield return new WaitForSeconds(0.5f);

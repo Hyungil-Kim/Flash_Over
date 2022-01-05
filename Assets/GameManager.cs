@@ -42,8 +42,6 @@ public class GameManager : MonoBehaviour
 	private float maxZoom = 60f;
 	private float minZoom = 100f;
 	/// ///////////////////////////////////////////////////////////////////////////////
-	private Vector3 firstDragPos;
-	public Camera camera1;
 	public Vector3 mouseMove;
 	public bool drag;
 	/// 

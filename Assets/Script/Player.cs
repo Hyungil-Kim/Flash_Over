@@ -18,6 +18,7 @@ public class Player : FSM<PlayerState>
     public int move = 5;
     public int hp = 20;
 
+    public int eventNum = 0;
 	private void Awake()
 	{
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();

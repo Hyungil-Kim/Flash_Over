@@ -41,9 +41,20 @@ public class Claimant : FSM<ClaimantState>
 		SetState(ClaimantState.Idle);
 		Turn.claimants.Add(this);
 	}
-	public void ClimantAct()
+	public void ClimantAct(int num)
 	{
-		StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer));
-		//StartCoroutine(claimantMove.MoveConfuse(this));
+		switch (num)
+		{
+			case 0:
+				StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer));
+				break;
+			case 1:
+				StartCoroutine(claimantMove.MoveConfuse(this));
+				break;
+			case 2:
+				claimantMove.JustStay(this);
+				break;
+		}
+
 	}
 }
