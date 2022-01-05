@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8565552100313537091}
   - component: {fileID: 2973465584545049876}
   - component: {fileID: 716185348833609234}
-  m_Layer: 0
+  - component: {fileID: 2564632583378323832}
+  m_Layer: 15
   m_Name: Grass 02
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -64,6 +65,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 54f70b82faa66d1458c8edee29a2d203, type: 3}
+  - {fileID: 2100000, guid: b349c97adfaf1984590f6a0502928f55, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,3 +116,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2564632583378323832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8565552100315530371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951cd1d656edc0a428e7a3ba3d598f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Renderers: []
+  Position: {x: 0, y: 0, z: 0}
+  Materials: []
+  InitialAlpha: 0
