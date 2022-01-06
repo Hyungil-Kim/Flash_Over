@@ -53,6 +53,7 @@ public class BattleUiManager : MonoBehaviour
 				tilemapManager.ResetFloodFill();
 				gameManager.targetPlayer.curStateName = PlayerState.Idle;
 				gameManager.targetPlayer.moveHelper.transform.position = gameManager.targetPlayer.transform.position;
+				//gameManager.cameraController.CameraForObjectsCenter(gameManager.pretargetPlayer.gameObject);
 				gameManager.targetPlayer = null;
 				gameManager.playerMove.moveList.Clear();
 				break;

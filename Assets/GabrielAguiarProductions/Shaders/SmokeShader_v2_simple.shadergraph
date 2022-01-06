@@ -1,5 +1,5 @@
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.GraphData",
     "m_ObjectId": "feed76ac414a47009ada03a5b887cfa7",
     "m_Properties": [
@@ -20,6 +20,12 @@
         }
     ],
     "m_Keywords": [],
+    "m_Dropdowns": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "5a2cec0c5a474281aa53b67a2cb0f404"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "0636250a83e645ed92055b582fa198fb"
@@ -239,10 +245,11 @@
         "serializedMesh": {
             "m_SerializedMesh": "{\"mesh\":{\"fileID\":10200,\"guid\":\"0000000000000000e000000000000000\",\"type\":0}}",
             "m_Guid": ""
-        }
+        },
+        "preventRotation": false
     },
     "m_Path": "Shader Graphs",
-    "m_ConcretePrecision": 0,
+    "m_GraphPrecision": 0,
     "m_PreviewMode": 2,
     "m_OutputNode": {
         "m_Id": ""
@@ -378,9 +385,13 @@
         "m_GuidSerialized": "c97a6c48-f5fb-43ca-86e3-b65c117c2158"
     },
     "m_Name": "VoronoiSpeed",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_287dc915db2645b38cebc2afd3a4ab2d",
     "m_OverrideReferenceName": "VoronoiSpeed_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -500,9 +511,13 @@
         "m_GuidSerialized": "6111deaf-f84d-4978-9b1b-399bfef468b5"
     },
     "m_Name": "Color",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_47a902b8bd26422a9fc3389f96163c61",
     "m_OverrideReferenceName": "Color_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -513,6 +528,7 @@
         "b": 1.0,
         "a": 1.0
     },
+    "isMainColor": false,
     "m_ColorMode": 1
 }
 
@@ -524,9 +540,13 @@
         "m_GuidSerialized": "2bc13abf-ef8e-4203-a244-4a0d243433e0"
     },
     "m_Name": "AlphaClip",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_489727d7138943af85dce42faa29bee5",
     "m_OverrideReferenceName": "AlphaClip_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -592,9 +612,13 @@
         "m_GuidSerialized": "c5d35e2d-974e-41be-9b3c-ea07b68be528"
     },
     "m_Name": "FresnelPower",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_5361452bddcc4a06a8372cc4d95abece",
     "m_OverrideReferenceName": "FresnelPower_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -605,6 +629,30 @@
         "x": 0.0,
         "y": 1.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "5a2cec0c5a474281aa53b67a2cb0f404",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "47a902b8bd26422a9fc3389f96163c61"
+        },
+        {
+            "m_Id": "5361452bddcc4a06a8372cc4d95abece"
+        },
+        {
+            "m_Id": "7f52befa4e5b4b5195919cad6fc96888"
+        },
+        {
+            "m_Id": "287dc915db2645b38cebc2afd3a4ab2d"
+        },
+        {
+            "m_Id": "489727d7138943af85dce42faa29bee5"
+        }
+    ]
 }
 
 {
@@ -791,9 +839,13 @@
         "m_GuidSerialized": "46dfc6a3-9013-496e-a67f-2ea81f8c8699"
     },
     "m_Name": "VoronoiScale",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_7f52befa4e5b4b5195919cad6fc96888",
     "m_OverrideReferenceName": "VoronoiScale_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,

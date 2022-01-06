@@ -1,5 +1,5 @@
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.GraphData",
     "m_ObjectId": "054df98389ba42f1b79d6db3e0d6dfd0",
     "m_Properties": [
@@ -17,6 +17,12 @@
         }
     ],
     "m_Keywords": [],
+    "m_Dropdowns": [],
+    "m_CategoryData": [
+        {
+            "m_Id": "c0b02b83f75e4680be7f3512f3057261"
+        }
+    ],
     "m_Nodes": [
         {
             "m_Id": "a0453ab2e67f4ff2971adfaa148ee97f"
@@ -482,10 +488,11 @@
         "serializedMesh": {
             "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
             "m_Guid": ""
-        }
+        },
+        "preventRotation": false
     },
     "m_Path": "Shader Graphs",
-    "m_ConcretePrecision": 0,
+    "m_GraphPrecision": 0,
     "m_PreviewMode": 2,
     "m_OutputNode": {
         "m_Id": ""
@@ -1220,9 +1227,13 @@
         "m_GuidSerialized": "34c9f425-a801-49b3-8962-30c918e64367"
     },
     "m_Name": "ElectricitySpeed",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector2_4923431ffc7f45c7ad38fd081c583d26",
     "m_OverrideReferenceName": "ElectricitySpeed_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -1539,9 +1550,13 @@
         "m_GuidSerialized": "fea8736e-bc58-4757-82b1-5e30a2fea762"
     },
     "m_Name": "Color",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_5f9c5ecabe7249f4a0cfb38a0d8ea126",
     "m_OverrideReferenceName": "Color_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -1552,6 +1567,7 @@
         "b": 1.0,
         "a": 1.0
     },
+    "isMainColor": false,
     "m_ColorMode": 1
 }
 
@@ -2530,9 +2546,13 @@
         "m_GuidSerialized": "feb1e018-9a0a-4ad9-8236-50e9e321e4d9"
     },
     "m_Name": "ElectricityScale",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_a7b4ae4fcc354af19b39a69d9c1d0f0c",
     "m_OverrideReferenceName": "ElectricityScale_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
@@ -2583,7 +2603,8 @@
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
-    }
+    },
+    "m_ClampType": 0
 }
 
 {
@@ -2857,6 +2878,27 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "c0b02b83f75e4680be7f3512f3057261",
+    "m_Name": "",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "5f9c5ecabe7249f4a0cfb38a0d8ea126"
+        },
+        {
+            "m_Id": "a7b4ae4fcc354af19b39a69d9c1d0f0c"
+        },
+        {
+            "m_Id": "cb2b4811eed04a33bdea1b2faa3b8e4d"
+        },
+        {
+            "m_Id": "4923431ffc7f45c7ad38fd081c583d26"
+        }
+    ]
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "c32a0dffbcdb4f0b9eefb588942f4d93",
     "m_Group": {
@@ -2898,9 +2940,13 @@
         "m_GuidSerialized": "742cc781-ecef-41b2-974c-e3e86d343b9d"
     },
     "m_Name": "ElectricityWidth",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_cb2b4811eed04a33bdea1b2faa3b8e4d",
     "m_OverrideReferenceName": "ElectricityWidth_",
     "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
