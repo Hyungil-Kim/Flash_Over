@@ -8,7 +8,7 @@ public class RestPrefab : MonoBehaviour
 {
     public Image icon;
     public TextMeshProUGUI text;
-    
+
     public void init(CharacterData cd, bool isActive, int index)
     {
         var button = icon.GetComponent<Button>();

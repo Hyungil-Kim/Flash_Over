@@ -21,38 +21,36 @@ public class GameManager : MonoBehaviour
 	public Color setAttackColor;
 	public Color setPathColor;
 	public Tilemap tilemap;
-	public GameObject target;
+	private GameObject target;
 	public bool press;
 	public GroundTile groundTile;
 
 	/////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////
 	public int num = -1;
-	public int move = 0;
+	public int move =0;
 	private Vector3 mouse3DPos;
 	private bool point;
 	//////////////////////////////////////////////////////////////////////////////////
 
 
 
-	public MyMeshCreate myMeshCreate;
-
 
 	public MouseInput multiTouch;
 	private float maxZoom = 60f;
 	private float minZoom = 100f;
 	/// ///////////////////////////////////////////////////////////////////////////////
+	private Vector3 firstDragPos;
+	public Camera camera1;
 	public Vector3 mouseMove;
 	public bool drag;
 	/// 
 	private Vector3 prevPos;
 	private bool firstclick = true;
-	/// 
-	public bool pickup;
-	public bool putdown;
-	/// 
-	public bool showMeleeRange;
-	public bool showthrowwRange;
+
+
+	public bool isStart;
+
 	public void Awake()
 	{
 		instance = this;
@@ -60,27 +58,63 @@ public class GameManager : MonoBehaviour
 	}
 	public void Start()
 	{
-
+		//VisionCheck.Init();
+		var characters = GameObject.FindGameObjectsWithTag("CreateCharacter");
+        foreach (var character in characters)
+        {
+			character.GetComponent<CreateCharacter>().Create();
+        }
+		AllTileMesh.instance.Init();
 	}
 	public void GetTilePosition(Vector2 mousePosition)
 	{
 		mousePos = mousePosition;
-
+		
 	}
 	public void GetClickedStartMouse(Vector2 callBack)
 	{
 		prevPos = callBack;
-		if (firstclick)
-		{
-			firstclick = false;
-			return;
-		}
+		//if (firstclick)
+		//{
+		//	firstclick = false;
+		//	return;
+		//}
 		drag = true;
+
+	}
+	public Player changePlayer = null;
+	public void CharacterChangeStart(Vector2 callBack)
+	{
+		Ray ray = Camera.main.ScreenPointToRay(mousePos);
+		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+		layerMask = ~layerMask;
+		if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
+		{
+			target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+			targetTile = tilemapManager.ReturnTile(target);
+			mouse3DPos = raycastHit.point;
+		}
+		else
+		{
+			target = null;
+			targetTile = null;
+		}
+		if (target != null)
+		{
+			if (target.tag == "Player")
+			{
+				changePlayer = target.GetComponent<Player>();
+			}
+			else
+            {
+				changePlayer = null;
+            }
+		}
 	}
 	public void GetClickedEndMouse()
 	{
 
-		if (!point)
+		if (!point && isStart)
 		{
 			press = false;
 			Debug.Log("Start");
@@ -119,7 +153,7 @@ public class GameManager : MonoBehaviour
 								break;
 							case PlayerState.Move:
 								break;
-							case PlayerState.Action:
+							case PlayerState.Attack:
 								tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
 								break;
 							case PlayerState.End:
@@ -139,7 +173,7 @@ public class GameManager : MonoBehaviour
 							targetPlayer.moveHelper.SetActive(true);
 							targetPlayer.moveHelper.transform.position = new Vector3(targetTile.transform.position.x, targetPlayer.transform.position.y, targetTile.transform.position.z);
 							break;
-						case PlayerState.Action:
+						case PlayerState.Attack:
 							break;
 						case PlayerState.End:
 							break;
@@ -147,57 +181,7 @@ public class GameManager : MonoBehaviour
 
 					preTile = tilemapManager.ReturnTile(mousePos);
 				}
-				else if (pickup)
-				{
-					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-					if (target.tag == "Claimant" && targetTile.nextTileList.Contains(playerTile))
-					{
-						playerMove.moveList.Add(target.transform.position);
-						targetPlayer.handList.Add(target);
-						uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
-						playerMove.moveList.Add(targetPlayer.transform.position);
-						target.SetActive(false);
-						playerMove.go = true;
-						targetPlayer.handFull = true;
-						pickup = false;
-					}
-				}
-				else if (putdown)
-				{
-					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-					if (target.tag == "Ground" && targetTile.nextTileList.Contains(playerTile))
-					{
-						var hand = targetPlayer.handList[0];
-						playerMove.moveList.Add(target.transform.position);
-						uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
-						playerMove.moveList.Add(targetPlayer.transform.position);
-						hand.transform.position = new Vector3(target.transform.position.x, targetPlayer.handList[0].transform.position.y, target.transform.position.z);
-						hand.SetActive(true);
-						targetPlayer.handList.RemoveAt(0);
-						playerMove.go = true;
-						targetPlayer.handFull = false;
-						putdown = false;
-					}
-				}
-				else if (showMeleeRange && !showthrowwRange)
-				{
-					if (target.tag == "Ground" && uIManager.battleUiManager.useItemManager.listRange.Contains(targetTile))
-					{
-						
-						StartCoroutine(uIManager.battleUiManager.useItemManager.UseItem());
-					}
-				}
-				else if (showMeleeRange && showthrowwRange)
-				{
-					if (target.tag == "Ground" && uIManager.battleUiManager.useItemManager.listRange.Contains(targetTile))
-					{
-
-						
-					}
-				}
-
-
-				if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Action)
+				if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Attack)
 				{
 					var fixedPos = mouse3DPos - targetPlayer.transform.position;
 					if (0 < fixedPos.x && Mathf.Abs(fixedPos.x) > Mathf.Abs(fixedPos.z))//오
@@ -232,9 +216,37 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
+	public void CharacterChanageEnd()
+    {
+		Ray ray = Camera.main.ScreenPointToRay(mousePos);
+		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+		layerMask = ~layerMask;
+		if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
+		{
+			target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+			targetTile = tilemapManager.ReturnTile(target);
+			mouse3DPos = raycastHit.point;
+		}
+		else
+		{
+			target = null;
+			targetTile = null;
+		}
+		if (target != null)
+		{
+			if (target.tag == "Player")
+			{
+				changePlayer = target.GetComponent<Player>();
+			}
+			else
+			{
+				changePlayer = null;
+			}
+		}
+	}
 	public void GetClickingMouse()
 	{
-		if (!point)
+		if (!point && isStart)
 		{
 			press = true;
 			if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Move && (targetPlayer == pretargetPlayer || pretargetPlayer == null))
@@ -242,8 +254,13 @@ public class GameManager : MonoBehaviour
 				StartCoroutine(playerMove.Move(setPathColor, setMoveColor, targetPlayer, move));
 			}
 		}
-
 	}
+
+	public void ChangeMousePointer()
+    {
+		
+    }
+
 	private bool IsPointerOverUI()
 	{
 		return EventSystem.current.IsPointerOverGameObject();
@@ -275,7 +292,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void LateUpdate()
 	{
-		if (drag)
+		if(drag && isStart)
 		{
 			CameraMove();
 		}
@@ -289,7 +306,7 @@ public class GameManager : MonoBehaviour
 		var pos2 = Camera.main.ScreenToWorldPoint(prevPos);
 
 		var delta = pos2 - pos1;
-
+		
 		delta.y = 0f;
 
 		Camera.main.transform.position = Camera.main.transform.position + delta;

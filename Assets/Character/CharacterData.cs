@@ -89,6 +89,8 @@ public class CharacterData
 
     public CharacterStat totalStats = new CharacterStat();
 
+    public int hp;
+
     public int stress;
 
     public Personality personality;
@@ -110,6 +112,7 @@ public class CharacterData
 
     public bool isRest;
     public int restCount;
+
     public void ApplyItemStat(ItemDataBase item)
     {
         item.owner = this;
@@ -301,6 +304,7 @@ public class CharacterData
 
         //Ω∫≈› √÷Ω≈»≠
         StatInit();
+        hp = totalStats.hp.stat;
     }
     //Ω∫≈› √ﬂ∞°
     public void AddStat(CharacterStatType statType, float statValue, CharacterStat stats)

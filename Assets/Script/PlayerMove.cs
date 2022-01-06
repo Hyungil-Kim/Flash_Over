@@ -148,7 +148,7 @@ public class PlayerMove : MonoBehaviour
 			}
 			else
 			{
-				gameManager.myMeshCreate.Test();
+				AllTileMesh.instance.UpdateFog();
 				if (num < moveList.Count - 1)
 				{
 					num++;

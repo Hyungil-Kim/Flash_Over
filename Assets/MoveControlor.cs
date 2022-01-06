@@ -44,6 +44,15 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Touch"",
+                    ""type"": ""Button"",
+                    ""id"": ""92bd3772-8795-4cd7-82dd-9f117ecf781c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -66,6 +75,17 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""touch"",
                     ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1bef75fe-2796-49bc-9e4a-37d24c73959c"",
+                    ""path"": ""<Touchscreen>/touch0/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""touch"",
+                    ""action"": ""Touch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -617,6 +637,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
         m_Mouse_Move = m_Mouse.FindAction("Move", throwIfNotFound: true);
         m_Mouse_Click = m_Mouse.FindAction("Click", throwIfNotFound: true);
+        m_Mouse_Touch = m_Mouse.FindAction("Touch", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -690,12 +711,14 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
     private IMouseActions m_MouseActionsCallbackInterface;
     private readonly InputAction m_Mouse_Move;
     private readonly InputAction m_Mouse_Click;
+    private readonly InputAction m_Mouse_Touch;
     public struct MouseActions
     {
         private @MoveControlor m_Wrapper;
         public MouseActions(@MoveControlor wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Mouse_Move;
         public InputAction @Click => m_Wrapper.m_Mouse_Click;
+        public InputAction @Touch => m_Wrapper.m_Mouse_Touch;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -711,6 +734,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @Click.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
                 @Click.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
                 @Click.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnClick;
+                @Touch.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnTouch;
+                @Touch.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnTouch;
+                @Touch.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnTouch;
             }
             m_Wrapper.m_MouseActionsCallbackInterface = instance;
             if (instance != null)
@@ -721,6 +747,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @Click.started += instance.OnClick;
                 @Click.performed += instance.OnClick;
                 @Click.canceled += instance.OnClick;
+                @Touch.started += instance.OnTouch;
+                @Touch.performed += instance.OnTouch;
+                @Touch.canceled += instance.OnTouch;
             }
         }
     }
@@ -852,6 +881,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
+        void OnTouch(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

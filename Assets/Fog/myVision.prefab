@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2062440637982134189}
   - component: {fileID: 2062440637982134186}
   - component: {fileID: 2062440637982134187}
-  - component: {fileID: 2062440637982134188}
   m_Layer: 14
   m_Name: myVision
   m_TagString: Untagged
@@ -84,20 +83,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062440637982134184}
   m_Mesh: {fileID: 0}
---- !u!114 &2062440637982134188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2062440637982134184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094ac8c2459770542b79ea91247cf94a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gm: {fileID: 0}
-  tilemapManager: {fileID: 0}
-  visionRanges:
-  - {fileID: 0}
-  fogProjector: {fileID: 0}

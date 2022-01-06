@@ -8,9 +8,11 @@ public class VisionRange : MonoBehaviour
 
 	public List<GroundTile> crossResetQueue = new List<GroundTile>();
 	private List<GroundTile> prevTileList = new List<GroundTile>();
+	private List<int> visiableTileIndexList = new List<int>();
+
 	public TilemapManager tilemapManager;
 	public int vision = 5;
-    private void Start()
+    private void Awake()
     {
 		tilemapManager = GameManager.instance.tilemapManager;
     }
@@ -20,7 +22,7 @@ public class VisionRange : MonoBehaviour
 		var tileObject = tilemapManager.ReturnTile(transform.position);
 		crossQueue.Enqueue(tileObject);
 		crossResetQueue.Add(tileObject);
-
+		//visiableTileIndexList.Add(tileObject.index);
 
 		var curQueue = crossQueue.Peek();
 		var curTile = tilemapManager.tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
@@ -37,13 +39,20 @@ public class VisionRange : MonoBehaviour
 			var nextQueue = nextVisionList[dir];
 			var ischeck = nextQueue.CheakVision;
 
-			if (!ischeck)
+			//if (!ischeck)
+			//{
+			//	if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue))
+			//	{
+			//		crossResetQueue.Add(nextQueue);
+			//		//visiableTileIndexList.Add(nextQueue.index);
+			//		crossQueue.Enqueue(nextQueue);
+			//	}
+			//}
+			if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue))
 			{
-				if (nextQueue.CheakVisionSum <= vision && !nextQueue.CheakVision && !crossResetQueue.Contains(nextQueue))
-				{
-					crossResetQueue.Add(nextQueue);
-					crossQueue.Enqueue(nextQueue);
-				}
+				crossResetQueue.Add(nextQueue);
+				//visiableTileIndexList.Add(nextQueue.index);
+				crossQueue.Enqueue(nextQueue);
 			}
 		}
 		curTile.CheakVision = true;
@@ -67,14 +76,22 @@ public class VisionRange : MonoBehaviour
 				var nextQueue = nextVisionList[dir];
 				var ischeck = nextQueue.CheakVision;
 
-				if (!ischeck)
+				//if (!ischeck)
+				//{
+				//	nextQueue.CheakVisionSum = curTile.CheakVisionSum + 1 + curQueue.tileSmokeValue / 10;
+				//	if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue))
+				//	{
+				//		crossResetQueue.Add(nextQueue);
+				//		//visiableTileIndexList.Add(nextQueue.index);
+				//		crossQueue.Enqueue(nextQueue);
+				//	}
+				//}
+				nextQueue.CheakVisionSum = curTile.CheakVisionSum + 1 + curQueue.tileSmokeValue / 10;
+				if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue))
 				{
-					nextQueue.CheakVisionSum = curTile.CheakVisionSum + 1 + curQueue.tileSmokeValue / 10;
-					if (nextQueue.CheakVisionSum <= vision && !nextQueue.CheakVision && !crossResetQueue.Contains(nextQueue))
-					{
-						crossResetQueue.Add(nextQueue);
-						crossQueue.Enqueue(nextQueue);
-					}
+					crossResetQueue.Add(nextQueue);
+					//visiableTileIndexList.Add(nextQueue.index);
+					crossQueue.Enqueue(nextQueue);
 				}
 			}
 			curTile.CheakVision = true;
@@ -83,14 +100,37 @@ public class VisionRange : MonoBehaviour
 	}
 	public void ResetTile()
 	{
-		for (int i = 0; i < crossResetQueue.Count; i++)
-		{
-			crossResetQueue[i].CheakVision = false;
-			crossResetQueue[i].CheakVisionSum = 0;
-			prevTileList.Add(crossResetQueue[i]);
-		}
+        foreach (var tile in crossResetQueue)
+        {
+			tile.CheakVision = false;
+			tile.CheakVisionSum = 0;
+        }
 		crossResetQueue.Clear();
 	}
+	//public void VisionReset()
+	//{
+	//	for (int i = 0; i < crossResetQueue.Count; i++)
+	//	{
+	//		crossResetQueue[i].CheakVisionSum = 0;
+	//		prevTileList.Add(crossResetQueue[i]);
+	//	}
+	//	crossResetQueue.Clear();
+	//}
+	//public void ResetTile()
+	//{
+	//	foreach (var tile in crossResetQueue)
+	//	{
+	//		if (prevTileList.Contains(tile))
+	//		{
+	//			prevTileList.Remove(tile);
+	//		}
+	//		tile.CheakVisionSum = 0;
+	//	}
+	//	foreach (var tile in prevTileList)
+	//	{
+	//		tile.CheakVision = false;
+	//	}
+	//}
 	public void CheckPrevTile()
     {
         for (int i = 0; i < prevTileList.Count; i++)

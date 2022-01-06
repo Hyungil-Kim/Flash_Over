@@ -20,7 +20,7 @@ public class Smoke : FSM<SmokeState>
     public int smokeArea;
     public void Awake()
     {
-        
+        //GetComponentInChildren<ParticleSystem>().Stop();
     }
     void Start()
     {
@@ -30,7 +30,11 @@ public class Smoke : FSM<SmokeState>
             AddState(SmokeState.Move, new SmokeMoveState(this)); ///? 
             AddState(SmokeState.End, new SmokeEndState(this));
             SetState(SmokeState.Idle);
-
+        if(!GetComponentInParent<GroundTile>().CheakVision)
+        {
+            GetComponentInChildren<ParticleSystem>().Stop();
+        }
+        //GetComponentInChildren<ParticleSystem>().Stop();
     }
     public void SaveSmoke()
     {

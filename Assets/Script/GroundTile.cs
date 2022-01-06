@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
+
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
@@ -55,6 +57,9 @@ public class GroundTile : MonoBehaviour
 	public int tileSaveSmokeValue;
 	public int tileSmokeValue;
 
+	//vision
+	public int index;
+
 
 	public GroundTile(int x , int y)
 	{
@@ -64,12 +69,15 @@ public class GroundTile : MonoBehaviour
 	public void Awake()
 	{
 		//firePrefab = GetComponentInChildren<Fire>();
+		//AllTile.allTile.Add(index, this);
 	}
 	public void Start()
 	{
 		oldColor = colorTile.GetComponent<Renderer>().material.color;
 		tilemap = transform.GetComponentInParent<Tilemap>();
 		cellpos = tilemap.WorldToCell(transform.position);
+		index = cellpos.x + cellpos.y * tilemap.size.x;
+		AllTile.allTile.Add(this);
 		for (int dir = 0; dir < 4; dir++)
 		{
 			int[] checkX = { 1, 0, -1, 0 };
@@ -83,6 +91,7 @@ public class GroundTile : MonoBehaviour
 				nextTileList.Add(nextTile);
 			}
 		}
+		
         
 		if(tileIsFire || tileIsSmoke)
 		{
@@ -206,6 +215,39 @@ public class GroundTile : MonoBehaviour
 	public void Update()
 	{
 		CheckFillToRay();
+		//var fire = firePrefab.GetComponentInChildren<ParticleSystem>();
+		//var smoke = smokePrefab.GetComponentInChildren<ParticleSystem>();
+
+		//if (tileIsFire)
+  //      {
+		//	firePrefab.SetActive(true);
+  //      }
+		//else if(tileIsFire && CheakVision)
+  //      {
+		//	fire.Play();
+		//}
+		//else
+  //      {
+		//	if(fire.isPlaying)
+  //          {
+		//		fire.Stop();
+  //          }
+  //      }
+		//if (smokePrefab)
+		//{
+		//	smokePrefab.SetActive(true);
+		//}
+		//else if (tileIsSmoke && CheakVision)
+		//{
+		//	smoke.Play();
+		//}
+		//else
+		//{
+		//	if (smoke.isPlaying)
+		//	{
+		//		smoke.Stop();
+		//	}
+		//}
 	}
 
 	public void CheckFillToRay()
@@ -338,9 +380,10 @@ public class GroundTile : MonoBehaviour
 		else if (tile.tileExp >= 100)
 		{
 			tile.tileIsFire = true;
+			tile.firePrefab.SetActive(true);
 			if (tile.cheakVision)
 			{
-				tile.firePrefab.SetActive(true);
+				firePrefab.GetComponentInChildren<ParticleSystem>().Play();
 			}
 			//tile.firePrefab.SetActive(true);
 		}
@@ -352,9 +395,10 @@ public class GroundTile : MonoBehaviour
 		else
 		{
 			tile.tileIsSmoke = true;
+			tile.smokePrefab.SetActive(true);
 			if (tile.cheakVision)
 			{
-				tile.smokePrefab.SetActive(true);
+				smokePrefab.GetComponentInChildren<ParticleSystem>().Play();
 			}
 			//tile.smokePrefab.SetActive(true);
 		}
@@ -362,20 +406,49 @@ public class GroundTile : MonoBehaviour
 	public void CheckParticle()
     {
 		if(tileIsFire && cheakVision)
-        {
-			firePrefab.SetActive(true);
-        }
+		{
+			//firePrefab.SetActive(true);
+			var particle = firePrefab.GetComponentInChildren<ParticleSystem>();
+			particle.Play();
+		}
 		else
-        {
-			firePrefab.SetActive(false);
+		{
+			//firePrefab.SetActive(false);
+			firePrefab.GetComponentInChildren<ParticleSystem>().Stop();
 		}
 		if(tileIsSmoke && cheakVision)
-        {
-			smokePrefab.SetActive(true);
-        }
+		{
+			//smokePrefab.SetActive(true);
+			smokePrefab.GetComponent<ParticleSystem>().Play();
+		}
 		else
+		{
+			//smokePrefab.SetActive(false);
+			smokePrefab.GetComponent<ParticleSystem>().Stop();
+		}
+		var visionList = new List<GameObject>();
+		RaycastHit[] hits;
+		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | (1 << LayerMask.NameToLayer("UI")));
+		layerMask = ~layerMask;
+		hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
+		for (int i = 0; i < hits.Length; i++)
+		{
+			RaycastHit hit = hits[i];
+			visionList.Add(hit.collider.gameObject);
+		}
+        foreach (var elem in visionList)
         {
-			smokePrefab.SetActive(false);
+			if(elem.tag == "Wall" && cheakVision)
+            {
+				var material = elem.GetComponent<Renderer>().material;
+				material.renderQueue = 3020;
+				//material.shader.FindPropertyIndex("")
+            }				
+			else if( elem.tag == "Wall")
+            {
+				var material = elem.GetComponent<Renderer>().material;
+				material.renderQueue = 2000; 
+			}
         }
 	}
 	public void ParticleOff()

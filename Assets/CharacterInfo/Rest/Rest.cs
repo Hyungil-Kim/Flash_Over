@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Rest : MonoBehaviour
 {
@@ -20,6 +22,19 @@ public class Rest : MonoBehaviour
     public MainRest mainRest;
     public RestCharacter restCharacter;
     public GameObject popUp;
+    public GameObject restOver;
+
+    private void OnEnable()
+    {
+        
+        mainRest.test();
+        if (GameData.userData.restEndList.Count > 0)
+        {
+            OnRestOver();
+        }
+    }
+
+
     public void OnClickRestRoom()
     {
         mainRest.gameObject.SetActive(false);
@@ -48,5 +63,21 @@ public class Rest : MonoBehaviour
     {
         popUp.SetActive(false);
         OnClickExitCharacter();
+    }
+    public void OnRestOver()
+    {
+        restOver.SetActive(true);
+        var name = "";
+        foreach (var cd in GameData.userData.restEndList)
+        {
+            name = name.Insert(name.Length, $", {cd.characterName}");
+            name = name.Remove(0, 1);
+        }
+        restOver.GetComponentInChildren<TextMeshProUGUI>().text = $"{name} ÀÇ ÈÞ½ÄÀÌ ³¡³µ½À´Ï´Ù.";
+        GameData.userData.restEndList.Clear();
+    }
+    public void OnRestOverExit()
+    {
+        restOver.SetActive(false);
     }
 }

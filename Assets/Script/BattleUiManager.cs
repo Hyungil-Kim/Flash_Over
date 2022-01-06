@@ -15,6 +15,7 @@ public class BattleUiManager : MonoBehaviour
     public Button attackButton;
     public Button moveButton;
     public Button cancleButton;
+	public Button startButton;
     public GameObject attack;
 
 	public Button rescueButton;
@@ -110,5 +111,9 @@ public class BattleUiManager : MonoBehaviour
 				break;
 		}
 	}
-
+	public void StartGame()
+    {
+		gameManager.isStart = true;
+		startButton.gameObject.SetActive(false);
+    }
 }

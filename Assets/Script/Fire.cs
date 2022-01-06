@@ -25,6 +25,7 @@ public class Fire : FSM<FireState>
 	public void Awake()
 	{
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+		//Turn.fires.Add(this);
 	}
 	public void Start()
 	{
@@ -33,6 +34,7 @@ public class Fire : FSM<FireState>
 		AddState(FireState.End, new FireEndState(this));
 		SetState(FireState.Idle);
 		Turn.fires.Add(this);
+		GetComponentInChildren<ParticleSystem>().Stop();
 	}
 	public void FireAct()
 	{
