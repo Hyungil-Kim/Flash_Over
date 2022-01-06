@@ -46,12 +46,12 @@ public class TilemapManager : MonoBehaviour
 	{
 		if (prePlayer == null)
 		{
-			floodFill.FloodFill(tilemap, target.transform.position, moveSetColor, player.move);//숫자에 범위크기
+			floodFill.FloodFill(tilemap, target.transform.position, moveSetColor, player.cd.totalStats.move);//숫자에 범위크기
 		}
 		else
 		{
 			floodFill.ResetTile(tilemap);
-			floodFill.FloodFill(tilemap, target.transform.position, moveSetColor, player.move);
+			floodFill.FloodFill(tilemap, target.transform.position, moveSetColor, player.cd.totalStats.move);
 
 		}
 	}
@@ -151,7 +151,7 @@ public class TilemapManager : MonoBehaviour
 			{
 				if (defender.tag == "Player")
 				{
-					defender.GetComponent<Player>().hp -= iDamage;
+					defender.GetComponent<Player>().cd.hp -= iDamage;
 				}
 				if(defender.tag == "Claimant")
 				{
@@ -188,7 +188,7 @@ public class TilemapManager : MonoBehaviour
 					{
 						var targetPos = tilemap.WorldToCell(elem.transform.position);
 						var targetTile = tilemap.GetInstantiatedObject(targetPos);
-						var damage = attacker.damege * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
+						var damage = attacker.cd.totalStats.dmg * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
 						damage = damage > 0 ? damage : 0;
 						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
 					}
@@ -202,7 +202,7 @@ public class TilemapManager : MonoBehaviour
 					{
 						var targetPos = tilemap.WorldToCell(elem.transform.position);
 						var targetTile = tilemap.GetInstantiatedObject(targetPos);
-						var damage = attacker.damege * 0.4;
+						var damage = attacker.cd.totalStats.dmg * 0.4;
 						damage = damage > 0 ? damage : 0;
 						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
 					}

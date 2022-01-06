@@ -38,7 +38,7 @@ public class PlayerMoveState : State
 	}
 	public override void Enter()
 	{
-		fsm.gameManager.move = fsm.move;
+		fsm.gameManager.move = fsm.cd.totalStats.move;
 		fsm.moveHelper.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(true);

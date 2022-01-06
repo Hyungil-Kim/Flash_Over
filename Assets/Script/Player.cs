@@ -12,9 +12,6 @@ public class Player : FSM<PlayerState>
 {
     public GameManager gameManager;
     public GameObject moveHelper;
-    public float damege = 10f;
-    public int move = 5;
-    public int hp = 20;
 
     public int index;
     public CharacterData cd;
