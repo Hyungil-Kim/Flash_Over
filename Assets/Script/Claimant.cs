@@ -5,7 +5,8 @@ using UnityEngine;
 public enum ClaimantState
 {
 	Idle,
-	Move,
+	Meet,
+	Resuce,
 	End,
 }
 public enum ClaimantInjure
@@ -28,6 +29,8 @@ public class Claimant : FSM<ClaimantState>
 	public int airGauge;//산소통 이름변경 필요
 	public int speed =5;
 	public int weight;
+	public int num = -1;
+	public bool moveEnd;
 	private ClaimantMove claimantMove = new ClaimantMove();
 	public void Awake()
 	{
@@ -36,14 +39,28 @@ public class Claimant : FSM<ClaimantState>
 	public void Start()
 	{
 		AddState(ClaimantState.Idle, new ClaimantIdleState(this));
-		AddState(ClaimantState.Move, new ClaimantMoveState(this));
+		AddState(ClaimantState.Meet, new ClaimantMeetState(this));
+		AddState(ClaimantState.Resuce, new ClaimantResuceState(this));
 		AddState(ClaimantState.End, new ClaimantEndState(this));
 		SetState(ClaimantState.Idle);
 		Turn.claimants.Add(this);
 	}
-	public void ClimantAct()
+	public void ClaimantAct()
 	{
-		StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer));
-		//StartCoroutine(claimantMove.MoveConfuse(this));
+		switch (num)
+		{
+			case 0:
+				StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer));
+				break;
+			case 1:
+				StartCoroutine(claimantMove.MoveConfuse(this));
+				break;
+			case 2:
+				claimantMove.JustStay(this);
+				break;
+			default:
+				claimantMove.JustStay(this);
+				break;
+		}
 	}
 }

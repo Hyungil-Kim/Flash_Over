@@ -12,7 +12,7 @@ public class VisionRange : MonoBehaviour
 
 	public TilemapManager tilemapManager;
 	public int vision = 5;
-    private void Awake()
+    private void Start()
     {
 		tilemapManager = GameManager.instance.tilemapManager;
     }

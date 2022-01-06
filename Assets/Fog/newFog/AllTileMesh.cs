@@ -16,7 +16,7 @@ public class AllTileMesh : MonoBehaviour
     Material fogMaterial;
     public static AllTileMesh instance;
 
-    void Start()
+    void Awake()
     {
         instance = this;
     }

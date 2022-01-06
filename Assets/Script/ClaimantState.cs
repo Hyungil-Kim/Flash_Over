@@ -11,7 +11,7 @@ public class ClaimantIdleState : State
 	}
 	public override void Enter()
 	{
-
+		
 	}
 	public override void Update()
 	{
@@ -22,16 +22,36 @@ public class ClaimantIdleState : State
 
 	}
 }
-public class ClaimantMoveState : State
+public class ClaimantMeetState : State
 {
 	Claimant fsm;
-	public ClaimantMoveState(Claimant _fsm)
+	public ClaimantMeetState(Claimant _fsm)
 	{
 		fsm = _fsm;
 	}
 	public override void Enter()
 	{
 
+	}
+	public override void Update()
+	{
+
+	}
+	public override void Exit()
+	{
+		
+	}
+}
+public class ClaimantResuceState : State
+{
+	Claimant fsm;
+	public ClaimantResuceState(Claimant _fsm)
+	{
+		fsm = _fsm;
+	}
+	public override void Enter()
+	{
+	
 	}
 	public override void Update()
 	{
@@ -51,7 +71,7 @@ public class ClaimantEndState : State
 	}
 	public override void Enter()
 	{
-
+		
 	}
 	public override void Update()
 	{

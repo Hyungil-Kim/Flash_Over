@@ -13,6 +13,7 @@ public class GroundTile : MonoBehaviour
 	public bool attackfloodFill = false;
 	public bool movefloodFill = false;
 	public bool isPlayer = false;
+	public Claimant isClaimant = null;
 	public int checkSum = 0;
 	public int G, H;
 	public GameObject colorTile;
@@ -282,6 +283,15 @@ public class GroundTile : MonoBehaviour
 				else
 				{
 					isWall = false;
+				}
+				if(elem.tag == "Claimant")
+				{
+					isClaimant = elem.GetComponent<Claimant>();
+					break;
+				}
+				else
+				{
+					isClaimant = null;
 				}
 			}
 		}
