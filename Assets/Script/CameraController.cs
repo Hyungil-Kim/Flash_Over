@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour
 
                     transform.position = target.transform.position + offset;
                 }
-                if (target.curStateName == PlayerState.Attack)
+                if (target.curStateName == PlayerState.Action)
                 {
                     transform.position = target.transform.position + offset;
                 }
@@ -84,7 +84,7 @@ public class CameraController : MonoBehaviour
                 {
                     transform.position = playerList[i].transform.position + offset;
                 }
-                if (playerList[i].curStateName == PlayerState.Attack)
+                if (playerList[i].curStateName == PlayerState.Action)
                 {
                     transform.position = playerList[i].transform.position + offset;
                 }
@@ -104,9 +104,7 @@ public class CameraController : MonoBehaviour
     }
     public void CameraForObjectsCenter(GameObject objects)
     {
-<<<<<<< Updated upstream
         transform.RotateAround(transform.position, Vector3.up, -90.0f);
-=======
         transform.position = new Vector3(objects.transform.position.x, transform.position.y, transform.position.z);
     }
 
@@ -126,7 +124,7 @@ public class CameraController : MonoBehaviour
         {
             camera.transform.position = area4.transform.position;
         }
->>>>>>> Stashed changes
+
     }
 }
 
