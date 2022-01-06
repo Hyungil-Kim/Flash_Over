@@ -65,7 +65,7 @@ public static class Turn
 			}
 			foreach (var claimant in sorClaimant)
 			{
-				if (claimant.curStateName != ClaimantState.Resuce)
+				if (claimant.curStateName != ClaimantState.Resuce && claimant.curStateName != ClaimantState.End)
 				{
 					claimant.moveEnd = false;
 					claimant.ClaimantAct();

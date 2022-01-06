@@ -50,7 +50,7 @@ public class Claimant : FSM<ClaimantState>
 		switch (num)
 		{
 			case 0:
-				StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer));
+				StartCoroutine(claimantMove.MoveToPlayer(this,targetPlayer));
 				break;
 			case 1:
 				StartCoroutine(claimantMove.MoveConfuse(this));
