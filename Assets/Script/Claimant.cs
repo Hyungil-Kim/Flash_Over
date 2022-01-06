@@ -59,7 +59,14 @@ public class Claimant : FSM<ClaimantState>
 				claimantMove.JustStay(this);
 				break;
 			default:
-				claimantMove.JustStay(this);
+				if (stun)
+				{
+					claimantMove.JustStay(this);
+				}
+				else
+				{
+					StartCoroutine(claimantMove.MoveConfuse(this));
+				}
 				break;
 		}
 	}
