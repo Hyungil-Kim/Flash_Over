@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
 	public bool drag;
 
 	private Vector3 prevPos;
-	private bool firstclick = true;
 	public bool isStart;
 
 	public bool pickup;
