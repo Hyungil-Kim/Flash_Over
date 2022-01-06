@@ -54,6 +54,7 @@ public class PlayerMove : MonoBehaviour
 		moveObject = gameManager.targetPlayer;
 		if (!tilemapManager.CheckPlayer(moveObject.moveHelper) || tilemapManager.ReturnTile(moveObject.gameObject)== tilemapManager.ReturnTile(moveObject.moveHelper))
 		{
+			moveObject.moveHelper.transform.position = Vector3.zero;
 			moveObject.moveHelper.gameObject.SetActive(false);
 			go = true;
 		}
