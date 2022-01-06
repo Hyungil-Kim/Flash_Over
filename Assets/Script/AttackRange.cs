@@ -106,8 +106,6 @@ public class AttackRange
 			}
 			curTile.attackfloodFill = true;
 		}
-		Debug.Log(LineResetQueue.Count);
-		Debug.Log(targetObject.transform.rotation.eulerAngles.y);
 	}
 	public void LineResetTile(Tilemap tilemap)
 	{

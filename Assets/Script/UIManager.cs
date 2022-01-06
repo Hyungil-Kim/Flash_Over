@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     public GameManager gameManager;
     public BattleUiManager battleUiManager;
+    public MeetEventManager meetEventManager;
     // Start is called before the first frame update
     void Start()
     {

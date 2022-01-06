@@ -215,6 +215,7 @@ MonoBehaviour:
   attackfloodFill: 0
   movefloodFill: 0
   isPlayer: 0
+  isClaimant: 0
   checkSum: 0
   G: 0
   H: 0
@@ -415,3 +416,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1271764609937064, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
   m_PrefabInstance: {fileID: 5742885046655381584}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &6728941683607438878
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5743874221551640312}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

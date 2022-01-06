@@ -5,7 +5,7 @@ public enum PlayerState
 {
     Idle,
     Move,
-    Attack,
+    Action,
     End,
 }
 public class Player : FSM<PlayerState>
@@ -17,20 +17,25 @@ public class Player : FSM<PlayerState>
     public float damege = 10f;
     public int move = 5;
     public int hp = 20;
-
+    public bool handFull;
+    public List<GameObject> handList = new List<GameObject>();
     public int eventNum = 0;
+    public CharacterData cd;
+    
 	private void Awake()
 	{
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 	}
 	void Start()
     {
+       // cd = GameData.userData.fireManList[0];
         AddState(PlayerState.Idle, new PlayerIdleState(this));                             
         AddState(PlayerState.Move, new PlayerMoveState(this));
-        AddState(PlayerState.Attack, new PlayerAttackState(this));
+        AddState(PlayerState.Action, new PlayerAttackState(this));
         AddState(PlayerState.End, new PlayerEndState(this));
         SetState(PlayerState.Idle);
         Turn.players.Add(this);
+        
     }
 
     void Update()

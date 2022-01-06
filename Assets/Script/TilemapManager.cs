@@ -12,6 +12,11 @@ public class TilemapManager : MonoBehaviour
 	private AttackRange attackRange = new AttackRange();
 	private MonsterAttackRange testAttackRange = new MonsterAttackRange();
 	private List<GroundTile> attackList = new List<GroundTile>();
+	private Claimant saveClaimant;
+	public Claimant SaveClaimant { get { return saveClaimant; } }
+	private Claimant rescueClaimant;
+	public Claimant RescueClaimant { get { return rescueClaimant; } }
+	private bool action;
 	public void Awake()
 	{
 		gameManager = GetComponent<GameManager>();
@@ -50,16 +55,58 @@ public class TilemapManager : MonoBehaviour
 
 		}
 	}
-	public void MoveEnd(Player targetplayer)
+	public void ShowFloodFillRange(GroundTile target, Color moveSetColor,int range)
+	{
+		floodFill.FloodFill(tilemap, target.transform.position, moveSetColor, range);
+	}
+	public List<GroundTile> ReturnFloodFillRange(GroundTile target,Color color, int range)
+	{
+		return floodFill.ReturnFloodFill(tilemap, target.transform.position, color, range);
+	}
+	public IEnumerator MoveEnd(Player targetPlayer)
 	{
 		floodFill.ResetTile(tilemap);
 		gameManager.playerMove.moveList.Clear();
-		targetplayer.SetState(PlayerState.Attack);
+		var visionList = targetPlayer.GetComponent<VisionRange>().CheackVision();
+		foreach(var elem in visionList)
+		{
+			if (elem.isClaimant)
+			{
+				foreach(var listElem in elem.fillList)
+				{
+					if (listElem.tag == "Claimant")
+					{
+						saveClaimant = listElem.GetComponent<Claimant>();
+						if (saveClaimant.num == -1 && !saveClaimant.stun)
+						{
+							yield return StartCoroutine(meetClaimant());
+						}
+					}
+				}
+			}
+		}
+			CheckClaimant(targetPlayer);
+			targetPlayer.SetState(PlayerState.Action);
+	}
+	public IEnumerator meetClaimant()
+	{
+		saveClaimant.SetState(ClaimantState.Meet);
+		gameManager.uIManager.meetEventManager.gameObject.SetActive(true);
+
+		while (saveClaimant.num == -1)
+			yield return 0;
+
+		gameManager.uIManager.meetEventManager.gameObject.SetActive(false);
+		yield return new WaitForSeconds(0.2f);
 
 	}
 	public void ResetFloodFill()
 	{
 		floodFill.ResetTile(tilemap);
+	}
+	public void ResetFloodFill(List<GroundTile> list)
+	{
+		floodFill.ResetTile(list);
 	}
 	public void DrawFloodFill(Vector3 targetPos, List<Vector3> moveList, int move, Color moveSetColor, Color pathColor)
 	{
@@ -105,6 +152,10 @@ public class TilemapManager : MonoBehaviour
 				if (defender.tag == "Player")
 				{
 					defender.GetComponent<Player>().hp -= iDamage;
+				}
+				if(defender.tag == "Claimant")
+				{
+					defender.GetComponent<Claimant>().hp -= iDamage;
 				}
 				//오브젝트 추가
 			}
@@ -223,4 +274,46 @@ public class TilemapManager : MonoBehaviour
 		return false;
 	}
 
+	//claimant
+
+	public void CheckClaimant(Player targetPlayer)
+	{
+		if (targetPlayer.handFull)
+		{
+			gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(true);
+			return;
+		}
+		var targetTile = ReturnTile(targetPlayer.gameObject);
+		foreach (var elem in targetTile.nextTileList)
+		{
+			foreach (var listElem in elem.fillList)
+			{
+				if (listElem.tag == "Claimant")
+				{
+					rescueClaimant = listElem.GetComponent<Claimant>();
+					gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(true);
+					break;
+				}
+			}
+		}
+	}
+
+
+	public IEnumerator WithPlayer(Claimant claimant, Player targetPlayer)
+	{
+		var preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
+		var targetTile = GameManager.instance.tilemapManager.ReturnTile(targetPlayer.gameObject);
+		var moveSpeed = 5;
+		var newPos = new Vector3(targetTile.transform.position.x, claimant.transform.position.y, targetTile.transform.position.z);
+		if (claimant.transform.position != newPos)
+		{
+			var dis = Vector3.Distance(claimant.transform.position, newPos);
+			if (dis > 0)
+			{
+				claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, newPos, moveSpeed * Time.deltaTime);
+				claimant.transform.LookAt(newPos);
+			}
+			yield return 0;
+		}
+	}
 }

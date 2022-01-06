@@ -6,7 +6,7 @@ public class ClaimantMove
 {
 	public void JustStay(Claimant claimant)
 	{
-		claimant.SetState(ClaimantState.End);
+		EndMove(claimant);
 	}
 	public void EndMove(Claimant claimant,List<GroundTile>list)
 	{
@@ -15,17 +15,23 @@ public class ClaimantMove
 		{
 			elem.Reset();
 		}
+		claimant.moveEnd = true;
+	}
+	public void EndMove(Claimant claimant)
+	{
+		claimant.SetState(ClaimantState.End);
+		claimant.moveEnd = true;
 	}
 	public IEnumerator MoveToPlayer(Claimant claimant,Player targetPlayer)
 	{
-		var preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
-		var targetTile = GameManager.instance.tilemapManager.ReturnTile(targetPlayer.gameObject);
+		var gameManager = GameManager.instance;
+		var preTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
+		var targetTile = gameManager.tilemapManager.ReturnTile(targetPlayer.gameObject);
 		var pathList = new List<GroundTile>();
 		var go = true;
 		var num = 0;
 		var moveSpeed = 5;
-		pathList = GameManager.instance.tilemapManager.SetAstar(preTile, targetTile);
-		Debug.Log(pathList.Count);
+		pathList = gameManager.tilemapManager.SetAstar(preTile, targetTile);
 
 		while (go)
 		{
@@ -43,7 +49,7 @@ public class ClaimantMove
 			}
 			else
 			{
-				if (num < pathList.Count - 1 && num <= claimant.speed)
+				if (num < pathList.Count - 1 && num <= claimant.speed && !targetTile.nextTileList.Contains(pathList[num]))
 				{
 					num++;
 				}
@@ -51,7 +57,7 @@ public class ClaimantMove
 				{
 					num = 0;
 					go = false;
-					
+					EndMove(claimant,pathList);
 				}
 			}
 		}
@@ -93,8 +99,10 @@ public class ClaimantMove
 				{
 					num = 0;
 					go = false;
+					EndMove(claimant);
 				}
 			}
 		}
 	}
+	
 }

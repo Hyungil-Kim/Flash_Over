@@ -64,10 +64,15 @@ public static class Turn
 			}
 			foreach (var claimant in sorClaimant)
 			{
-				claimant.ClimantAct(claimant.targetPlayer.eventNum);
-				claimant.ChangeState(ClaimantState.End);
+				if (claimant.curStateName != ClaimantState.Resuce)
+				{
+					claimant.moveEnd = false;
+					claimant.ClaimantAct();
+					yield return new WaitUntil(() => claimant.moveEnd == true);
+				}
+				yield return new WaitForSeconds(0.5f);
 			}
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(2f);
 
 		}
 		foreach (var smoke in smokes)
@@ -125,6 +130,7 @@ public static class Turn
 			}
 			foreach (var claimant in claimants)
 			{
+				if(claimant.curStateName != ClaimantState.Resuce)
 				claimant.ChangeState(ClaimantState.Idle);
 			}
 		}
