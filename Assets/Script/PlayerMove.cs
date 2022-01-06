@@ -7,7 +7,7 @@ public class PlayerMove : MonoBehaviour
 	private TilemapManager tilemapManager;
 	public List<Vector3> moveList = new List<Vector3>();
 	private GameManager gameManager;
-	private Player moveObject;
+	public Player moveObject;
 	public float speed = 3f;
 	public bool go = false;
 	int num = 0;
@@ -54,6 +54,7 @@ public class PlayerMove : MonoBehaviour
 		moveObject = gameManager.targetPlayer;
 		if (!tilemapManager.CheckPlayer(moveObject.moveHelper) || tilemapManager.ReturnTile(moveObject.gameObject)== tilemapManager.ReturnTile(moveObject.moveHelper))
 		{
+			if (tilemapManager.ReturnTile(moveObject.moveHelper).isClaimant) return;
 			moveObject.moveHelper.gameObject.transform.position = Vector3.zero;
 			moveObject.moveHelper.gameObject.SetActive(false);
 			go = true;
@@ -132,6 +133,11 @@ public class PlayerMove : MonoBehaviour
 				{
 					moveObject.transform.position = Vector3.MoveTowards(moveObject.transform.position, newPos, speed * Time.deltaTime);
 					moveObject.transform.LookAt(newPos);
+					if (moveObject.handList.Count != 0 && moveObject.handList[0].tag =="Claimant")
+					{
+						moveObject.handList[0].transform.position = new Vector3(moveObject.transform.position.x, moveObject.handList[0].transform.position.y, moveObject.transform.position.z);
+						moveObject.handList[0].transform.LookAt(newPos);
+					}
 					if (!hit)
 					{
 						if (tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>())
@@ -140,7 +146,7 @@ public class PlayerMove : MonoBehaviour
 							moveObject.cd.hp -= fireDamage;
 							if(moveObject.handList.Count != 0 && moveObject.handList[0].GetComponent<Claimant>())
 							{
-							moveObject.handList[0].GetComponent<Claimant>().hp -= fireDamage;
+								moveObject.handList[0].GetComponent<Claimant>().hp -= fireDamage;
 							}
 							hit = true;
 						}

@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour
 						targetPlayer.handList.Add(target);
 						uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
 						playerMove.moveList.Add(targetPlayer.transform.position);
-						target.SetActive(false);
+						//target.SetActive(false);
 						playerMove.go = true;
 						targetPlayer.handFull = true;
 						pickup = false;
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
 						uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
 						playerMove.moveList.Add(targetPlayer.transform.position);
 						hand.transform.position = new Vector3(target.transform.position.x, targetPlayer.handList[0].transform.position.y, target.transform.position.z);
-						hand.SetActive(true);
+						//hand.SetActive(true);
 						if(hand.tag == "Claimant")
 							hand.GetComponent<Claimant>().SetState(ClaimantState.End);
 						targetPlayer.handList.RemoveAt(0);

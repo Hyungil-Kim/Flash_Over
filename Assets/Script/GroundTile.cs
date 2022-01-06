@@ -271,27 +271,15 @@ public class GroundTile : MonoBehaviour
 					isPlayer = true;
 					break;
 				}
-				else
-				{
-					isPlayer = false;
-				}
-				if(elem.tag == "Wall")
+				else if(elem.tag == "Wall")
 				{
 					isWall = true;
 					break;
 				}
-				else
-				{
-					isWall = false;
-				}
-				if(elem.tag == "Claimant")
+				else if(elem.tag == "Claimant")
 				{
 					isClaimant = elem.GetComponent<Claimant>();
 					break;
-				}
-				else
-				{
-					isClaimant = null;
 				}
 			}
 		}
@@ -299,6 +287,7 @@ public class GroundTile : MonoBehaviour
 		{
 			isWall = false;
 			isPlayer = false;
+			isClaimant = null;
 		}
 	}
 	
