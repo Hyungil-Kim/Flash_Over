@@ -19,7 +19,7 @@ public class FogProjector : MonoBehaviour
     Material blurMaterial;
     public float blur=1;
 
-    DecalProjector projector;
+    Projector projector;
 
     public float blendSpeed = 1;
     float blend;
@@ -27,7 +27,7 @@ public class FogProjector : MonoBehaviour
 
     void OnEnable()
     {
-        projector = GetComponent<DecalProjector>();
+        projector = GetComponent<Projector>();
 
         blurMaterial = new Material(blurShader);
         blurMaterial.SetVector("_Parameter", new Vector4(blur, -blur, 0, 0));
@@ -72,7 +72,7 @@ public class FogProjector : MonoBehaviour
         Graphics.Blit(projecTexture, temp, blurMaterial, 1);
         Graphics.Blit(temp, projecTexture, blurMaterial, 2);
 
-        StartCoroutine(Blend());
+        //StartCoroutine(Blend());
 
         RenderTexture.ReleaseTemporary(temp);
     }

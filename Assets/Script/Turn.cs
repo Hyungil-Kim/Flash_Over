@@ -49,6 +49,7 @@ public static class Turn
 			//	smoke.SpreadSmoke();
 			//}
 
+			//TurnOff();
 
 			yield return new WaitForSeconds(2f);
 
@@ -98,7 +99,6 @@ public static class Turn
 			window.WindowTurn();
 		}
 
-		TurnOff();
 		//for (int i = 1; i <= maxArea; i++)
 		//{
 		//    var sortNpc = npcs.Where((x) => x.areaNumber == i);

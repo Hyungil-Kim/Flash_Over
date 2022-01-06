@@ -5,10 +5,7 @@
 
 Shader "Projector/Fog Of War" {
 	Properties {
-		_OldFogTex ("Old Fog Texture", 2D) = "g
-		
-		
-		" {}
+		_OldFogTex ("Old Fog Texture", 2D) = "gray" {}
 		_FogTex ("Fog Texture", 2D) = "gray" {}
 		_Color ("Color", Color) = (0,0,0,0)
 	}

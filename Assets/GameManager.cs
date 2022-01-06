@@ -35,8 +35,6 @@ public class GameManager : MonoBehaviour
 
 
 
-	public MyMeshCreate myMeshCreate;
-
 
 	public MouseInput multiTouch;
 	private float maxZoom = 60f;
@@ -50,6 +48,9 @@ public class GameManager : MonoBehaviour
 	private Vector3 prevPos;
 	private bool firstclick = true;
 
+
+	public bool isStart;
+
 	public void Awake()
 	{
 		instance = this;
@@ -57,7 +58,13 @@ public class GameManager : MonoBehaviour
 	}
 	public void Start()
 	{
-
+		//VisionCheck.Init();
+		var characters = GameObject.FindGameObjectsWithTag("CreateCharacter");
+        foreach (var character in characters)
+        {
+			character.GetComponent<CreateCharacter>().Create();
+        }
+		AllTileMesh.instance.Init();
 	}
 	public void GetTilePosition(Vector2 mousePosition)
 	{
@@ -67,17 +74,47 @@ public class GameManager : MonoBehaviour
 	public void GetClickedStartMouse(Vector2 callBack)
 	{
 		prevPos = callBack;
-		if (firstclick)
-		{
-			firstclick = false;
-			return;
-		}
+		//if (firstclick)
+		//{
+		//	firstclick = false;
+		//	return;
+		//}
 		drag = true;
+
+	}
+	public Player changePlayer = null;
+	public void CharacterChangeStart(Vector2 callBack)
+	{
+		Ray ray = Camera.main.ScreenPointToRay(mousePos);
+		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+		layerMask = ~layerMask;
+		if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
+		{
+			target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+			targetTile = tilemapManager.ReturnTile(target);
+			mouse3DPos = raycastHit.point;
+		}
+		else
+		{
+			target = null;
+			targetTile = null;
+		}
+		if (target != null)
+		{
+			if (target.tag == "Player")
+			{
+				changePlayer = target.GetComponent<Player>();
+			}
+			else
+            {
+				changePlayer = null;
+            }
+		}
 	}
 	public void GetClickedEndMouse()
 	{
 
-		if (!point)
+		if (!point && isStart)
 		{
 			press = false;
 			Debug.Log("Start");
@@ -179,9 +216,37 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
+	public void CharacterChanageEnd()
+    {
+		Ray ray = Camera.main.ScreenPointToRay(mousePos);
+		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+		layerMask = ~layerMask;
+		if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
+		{
+			target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+			targetTile = tilemapManager.ReturnTile(target);
+			mouse3DPos = raycastHit.point;
+		}
+		else
+		{
+			target = null;
+			targetTile = null;
+		}
+		if (target != null)
+		{
+			if (target.tag == "Player")
+			{
+				changePlayer = target.GetComponent<Player>();
+			}
+			else
+			{
+				changePlayer = null;
+			}
+		}
+	}
 	public void GetClickingMouse()
 	{
-		if (!point)
+		if (!point && isStart)
 		{
 			press = true;
 			if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Move && (targetPlayer == pretargetPlayer || pretargetPlayer == null))
@@ -189,8 +254,13 @@ public class GameManager : MonoBehaviour
 				StartCoroutine(playerMove.Move(setPathColor, setMoveColor, targetPlayer, move));
 			}
 		}
-		
 	}
+
+	public void ChangeMousePointer()
+    {
+		
+    }
+
 	private bool IsPointerOverUI()
 	{
 		return EventSystem.current.IsPointerOverGameObject();
@@ -222,7 +292,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void LateUpdate()
 	{
-		if(drag)
+		if(drag && isStart)
 		{
 			CameraMove();
 		}
