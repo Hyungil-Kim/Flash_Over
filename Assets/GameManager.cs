@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class GameManager : MonoBehaviour
 {
 	public Player targetPlayer;
-	private Player pretargetPlayer;
+	public Player pretargetPlayer;
 	public GroundTile preTile;
 	public TilemapManager tilemapManager;
 	public PlayerMove playerMove; //player매니저로 옮길것인가?
@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 	private GameObject target;
 	public bool press;
 	public GroundTile groundTile;
+	public CameraController cameraController;
 
 	/////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////

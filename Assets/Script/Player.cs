@@ -19,7 +19,8 @@ public class Player : FSM<PlayerState>
 	private void Awake()
 	{
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-	}
+        Turn.players.Add(this);
+    }
 	void Start()
     {
         AddState(PlayerState.Idle, new PlayerIdleState(this));                             
@@ -27,7 +28,7 @@ public class Player : FSM<PlayerState>
         AddState(PlayerState.Attack, new PlayerAttackState(this));
         AddState(PlayerState.End, new PlayerEndState(this));
         SetState(PlayerState.Idle);
-        Turn.players.Add(this);
+        
     }
 
     void Update()
