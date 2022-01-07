@@ -10,13 +10,14 @@ public class CameraController : MonoBehaviour
     private Camera camera;
     private GameManager gameManager;
     private Player target;
-    private List<Player> playerList = new List<Player>();
+    private Fire fire;
+    public List<Player> playerList = new List<Player>();
     private VisionRange visionRange;
     private GroundTile groundTile;
 
     public GameObject area1;
     public GameObject area2;
-    public GameObject area4;
+    public GameObject area3;
 
     // Start is called before the first frame update
     void Start()
@@ -34,61 +35,51 @@ public class CameraController : MonoBehaviour
 
     }
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        //for (int i = 0; i < playerList.Count; i++)
-        //{
-        //    camera.transform.LookAt(playerList[i].transform);
-
-        //}
-        //if (gameManager.targetPlayer != null)
+ 
         target = gameManager.targetPlayer;
 
         for (int i = 0; i < playerList.Count; i++)
         {
-            //var player = players[i].GetComponent<Player>();
-
-            //if (player.curStateName == PlayerState.End) return;
-            //transform.position = players[i].transform.position + offset;
-            //CameraForObjectsCenter(players);
-
+        
             if (target != null)
             {
                 Debug.Log("≈∏∞Ÿ¿Ã¥Ÿ");
 
-                if (target.curStateName == PlayerState.Idle)
-                {
-                    transform.position = new Vector3(playerList[i].transform.position.x, transform.position.y, offset.z);
-                  
-                }
+                //if (target.curStateName == PlayerState.Idle)
+                //{
+                //    transform.position = new Vector3(target.transform.position.x, transform.position.y, offset.z);
+
+                //}
                 if (target.curStateName == PlayerState.Move)
                 {
                     //transform.position = new Vector3(playerList[i].transform.position.x, transform.position.y, offset.z);
 
-                    transform.position = target.transform.position + offset;
+                    transform.position = new Vector3(target.transform.position.x, transform.position.y, playerList[i].transform.position.z - 3);
                 }
                 if (target.curStateName == PlayerState.Action)
                 {
-                    transform.position = target.transform.position + offset;
+                    transform.position = new Vector3(target.transform.position.x, transform.position.y, transform.position.z);
                 }
-                //if (playerList[i].curStateName == PlayerState.End) return;
+                if (playerList[i].curStateName == PlayerState.End) return;
             }
             else if (target == null)
             {
                 //Debug.Log("≈∏∞Ÿ¿Ã ≥Œ¿Ã¥Ÿ");
-                if (playerList[i].curStateName == PlayerState.Idle)
-                {
-                    transform.position = new Vector3(playerList[i].transform.position.x, transform.position.y, playerList[i].transform.position.z + offset.z);
-                }
-                if (playerList[i].curStateName == PlayerState.Move)
-                {
-                    transform.position = playerList[i].transform.position + offset;
-                }
-                if (playerList[i].curStateName == PlayerState.Action)
-                {
-                    transform.position = playerList[i].transform.position + offset;
-                }
-                //if (playerList[i].curStateName == PlayerState.End) return;
+                //if (playerList[i].curStateName == PlayerState.Idle)
+                //{
+                //    transform.position = new Vector3(playerList[i].transform.position.x, transform.position.y, playerList[i].transform.position.z-3);
+                //}
+                //if (playerList[i].curStateName == PlayerState.Move)
+                //{
+                //    transform.position = playerList[i].transform.position + offset;
+                //}
+                //if (playerList[i].curStateName == PlayerState.Action)
+                //{
+                //    transform.position = playerList[i].transform.position + offset;
+                //}
+                if (playerList[i].curStateName == PlayerState.End) return;
             }
 
         }
@@ -108,24 +99,7 @@ public class CameraController : MonoBehaviour
         transform.position = new Vector3(objects.transform.position.x, transform.position.y, transform.position.z);
     }
 
-    public void CameraByArea()
-    {
-        var vision = visionRange.crossResetQueue;
-        vision.Contains(groundTile);
-        if (groundTile.tileArea == 1)
-        {
-            camera.transform.position = area1.transform.position;
-        }
-        else if (groundTile.tileArea == 2)
-        {
-            camera.transform.position = area2.transform.position;
-        } 
-        else if (groundTile.tileArea == 4)
-        {
-            camera.transform.position = area4.transform.position;
-        }
-
-    }
+    
 }
 
 
