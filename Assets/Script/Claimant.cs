@@ -78,10 +78,12 @@ public class Claimant : FSM<ClaimantState>
 	}
 	public void Update()
 	{
+
 		if (hp <= 0 || lung < 0)
 		{
 			gameObject.SetActive(false);
 			Turn.claimants.Remove(this);
 		}
+
 	}
 }

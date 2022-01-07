@@ -10,12 +10,15 @@ public static class Turn
 	public static List<Smoke> smokes = new List<Smoke>();
 	public static List<Claimant> claimants = new List<Claimant>();
 	public static List<Window> windows = new List<Window>();
+	public static List<CameraForFire> fireCamera = new List<CameraForFire>();
 
 	public static int maxArea = 4;
 	public static List<Smoke> copylist = new List<Smoke>();
 
 	public delegate void turnOff();
 	public static turnOff TurnOff;
+	public static CameraController cameraController;
+
 	public static IEnumerator CoTurnSystem()
 	{
 		foreach (var player in players)
@@ -30,6 +33,15 @@ public static class Turn
 		{
 			for (int i = 0; i <= maxArea; i++)
 			{
+                foreach (var forFire in fireCamera)
+                {
+					if(forFire.areaNum==i)
+                    {
+						Camera.main.transform.position = forFire.transform.position;
+						yield return new WaitForSeconds(1.0f);
+                    }
+					
+                }
 				var sortMonster = fires.Where((x) => x.fireArea == i);
 				foreach (var monster in sortMonster)
 				{
@@ -52,6 +64,7 @@ public static class Turn
 				{
 					if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))
 					{
+
 						yield return new WaitForSeconds(2f);
 						break;
 					}
@@ -94,11 +107,16 @@ public static class Turn
 			for (int i = 0; i <= maxArea; i++)
 			{
 				var sorClaimant = claimants.Where((x) => x.claimantArea == i);
+               
+
+				
 
 				foreach (var claimant in sorClaimant)
 				{
 					if (claimant.curStateName != ClaimantState.Resuce && claimant.curStateName != ClaimantState.End)
 					{
+						Camera.main.transform.position = new Vector3(claimant.transform.position.x, Camera.main.transform.position.y, claimant.transform.position.z - 3);
+
 						claimant.moveEnd = false;
 						claimant.ClaimantAct();
 						claimant.oxygentank -= 1;
