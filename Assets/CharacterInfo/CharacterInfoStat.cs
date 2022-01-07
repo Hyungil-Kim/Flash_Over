@@ -62,7 +62,9 @@ public class CharacterInfoStat : MonoBehaviour
         statSB.Append(string.Format($"Dmg : {curCharacter.totalStats.dmg}\n"));
         statSB.Append(string.Format($"Def : {curCharacter.totalStats.def}\n"));
         statSB.Append(string.Format($"Sta : {curCharacter.totalStats.sta}\n"));
-        statSB.Append(string.Format($"잔여무게 : {curCharacter.weight}"));
+        statSB.Append(string.Format($"잔여무게 : {curCharacter.weight}\n"));
+        statSB.Append(string.Format($"피로도 : {curCharacter.tiredScore}"));
+
         stat.text = statSB.ToString();
 
         personality.text = "";
@@ -76,5 +78,12 @@ public class CharacterInfoStat : MonoBehaviour
         //move.text = $"Move : {curCharacter.totalStats.move}";
         //str.text = $"Str : {curCharacter.totalStats.str}";
         //def.text = $"Lung : {curCharacter.totalStats.lung}";
+    }
+    public void test()
+    {
+        var characterInfo = GetComponentInParent<CharacterInfo>();
+        var curCharacter = characterInfo.curCharacter;
+        curCharacter.tiredScore = 70;
+        Init();
     }
 }
