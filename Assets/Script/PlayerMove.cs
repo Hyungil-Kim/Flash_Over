@@ -13,6 +13,7 @@ public class PlayerMove : MonoBehaviour
 	int num = 0;
 	public int move = 0;
 	private bool hit = false;
+	private bool breath = false;
 	public void Awake()
 	{
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -52,7 +53,7 @@ public class PlayerMove : MonoBehaviour
 	public void MovePlayer()
 	{
 		moveObject = gameManager.targetPlayer;
-		if (!tilemapManager.CheckPlayer(moveObject.moveHelper) || tilemapManager.ReturnTile(moveObject.gameObject)== tilemapManager.ReturnTile(moveObject.moveHelper))
+		if (!tilemapManager.CheckPlayer(moveObject.moveHelper) || tilemapManager.ReturnTile(moveObject.gameObject) == tilemapManager.ReturnTile(moveObject.moveHelper))
 		{
 			if (tilemapManager.ReturnTile(moveObject.moveHelper).isClaimant) return;
 			moveObject.moveHelper.gameObject.transform.position = Vector3.zero;
@@ -60,7 +61,7 @@ public class PlayerMove : MonoBehaviour
 			go = true;
 		}
 	}
-	public IEnumerator Move(Color setPathColor,Color setMoveColor,Player player,int movePoint)
+	public IEnumerator Move(Color setPathColor, Color setMoveColor, Player player, int movePoint)
 	{
 		if (!go)
 		{
@@ -77,9 +78,13 @@ public class PlayerMove : MonoBehaviour
 				{
 					var targetTile = tilemapManager.ReturnTile(raycastHit.transform.position);
 					var tilePos = targetTile.transform.position;
-					if (targetTile.nextTileList.Contains(helperTile) || targetTile)
+					if (targetTile.movefloodFill || gameManager.playerMove.moveList.Contains(tilePos))
 					{
 						gameManager.drag = false;
+					}
+					else
+					{
+						gameManager.drag = true;
 					}
 					//var curTile = tilemapManager.ReturnTile(moveList[moveList.Count - 1]);
 					if (moveList.Count == 0) yield break;
@@ -133,24 +138,13 @@ public class PlayerMove : MonoBehaviour
 				{
 					moveObject.transform.position = Vector3.MoveTowards(moveObject.transform.position, newPos, speed * Time.deltaTime);
 					moveObject.transform.LookAt(newPos);
-					if (moveObject.handList.Count != 0 && moveObject.handList[0].tag =="Claimant")
+					if (moveObject.handList.Count != 0 && moveObject.handList[0].tag == "Claimant")
 					{
 						moveObject.handList[0].transform.position = new Vector3(moveObject.transform.position.x, moveObject.handList[0].transform.position.y, moveObject.transform.position.z);
 						moveObject.handList[0].transform.LookAt(newPos);
 					}
-					if (!hit)
-					{
-						if (tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>())
-						{
-							var fireDamage = tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>().fireDamage;
-							moveObject.cd.hp -= fireDamage;
-							if(moveObject.handList.Count != 0 && moveObject.handList[0].GetComponent<Claimant>())
-							{
-								moveObject.handList[0].GetComponent<Claimant>().hp -= fireDamage;
-							}
-							hit = true;
-						}
-					}
+					hitCheck(newPos);
+					BreathCheck(newPos);
 				}
 			}
 			else
@@ -160,67 +154,103 @@ public class PlayerMove : MonoBehaviour
 				{
 					num++;
 					hit = false;
+					breath = false;
 				}
 				else
 				{
 					num = 0;
+					hit = false;
+					breath = false;
 					go = false;
 					StartCoroutine(gameManager.tilemapManager.MoveEnd(moveObject));
 				}
 			}
 		}
-		
+	}
+	public void BreathCheck(Vector3 newPos)
+	{
+		if (!breath)
+		{
+			if (tilemapManager.ReturnTile(newPos).GetComponentInChildren<Smoke>())
+			{
+				moveObject.ap -= 1;
+			}
+			moveObject.ap -= 1;
+
+			if (moveObject.ap < 0)
+			{
+				moveObject.lung += moveObject.ap;
+				moveObject.ap = 0;
+			}
+			breath = true;
+		}
+	}
+	public void hitCheck(Vector3 newPos)
+	{
+		if (!hit)
+		{
+			if (tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>())
+			{
+				var fireDamage = tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>().fireDamage;
+				moveObject.cd.hp -= fireDamage;
+				if (moveObject.handList.Count != 0 && moveObject.handList[0].GetComponent<Claimant>())
+				{
+					moveObject.handList[0].GetComponent<Claimant>().hp -= fireDamage;
+				}
+				hit = true;
+			}
+		}
 	}
 
-		//public void CopyList()
-		//{
-		//	preRoot = gameManager.tilemapManager.ReturnFinalList();
-		//	for (int i = 0; i < preRoot.Count; i++)
-		//	{
-		//		var nextCenterPos = gameManager.tilemapManager.ReturnPosition(preRoot[i].transform.position);
-		//		var newCenterPos = new Vector3(nextCenterPos.x, moveObject.transform.position.y, nextCenterPos.z);
-		//		moveList.Add(newCenterPos);//다음 타일의 중앙좌표 y는 플레이어
-		//	}
-		//}
-		//public void Move()
-		//{
-		//	moveObject = gameManager.targetPlayer.gameObject;
-		//	moveList = new List<Vector3>();
-		//	CopyList();
-		//	if (gameManager.moveHelper != null)//임시코드
-		//	{
-		//		gameManager.moveHelper.SetActive(false);
-		//	}
-		//	go = true;
-		//}
-		//public void Update()
-		//{
-		//	if (go)
-		//	{
-		//		if (moveObject.transform.position != moveList[num])
-		//		{
-		//			var dis = Vector3.Distance(moveObject.transform.position, moveList[num]);
-		//			if (dis > 0)
-		//			{
-		//				moveObject.transform.position = Vector3.MoveTowards(moveObject.transform.position, moveList[num], speed * Time.deltaTime);
-		//				moveObject.transform.LookAt(moveList[num]);
-		//			}
-		//		}
-		//		else
-		//		{
-		//			if (num < moveList.Count - 1)
-		//			{
-		//				num++;
-		//			}
-		//			else
-		//			{
-		//				num = 0;
-		//				go = false;
-		//				gameManager.tilemapManager.MoveEnd();
-		//			}
-		//		}
-		//	}
-		//}
+	//public void CopyList()
+	//{
+	//	preRoot = gameManager.tilemapManager.ReturnFinalList();
+	//	for (int i = 0; i < preRoot.Count; i++)
+	//	{
+	//		var nextCenterPos = gameManager.tilemapManager.ReturnPosition(preRoot[i].transform.position);
+	//		var newCenterPos = new Vector3(nextCenterPos.x, moveObject.transform.position.y, nextCenterPos.z);
+	//		moveList.Add(newCenterPos);//다음 타일의 중앙좌표 y는 플레이어
+	//	}
+	//}
+	//public void Move()
+	//{
+	//	moveObject = gameManager.targetPlayer.gameObject;
+	//	moveList = new List<Vector3>();
+	//	CopyList();
+	//	if (gameManager.moveHelper != null)//임시코드
+	//	{
+	//		gameManager.moveHelper.SetActive(false);
+	//	}
+	//	go = true;
+	//}
+	//public void Update()
+	//{
+	//	if (go)
+	//	{
+	//		if (moveObject.transform.position != moveList[num])
+	//		{
+	//			var dis = Vector3.Distance(moveObject.transform.position, moveList[num]);
+	//			if (dis > 0)
+	//			{
+	//				moveObject.transform.position = Vector3.MoveTowards(moveObject.transform.position, moveList[num], speed * Time.deltaTime);
+	//				moveObject.transform.LookAt(moveList[num]);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			if (num < moveList.Count - 1)
+	//			{
+	//				num++;
+	//			}
+	//			else
+	//			{
+	//				num = 0;
+	//				go = false;
+	//				gameManager.tilemapManager.MoveEnd();
+	//			}
+	//		}
+	//	}
+	//}
 
-	
+
 }

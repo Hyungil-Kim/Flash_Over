@@ -101,21 +101,22 @@ public static class Turn
 					{
 						claimant.moveEnd = false;
 						claimant.ClaimantAct();
-						if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject)))
+						claimant.oxygentank -= 1;
+						if(claimant.oxygentank <= 0)
 						{
-							yield return new WaitUntil(() => claimant.moveEnd == true);
+							claimant.ap = claimant.Maxap;
 						}
+							yield return new WaitUntil(() => claimant.moveEnd == true);
+						
 					}
-					if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject)))
-					{
+					
 						yield return new WaitForSeconds(0.5f);
-					}
+					
 				}
 			}
 		}
 		ChangeStateIdle();
 	}
-
 	public static void ChangeStateIdle()
 	{
 		if (players.Count != 0)
@@ -153,5 +154,9 @@ public static class Turn
 			}
 		}
 
+	}
+	public static void EndGame()
+	{
+		
 	}
 }

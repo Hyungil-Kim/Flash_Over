@@ -32,6 +32,12 @@ public class Claimant : FSM<ClaimantState>
 	public int num = -1;
 	public bool moveEnd;
 	private ClaimantMove claimantMove = new ClaimantMove();
+	//
+	public int oxygentank = 5;//ªÍº“≈ ≈©
+	public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
+	public int Maxap = 8; // √÷¥Î∆Û»∞∑Æ
+	public int lung = 100; // ∆Û hp
+
 	public void Awake()
 	{
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -72,7 +78,7 @@ public class Claimant : FSM<ClaimantState>
 	}
 	public void Update()
 	{
-		if (hp <= 0)
+		if (hp <= 0 || lung < 0)
 		{
 			gameObject.SetActive(false);
 			Turn.claimants.Remove(this);

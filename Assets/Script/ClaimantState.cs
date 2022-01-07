@@ -79,6 +79,10 @@ public class ClaimantEndState : State
 	}
 	public override void Exit()
 	{
-
+		if (fsm.oxygentank != 0)
+		{
+			fsm.ap = fsm.Maxap;
+			fsm.oxygentank -= 1;
+		}
 	}
 }

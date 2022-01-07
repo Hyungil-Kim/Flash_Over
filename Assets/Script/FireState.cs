@@ -58,7 +58,7 @@ public class FireEndState : State
 		{
 			weat = 0;
 		}
-		fsm.fireHp = fsm.fireExpGrowth * (ground.tileMesh - weat + objectsMesh);
+		fsm.fireHp += fsm.fireExpGrowth * (ground.tileMesh - weat + objectsMesh);
 		if(fsm.fireHp > 0 && fsm.fireHp <= 10)
 		{
 			fsm.fireLevel = 1;

@@ -15,7 +15,15 @@ public class PlayerIdleState : State
 		fsm.moveHelper.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.attack.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.shootButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.weapon1Button.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
+
 	}
 
 	public override void Exit()
@@ -42,6 +50,8 @@ public class PlayerMoveState : State
 		fsm.moveHelper.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(true);
+		fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
 	}
 
 	public override void Exit()
@@ -64,8 +74,13 @@ public class PlayerAttackState : State
 	public override void Enter()
 	{
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.attack.SetActive(true);
+		fsm.gameManager.uIManager.battleUiManager.shootButton.gameObject.SetActive(false);
+
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(true);
+
+		fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(true);
+		fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(true);
+		fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(true);
 	}
 
 	public override void Exit()
@@ -88,7 +103,15 @@ public class PlayerEndState : State
 	}
 	public override void Enter()
 	{
-		fsm.gameManager.uIManager.battleUiManager.attack.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
+
+		fsm.gameManager.uIManager.battleUiManager.shootButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.weapon1Button.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
 		fsm.gameManager.targetPlayer = null;
 		fsm.StartCoroutine(Turn.CoTurnSystem());

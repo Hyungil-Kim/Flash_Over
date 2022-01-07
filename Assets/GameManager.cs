@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
 
 					preTile = tilemapManager.ReturnTile(mousePos);
 				}
-				else if (pickup)
+				else if (pickup && targetPlayer.curStateName == PlayerState.Action)
 				{
 					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					if (target.tag == "Claimant" && targetTile.nextTileList.Contains(playerTile))
@@ -193,9 +193,15 @@ public class GameManager : MonoBehaviour
 						playerMove.go = true;
 						targetPlayer.handFull = true;
 						pickup = false;
+						targetPlayer.ap -= 3;
+						if(targetPlayer.ap < 0)
+						{
+							targetPlayer.lung += targetPlayer.ap;
+							targetPlayer.ap = 0;
+						}
 					}
 				}
-				else if (putdown)
+				else if (putdown && targetPlayer.curStateName == PlayerState.Action)
 				{
 					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					if (target.tag == "Ground" && targetTile.nextTileList.Contains(playerTile))
@@ -212,17 +218,22 @@ public class GameManager : MonoBehaviour
 						playerMove.go = true;
 						targetPlayer.handFull = false;
 						putdown = false;
+						targetPlayer.ap -= 3;
+						if (targetPlayer.ap < 0)
+						{
+							targetPlayer.lung += targetPlayer.ap;
+							targetPlayer.ap = 0;
+						}
 					}
 				}
-				else if (showMeleeRange && !showthrowwRange)
+				else if (showMeleeRange && !showthrowwRange && targetPlayer.curStateName == PlayerState.Action)
 				{
 					if (target.tag == "Ground" && uIManager.battleUiManager.useItemManager.listRange.Contains(targetTile))
 					{
-						
-						StartCoroutine(uIManager.battleUiManager.useItemManager.UseItem());
+						StartCoroutine(uIManager.battleUiManager.useItemManager.UseItemEnd());
 					}
 				}
-				else if (showMeleeRange && showthrowwRange)
+				else if (showMeleeRange && showthrowwRange && targetPlayer.curStateName == PlayerState.Action)
 				{
 					if (target.tag == "Ground" && uIManager.battleUiManager.useItemManager.listRange.Contains(targetTile))
 					{

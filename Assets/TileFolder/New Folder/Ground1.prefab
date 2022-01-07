@@ -118,6 +118,7 @@ MonoBehaviour:
   attackfloodFill: 0
   movefloodFill: 0
   isPlayer: 0
+  isClaimant: {fileID: 0}
   checkSum: 0
   G: 0
   H: 0
@@ -125,21 +126,25 @@ MonoBehaviour:
   oldColor: {r: 1, g: 1, b: 1, a: 1}
   cellpos: {x: 0, y: 0, z: 0}
   nextTileList: []
+  nextVisionList: []
   fillList: []
   tilemap: {fileID: 0}
   firePrefab: {fileID: 1762754347840333798}
+  cheakVision: 0
+  cheakSumVision: 0
   tileArea: 1
   tileMesh: 3
   tileIsWeat: 0
   tileWeatValue: 1
   tileExp: 5
-  tileHp: 90
+  tileHp: 10
   tileGrowthExp: 10
   tileIsFire: 0
   smokePrefab: {fileID: 5425508792547149977}
   tileIsSmoke: 0
   tileSaveSmokeValue: 0
   tileSmokeValue: 0
+  index: 0
 --- !u!1 &1094793915136615535
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +300,10 @@ PrefabInstance:
     - target: {fileID: 4717135665064498, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
+      propertyPath: fireHp
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: fireDamage
