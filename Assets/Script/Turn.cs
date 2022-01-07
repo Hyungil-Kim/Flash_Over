@@ -107,15 +107,11 @@ public static class Turn
 			for (int i = 0; i <= maxArea; i++)
 			{
 				var sorClaimant = claimants.Where((x) => x.claimantArea == i);
-               
-
-				
-
 				foreach (var claimant in sorClaimant)
 				{
 					if (claimant.curStateName != ClaimantState.Resuce && claimant.curStateName != ClaimantState.End)
 					{
-						Camera.main.transform.position = new Vector3(claimant.transform.position.x, Camera.main.transform.position.y, claimant.transform.position.z - 3);
+						//Camera.main.transform.position = new Vector3(claimant.transform.position.x, Camera.main.transform.position.y, claimant.transform.position.z - 3);
 
 						claimant.moveEnd = false;
 						claimant.ClaimantAct();
@@ -125,7 +121,6 @@ public static class Turn
 							claimant.ap = claimant.Maxap;
 						}
 							yield return new WaitUntil(() => claimant.moveEnd == true);
-						
 					}
 					
 						yield return new WaitForSeconds(0.5f);

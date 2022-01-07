@@ -75,7 +75,7 @@ public class ClaimantMove
 		while (go)
 		{
 			var newPos =new Vector3(preTile.nextTileList[root].transform.position.x , claimant.transform.position.y, preTile.nextTileList[root].transform.position.z);
-			if(preTile.nextTileList[root].tileIsFire && num <=claimant.speed)
+			if(preTile.nextTileList[root].tileIsFire && num <=claimant.speed && preTile.nextTileList[root].isWall)
 			{
 				num++;
 				continue;
