@@ -78,11 +78,14 @@ public class ItemInfo : MonoBehaviour
     {
         var parent = GetComponentInParent<CharacterInfo>();
         var character = parent.curCharacter;
-        if(character.weight < itemData.dataTable.weight)
+        if (itemData != null)
         {
-            //公霸 何练
-            weightFull.SetActive(true);
-            return;
+            if (character.weight < itemData.dataTable.weight)
+            {
+                //公霸 何练
+                weightFull.SetActive(true);
+                return;
+            }
         }
         if (itemData != null && itemData.owner != null)
         {

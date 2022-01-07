@@ -24,6 +24,7 @@ public class CharacterInfo : MonoBehaviour
     {
         chaStatPanal.gameObject.SetActive(false);
         chaListPanal.gameObject.SetActive(true);
+        chaListPanal.Init();
     }
     public void OnInventory()
     {
@@ -41,5 +42,13 @@ public class CharacterInfo : MonoBehaviour
     {
         currentItemType = (ItemType)index;
         OnInventory();
+    }
+    public void OnFire()
+    {
+        if (GameData.userData.characterList.Contains(curCharacter))
+        {
+            GameData.userData.characterList.Remove(curCharacter);
+        }
+        OnExitStat();
     }
 }

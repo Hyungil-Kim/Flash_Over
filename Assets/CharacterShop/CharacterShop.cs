@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class CharacterShop : MonoBehaviour
 {
     public HireInfo hireInfo;
     public int maxChaList;
     public GameObject shopChaPrefab;
     public GameObject content;
+    public GameObject needGold;
+    public TextMeshProUGUI gold;
+
     private int currentPoint;
     List<GameObject> shopChaList = new List<GameObject>();
 
@@ -43,6 +46,10 @@ public class CharacterShop : MonoBehaviour
     {
         
     }
+    private void Update()
+    {
+        gold.text = $"°ñµå : {GameData.userData.gold}";
+    }
     public void ShopListUpdate()
     {
         GameData.userData.shopChaList.Clear();
@@ -76,20 +83,41 @@ public class CharacterShop : MonoBehaviour
         {
             return;
         }
+        if (GameData.userData.gold < 1000)
+        {
+            needGold.SetActive(true);
+            return;
+        }
         if (currentPoint < maxChaList)
         {
             shopChaList[currentPoint].SetActive(false);
-            GameData.userData.characterList.Add(GameData.userData.shopChaList[currentPoint]);
+            var character = GameData.userData.shopChaList[currentPoint];
+            GameData.userData.characterList.Add(character);
+            var oxygenItem = new OxygenTankData(MyDataTableMgr.oxygenTankTable.GetTable(0));
+            GameData.userData.oxygenTankList.Add(oxygenItem);
+            character.EquipItem(oxygenItem, ItemType.OxygenTank);
+            var bunkergearItem = new BunkerGearData(MyDataTableMgr.bunkerGearTable.GetTable(0));
+            GameData.userData.bunkerGearList.Add(bunkergearItem);
+            character.EquipItem(bunkergearItem, ItemType.BunkerGear);
+            var hoseItem = new HoseData(MyDataTableMgr.hoseTable.GetTable(0));
+            GameData.userData.hoseList.Add(hoseItem);
+            character.EquipItem(hoseItem, ItemType.Hose);
+
             GameData.userData.shopChaList[currentPoint].isHire = true;
             currentPoint = maxChaList + 1;
             hireInfo.Init(null);
         }
+        GameData.userData.gold -= 1000;
         //test
-        GameData.userData.SaveUserData(1);
+        //GameData.userData.SaveUserData(1);
     }
 
     public void OnTest()
     {
         ShopListUpdate();
+    }
+    public void CheckNeedGold()
+    {
+        needGold.SetActive(false);
     }
 }

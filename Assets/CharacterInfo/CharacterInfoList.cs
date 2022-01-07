@@ -13,7 +13,8 @@ public class CharacterInfoList : MonoBehaviour
     private int sortIndex;
     public CharacterInfoStat info;
     private bool isReverse;
-    private List<CharacterData> sortUserCharacter;
+    private List<CharacterData> sortUserCharacter
+        = new List<CharacterData>();
     private void Awake()
     {
         for (int i = 0; i < maxChaCount; i++)
@@ -34,7 +35,13 @@ public class CharacterInfoList : MonoBehaviour
     public void Init()
     {
         var userCharacterList = GameData.userData.characterList;
+        foreach (var cha in chaList)
+        {
+            cha.SetActive(false);
+        }
+
         var characterSort = (CharacterOrder)sortIndex;
+        sortUserCharacter.Clear();
         switch (characterSort)
         {
             case CharacterOrder.Default:
