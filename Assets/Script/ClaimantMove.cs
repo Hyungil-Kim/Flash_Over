@@ -75,12 +75,12 @@ public class ClaimantMove
 		while (go)
 		{
 			var newPos =new Vector3(preTile.nextTileList[root].transform.position.x , claimant.transform.position.y, preTile.nextTileList[root].transform.position.z);
-			if(preTile.nextTileList[root].tileIsFire && num <=claimant.speed)
+			if(preTile.nextTileList[root].tileIsFire && num <=claimant.speed && preTile.nextTileList[root].isWall)
 			{
 				num++;
 				continue;
 			}
-			if (claimant.transform.position != newPos && num <= claimant.speed)
+			if (claimant.transform.position != newPos && num <= claimant.speed && preTile.nextTileList[root].isWall)
 			{
 				var dis = Vector3.Distance(claimant.transform.position, newPos);
 				if (dis > 0)

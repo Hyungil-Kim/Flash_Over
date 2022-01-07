@@ -257,7 +257,8 @@ public class TilemapManager : MonoBehaviour
 
 		foreach (var elem in ground.nextTileList)
 		{
-			elem.tileSmokeValue += elem.tileSaveSmokeValue;
+			if (elem.tag != "Wall")
+				elem.tileSmokeValue += elem.tileSaveSmokeValue;
 		}
 		ground.tileSmokeValue += ground.tileSaveSmokeValue;
 	}

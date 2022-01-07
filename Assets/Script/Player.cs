@@ -41,21 +41,21 @@ public class Player : FSM<PlayerState>
 
     void Update()
     {
-		if (cd.hp <= 0 || lung <= 0)
-		{
-			if (handFull)
-			{
-				handList[0].SetActive(false);
-				handFull = false;
-				if (handList[0].tag == "Claimant")
-				{
-					Turn.claimants.Remove(handList[0].GetComponent<Claimant>());
-					handList.RemoveAt(0);
-				}
-			}
-			gameObject.SetActive(false);
-			Turn.players.Remove(this);
-		}
+		//if (cd.hp <= 0 || lung <= 0)
+		//{
+		//	if (handFull)
+		//	{
+		//		handList[0].SetActive(false);
+		//		handFull = false;
+		//		if (handList[0].tag == "Claimant")
+		//		{
+		//			Turn.claimants.Remove(handList[0].GetComponent<Claimant>());
+		//			handList.RemoveAt(0);
+		//		}
+		//	}
+		//	gameObject.SetActive(false);
+		//	Turn.players.Remove(this);
+		//}
 	}
     private void OnDestroy()
     {

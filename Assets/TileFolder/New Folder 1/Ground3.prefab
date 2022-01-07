@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 65910483985868152}
   - component: {fileID: -7652962128958692100}
   m_Layer: 11
-  m_Name: Grass 01
+  m_Name: Ground3
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,13 +132,13 @@ MonoBehaviour:
   firePrefab: {fileID: 1762754347840333798}
   cheakVision: 0
   cheakSumVision: 0
-  tileArea: 1
-  tileMesh: 3
+  tileArea: 3
+  tileMesh: -1
   tileIsWeat: 0
-  tileWeatValue: 1
-  tileExp: 5
-  tileHp: 90
-  tileGrowthExp: 10
+  tileWeatValue: 0
+  tileExp: 0
+  tileHp: 1000
+  tileGrowthExp: 2
   tileIsFire: 0
   smokePrefab: {fileID: 5425508792547149977}
   tileIsSmoke: 0
@@ -303,7 +303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: fireHp
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: fireDamage
