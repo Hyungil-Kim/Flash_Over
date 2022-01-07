@@ -80,7 +80,7 @@ public class ClaimantMove
 				num++;
 				continue;
 			}
-			if (claimant.transform.position != newPos && num <= claimant.speed)
+			if (claimant.transform.position != newPos && num <= claimant.speed && preTile.nextTileList[root].isWall)
 			{
 				var dis = Vector3.Distance(claimant.transform.position, newPos);
 				if (dis > 0)

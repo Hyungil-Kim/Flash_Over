@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 4367009878484727018}
   - component: {fileID: 7925207006863759914}
   m_Layer: 11
-  m_Name: Groundfire2
+  m_Name: Groundfire2blue
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,12 +230,12 @@ MonoBehaviour:
   cheakVision: 0
   cheakSumVision: 0
   tileArea: 2
-  tileMesh: 2
+  tileMesh: 1
   tileIsWeat: 0
-  tileWeatValue: 1
+  tileWeatValue: 0
   tileExp: 0
-  tileHp: 1
-  tileGrowthExp: 5
+  tileHp: 1000
+  tileGrowthExp: 2
   tileIsFire: 1
   smokePrefab: {fileID: 3062203844467908958}
   tileIsSmoke: 0
@@ -347,7 +347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1271764609937064, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4717135665064498, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: m_RootOrder
@@ -398,6 +398,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
+      propertyPath: fireHp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -408,6 +412,10 @@ PrefabInstance:
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: fireExpGrowth
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
+      propertyPath: fireMakeSmoke
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}

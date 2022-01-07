@@ -71,7 +71,7 @@ public class Claimant : FSM<ClaimantState>
 				}
 				else
 				{
-					StartCoroutine(claimantMove.MoveConfuse(this));
+					claimantMove.JustStay(this);
 				}
 				break;
 		}
