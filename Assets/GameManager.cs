@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
 	public bool drag;
 
 	private Vector3 prevPos;
-	private bool firstclick = true;
 	public bool isStart;
 
 	public bool pickup;
@@ -195,7 +194,7 @@ public class GameManager : MonoBehaviour
 
 					preTile = tilemapManager.ReturnTile(mousePos);
 				}
-				else if (pickup)
+				else if (pickup && targetPlayer.curStateName == PlayerState.Action)
 				{
 					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					if (target.tag == "Claimant" && targetTile.nextTileList.Contains(playerTile))
@@ -205,13 +204,19 @@ public class GameManager : MonoBehaviour
 						targetPlayer.handList.Add(target);
 						uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
 						playerMove.moveList.Add(targetPlayer.transform.position);
-						target.SetActive(false);
+						//target.SetActive(false);
 						playerMove.go = true;
 						targetPlayer.handFull = true;
 						pickup = false;
+						targetPlayer.ap -= 3;
+						if(targetPlayer.ap < 0)
+						{
+							targetPlayer.lung += targetPlayer.ap;
+							targetPlayer.ap = 0;
+						}
 					}
 				}
-				else if (putdown)
+				else if (putdown && targetPlayer.curStateName == PlayerState.Action)
 				{
 					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					if (target.tag == "Ground" && targetTile.nextTileList.Contains(playerTile))
@@ -221,24 +226,29 @@ public class GameManager : MonoBehaviour
 						uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
 						playerMove.moveList.Add(targetPlayer.transform.position);
 						hand.transform.position = new Vector3(target.transform.position.x, targetPlayer.handList[0].transform.position.y, target.transform.position.z);
-						hand.SetActive(true);
+						//hand.SetActive(true);
 						if(hand.tag == "Claimant")
 							hand.GetComponent<Claimant>().SetState(ClaimantState.End);
 						targetPlayer.handList.RemoveAt(0);
 						playerMove.go = true;
 						targetPlayer.handFull = false;
 						putdown = false;
+						targetPlayer.ap -= 3;
+						if (targetPlayer.ap < 0)
+						{
+							targetPlayer.lung += targetPlayer.ap;
+							targetPlayer.ap = 0;
+						}
 					}
 				}
-				else if (showMeleeRange && !showthrowwRange)
+				else if (showMeleeRange && !showthrowwRange && targetPlayer.curStateName == PlayerState.Action)
 				{
 					if (target.tag == "Ground" && uIManager.battleUiManager.useItemManager.listRange.Contains(targetTile))
 					{
-						
-						StartCoroutine(uIManager.battleUiManager.useItemManager.UseItem());
+						StartCoroutine(uIManager.battleUiManager.useItemManager.UseItemEnd());
 					}
 				}
-				else if (showMeleeRange && showthrowwRange)
+				else if (showMeleeRange && showthrowwRange && targetPlayer.curStateName == PlayerState.Action)
 				{
 					if (target.tag == "Ground" && uIManager.battleUiManager.useItemManager.listRange.Contains(targetTile))
 					{

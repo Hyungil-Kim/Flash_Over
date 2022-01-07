@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ClaimantMove
 {
+	private bool breath = false;
 	public void JustStay(Claimant claimant)
 	{
 		EndMove(claimant);
@@ -44,6 +45,7 @@ public class ClaimantMove
 				{
 					claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, newPos, moveSpeed * Time.deltaTime);
 					claimant.transform.LookAt(newPos);
+					BreathCheck(newPos,claimant);
 				}
 				yield return 0;
 			}
@@ -52,6 +54,7 @@ public class ClaimantMove
 				if (num < pathList.Count - 1 && num <= claimant.speed && !targetTile.nextTileList.Contains(pathList[num]))
 				{
 					num++;
+					breath = false;
 				}
 				else
 				{
@@ -104,5 +107,23 @@ public class ClaimantMove
 			}
 		}
 	}
-	
+	public void BreathCheck(Vector3 newPos,Claimant claimant)
+	{
+		var gameManager = GameManager.instance;
+		if (!breath)
+		{
+			if (gameManager.tilemapManager.ReturnTile(newPos).GetComponentInChildren<Smoke>())
+			{
+				claimant.ap -= 1;
+			}
+			claimant.ap -= 1;
+
+			if (claimant.ap < 0)
+			{
+				claimant.lung += claimant.ap;
+				claimant.ap = 0;
+			}
+			breath = true;
+		}
+	}
 }

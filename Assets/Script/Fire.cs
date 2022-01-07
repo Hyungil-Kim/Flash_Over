@@ -14,7 +14,7 @@ public class Fire : FSM<FireState>
     public GameManager gameManager;
 
 
-    public float fireHp = 20;
+    public float fireHp;
     public int fireExpGrowth;
     public int fireDamage;
     public int fireLevel;
@@ -43,5 +43,13 @@ public class Fire : FSM<FireState>
 	public void FireEndAct()
 	{
 		gameManager.tilemapManager.EndMonsterAttack();
+	}
+	public void Update()
+	{
+		if(fireHp <= 0)
+		{
+			gameObject.SetActive(false);
+			Turn.fires.Remove(this);
+		}
 	}
 }

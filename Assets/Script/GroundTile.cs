@@ -272,27 +272,15 @@ public class GroundTile : MonoBehaviour
 					isPlayer = true;
 					break;
 				}
-				else
-				{
-					isPlayer = false;
-				}
-				if(elem.tag == "Wall")
+				else if(elem.tag == "Wall")
 				{
 					isWall = true;
 					break;
 				}
-				else
-				{
-					isWall = false;
-				}
-				if(elem.tag == "Claimant")
+				else if(elem.tag == "Claimant")
 				{
 					isClaimant = elem.GetComponent<Claimant>();
 					break;
-				}
-				else
-				{
-					isClaimant = null;
 				}
 			}
 		}
@@ -300,6 +288,7 @@ public class GroundTile : MonoBehaviour
 		{
 			isWall = false;
 			isPlayer = false;
+			isClaimant = null;
 		}
 	}
 	
@@ -372,13 +361,13 @@ public class GroundTile : MonoBehaviour
 	public void CheckParticleOn(GroundTile tile)
 	{
 
-		if (tile.tileExp <= 0)
+		if (tile.firePrefab.GetComponent<Fire>().fireHp <= 0)//tile.tileExp <= 100
 		{
-			tile.tileIsFire = false;
 
-			//tile.firePrefab.SetActive(false);
+			tile.tileIsFire = false;
+			tile.firePrefab.SetActive(false);
 		}
-		else if (tile.tileExp >= 100)
+		else if (tile.firePrefab.GetComponent<Fire>().fireHp >= 100) //tile.tileExp >= 100
 		{
 			tile.tileIsFire = true;
 			tile.firePrefab.SetActive(true);
@@ -388,12 +377,13 @@ public class GroundTile : MonoBehaviour
 			}
 			//tile.firePrefab.SetActive(true);
 		}
-		if (tile.tileSmokeValue < 10)//임시 연기 표시기준
+
+		if (tile.tileSmokeValue < 10 && tile.tag != "Wall")//임시 연기 표시기준
 		{
 			tile.tileIsSmoke = false;
 			//tile.smokePrefab.SetActive(false);
 		}
-		else
+		else if((tile.tileSmokeValue >= 10 && tile.tag != "Wall"))
 		{
 			tile.tileIsSmoke = true;
 			tile.smokePrefab.SetActive(true);

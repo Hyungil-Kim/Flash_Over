@@ -26,67 +26,51 @@ public static class Turn
 			}
 		}
 
-		for (int i = 0; i <= maxArea; i++)
+		if (fires.Count != 0)
 		{
-			var sortMonster = fires.Where((x) => x.fireArea == i);
-			if(sortMonster.ToList().Count == 0)// 시야 조건 추가필요
+			for (int i = 0; i <= maxArea; i++)
 			{
-				ChangeStateIdle(i);
-				continue;
-			}
-			foreach (var monster in sortMonster)
-			{
-				monster.FireAct();
-				monster.ChangeState(FireState.End);
-			}
-			yield return new WaitForSeconds(0.5f);
-			fires[0].FireEndAct();
-
-			//연기 이동=>
-
-			//foreach(var smoke in sortSmoke)
-			//{
-			//	smoke.SpreadSmoke();
-			//}
-
-			//TurnOff();
-
-			yield return new WaitForSeconds(2f);
-
-			ChangeStateIdle(i);
-		}
-		for(int i =0; i<= maxArea;i++)
-		{
-			var sorClaimant = claimants.Where((x) => x.claimantArea == i);
-			if (sorClaimant.ToList().Count == 0)// 시야 조건 추가필요
-			{
-				ChangeStateIdle(i);
-				continue;
-			}
-			foreach (var claimant in sorClaimant)
-			{
-				if (claimant.curStateName != ClaimantState.Resuce && claimant.curStateName != ClaimantState.End)
+				var sortMonster = fires.Where((x) => x.fireArea == i);
+				foreach (var monster in sortMonster)
 				{
-					claimant.moveEnd = false;
-					claimant.ClaimantAct();
-					yield return new WaitUntil(() => claimant.moveEnd == true);
+					monster.FireAct();
+					monster.ChangeState(FireState.End);
 				}
-				yield return new WaitForSeconds(0.5f);
-			}
-			yield return new WaitForSeconds(2f);
-
-		}
-		foreach (var smoke in smokes)
-		{
-			var ground = smoke.GetComponentInParent<GroundTile>();
-			for (int i = 0; i < ground.nextTileList.Count; i++)
-			{
-				if (!smokes.Contains(ground.nextTileList[i].gameObject.GetComponentInChildren<Smoke>()) && ground.nextTileList[i].tileSaveSmokeValue != 0)
+				foreach (var elem in sortMonster)
 				{
-					copylist.Add(ground.nextTileList[i].GetComponentInChildren<Smoke>(true));
+					if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))
+					{
+						yield return new WaitForSeconds(0.5f);
+						break;
+					}
+				}
+				fires[0].FireEndAct();
+
+
+				//TurnOff();
+				foreach (var elem in sortMonster)
+				{
+					if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))
+					{
+						yield return new WaitForSeconds(2f);
+						break;
+					}
 				}
 			}
 		}
+		if (smokes.Count != 0)
+		{ 
+			foreach (var smoke in smokes)
+			{
+				var ground = smoke.GetComponentInParent<GroundTile>();
+				for (int i = 0; i < ground.nextTileList.Count; i++)
+				{
+					if (!smokes.Contains(ground.nextTileList[i].gameObject.GetComponentInChildren<Smoke>()) && ground.nextTileList[i].tileSaveSmokeValue != 0)
+					{
+						copylist.Add(ground.nextTileList[i].GetComponentInChildren<Smoke>(true));
+					}
+				}
+			}
 		foreach(var elem in copylist)
 		{
 			smokes.Add(elem);
@@ -103,36 +87,76 @@ public static class Turn
 		{
 			window.WindowTurn();
 		}
+		}
 
-		//for (int i = 1; i <= maxArea; i++)
-		//{
-		//    var sortNpc = npcs.Where((x) => x.areaNumber == i);
-		//    foreach (var npc in sortNpc)
-		//    {
-		//        npc.Act();
-		//    }
-		//    Debug.Log($"{i}번 구역 NPC 완료");
-		//    yield return new WaitForSeconds(2f);
-		//}
+		if (claimants.Count != 0)
+		{
+			for (int i = 0; i <= maxArea; i++)
+			{
+				var sorClaimant = claimants.Where((x) => x.claimantArea == i);
+
+				foreach (var claimant in sorClaimant)
+				{
+					if (claimant.curStateName != ClaimantState.Resuce && claimant.curStateName != ClaimantState.End)
+					{
+						claimant.moveEnd = false;
+						claimant.ClaimantAct();
+						claimant.oxygentank -= 1;
+						if(claimant.oxygentank <= 0)
+						{
+							claimant.ap = claimant.Maxap;
+						}
+							yield return new WaitUntil(() => claimant.moveEnd == true);
+						
+					}
+					
+						yield return new WaitForSeconds(0.5f);
+					
+				}
+			}
+		}
+		ChangeStateIdle();
 	}
-
-	public static void ChangeStateIdle(int area)
+	public static void ChangeStateIdle()
 	{
-		if (area == maxArea)
+		if (players.Count != 0)
 		{
 			foreach (var player in players)
 			{
-				player.ChangeState(PlayerState.Idle);
-			}
-			foreach (var fire in fires)
-			{
-				fire.ChangeState(FireState.Idle);
-			}
-			foreach (var claimant in claimants)
-			{
-				if(claimant.curStateName != ClaimantState.Resuce)
-				claimant.ChangeState(ClaimantState.Idle);
+				if (player.curStateName != PlayerState.Idle)
+					player.ChangeState(PlayerState.Idle);
 			}
 		}
+		if (fires.Count != 0)
+		{
+			foreach (var fire in fires)
+			{
+				if (fire.curStateName != FireState.Idle)
+					fire.ChangeState(FireState.Idle);
+			}
+		}
+		if (claimants.Count != 0)
+		{
+			foreach (var claimant in claimants)
+			{
+				if (claimant.curStateName != ClaimantState.Resuce)
+					claimant.ChangeState(ClaimantState.Idle);
+			}
+		}
+	}
+	public static void OutOfSight(List<Fire> fireList,float sec)
+	{
+		foreach(var elem in fireList)
+		{
+			if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))
+			{
+				
+			}
+		}
+
+	}
+	public static void EndGame()
+	{
+		
 	}
 }

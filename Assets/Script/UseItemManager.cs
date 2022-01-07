@@ -51,11 +51,14 @@ public class UseItemManager : MonoBehaviour
 
 		}
 	}
-	public IEnumerator UseItem()
+	public IEnumerator UseItemEnd()
 	{
 		yield return new WaitForSeconds(0.2f);
-		gameManager.tilemapManager.ResetFloodFill(listRange);
-		listRange.Clear();
+		if (listRange != null)
+		{
+			gameManager.tilemapManager.ResetFloodFill(listRange);
+			listRange.Clear();
+		}
 		yield return 0;
 	}
 	private void Update()

@@ -192,6 +192,7 @@ public class TilemapManager : MonoBehaviour
 						var damage = attacker.cd.totalStats.dmg * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
 						damage = damage > 0 ? damage : 0;
 						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
+						Debug.Log(elem.GetComponentInChildren<Fire>().fireHp);
 					}
 				}
 				break;
@@ -212,6 +213,12 @@ public class TilemapManager : MonoBehaviour
 				break;
 		}
 		ResetAttackRange(num);
+		attacker.ap -= 5;
+		if(attacker.ap <0)
+		{
+			attacker.lung += attacker.ap;
+			attacker.ap = 0;
+		}
 	}
 	//smoke
 	public int CheckDivideSmoke(Smoke smoke)//꺼져있어서 못찾을수도있음 실행부분 예외필요

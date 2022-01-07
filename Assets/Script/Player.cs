@@ -19,15 +19,18 @@ public class Player : FSM<PlayerState>
     public bool handFull;
     public List<GameObject> handList = new List<GameObject>();
     public int eventNum = 0;
-    
+    /// 
+    public int oxygentank = 5;//ªÍº“≈ ≈©
+    public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
+    public int Maxap = 8; // √÷¥Î∆Û»∞∑Æ
+    public int lung = 100; // ∆Û hp
 	private void Awake()
 	{
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         Turn.players.Add(this);
     }
 	void Start()
-    {
-       // cd = GameData.userData.fireManList[0];
+    { 
         AddState(PlayerState.Idle, new PlayerIdleState(this));                             
         AddState(PlayerState.Move, new PlayerMoveState(this));
         AddState(PlayerState.Action, new PlayerAttackState(this));
@@ -38,8 +41,22 @@ public class Player : FSM<PlayerState>
 
     void Update()
     {
-        FSMUpdate();
-    }
+		if (cd.hp <= 0 || lung <= 0)
+		{
+			if (handFull)
+			{
+				handList[0].SetActive(false);
+				handFull = false;
+				if (handList[0].tag == "Claimant")
+				{
+					Turn.claimants.Remove(handList[0].GetComponent<Claimant>());
+					handList.RemoveAt(0);
+				}
+			}
+			gameObject.SetActive(false);
+			Turn.players.Remove(this);
+		}
+	}
     private void OnDestroy()
     {
         Turn.players.Remove(this);

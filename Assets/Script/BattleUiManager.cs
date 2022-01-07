@@ -12,10 +12,10 @@ public class BattleUiManager : MonoBehaviour
     public Button weapon2Button;
     public Button itemButton;
     public Button waitButton;
-    public Button attackButton;
+    public Button shootButton;
     public Button moveButton;
     public Button cancleButton;
-    public GameObject attack;
+    public Button attackButton;
 
 	public Button rescueButton;
 	public Button putDownButton;
@@ -42,7 +42,18 @@ public class BattleUiManager : MonoBehaviour
 		gameManager.num = 2;
 		tilemapManager.ChangeColorAttack(gameManager.targetPlayer.gameObject, gameManager.num, gameManager.setAttackColor);
 	}
+	public void OnClickAttackButton()
+	{
+		shootButton.gameObject.SetActive(true);
+		weapon1Button.gameObject.SetActive(true);
+		weapon2Button.gameObject.SetActive(true);
 
+		itemButton.gameObject.SetActive(false);
+		rescueButton.gameObject.SetActive(false);
+		putDownButton.gameObject.SetActive(false);
+		waitButton.gameObject.SetActive(false);
+		attackButton.gameObject.SetActive(false);
+	}
 	public void Cancle()
 	{
 		switch (gameManager.targetPlayer.curStateName)
@@ -52,17 +63,33 @@ public class BattleUiManager : MonoBehaviour
 			case PlayerState.Move:
 				tilemapManager.ResetFloodFill();
 				gameManager.targetPlayer.curStateName = PlayerState.Idle;
-				//gameManager.targetPlayer.moveHelper.transform.position = gameManager.targetPlayer.transform.position;
 				gameManager.targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
+
 				//gameManager.cameraController.CameraForObjectsCenter(gameManager.pretargetPlayer.gameObject);
 				gameManager.targetPlayer = null;
 				gameManager.playerMove.moveList.Clear();
 				break;
 			case PlayerState.Action:
-				tilemapManager.ResetAttackRange(gameManager.num);
-				gameManager.num = -1;
+				
 				gameManager.pickup = false;
 				gameManager.putdown = false;
+
+				if(!attackButton.gameObject.activeSelf)
+				{
+					tilemapManager.ResetAttackRange(gameManager.num);
+					gameManager.num = -1;
+					shootButton.gameObject.SetActive(false);
+					weapon1Button.gameObject.SetActive(false);
+					weapon2Button.gameObject.SetActive(false);
+				}
+				if(useItemManager.gameObject.activeSelf)
+				{
+					useItemManager.gameObject.SetActive(false);
+				}
+					itemButton.gameObject.SetActive(true);
+					waitButton.gameObject.SetActive(true);
+					attackButton.gameObject.SetActive(true);
+				StartCoroutine(useItemManager.UseItemEnd());
 				break;
 			case PlayerState.End:
 				break;
@@ -72,12 +99,13 @@ public class BattleUiManager : MonoBehaviour
 	{
 		if(gameManager.num != -1)
 		{ 
-		tilemapManager.DoAttack(gameManager.targetPlayer, gameManager.num);
-		gameManager.targetPlayer.SetState(PlayerState.End);
+			tilemapManager.DoAttack(gameManager.targetPlayer, gameManager.num);
+			gameManager.targetPlayer.SetState(PlayerState.End);
 		}
 	}
 	public void DoPickClaimant()
 	{
+		Cancle();
 		if (gameManager.targetPlayer.handFull)
 			return;
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
@@ -86,6 +114,7 @@ public class BattleUiManager : MonoBehaviour
 	}
 	public void DoPutDownClaimant()
 	{
+		Cancle();
 		if (!gameManager.targetPlayer.handFull)
 			return;
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
@@ -94,6 +123,9 @@ public class BattleUiManager : MonoBehaviour
 	}
 	public void UseItem()
 	{
+		Cancle();
+		uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
+		uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
 		useItemManager.gameObject.SetActive(true);
 	}
 	public void EndTurn()
@@ -103,10 +135,28 @@ public class BattleUiManager : MonoBehaviour
 			case PlayerState.Idle:
 				break;
 			case PlayerState.Move:
-			gameManager.targetPlayer.SetState(PlayerState.Action);
+				gameManager.targetPlayer.SetState(PlayerState.Action);
 				break;
 			case PlayerState.Action:
-			gameManager.targetPlayer.SetState(PlayerState.End);
+				gameManager.pickup = false;
+				gameManager.putdown = false;
+
+				if (!attackButton.gameObject.activeSelf)
+				{
+					tilemapManager.ResetAttackRange(gameManager.num);
+					gameManager.num = -1;
+					shootButton.gameObject.SetActive(false);
+					weapon1Button.gameObject.SetActive(false);
+					weapon2Button.gameObject.SetActive(false);
+				}
+				if (useItemManager.gameObject.activeSelf)
+				{
+					useItemManager.gameObject.SetActive(false);
+				}
+				itemButton.gameObject.SetActive(true);
+				waitButton.gameObject.SetActive(true);
+				attackButton.gameObject.SetActive(true);
+				gameManager.targetPlayer.SetState(PlayerState.End);
 				break;
 			case PlayerState.End:
 				break;
