@@ -62,8 +62,11 @@ public class GameManager : MonoBehaviour
         {
 			character.GetComponent<CreateCharacter>().Create();
         }
-		if(AllTileMesh.instance !=null)
-		AllTileMesh.instance.Init();
+	}
+	public void Init()
+    {
+		if (AllTileMesh.instance != null)
+			AllTileMesh.instance.Init();
 	}
 	public void GetTilePosition(Vector2 mousePosition)
 	{
@@ -82,32 +85,41 @@ public class GameManager : MonoBehaviour
 
 	}
 	public Player changePlayer = null;
+	public CreateCharacter change = null;
 	public void CharacterChangeStart(Vector2 callBack)
 	{
-		Ray ray = Camera.main.ScreenPointToRay(mousePos);
-		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
-		layerMask = ~layerMask;
-		if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
+		if (!isStart)
 		{
-			target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
-			targetTile = tilemapManager.ReturnTile(target);
-			mouse3DPos = raycastHit.point;
-		}
-		else
-		{
-			target = null;
-			targetTile = null;
-		}
-		if (target != null)
-		{
-			if (target.tag == "Player")
+			Ray ray = Camera.main.ScreenPointToRay(mousePos);
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+			layerMask = ~layerMask;
+			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
-				changePlayer = target.GetComponent<Player>();
+				target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+				targetTile = tilemapManager.ReturnTile(target);
+				mouse3DPos = raycastHit.point;
 			}
 			else
-            {
-				changePlayer = null;
-            }
+			{
+				target = null;
+				targetTile = null;
+			}
+			if (target != null)
+			{
+				if (target.tag == "Player")
+				{
+					changePlayer = target.GetComponent<Player>();
+					change = target.GetComponentInParent<CreateCharacter>();
+					uIManager.OnCharacterIcon();
+					uIManager.OnCharacterInfo();
+					uIManager.info.Init();
+				}
+				else
+				{
+					changePlayer = null;
+					change = null;
+				}
+			}
 		}
 	}
 	public void GetClickedEndMouse()
@@ -161,6 +173,8 @@ public class GameManager : MonoBehaviour
 						pretargetPlayer = targetPlayer;
 						preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					}
+					uIManager.OnCharacterInfo();
+					uIManager.info.Init();
 				}
 				else if (target.tag == "Ground" && targetTile.movefloodFill && preTile.fillList.Contains(targetTile.gameObject))//땅클릭 + 이동범위인지
 				{
@@ -170,7 +184,8 @@ public class GameManager : MonoBehaviour
 							break;
 						case PlayerState.Move:
 							targetPlayer.moveHelper.SetActive(true);
-							targetPlayer.moveHelper.transform.position = new Vector3(targetTile.transform.position.x, targetPlayer.transform.position.y, targetTile.transform.position.z);
+							//targetPlayer.moveHelper.transform.position = new Vector3(targetTile.transform.position.x, targetPlayer.transform.position.y, targetTile.transform.position.z);
+							targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
 							break;
 						case PlayerState.Action:
 							break;
@@ -231,7 +246,10 @@ public class GameManager : MonoBehaviour
 						
 					}
 				}
-
+				else
+                {
+					uIManager.OffCharacterInfo();
+				}
 
 				if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Action)
 				{
@@ -270,30 +288,46 @@ public class GameManager : MonoBehaviour
 	}
 	public void CharacterChanageEnd()
     {
-		Ray ray = Camera.main.ScreenPointToRay(mousePos);
-		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
-		layerMask = ~layerMask;
-		if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
+		if (!isStart)
 		{
-			target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
-			targetTile = tilemapManager.ReturnTile(target);
-			mouse3DPos = raycastHit.point;
-		}
-		else
-		{
-			target = null;
-			targetTile = null;
-		}
-		if (target != null)
-		{
-			if (target.tag == "Player")
+			Ray ray = Camera.main.ScreenPointToRay(mousePos);
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+			layerMask = ~layerMask;
+			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
-				changePlayer = target.GetComponent<Player>();
+				target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+				targetTile = tilemapManager.ReturnTile(target);
+				mouse3DPos = raycastHit.point;
 			}
 			else
 			{
-				changePlayer = null;
+				target = null;
+				targetTile = null;
 			}
+			if (target != null)
+			{
+				if (target.tag == "CreateQuad")
+				{
+					var createCharacter = target.GetComponentInParent<CreateCharacter>();
+					if (createCharacter != change)
+					{
+						createCharacter.ChangeCharacter(changePlayer);
+						if (change != null)
+						{
+							change.DeleteCharacter();
+						}
+					}
+				}
+				if(changePlayer == null)
+                {
+					uIManager.OffCharacterInfo();
+				}
+				uIManager.OffCharacterIcon();
+				//uIManager.OffCharacterInfo();
+				changePlayer = null;
+				change = null;
+			}
+			
 		}
 	}
 	public void GetClickingMouse()

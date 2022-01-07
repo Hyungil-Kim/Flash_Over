@@ -44,6 +44,7 @@ public class Shop : MonoBehaviour
             }
         }
     }
+
     private void Start()
     {
         //실제시간으로 할때 필요
@@ -128,6 +129,8 @@ public class Shop : MonoBehaviour
             //현재 상점아이템리스트 추가
             GameData.userData.shopItemList.Add(gradeItem);
             SetList(gradeItem, i);
+
+            GameData.userData.SaveUserData(1);
         }
     }
     //public ItemDataBase GetRandomConsumItem(ItemGrade grade)

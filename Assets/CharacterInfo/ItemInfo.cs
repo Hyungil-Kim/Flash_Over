@@ -11,7 +11,7 @@ public class ItemInfo : MonoBehaviour
     public TextMeshProUGUI description;
     private ItemDataBase itemData;
     private ItemType itemType;
-
+    public GameObject weightFull;
     public void Init(ItemDataBase data, ItemType type)
     {
         itemData = data;
@@ -61,7 +61,8 @@ public class ItemInfo : MonoBehaviour
             default:
                 break;
         }
-        stat.text.Remove(0, 1);
+        stat.text = stat.text.Remove(0, 1);
+        stat.text = stat.text.Insert(stat.text.Length, $"\nweight : {itemData.dataTable.weight}");
         description.text = "";
     }
     public void None(ItemType type)
@@ -77,6 +78,12 @@ public class ItemInfo : MonoBehaviour
     {
         var parent = GetComponentInParent<CharacterInfo>();
         var character = parent.curCharacter;
+        if(character.weight < itemData.dataTable.weight)
+        {
+            //무게 부족
+            weightFull.SetActive(true);
+            return;
+        }
         if (itemData != null && itemData.owner != null)
         {
             alreadyEquip.Init(character, itemData, itemType);
@@ -94,5 +101,9 @@ public class ItemInfo : MonoBehaviour
             character.DisarmItem(itemType);
             parent.OnExitInventory();
         }
+    }
+    public void OnCheck()
+    {
+        weightFull.SetActive(false);
     }
 }

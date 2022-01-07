@@ -32,6 +32,11 @@ public class TrainingRoom : MonoBehaviour
     }
     public void Init()
     {
+        for (int i = 0; i < sliders.Length; i++)
+        {
+            sliders[i].Init((TrainingStatType)i);
+        }
+
         var st = $"Gold : {GameData.userData.gold}";
         gold.text = totalGold != 0 ? st.Insert(st.Length, $" - {totalGold}") : st;
         for (int i = 0; i < buttons.Length; i++)

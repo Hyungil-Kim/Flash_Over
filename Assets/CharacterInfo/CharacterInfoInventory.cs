@@ -18,6 +18,8 @@ public class CharacterInfoInventory : MonoBehaviour
 
     //private ItemType curType;
     //private ItemDataBase curData;
+
+ 
     private void Start()
     {
 

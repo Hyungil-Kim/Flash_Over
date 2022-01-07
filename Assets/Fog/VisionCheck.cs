@@ -36,8 +36,11 @@ public static class VisionCheck
                     AllTile.visionTile.Add(visionRange[j]);
                     //visionRange[j].CheakVisionSum = 0;
                 }
+                if(AllTile.prevVisionTile.Contains(visionRange[j]))
+                {
+                    AllTile.prevVisionTile.Remove(visionRange[j]);
+                }
             }
-            
         }
         foreach (var tile in AllTile.prevVisionTile)
         {

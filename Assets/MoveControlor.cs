@@ -81,7 +81,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1bef75fe-2796-49bc-9e4a-37d24c73959c"",
-                    ""path"": ""<Touchscreen>/touch0/tap"",
+                    ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""touch"",

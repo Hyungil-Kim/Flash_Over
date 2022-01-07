@@ -54,14 +54,15 @@ public class CharacterInfoStat : MonoBehaviour
         info.text = $"{curCharacter.characterClass}\n{curCharacter.characterGrade}  {curCharacter.characterName}";
 
         var statSB = new StringBuilder();
-        statSB.Append(string.Format($"Hp : {curCharacter.totalStats.hp}\n"));
-        statSB.Append(string.Format($"Lung : {curCharacter.totalStats.lung}\n"));
-        statSB.Append(string.Format($"Str : {curCharacter.totalStats.str}\n"));
+        statSB.Append(string.Format($"Hp : {curCharacter.totalStats.hp.stat}\n"));
+        statSB.Append(string.Format($"Lung : {curCharacter.totalStats.lung.stat}\n"));
+        statSB.Append(string.Format($"Str : {curCharacter.totalStats.str.stat}\n"));
         statSB.Append(string.Format($"Move : {curCharacter.totalStats.move}\n"));
         statSB.Append(string.Format($"Vision : {curCharacter.totalStats.vision}\n"));
         statSB.Append(string.Format($"Dmg : {curCharacter.totalStats.dmg}\n"));
         statSB.Append(string.Format($"Def : {curCharacter.totalStats.def}\n"));
-        statSB.Append(string.Format($"Sta : {curCharacter.totalStats.sta}"));
+        statSB.Append(string.Format($"Sta : {curCharacter.totalStats.sta}\n"));
+        statSB.Append(string.Format($"ÀÜ¿©¹«°Ô : {curCharacter.weight}"));
         stat.text = statSB.ToString();
 
         personality.text = "";

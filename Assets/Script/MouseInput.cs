@@ -26,6 +26,8 @@ public class MouseInput : MonoBehaviour
 		mousePoint.Mouse.Touch.performed += val => gameManager.ChangeMousePointer();
 		mousePoint.Mouse.Click.canceled += val => gameManager.GetClickedEndMouse();
 		mousePoint.Mouse.Touch.canceled += val => gameManager.CharacterChanageEnd();
+		
+
 	}
 
 

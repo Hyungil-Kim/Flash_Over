@@ -33,21 +33,29 @@ public class RestList : MonoBehaviour
     }
     public void Init()
     {
+        foreach (var cha in chaList)
+        {
+            cha.SetActive(false);
+        }
         var userCharacterList = GameData.userData.characterList;
         var characterSort = (CharacterOrder)sortIndex;
         switch (characterSort)
         {
             case CharacterOrder.Default:
-                sortUserCharacter = userCharacterList.Select((x) => x).ToList();
+                sortUserCharacter = userCharacterList.Where((x) => !x.isRest)
+                    .Select((x) => x).ToList();
                 break;
             case CharacterOrder.Str:
-                sortUserCharacter = userCharacterList.OrderBy((x) => x.baseStats.str).ToList();
+                sortUserCharacter = userCharacterList.Where((x) => !x.isRest)
+                    .OrderBy((x) => x.baseStats.str).ToList();
                 break;
             case CharacterOrder.Name:
-                sortUserCharacter = userCharacterList.OrderBy((x) => x.characterName).ToList();
+                sortUserCharacter = userCharacterList.Where((x) => !x.isRest)
+                    .OrderBy((x) => x.characterName).ToList();
                 break;
             case CharacterOrder.Hp:
-                sortUserCharacter = userCharacterList.OrderBy((x) => x.baseStats.hp).ToList();
+                sortUserCharacter = userCharacterList.Where((x) => !x.isRest)
+                    .OrderBy((x) => x.baseStats.hp).ToList();
                 break;
             default:
                 break;

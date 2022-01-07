@@ -36,6 +36,7 @@ public class ConsumableItemTable : MyDataTableBase<ConsumableItemTableData>
             tableData.statStr = table["STAT_STR"];
             tableData.duration = int.Parse(table["DURATION"]);
             tableData.grade = table["GRADE"];
+            tableData.weight = int.Parse(table["WEIGHT"]);
             //tableData.count = 1;
 
             //tableData.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{tableData.iconID}");

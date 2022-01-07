@@ -11,7 +11,7 @@ public class PlayerIdleState : State
 	}
 	public override void Enter()
 	{
-		fsm.moveHelper.transform.position = fsm.transform.position;
+		fsm.moveHelper.transform.localPosition = Vector3.zero;
 		fsm.moveHelper.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);

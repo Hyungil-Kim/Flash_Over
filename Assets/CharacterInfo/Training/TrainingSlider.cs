@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TrainingSlider : MonoBehaviour
 {
+    public TextMeshProUGUI text;
     public Slider slider;
     public RectTransform rectTransform; 
     public Image increase;
@@ -18,6 +20,7 @@ public class TrainingSlider : MonoBehaviour
     public void Init(TrainingStatType type , int increaseExp = 0)
     {
         var character = GetComponentInParent<TrainingCharacter>().curCharacter;
+       
         var sliderWidth = rectTransform.sizeDelta.x;
         float statMaxExp = 0;
         float statExp = 0;
@@ -35,16 +38,19 @@ public class TrainingSlider : MonoBehaviour
         switch (type)
         {
             case TrainingStatType.Str:
+                text.text = $"Èû:{character.totalStats.str.stat}";
                 statMaxExp = character.totalStats.str.maxExp;
                 statExp = character.totalStats.str.exp;
                 slider.value = statExp / statMaxExp;
                 break;
             case TrainingStatType.Lung:
+                text.text = $"Æó:{character.totalStats.lung.stat}";
                 statMaxExp = character.totalStats.lung.maxExp;
                 statExp = character.totalStats.lung.exp;
                 slider.value = statExp / statMaxExp;
                 break;
             case TrainingStatType.Hp:
+                text.text = $"Ã¼·Â:{character.totalStats.hp.stat}";
                 statMaxExp = character.totalStats.hp.maxExp;
                 statExp = character.totalStats.hp.exp;
                 slider.value = statExp / statMaxExp;
@@ -60,7 +66,7 @@ public class TrainingSlider : MonoBehaviour
         increaseNomalize = Mathf.Clamp(increaseNomalize, 0, 1 - (slider.value/* + oldIncreaseNomalize*/));
         increase.rectTransform.sizeDelta = new Vector2(/*oldIncrease +*/ sliderWidth * increaseNomalize, increase.rectTransform.sizeDelta.y);
 
-        if(exp + statExp >= statMaxExp)
+        if(normalExp + statExp >= statMaxExp)
         {
             levelUp.SetActive(true);
         }

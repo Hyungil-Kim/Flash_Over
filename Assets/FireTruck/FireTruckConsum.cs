@@ -23,31 +23,36 @@ public class FireTruckConsum : MonoBehaviour
         var consum1 = firemanInfo.CurCharacter.consum1;
         var consum2 = firemanInfo.CurCharacter.consum2;
 
-        if (consum1 != null && consum2 != null)
+        if(GameData.userData.gold < itemData.itemData.cost || firemanInfo.CurCharacter.weight < itemData.itemData.weight)
         {
-            if (consum1.dataTable.itemName == itemData.dataTable.itemName)
-            {
-                consum1.count++;
-            }
-            else if (consum2.dataTable.itemName == itemData.dataTable.itemName)
-            {
-                consum2.count++;
-            }
-            else
-            {
-                return;
-            }
+            return;
+        }
+
+        if(consum1 != null && consum1.dataTable.itemName == itemData.dataTable.itemName)
+        {
+            
+            consum1.count++;
+
+        }
+        else if (consum2 != null && consum2.dataTable.itemName == itemData.dataTable.itemName)
+        {
+
+            consum2.count++;
+
         }
         else if (consum1 == null)
         {
             firemanInfo.CurCharacter.consum1 = itemData;
-
         }
         else if (consum2 == null)
         {
             firemanInfo.CurCharacter.consum2 = itemData;
         }
-
+        else
+        {
+            return;
+        }
+        GameData.userData.gold -= itemData.itemData.cost;
         firemanInfo.CharacterInit();
     }
 }

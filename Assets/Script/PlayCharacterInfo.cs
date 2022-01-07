@@ -6,33 +6,70 @@ using TMPro;
 
 public class PlayCharacterInfo : MonoBehaviour
 {
-    public Image icon;
+
     public TextMeshProUGUI chaName;
     public TextMeshProUGUI chaStat;
+    public ClaimantInfo claimantInfo;
+    //private void Update()
+    //{
+    //    if(GameManager.instance.targetPlayer != null)
+    //    Init();
+    //}
+    private void OnEnable()
+    {
+        //Init();
+    }
     private void Update()
     {
-        if(GameManager.instance.targetPlayer != null)
         Init();
     }
     public void Init()
     {
-        var cd = GameManager.instance.targetPlayer.cd;
-        //icon.sprite
-        chaName.text = $"{cd.characterName}";
-        string tired = "ㅈㅈ";
-        if (cd.tiredScore < 30)
+        CharacterData cd = null;
+        if (!GameManager.instance.isStart)
         {
-            tired = "멀쩡함";
+            if(GameManager.instance.changePlayer !=null)
+            cd = GameManager.instance.changePlayer.cd;
         }
-        else if (cd.tiredScore < 70)
+        else
         {
-            tired = "피곤함";
+            if (GameManager.instance.targetPlayer != null)
+            {
+                cd = GameManager.instance.targetPlayer.cd;
+                if (GameManager.instance.targetPlayer.handList.Count > 0)
+                {
+                    var claimant = GameManager.instance.targetPlayer.handList[0].GetComponent<Claimant>();
+                    claimantInfo.gameObject.SetActive(true);
+                    claimantInfo.Init(claimant);
+                }
+                else
+                {
+                    claimantInfo.gameObject.SetActive(false);
+                }
+            }
         }
-        else if (cd.tiredScore < 100)
+        if (cd != null)
         {
-            tired = "주거";
+            chaName.text = $"{cd.characterName} 산소 : {cd.oxygen}";
+            string tired = "ㅈㅈ";
+            if (cd.tiredScore < 30)
+            {
+                tired = "멀쩡함";
+            }
+            else if (cd.tiredScore < 70)
+            {
+                tired = "피곤함";
+            }
+            else if (cd.tiredScore < 100)
+            {
+                tired = "주거";
+            }
+            chaStat.text = $"체력 : {cd.hp} 데미지 : {cd.totalStats.dmg}\n이동 : {cd.totalStats.move} 피로 : {tired}";
         }
-        chaStat.text = $"체력 : {cd.hp} 데미지 : {cd.totalStats.dmg}\n이동 : {cd.totalStats.move} 피로 : {tired}";
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
     

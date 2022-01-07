@@ -43,7 +43,7 @@
 	SubShader
 	{
 		Tags{ "Queue" = "Geometry+1" }
-			ZTest Off // 포그 플레인이 항상 화면 앞에 그려지게 함
+			ZTest NotEqual // 포그 플레인이 항상 화면 앞에 그려지게 함
 			Blend SrcAlpha OneMinusSrcAlpha
 			Color[_Color]
 			Pass

@@ -27,10 +27,6 @@ public class VisionRange : MonoBehaviour
 		var curQueue = crossQueue.Peek();
 		var curTile = tilemapManager.tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 
-		if (!curTile.isWall)
-		{
-
-		}
 		crossQueue.Dequeue();
 		var nextVisionList = curQueue.SetNextVision(tileObject);
 		var listCount = nextVisionList.Count;
@@ -48,7 +44,7 @@ public class VisionRange : MonoBehaviour
 			//		crossQueue.Enqueue(nextQueue);
 			//	}
 			//}
-			if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue))
+			if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue) /*&& !nextQueue.isWall*/)
 			{
 				crossResetQueue.Add(nextQueue);
 				//visiableTileIndexList.Add(nextQueue.index);
@@ -65,8 +61,11 @@ public class VisionRange : MonoBehaviour
 			curQueue = crossQueue.Peek();
 			curTile = tilemapManager.tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 
-			if (!curTile.isWall)
+			if (curTile.isWall)
 			{
+				curTile.CheakVision = true;
+				crossQueue.Dequeue();
+				continue;
 			}
 			crossQueue.Dequeue();
 			nextVisionList = curQueue.SetNextVision(tileObject);
@@ -87,13 +86,14 @@ public class VisionRange : MonoBehaviour
 				//	}
 				//}
 				nextQueue.CheakVisionSum = curTile.CheakVisionSum + 1 + curQueue.tileSmokeValue / 10;
-				if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue))
+				if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue)/*&& !nextQueue.isWall*/)
 				{
 					crossResetQueue.Add(nextQueue);
 					//visiableTileIndexList.Add(nextQueue.index);
 					crossQueue.Enqueue(nextQueue);
 				}
 			}
+			
 			curTile.CheakVision = true;
 		}
 		return crossResetQueue;

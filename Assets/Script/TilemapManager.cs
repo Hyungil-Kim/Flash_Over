@@ -23,6 +23,7 @@ public class TilemapManager : MonoBehaviour
 	}
 	public void Start()
 	{
+		//gameManager = GetComponent<GameManager>();
 	}
 	//타일맵관련
 	public GroundTile ReturnTile(GameObject gameObject)

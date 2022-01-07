@@ -541,6 +541,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 01ff1084-fa02-4be8-b8ec-c2f08cbfefec
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 92bd3772-8795-4cd7-82dd-9f117ecf781c
+    m_ActionName: Mouse/Touch[/Device Simulator Touchscreen/touch0/tap]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Mouse
@@ -562,10 +566,10 @@ MonoBehaviour:
   prevStateName: 0
   gameManager: {fileID: 0}
   moveHelper: {fileID: 190663546081330630}
-  damege: 10
-  move: 5
-  hp: 20
   index: 0
+  handFull: 0
+  handList: []
+  eventNum: 0
 --- !u!114 &190663547299136464
 MonoBehaviour:
   m_ObjectHideFlags: 0

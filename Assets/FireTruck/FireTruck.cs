@@ -82,6 +82,23 @@ public class FireTruck : MonoBehaviour
             fireman.Value.isSelected = false;
         }
     }
+    public void OnExitConsumShop()
+    {
+        foreach (var fireman in outFireMan)
+        {
+            if (fireman.Value.consum1 != null)
+            {
+                GameData.userData.gold += fireman.Value.consum1.count * fireman.Value.consum1.itemData.cost;
+                fireman.Value.consum1 = null;
+            }
+            if (fireman.Value.consum2 != null)
+            {
+                GameData.userData.gold += fireman.Value.consum2.count * fireman.Value.consum2.itemData.cost;
+                fireman.Value.consum2 = null;
+            }
+        }
+    }
+
     public void SetCurFireMan(int index)
     {
         curFiremanIndex = index;

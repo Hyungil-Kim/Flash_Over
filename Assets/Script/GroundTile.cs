@@ -97,6 +97,7 @@ public class GroundTile : MonoBehaviour
 		{
 			Turn.smokes.Add(this.GetComponentInChildren<Smoke>(true));
 		}
+		CheckParticle();
 	}
 	public List<GroundTile> SetNextVision(GroundTile playerTile)
     {
@@ -438,17 +439,27 @@ public class GroundTile : MonoBehaviour
 		}
         foreach (var elem in visionList)
         {
-			if(elem.tag == "Wall" && cheakVision)
+			if(elem.tag == "Wall" && cheakVision )
             {
 				var material = elem.GetComponent<Renderer>().material;
 				material.renderQueue = 3020;
 				//material.shader.FindPropertyIndex("")
             }				
-			else if( elem.tag == "Wall")
+			else if( elem.tag == "Wall" && !cheakVision)
             {
 				var material = elem.GetComponent<Renderer>().material;
 				material.renderQueue = 2000; 
 			}
+			if(elem.tag == "Claimant" && cheakVision)
+            {
+				elem.GetComponent<Renderer>().enabled = true;
+				var material = elem.GetComponent<Renderer>().material;
+				material.renderQueue = 3020;
+			}
+			else if(elem.tag == "Claimant" && !cheakVision)
+            {
+				elem.GetComponent<Renderer>().enabled = false;
+            }
         }
 	}
 	public void ParticleOff()

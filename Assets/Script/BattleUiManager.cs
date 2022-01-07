@@ -52,7 +52,8 @@ public class BattleUiManager : MonoBehaviour
 			case PlayerState.Move:
 				tilemapManager.ResetFloodFill();
 				gameManager.targetPlayer.curStateName = PlayerState.Idle;
-				gameManager.targetPlayer.moveHelper.transform.position = gameManager.targetPlayer.transform.position;
+				//gameManager.targetPlayer.moveHelper.transform.position = gameManager.targetPlayer.transform.position;
+				gameManager.targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
 				//gameManager.cameraController.CameraForObjectsCenter(gameManager.pretargetPlayer.gameObject);
 				gameManager.targetPlayer = null;
 				gameManager.playerMove.moveList.Clear();

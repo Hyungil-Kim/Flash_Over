@@ -25,7 +25,11 @@ public class AlreadyEquip : MonoBehaviour
     }
     public void OnYes()
     {
-        cd.EquipItem(id, it);
+        //임시로 처리 나중에 UI추가해야할듯 ?
+        if (cd.weight > id.dataTable.weight)
+        {
+            cd.EquipItem(id, it);
+        }
         if(exit != null)
         {
             exit();

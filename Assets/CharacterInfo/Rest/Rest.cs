@@ -57,6 +57,7 @@ public class Rest : MonoBehaviour
     {
         curCd.restCount = 1;
         GameData.userData.restList.Add(curIndex, curCd);
+        curCd.isRest = true;
         OnClickunRest();
     }
     public void OnClickunRest()

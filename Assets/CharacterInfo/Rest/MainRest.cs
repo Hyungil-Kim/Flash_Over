@@ -48,6 +48,7 @@ public class MainRest : MonoBehaviour
             cd.Value.restCount++;
             if(cd.Value.restCount == 3)
             {
+                cd.Value.isRest = false;
                 cd.Value.tiredScore = 0;
                 keyList.Add(cd.Key);
                 GameData.userData.restEndList.Add(cd.Value);

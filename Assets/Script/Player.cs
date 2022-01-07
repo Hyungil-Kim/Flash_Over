@@ -33,11 +33,15 @@ public class Player : FSM<PlayerState>
         AddState(PlayerState.Action, new PlayerAttackState(this));
         AddState(PlayerState.End, new PlayerEndState(this));
         SetState(PlayerState.Idle);
+        moveHelper.transform.localPosition = Vector3.zero;
     }
 
     void Update()
     {
         FSMUpdate();
     }
-
+    private void OnDestroy()
+    {
+        Turn.players.Remove(this);
+    }
 }

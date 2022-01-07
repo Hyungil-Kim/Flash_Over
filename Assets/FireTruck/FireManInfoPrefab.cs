@@ -13,6 +13,7 @@ public class FireManInfoPrefab : MonoBehaviour
     public FireManItem oxygenTank;
     public TextMeshProUGUI info;
     public TextMeshProUGUI stat;
+    public TextMeshProUGUI weight;
 
     public FireManItem consum1;
     public FireManItem consum2;
@@ -40,11 +41,12 @@ public class FireManInfoPrefab : MonoBehaviour
         statSB.Append(string.Format($"Sta : {cd.totalStats.sta}"));
         stat.text = statSB.ToString();
         var firemanInfo = GetComponentInParent<FireManInfo>();
-
+        weight.text = $"남은 무게 : {cd.weight}";
+        
         hose.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
         bunkerGear.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
         oxygenTank.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
-        consum1.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
-        consum2.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
+        consum1.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd, 1));
+        consum2.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd, 2));
     }
 }

@@ -45,7 +45,7 @@ public class TrainingStat
     public int stat;
     public int exp;
     public int level;
-    public int statIncrease;
+    public int statIncrease = 2;
 
     public int maxExp = 100;
     private int maxLevel = 99;
@@ -90,6 +90,40 @@ public class CharacterData
     public CharacterStat totalStats = new CharacterStat();
 
     public int hp;
+
+    public int oxygen;
+
+    public int addWeight;
+
+    public int weight
+    {
+        get
+        {
+            var totalWeight = 0;
+            if(hose != null)
+            {
+                totalWeight += hose.hoseData.weight;
+            }
+            if(bunkerGear != null)
+            {
+                totalWeight += bunkerGear.bunkerGearData.weight;
+            }
+            if(oxygenTank != null)
+            {
+                totalWeight += oxygenTank.oxygenTankData.weight;
+            }
+            if(consum1 != null)
+            {
+                totalWeight += consum1.itemData.weight * consum1.count;
+            }
+            if (consum2 != null)
+            {
+                totalWeight += consum2.itemData.weight * consum2.count;
+            }
+            totalWeight += addWeight;
+            return totalStats.str.stat - totalWeight;
+        }
+    }
 
     public int stress;
 
@@ -304,7 +338,8 @@ public class CharacterData
 
         //Ω∫≈› √÷Ω≈»≠
         StatInit();
-        hp = totalStats.hp.stat;
+        totalStats.str.stat *= 5;
+        totalStats.hp.stat *= 2;
     }
     //Ω∫≈› √ﬂ∞°
     public void AddStat(CharacterStatType statType, float statValue, CharacterStat stats)
@@ -439,5 +474,45 @@ public class CharacterData
         }
         StatInit();
     }
-
+    public void UseConsumItem(int slot)
+    {
+        
+        switch (slot)
+        {
+            case 1:
+                if(consum1 != null)
+                {
+                    consum1.count--;
+                    if(consum1.count == 0)
+                    {
+                        consum1 = null;
+                    }
+                }
+                break;
+            case 2:
+                if (consum2 != null)
+                {
+                    consum2.count--;
+                    if (consum2.count == 0)
+                    {
+                        consum2 = null;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    public void GameStart()
+    {
+        hp = totalStats.hp.stat;
+        oxygen = totalStats.lung.stat;
+        addWeight = 0;
+    }
+    public void SetStat()
+    {
+        StatInit();
+        totalStats.str.stat *= 5;
+        totalStats.hp.stat *= 2;
+    }
 }
