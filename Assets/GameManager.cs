@@ -227,10 +227,8 @@ public class GameManager : MonoBehaviour
 						playerMove.moveList.Add(targetPlayer.transform.position);
 						hand.transform.position = new Vector3(target.transform.position.x, targetPlayer.handList[0].transform.position.y, target.transform.position.z);
 						//hand.SetActive(true);
-						if (hand.tag == "Claimant")
-						{
+						if(hand.tag == "Claimant")
 							hand.GetComponent<Claimant>().SetState(ClaimantState.End);
-						}
 						targetPlayer.handList.RemoveAt(0);
 						playerMove.go = true;
 						targetPlayer.handFull = false;
