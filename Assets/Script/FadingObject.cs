@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.Tilemaps;
 public class FadingObject : MonoBehaviour, IEquatable<FadingObject>
 {
     public List<Renderer> Renderers = new List<Renderer>();
@@ -11,6 +12,8 @@ public class FadingObject : MonoBehaviour, IEquatable<FadingObject>
     [HideInInspector]
     public float InitialAlpha;
 
+    public Vector3Int cellpos;
+    private Tilemap tilemap;
     private void Awake()
     {
         Position = transform.position;
@@ -24,8 +27,16 @@ public class FadingObject : MonoBehaviour, IEquatable<FadingObject>
         }
 
         InitialAlpha = Materials[0].color.a;
+
+        tilemap = GetComponentInParent<Tilemap>();
+        cellpos = tilemap.WorldToCell(transform.position);
+        AllTile.wallTile.Add(this);
     }
 
+    private void Start()
+    {
+
+    }
     public bool Equals(FadingObject other)
     {
         return Position.Equals(other.Position);

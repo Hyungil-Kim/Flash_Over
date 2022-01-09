@@ -112,6 +112,27 @@ public class AllTileMesh : MonoBehaviour
             tris[trisIndex + 5] = verticesIndex + 1;
             count++;
         }
+        //foreach (var tile in allTile)
+        //{
+        //    var material = tile.GetComponent<Renderer>().material;
+        //    material.renderQueue = 3020;
+        //}
+
+        //Vector3[] vertices = new Vector3[4];
+        //int[] tris = new int[6];
+        //var size = tilemap.size;
+        //Debug.Log(size);
+        //vertices[0] = new Vector3(-size.x/2 , -size.z, -size.y / 2);
+        //vertices[1] = new Vector3(size.x / 2, -size.z, -size.y / 2);
+        //vertices[2] = new Vector3(-size.x / 2, -size.z, size.y / 2);
+        //vertices[3] = new Vector3(size.x / 2, -size.z, size.y / 2);
+
+        //tris[0] = 0;
+        //tris[1] = 2;
+        //tris[2] = 1;
+        //tris[3] = 2;
+        //tris[4] = 3;
+        //tris[5] = 1;
 
         viewMesh.vertices = vertices;
         viewMesh.triangles = tris;

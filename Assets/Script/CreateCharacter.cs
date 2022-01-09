@@ -13,12 +13,29 @@ public class CreateCharacter : MonoBehaviour
     }
     public void Create()
     {
-        if (GameData.userData.fireManList.ContainsKey(characterIndex))
-        {
-            character = Instantiate(characterPrefab, transform);
-            character.GetComponent<Player>().cd = GameData.userData.fireManList[characterIndex];
-            character.GetComponent<Player>().cd.GameStart();
-        }
+        //if (GameData.userData.fireManList.ContainsKey(characterIndex))
+        //{
+        //    character = Instantiate(characterPrefab, transform);
+        //    CharacterData cd = new CharacterData();
+        //    cd.SetCharacter();
+        //    cd.EquipItem(new HoseData( MyDataTableMgr.hoseTable.GetTable(1)), ItemType.Hose);
+        //    cd.EquipItem(new HoseData( MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
+        //    cd.EquipItem(new HoseData( MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
+
+        //    character.GetComponent<Player>().cd = cd;
+        //    //character.GetComponent<Player>().cd = GameData.userData.fireManList[characterIndex];
+        //    character.GetComponent<Player>().cd.GameStart();
+        //}
+        character = Instantiate(characterPrefab, transform);
+        CharacterData cd = new CharacterData();
+        cd.SetCharacter();
+        cd.EquipItem(new HoseData(MyDataTableMgr.hoseTable.GetTable(1)), ItemType.Hose);
+        cd.EquipItem(new HoseData(MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
+        cd.EquipItem(new HoseData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
+
+        character.GetComponent<Player>().cd = cd;
+        //character.GetComponent<Player>().cd = GameData.userData.fireManList[characterIndex];
+        character.GetComponent<Player>().cd.GameStart();
     }
     public void ChangeCharacter(Player player)
     {

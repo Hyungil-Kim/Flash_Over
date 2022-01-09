@@ -10,4 +10,6 @@ public static class AllTile
         = new List<GroundTile>();
     public static List<GroundTile> prevVisionTile
         = new List<GroundTile>();
+    public static List<FadingObject> wallTile
+        = new List<FadingObject>();
 }
