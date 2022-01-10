@@ -15,7 +15,35 @@ public class MouseInput : MonoBehaviour
 	private GameManager gameManager;
 	public float minZoomInch = 0.2f;
 	public float maxZoomInch = 0.5f;
-	public void Awake()
+
+	public void OnClick(InputAction.CallbackContext ctx)
+    {
+        switch (ctx.phase)
+        {
+            case InputActionPhase.Disabled:
+                break;
+            case InputActionPhase.Waiting:
+                break;
+            case InputActionPhase.Started:
+                break;
+            case InputActionPhase.Performed:
+                switch (ctx.interaction)
+                {
+					case MultiTapInteraction:
+						//GameManager.instance.uIManager.gameclearUI.SkipResult();
+						break;
+                    default:
+                        break;
+                }
+                break;
+            case InputActionPhase.Canceled:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void Awake()
 	{
 		gameManager = GetComponent<GameManager>();
 		mousePoint = new MoveControlor();
@@ -26,8 +54,7 @@ public class MouseInput : MonoBehaviour
 		mousePoint.Mouse.Touch.performed += val => gameManager.ChangeMousePointer();
 		mousePoint.Mouse.Click.canceled += val => gameManager.GetClickedEndMouse();
 		mousePoint.Mouse.Touch.canceled += val => gameManager.CharacterChanageEnd();
-		
-
+		mousePoint.Mouse.Touch.performed += val => gameManager.uIManager.gameclearUI.SkipResult(val); 
 	}
 
 

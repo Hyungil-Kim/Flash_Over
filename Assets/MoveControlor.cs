@@ -51,7 +51,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""id"": ""92bd3772-8795-4cd7-82dd-9f117ecf781c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""MultiTap(tapDelay=0.1)"",
                     ""initialStateCheck"": false
                 }
             ],
