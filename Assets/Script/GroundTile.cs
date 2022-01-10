@@ -438,7 +438,7 @@ public class GroundTile : MonoBehaviour
 			else if( elem.tag == "Wall" && !cheakVision)
             {
 				var material = elem.GetComponent<Renderer>().material;
-				material.renderQueue = 3000; 
+				material.renderQueue = 2000; 
 			}
 			if(elem.tag == "Claimant" && cheakVision)
             {

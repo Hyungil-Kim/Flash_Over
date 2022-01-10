@@ -59,26 +59,67 @@ public class WallTileMesh : MonoBehaviour
     {
         viewMesh.Clear();
 
-        Vector3[] vertices = new Vector3[allTile.Count * 4];
-        int[] tris = new int[allTile.Count * 6];
+        Vector3[] vertices = new Vector3[allTile.Count * 4 * 5];
+        int[] tris = new int[allTile.Count * 6 * 5];
 
         int count = 0;
         foreach (var tile in allTile)
         {
-            var worldPos = tilemap.CellToWorld(tile.cellpos);
-            var verticesIndex = count * 4;
-            var trisIndex = count * 6;
-            vertices[verticesIndex] = new Vector3(worldPos.x, worldPos.y, worldPos.z);
-            vertices[verticesIndex + 1] = new Vector3(worldPos.x + 1, worldPos.y, worldPos.z);
-            vertices[verticesIndex + 2] = new Vector3(worldPos.x, worldPos.y, worldPos.z + 1);
-            vertices[verticesIndex + 3] = new Vector3(worldPos.x + 1, worldPos.y, worldPos.z + 1);
+            for (int i = 0; i < 5; i++)
+            {
+                var worldPos = tilemap.CellToWorld(tile.cellpos);
+                var verticesIndex = count * 20 + (4 * i);
+                var trisIndex = count * 30 + (6 * i);
+                switch (i)
+                {
+                    case 0:
+                        vertices[verticesIndex] = new Vector3(worldPos.x, worldPos.y, worldPos.z);
+                        vertices[verticesIndex + 1] = new Vector3(worldPos.x + 1, worldPos.y, worldPos.z);
+                        vertices[verticesIndex + 2] = new Vector3(worldPos.x, worldPos.y, worldPos.z + 1);
+                        vertices[verticesIndex + 3] = new Vector3(worldPos.x + 1, worldPos.y, worldPos.z + 1);
 
-            tris[trisIndex] = verticesIndex;
-            tris[trisIndex + 1] = verticesIndex + 2;
-            tris[trisIndex + 2] = verticesIndex + 1;
-            tris[trisIndex + 3] = verticesIndex + 2;
-            tris[trisIndex + 4] = verticesIndex + 3;
-            tris[trisIndex + 5] = verticesIndex + 1;
+                        break;
+                    case 1:
+                        vertices[verticesIndex + 1] = new Vector3(worldPos.x + 0.01f, worldPos.y, worldPos.z + 0.01f);
+                        vertices[verticesIndex] = new Vector3(worldPos.x + 1 + 0.01f, worldPos.y, worldPos.z + 0.01f);
+                        vertices[verticesIndex + 3] = new Vector3(worldPos.x + 0.01f, worldPos.y -1, worldPos.z + 0.01f);
+                        vertices[verticesIndex + 2] = new Vector3(worldPos.x + 1 + 0.01f, worldPos.y -1, worldPos.z + 0.01f);
+
+                        break;
+                    case 2:
+                        vertices[verticesIndex + 1] = new Vector3(worldPos.x + 1 - 0.01f, worldPos.y, worldPos.z - 0.01f);
+                        vertices[verticesIndex] = new Vector3(worldPos.x + 1 - 0.01f, worldPos.y, worldPos.z + 1 - 0.01f);
+                        vertices[verticesIndex + 3] = new Vector3(worldPos.x + 1 - 0.01f, worldPos.y - 1, worldPos.z - 0.01f);
+                        vertices[verticesIndex + 2] = new Vector3(worldPos.x + 1 - 0.01f, worldPos.y - 1, worldPos.z + 1 - 0.01f);
+
+                        break;
+                    case 3:
+                        vertices[verticesIndex + 1] = new Vector3(worldPos.x + 1 - 0.01f, worldPos.y, worldPos.z + 1 - 0.01f);
+                        vertices[verticesIndex] = new Vector3(worldPos.x - 0.01f, worldPos.y, worldPos.z + 1 - 0.01f);
+                        vertices[verticesIndex + 3] = new Vector3(worldPos.x + 1 - 0.01f, worldPos.y - 1, worldPos.z + 1 - 0.01f);
+                        vertices[verticesIndex + 2] = new Vector3(worldPos.x - 0.01f, worldPos.y - 1, worldPos.z + 1 - 0.01f);
+
+                        break;
+                    case 4:
+                        vertices[verticesIndex + 1] = new Vector3(worldPos.x + 0.01f, worldPos.y, worldPos.z + 1 + 0.01f);
+                        vertices[verticesIndex] = new Vector3(worldPos.x + 0.01f, worldPos.y, worldPos.z + 0.01f);
+                        vertices[verticesIndex + 3] = new Vector3(worldPos.x + 0.01f, worldPos.y -1, worldPos.z + 1 + 0.01f);
+                        vertices[verticesIndex + 2] = new Vector3(worldPos.x + 0.01f, worldPos.y - 1, worldPos.z + 0.01f);
+
+                        break;
+                    default:
+                        break;
+                }
+
+                tris[trisIndex] = verticesIndex;
+                tris[trisIndex + 1] = verticesIndex + 2;
+                tris[trisIndex + 2] = verticesIndex + 1;
+                tris[trisIndex + 3] = verticesIndex + 2;
+                tris[trisIndex + 4] = verticesIndex + 3;
+                tris[trisIndex + 5] = verticesIndex + 1;
+            }
+
+
             count++;
         }
 
@@ -86,4 +127,36 @@ public class WallTileMesh : MonoBehaviour
         viewMesh.triangles = tris;
         viewMesh.RecalculateNormals();
     }
+    //public void DrawMesh()
+    //{
+    //    viewMesh.Clear();
+
+    //    Vector3[] vertices = new Vector3[allTile.Count * 4 * 5];
+    //    int[] tris = new int[allTile.Count * 6 * 5];
+
+    //    int count = 0;
+    //    foreach (var tile in allTile)
+    //    {
+    //        var worldPos = tilemap.CellToWorld(tile.cellpos);
+    //        var verticesIndex = count * 4;
+    //        var trisIndex = count * 6;
+    //        vertices[verticesIndex] = new Vector3(worldPos.x, worldPos.y, worldPos.z);
+    //        vertices[verticesIndex + 1] = new Vector3(worldPos.x + 1, worldPos.y, worldPos.z);
+    //        vertices[verticesIndex + 2] = new Vector3(worldPos.x, worldPos.y, worldPos.z + 1);
+    //        vertices[verticesIndex + 3] = new Vector3(worldPos.x + 1, worldPos.y, worldPos.z + 1);
+
+    //        tris[trisIndex] = verticesIndex;
+    //        tris[trisIndex + 1] = verticesIndex + 2;
+    //        tris[trisIndex + 2] = verticesIndex + 1;
+    //        tris[trisIndex + 3] = verticesIndex + 2;
+    //        tris[trisIndex + 4] = verticesIndex + 3;
+    //        tris[trisIndex + 5] = verticesIndex + 1;
+
+    //        count++;
+    //    }
+
+    //    viewMesh.vertices = vertices;
+    //    viewMesh.triangles = tris;
+    //    viewMesh.RecalculateNormals();
+    //}
 }
