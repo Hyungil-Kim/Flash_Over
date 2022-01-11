@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
-	public void GetClickedEndMouse()
+	public void GetClickedEndMouse(GameObject gameObject = null)
 	{
 
 		if (!point && isStart)
@@ -134,7 +134,14 @@ public class GameManager : MonoBehaviour
 			layerMask = ~layerMask;
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
-				target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+				if (gameObject != null)
+				{
+					target = gameObject;
+				}
+				else
+				{
+					target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+				}
 				targetTile = tilemapManager.ReturnTile(target);
 				mouse3DPos = raycastHit.point;
 			}
@@ -148,7 +155,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (target.tag == "Player")
 				{
-					if (targetPlayer == null || targetPlayer.curStateName != PlayerState.Move)
+					if (targetPlayer == null)
 					{
 						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
 						Debug.Log(targetPlayer);
@@ -159,6 +166,7 @@ public class GameManager : MonoBehaviour
 								tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
 								playerMove.ResetMoveList();
 								playerMove.AddMoveList(targetTile.transform.position, setPathColor);
+								move = targetPlayer.cd.totalStats.move;
 								targetPlayer.ChangeState(PlayerState.Move);
 								break;
 							case PlayerState.Move:

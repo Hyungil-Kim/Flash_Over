@@ -27,7 +27,7 @@ public class Claimant : FSM<ClaimantState>
 	public int claimantArea;
 	public int hp;
 	public int airGauge;//산소통 이름변경 필요
-	public int speed =5;
+	public int speed;
 	public int weight;
 	public int num = -1;
 	public bool moveEnd;

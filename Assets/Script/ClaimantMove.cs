@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class ClaimantMove
 {
 	private bool breath = false;
@@ -9,10 +9,10 @@ public class ClaimantMove
 	{
 		EndMove(claimant);
 	}
-	public void EndMove(Claimant claimant,List<GroundTile>list)
+	public void EndMove(Claimant claimant, List<GroundTile> list)
 	{
 		claimant.SetState(ClaimantState.End);
-		foreach(var elem in list)
+		foreach (var elem in list)
 		{
 			elem.Reset();
 		}
@@ -23,20 +23,41 @@ public class ClaimantMove
 		claimant.SetState(ClaimantState.End);
 		claimant.moveEnd = true;
 	}
-	public IEnumerator MoveToPlayer(Claimant claimant,Player targetPlayer)
+	public IEnumerator MoveToPlayer(Claimant claimant, Player targetPlayer)
 	{
 		var gameManager = GameManager.instance;
-		var preTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
-		var targetTile = gameManager.tilemapManager.ReturnTile(targetPlayer.gameObject);
-		var pathList = new List<GroundTile>();
+		var startTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
+		var goalTile = gameManager.tilemapManager.ReturnTile(targetPlayer.gameObject);
+		var path = gameManager.tilemapManager.SetAstar(startTile, goalTile);
+		var targetTile = startTile;
+		for (var i = path.Count - 1; i >= 0; --i)
+		{
+			if (path[i].fillList.Count == 0)
+			{
+				targetTile = path[i];
+				break;
+			}
+
+			foreach (var adjcent in path[i].nextTileList)
+			{
+				if (adjcent.fillList.Count == 0)
+				{
+					targetTile = adjcent;
+					break;
+				}
+			}
+		}
+
+		if (startTile == targetTile)
+			yield break;
+
+		var pathList = gameManager.tilemapManager.SetAstar(startTile, targetTile);
 		var go = true;
 		var num = 0;
 		var moveSpeed = 5;
-		pathList = gameManager.tilemapManager.SetAstar(preTile, targetTile);
-
 		while (go)
 		{
-			if (pathList.Count ==0) yield break;
+			if (pathList.Count == 0) yield break;
 			var newPos = new Vector3(pathList[num].transform.position.x, claimant.transform.position.y, pathList[num].transform.position.z);
 			if (claimant.transform.position != newPos)
 			{
@@ -45,13 +66,13 @@ public class ClaimantMove
 				{
 					claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, newPos, moveSpeed * Time.deltaTime);
 					claimant.transform.LookAt(newPos);
-					BreathCheck(newPos,claimant);
+					BreathCheck(newPos, claimant);
 				}
 				yield return 0;
 			}
 			else
 			{
-				if (num < pathList.Count - 1 && num <= claimant.speed && !targetTile.nextTileList.Contains(pathList[num]))
+				if (num < pathList.Count - 1 && num <= claimant.speed)
 				{
 					num++;
 					breath = false;
@@ -60,27 +81,55 @@ public class ClaimantMove
 				{
 					num = 0;
 					go = false;
-					EndMove(claimant,pathList);
+					EndMove(claimant, pathList);
 				}
 			}
 		}
 	}
 	public IEnumerator MoveConfuse(Claimant claimant)
 	{
-		var preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
+		var gameManager = GameManager.instance;
+		var preTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
 		var go = true;
 		var num = 0;
 		var moveSpeed = 5;
-		var root = Random.Range(0, preTile.nextTileList.Count);
+		var path = Random.Range(0, preTile.nextTileList.Count);
+		claimant.transform.position = new Vector3(preTile.transform.position.x, claimant.transform.position.y, preTile.transform.position.z);
 		while (go)
 		{
-			var newPos =new Vector3(preTile.nextTileList[root].transform.position.x , claimant.transform.position.y, preTile.nextTileList[root].transform.position.z);
-			if(preTile.nextTileList[root].tileIsFire && num <=claimant.speed && preTile.nextTileList[root].isWall)
+			var newPos = new Vector3(preTile.nextTileList[path].transform.position.x, claimant.transform.position.y, preTile.nextTileList[path].transform.position.z);
+			var newTile = gameManager.tilemapManager.ReturnTile(newPos);
+
+			if (newTile.fillList.Count != 0)
 			{
-				num++;
+				if (num <= claimant.speed)
+				{
+					num++;
+					preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
+					path = Random.Range(0, preTile.nextTileList.Count);
+				}
+				else
+				{
+					num = 0;
+					go = false;
+					EndMove(claimant);
+					while (claimant.transform.position != preTile.transform.position)
+					{
+						var prePos = new Vector3(preTile.transform.position.x, claimant.transform.position.y, preTile.transform.position.z);
+						var dis = Vector3.Distance(claimant.transform.position, prePos);
+						if (dis > 0)
+						{
+							claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, prePos, moveSpeed * Time.deltaTime);
+							claimant.transform.LookAt(prePos);
+						}
+						yield return 0;
+					}
+					yield break;
+				}
 				continue;
 			}
-			if (claimant.transform.position != newPos && num <= claimant.speed && preTile.nextTileList[root].isWall)
+
+			if (claimant.transform.position != newPos)
 			{
 				var dis = Vector3.Distance(claimant.transform.position, newPos);
 				if (dis > 0)
@@ -96,7 +145,7 @@ public class ClaimantMove
 				{
 					num++;
 					preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
-					root = Random.Range(0, preTile.nextTileList.Count);
+					path = Random.Range(0, preTile.nextTileList.Count);
 				}
 				else
 				{
@@ -107,7 +156,7 @@ public class ClaimantMove
 			}
 		}
 	}
-	public void BreathCheck(Vector3 newPos,Claimant claimant)
+	public void BreathCheck(Vector3 newPos, Claimant claimant)
 	{
 		var gameManager = GameManager.instance;
 		if (!breath)

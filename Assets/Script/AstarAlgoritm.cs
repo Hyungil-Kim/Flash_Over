@@ -11,13 +11,13 @@ public class AstarAlgoritm
 	private List<GroundTile> openList;
 	private List<GroundTile> closedList;
 	public List<GroundTile> finalList;
+
 	public List<GroundTile> PathFinding(GroundTile startTile ,GroundTile endTile)
 	{
 		openList = new List<GroundTile>();
 		closedList = new List<GroundTile>();
 		finalList = new List<GroundTile>();
 		astartTarget = endTile;
-
 		openList.Add(startTile);
 		while (openList.Count > 0)
 		{
@@ -36,9 +36,9 @@ public class AstarAlgoritm
 			{
 				GroundTile endCurTile = endTile;
 				while(endCurTile != startTile)
-				{
-					finalList.Add(endCurTile);
-					endCurTile = endCurTile.ParentTile;
+				{ 
+						finalList.Add(endCurTile);
+						endCurTile = endCurTile.ParentTile;
 				}
 				finalList.Add(startTile);
 				finalList.Reverse();
@@ -56,7 +56,7 @@ public class AstarAlgoritm
 
 	private void OpenListAdd(GroundTile nextTile)
 	{
-		if(!nextTile.isWall && !closedList.Contains(nextTile) && nextTile.gameObject.activeSelf && !nextTile.tileIsFire && (nextTile == astartTarget && nextTile.isClaimant || nextTile.isPlayer))
+		if(!nextTile.isWall && !closedList.Contains(nextTile) && nextTile.gameObject.activeSelf&& !nextTile.tileIsFire)
 		{
 			GroundTile neighborTile = nextTile;
 			int moveCost = curTile.G + 10;
@@ -66,7 +66,6 @@ public class AstarAlgoritm
 				neighborTile.G = moveCost;
 				neighborTile.H = (Mathf.Abs(neighborTile.cellpos.x - astartTarget.cellpos.x) + Mathf.Abs(neighborTile.cellpos.y - astartTarget.cellpos.y)) * 10;
 				neighborTile.ParentTile = curTile;
-
 				openList.Add(neighborTile);
 			}
 		}
