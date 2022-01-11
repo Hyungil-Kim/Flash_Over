@@ -149,6 +149,8 @@ public class FloodFillAlgorism
 
 	public List<GroundTile> ReturnFloodFill(Tilemap tilemap, Vector3 startPos, Color newColor, int speed)
 	{
+		objectQueue.Clear();
+		resetQueue.Clear();
 		cellPos = tilemap.WorldToCell(startPos);
 		tileObject = tilemap.GetInstantiatedObject(cellPos).GetComponent<GroundTile>();
 		objectQueue.Enqueue(tileObject);
@@ -159,7 +161,7 @@ public class FloodFillAlgorism
 			var curQueue = objectQueue.Peek();
 			var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 
-			if (!curTile.isWall)
+			if (!curTile.isWall && newColor != Color.clear)
 			{
 				curTile.SetTileColor(newColor);
 			}
@@ -172,9 +174,9 @@ public class FloodFillAlgorism
 				if (!ischeck && nextObject.activeSelf)
 				{
 					nextQueue.checkSum = curTile.GetComponent<GroundTile>().checkSum + 1;
-					if (!resetQueue.Contains(nextQueue))
+					if (!resetQueue.Contains(curQueue))
 					{
-						resetQueue.Enqueue(nextQueue);
+						resetQueue.Enqueue(curQueue);
 					}
 					if (nextQueue.checkSum <= speed && !nextQueue.isWall)
 					{

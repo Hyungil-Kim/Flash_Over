@@ -33,38 +33,39 @@ public static class Turn
 		{
 			for (int i = 0; i <= maxArea; i++)
 			{
-                foreach (var forFire in fireCamera)
-                {
-					if(forFire.areaNum==i)
-                    {
+				foreach (var forFire in fireCamera)
+				{
+					if (forFire.areaNum == i)
+					{
 						Camera.main.transform.position = forFire.transform.position;
 						yield return new WaitForSeconds(1.0f);
-                    }
-					
-                }
+					}
+
+				}
 				var sortMonster = fires.Where((x) => x.fireArea == i);
 				foreach (var monster in sortMonster)
 				{
 					monster.FireAct();
 					monster.ChangeState(FireState.End);
 				}
-				foreach (var elem in sortMonster)
+
+				foreach(var all in AllTile.visionTile)
 				{
-					if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))
+					if (all.tileIsFire && all.tileArea == i)
 					{
 						yield return new WaitForSeconds(0.5f);
 						break;
 					}
 				}
+
 				fires[0].FireEndAct();
 
 
 				//TurnOff();
-				foreach (var elem in sortMonster)
+				foreach (var all in AllTile.visionTile)
 				{
-					if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))
+					if (all.tileIsFire && all.tileArea == i)
 					{
-
 						yield return new WaitForSeconds(2f);
 						break;
 					}
@@ -72,7 +73,7 @@ public static class Turn
 			}
 		}
 		if (smokes.Count != 0)
-		{ 
+		{
 			foreach (var smoke in smokes)
 			{
 				var ground = smoke.GetComponentInParent<GroundTile>();
@@ -84,22 +85,22 @@ public static class Turn
 					}
 				}
 			}
-		foreach(var elem in copylist)
-		{
-			smokes.Add(elem);
-		}
-		foreach (var smoke in smokes)
-		{
-			smoke.ResetSmokeValue();
-		}
-		foreach (var smoke in smokes)
-		{
-			smoke.SaveSmoke();
-		}
-		foreach (var window in windows)
-		{
-			window.WindowTurn();
-		}
+			foreach (var elem in copylist)
+			{
+				smokes.Add(elem);
+			}
+			foreach (var smoke in smokes)
+			{
+				smoke.ResetSmokeValue();
+			}
+			foreach (var smoke in smokes)
+			{
+				smoke.SaveSmoke();
+			}
+			foreach (var window in windows)
+			{
+				window.WindowTurn();
+			}
 		}
 
 		if (claimants.Count != 0)
@@ -116,15 +117,15 @@ public static class Turn
 						claimant.moveEnd = false;
 						claimant.ClaimantAct();
 						claimant.oxygentank -= 1;
-						if(claimant.oxygentank <= 0)
+						if (claimant.oxygentank <= 0)
 						{
 							claimant.ap = claimant.Maxap;
 						}
-							yield return new WaitUntil(() => claimant.moveEnd == true);
+						yield return new WaitUntil(() => claimant.moveEnd == true);
 					}
-					
-						yield return new WaitForSeconds(0.5f);
-					
+
+					yield return new WaitForSeconds(0.5f);
+
 				}
 			}
 		}
@@ -157,19 +158,19 @@ public static class Turn
 			}
 		}
 	}
-	public static void OutOfSight(List<Fire> fireList,float sec)
+	public static void OutOfSight(List<Fire> fireList, float sec)
 	{
-		foreach(var elem in fireList)
+		foreach (var elem in fireList)
 		{
 			if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))
 			{
-				
+
 			}
 		}
 
 	}
 	public static void EndGame()
 	{
-		
+
 	}
 }
