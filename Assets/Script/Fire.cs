@@ -21,10 +21,11 @@ public class Fire : FSM<FireState>
     public int fireArea;
 
 	public int fireMakeSmoke = 50;
-
+	public GroundTile gt;
 	public void Awake()
 	{
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+		gt = GetComponentInParent<GroundTile>();
 		//Turn.fires.Add(this);
 	}
 	public void Start()

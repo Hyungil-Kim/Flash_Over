@@ -10,7 +10,7 @@ public static class Turn
 	public static List<Smoke> smokes = new List<Smoke>();
 	public static List<Claimant> claimants = new List<Claimant>();
 	public static List<Window> windows = new List<Window>();
-	public static List<CameraForFire> fireCamera = new List<CameraForFire>();
+	public static List<CameraForFireZone> fireCamera = new List<CameraForFireZone>();
 
 	public static int maxArea = 4;
 	public static List<Smoke> copylist = new List<Smoke>();
@@ -23,30 +23,55 @@ public static class Turn
 	{
 		foreach (var player in players)
 		{
-			if (player.curStateName != PlayerState.End)
+			if(player.curStateName==PlayerState.Idle)
+            {
+				cameraController.CameraMoving(player);
+
+			}
+			//if (player.curStateName == PlayerState.Move)
+			//{
+			//	Debug.Log("µé¾î¿Í?");
+			//	cameraController.CameraMoving(player);
+
+			//}
+			if(player.curStateName != PlayerState.End)
 			{
 				yield break;
 			}
 		}
-
+		bool isSight = false;
 		if (fires.Count != 0)
 		{
 			for (int i = 0; i <= maxArea; i++)
 			{
-                foreach (var forFire in fireCamera)
-                {
-					if(forFire.areaNum==i)
-                    {
-						Camera.main.transform.position = forFire.transform.position;
-						yield return new WaitForSeconds(1.0f);
-                    }
+     //           foreach (var forFire in fireCamera)
+     //           {
+					//if(forFire.areaNum==i)
+     //               {
+					//	//Camera.main.transform.position = forFire.transform.position;
+					//	yield return new WaitForSeconds(1.0f);
+     //               }
 					
-                }
+     //           }
 				var sortMonster = fires.Where((x) => x.fireArea == i);
 				foreach (var monster in sortMonster)
 				{
+					if(!isSight)
+                    {
+						isSight = monster.gt.CheakVision;
+                    }
 					monster.FireAct();
 					monster.ChangeState(FireState.End);
+				}
+				if(isSight)
+                {
+                    foreach (var item in fireCamera)
+                    {
+						if(item.areaNum == i)
+                        {
+							Camera.main.transform.position = item.transform.position;
+						}
+                    }
 				}
 				foreach (var elem in sortMonster)
 				{

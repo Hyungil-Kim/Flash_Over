@@ -36,6 +36,7 @@ public class CreateCharacter : MonoBehaviour
         character.GetComponent<Player>().cd = cd;
         //character.GetComponent<Player>().cd = GameData.userData.fireManList[characterIndex];
         character.GetComponent<Player>().cd.GameStart();
+        character.GetComponent<Player>().index = characterIndex;
     }
     public void ChangeCharacter(Player player)
     {

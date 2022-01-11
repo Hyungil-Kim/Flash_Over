@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
         {
 			character.GetComponent<CreateCharacter>().Create();
         }
+		
 	}
 	public void Init()
     {
@@ -121,6 +122,38 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
+	public void ChangeTargetPlayer(GameObject go)
+    {
+			target = go;// 레이 맞은 오브젝트s
+			targetTile = tilemapManager.ReturnTile(target);
+		if (targetPlayer == null)
+		{
+			targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
+			Debug.Log(targetPlayer);
+			//Debug.Log(pretargetPlayer);
+			switch (targetPlayer.curStateName)
+			{
+				case PlayerState.Idle:
+					tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
+					playerMove.ResetMoveList();
+					playerMove.AddMoveList(targetTile.transform.position, setPathColor);
+					targetPlayer.ChangeState(PlayerState.Move);
+					break;
+				case PlayerState.Move:
+					break;
+				case PlayerState.Action:
+					tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
+					break;
+				case PlayerState.End:
+					break;
+			}
+			pretargetPlayer = targetPlayer;
+			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+		}
+		uIManager.OnCharacterInfo();
+		uIManager.info.Init();
+	}
+	
 	public void GetClickedEndMouse()
 	{
 
@@ -135,6 +168,7 @@ public class GameManager : MonoBehaviour
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
 				target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
+
 				targetTile = tilemapManager.ReturnTile(target);
 				mouse3DPos = raycastHit.point;
 			}
@@ -148,8 +182,8 @@ public class GameManager : MonoBehaviour
 			{
 				if (target.tag == "Player")
 				{
-					if (targetPlayer == null || targetPlayer.curStateName != PlayerState.Move)
-					{
+					if (targetPlayer == null)
+					{ 
 						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
 						Debug.Log(targetPlayer);
 						//Debug.Log(pretargetPlayer);
