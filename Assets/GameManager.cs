@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
         {
 			character.GetComponent<CreateCharacter>().Create();
         }
+		
 	}
 	public void Init()
     {
@@ -121,7 +122,40 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
-	public void GetClickedEndMouse(GameObject gameObject = null)
+	public void ChangeTargetPlayer(GameObject go)
+	{
+		target = go;// 레이 맞은 오브젝트s
+		targetTile = tilemapManager.ReturnTile(target);
+		if (targetPlayer == null)
+		{
+			targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
+			Debug.Log(targetPlayer);
+			//Debug.Log(pretargetPlayer);
+			switch (targetPlayer.curStateName)
+			{
+				case PlayerState.Idle:
+					tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
+					playerMove.ResetMoveList();
+					playerMove.AddMoveList(targetTile.transform.position, setPathColor);
+					targetPlayer.ChangeState(PlayerState.Move);
+					break;
+				case PlayerState.Move:
+					break;
+				case PlayerState.Action:
+					tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
+					break;
+				case PlayerState.End:
+					break;
+			}
+			pretargetPlayer = targetPlayer;
+			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+		}
+		uIManager.OnCharacterInfo();
+		uIManager.info.Init();
+	}
+
+	
+	public void GetClickedEndMouse()
 	{
 
 		if (!point && isStart)
@@ -134,14 +168,7 @@ public class GameManager : MonoBehaviour
 			layerMask = ~layerMask;
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
-				if (gameObject != null)
-				{
-					target = gameObject;
-				}
-				else
-				{
-					target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
-				}
+				target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
 				targetTile = tilemapManager.ReturnTile(target);
 				mouse3DPos = raycastHit.point;
 			}
@@ -156,7 +183,7 @@ public class GameManager : MonoBehaviour
 				if (target.tag == "Player")
 				{
 					if (targetPlayer == null)
-					{
+					{ 
 						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
 						Debug.Log(targetPlayer);
 						//Debug.Log(pretargetPlayer);

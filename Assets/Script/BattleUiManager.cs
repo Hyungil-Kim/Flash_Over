@@ -21,6 +21,7 @@ public class BattleUiManager : MonoBehaviour
 	public Button putDownButton;
 
 	public UseItemManager useItemManager;
+	
 
 	// Start is called before the first frame update
 

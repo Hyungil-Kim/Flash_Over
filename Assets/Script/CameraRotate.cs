@@ -14,12 +14,5 @@ public class CameraRotate : MonoBehaviour
         transform.RotateAround(transform.position, Vector3.up, -90.0f);
 
     }
-    private void CameraForObjectsCenter(GameObject[] objects)
-    {
-        for (int i = 0; i < objects.Length; i++)
-        {
-            GetComponent<Camera>().transform.position = new Vector3(objects[i].transform.position.x, GetComponent<Camera>().transform.position.y, GetComponent<Camera>().transform.position.z);
-        }
-
-    }
+  
 }

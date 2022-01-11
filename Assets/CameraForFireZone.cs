@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraForFire : MonoBehaviour
+public class CameraForFireZone : MonoBehaviour
 {
     public int areaNum;
     void Start()

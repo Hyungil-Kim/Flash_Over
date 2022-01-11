@@ -5,14 +5,19 @@ using UnityEngine;
 public class PlayerIdleState : State
 {
     Player fsm;
+	CameraController cameraController;
+
 	public PlayerIdleState(Player _fsm)
 	{
 		fsm = _fsm;
+	CameraController cameraController;
+
 	}
 	public override void Enter()
 	{
 
 		fsm.moveHelper.transform.localPosition = Vector3.zero;
+
 
 		fsm.moveHelper.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
@@ -98,6 +103,7 @@ public class PlayerAttackState : State
 public class PlayerEndState : State
 {
 	Player fsm;
+
 	public PlayerEndState(Player _fsm)
 	{
 		fsm = _fsm;
@@ -115,6 +121,12 @@ public class PlayerEndState : State
 		fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
 		fsm.gameManager.targetPlayer = null;
+		//var nextPlayer = Turn.players.Find((x) => x.index == fsm.index + 1);
+		//fsm.gameManager.GetClickedEndMouse(nextPlayer.gameObject);
+		//fsm.gameManager.ChangeTargetPlayer(nextPlayer.gameObject);
+		//Debug.Log($"다음 플레이어 인덱스 {nextPlayer.index}");
+		//fsm.gameManager.GetClickedEndMouse(Turn.players[fsm.index + 1].gameObject);
+
 		fsm.StartCoroutine(Turn.CoTurnSystem());
 	}
 
