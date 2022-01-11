@@ -39,7 +39,7 @@ public static class Turn
 				yield break;
 			}
 		}
-		bool isSight = false;
+	
 		if (fires.Count != 0)
 		{
 			for (int i = 0; i <= maxArea; i++)
@@ -56,23 +56,11 @@ public static class Turn
 				var sortMonster = fires.Where((x) => x.fireArea == i);
 				foreach (var monster in sortMonster)
 				{
-					if(!isSight)
-                    {
-						isSight = monster.gt.CheakVision;
-                    }
+					
 					monster.FireAct();
 					monster.ChangeState(FireState.End);
 				}
-				if(isSight)
-                {
-                    foreach (var item in fireCamera)
-                    {
-						if(item.areaNum == i)
-                        {
-							Camera.main.transform.position = item.transform.position;
-						}
-                    }
-				}
+			
 				foreach (var elem in sortMonster)
 				{
 					if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))

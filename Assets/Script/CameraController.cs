@@ -17,9 +17,6 @@ public class CameraController : MonoBehaviour
     public GameObject area2;
     public GameObject area3;
     public List<CameraForFireZone> cameraForFireZones;
-    float lerpDuration = 0.7f;
-    bool rotating;
-    float angle;
 
     // Start is called before the first frame update
     void Start()
@@ -41,24 +38,12 @@ public class CameraController : MonoBehaviour
         
     }
 
-    public void CameraMoving(Player player)//처음비추는거?
+    public void CameraMoving(Player player)
     {
         transform.position = player.transform.position + offset;
     }
 
-    public void CameraForZone(GameObject zone)//구역
-    {
-        for (int i = 0; i < Turn.maxArea; i++)
-        {
-            foreach (var fireZone in cameraForFireZones)
-            {
-                if (fireZone.areaNum == i)
-                {
-                    Camera.main.transform.position = fireZone.transform.position;
-                }
-            }
-        }
-    }
+ 
 
     public void CameraRotationRight()
     { 
