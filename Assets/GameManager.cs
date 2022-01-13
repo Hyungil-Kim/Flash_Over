@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using TMPro;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager instance;
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
 	/////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////
 	public int num = -1;
-	public int move = 0;
+	public int move;
 	private Vector3 mouse3DPos;
 	private bool point;
 
@@ -48,7 +49,11 @@ public class GameManager : MonoBehaviour
 	public bool showMeleeRange;
 	public bool showthrowwRange;
 
+
 	public int turnCount;
+	public TextMeshProUGUI tMPro;
+	public TextMeshProUGUI pressPro;
+
 
 	public void Awake()
 	{
@@ -60,6 +65,7 @@ public class GameManager : MonoBehaviour
 	{
 		//VisionCheck.Init();
 		var characters = GameObject.FindGameObjectsWithTag("CreateCharacter");
+
 		if (PlaySaveSystem.ps != null)
 		{
 
@@ -120,7 +126,6 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
-		
 	}
 	public void StartGame()
     {
@@ -131,7 +136,13 @@ public class GameManager : MonoBehaviour
 	public void Init()
     {
 		if (AllTileMesh.instance != null)
+		{
 			AllTileMesh.instance.Init();
+			if (Turn.players.Count != 0) 
+			{ 
+				ChangeTargetPlayer(Turn.players[0].gameObject);
+			}
+		}
 	}
 	public void GetTilePosition(Vector2 mousePosition)
 	{
@@ -141,11 +152,6 @@ public class GameManager : MonoBehaviour
 	public void GetClickedStartMouse(Vector2 callBack)
 	{
 		prevPos = callBack;
-		//if (firstclick)
-		//{
-		//	firstclick = false;
-		//	return;
-		//}
 		drag = true;
 
 	}
@@ -191,11 +197,9 @@ public class GameManager : MonoBehaviour
 	{
 		target = go;// 레이 맞은 오브젝트s
 		targetTile = tilemapManager.ReturnTile(target);
-		if (targetPlayer == null)
+		if (targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle)
 		{
 			targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
-			Debug.Log(targetPlayer);
-			//Debug.Log(pretargetPlayer);
 			switch (targetPlayer.curStateName)
 			{
 				case PlayerState.Idle:
@@ -213,7 +217,7 @@ public class GameManager : MonoBehaviour
 					break;
 			}
 			pretargetPlayer = targetPlayer;
-			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);  
 		}
 		uIManager.OnCharacterInfo();
 		uIManager.info.Init();
@@ -222,10 +226,9 @@ public class GameManager : MonoBehaviour
 	
 	public void GetClickedEndMouse()
 	{
-
+			press = false;
 		if (!point && isStart)
 		{
-			press = false;
 			Debug.Log("Start");
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
@@ -250,15 +253,12 @@ public class GameManager : MonoBehaviour
 					if (targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle)
 					{ 
 						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
-						Debug.Log(targetPlayer);
-						//Debug.Log(pretargetPlayer);
 						switch (targetPlayer.curStateName)
 						{
 							case PlayerState.Idle:
 								tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
 								playerMove.ResetMoveList();
 								playerMove.AddMoveList(targetTile.transform.position, setPathColor);
-								move = targetPlayer.cd.totalStats.move;
 								targetPlayer.ChangeState(PlayerState.Move);
 								break;
 							case PlayerState.Move:
@@ -283,7 +283,6 @@ public class GameManager : MonoBehaviour
 							break;
 						case PlayerState.Move:
 							targetPlayer.moveHelper.SetActive(true);
-							//targetPlayer.moveHelper.transform.position = new Vector3(targetTile.transform.position.x, targetPlayer.transform.position.y, targetTile.transform.position.z);
 							targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
 							break;
 						case PlayerState.Action:
@@ -454,8 +453,16 @@ public class GameManager : MonoBehaviour
 
 	public void ChangeMousePointer()
     {
-		
-    }
+		if (!point && isStart)
+		{
+			press = true;
+
+			if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Move && (targetPlayer == pretargetPlayer || pretargetPlayer == null))
+			{
+				StartCoroutine(playerMove.Move(setPathColor, setMoveColor, targetPlayer, move));
+			}
+		}
+	}
 
 	private bool IsPointerOverUI()
 	{
@@ -467,6 +474,8 @@ public class GameManager : MonoBehaviour
 
 	public void Update()
 	{
+		tMPro.text = move.ToString();
+		pressPro.text = press.ToString();
 		//mousePos = multiTouch.mousePoint.Mouse.Move.ReadValue<Vector2>();
 		var pointer = IsPointerOverUI();
 		if (pointer)
