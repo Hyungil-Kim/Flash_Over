@@ -11,7 +11,6 @@ public class PlayerMove : MonoBehaviour
 	public float speed = 3f;
 	public bool go = false;
 	int num = 0;
-	public int move = 0;
 	private bool hit = false;
 	private bool breath = false;
 	public void Awake()
@@ -66,8 +65,6 @@ public class PlayerMove : MonoBehaviour
 	{
 		if (!go)
 		{
-
-			//Camera.main.transform.position= new Vector3(moveObject.transform.position.x, Camera.main.transform.position.y, moveObject.transform.position.z - 3);
 			var moveHelper = player.moveHelper;
 			var helperTile = tilemapManager.ReturnTile(moveHelper);
 			Debug.Log(helperTile.transform.position);
@@ -111,23 +108,19 @@ public class PlayerMove : MonoBehaviour
 						tilemapManager.DrawFloodFill(tilePos, moveList, movePoint, setMoveColor, setPathColor);
 					}
 				}
-				ReturnMovePoint(movePoint);
+				gameManager.move = movePoint;
 				yield return 0;
 			}
 		}
 	}
-	public int ReturnMovePoint(int movePoint)
-	{
-		gameManager.move = movePoint;
-		return move;
-	}
+
 
 	public void Update()
 	{
 		if (go)
 		{
 			//움직일때 따라가는거?
-			//Camera.main.transform.position = new Vector3(moveObject.transform.position.x, Camera.main.transform.position.y, moveObject.transform.position.z - 3);
+			Camera.main.transform.position = new Vector3(moveObject.transform.position.x, Camera.main.transform.position.y, moveObject.transform.position.z - 3);
 			if (moveList.Count == 0)
 			{
 				num = 0;

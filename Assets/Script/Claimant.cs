@@ -120,7 +120,7 @@ public class Claimant : FSM<ClaimantState>
 				}
 				else
 				{
-					claimantMove.JustStay(this);
+					StartCoroutine(claimantMove.MoveConfuse(this));
 				}
 				break;
 		}

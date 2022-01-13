@@ -12,8 +12,7 @@ public static class Turn
 	public static Dictionary<int, GameObject> saveClaimants = new Dictionary<int, GameObject>();
 
 	public static List<Window> windows = new List<Window>();
-	public static List<CameraForFireZone> fireCamera = new List<CameraForFireZone>();
-
+	public static List<CameraForFireZone> areaCamera = new List<CameraForFireZone>();
 	public static int maxArea = 4;
 	public static List<Smoke> copylist = new List<Smoke>();
 
@@ -38,36 +37,26 @@ public static class Turn
 			if(player.curStateName==PlayerState.Idle)
             {
 				cameraController.CameraMoving(player);
+				GameManager.instance.ChangeTargetPlayer(player.gameObject);
+				GameManager.instance.move = player.cd.totalStats.move;
 
 			}
-			//if (player.curStateName == PlayerState.Move)
-			//{
-			//	Debug.Log("들어와?");
-			//	cameraController.CameraMoving(player);
-
-			//}
 			if(player.curStateName != PlayerState.End)
 			{
 				yield break;
 			}
 		}
-	
+		///
+		/// setActive UI( 적턴)
+		/// yield return secind
+		///
 		if (fires.Count != 0)
 		{
 			for (int i = 0; i <= maxArea; i++)
 			{
-				foreach (var forFire in fireCamera)
-				{
-					if (forFire.areaNum == i)
-					{
-						Camera.main.transform.position = forFire.transform.position;
-						yield return new WaitForSeconds(1.0f);
-					}
-				}
-				var sortMonster = fires.Where((x) => x.fireArea == i);
+				var sortMonster = fires.Where((x) => x.fireArea == i);	
 				foreach (var monster in sortMonster)
 				{
-					
 					monster.FireAct();
 					monster.ChangeState(FireState.End);
 				}
@@ -76,6 +65,7 @@ public static class Turn
 				{
 					if (all.tileIsFire && all.tileArea == i)
 					{
+						Camera.main.transform.position = areaCamera[i].transform.position;
 						yield return new WaitForSeconds(0.5f);
 						break;
 					}
@@ -124,7 +114,9 @@ public static class Turn
 				window.WindowTurn();
 			}
 		}
-
+		//
+		// setactive(true) 요구조자턴 ui
+		//
 		if (claimants.Count != 0)
 		{
 			for (int i = 0; i <= maxArea; i++)
@@ -134,8 +126,6 @@ public static class Turn
 				{
 					if (claimant.curStateName != ClaimantState.Resuce && claimant.curStateName != ClaimantState.End)
 					{
-						//Camera.main.transform.position = new Vector3(claimant.transform.position.x, Camera.main.transform.position.y, claimant.transform.position.z - 3);
-
 						claimant.moveEnd = false;
 						claimant.ClaimantAct();
 						claimant.oxygentank -= 1;
@@ -159,16 +149,14 @@ public static class Turn
 		{
 			foreach (var player in players)
 			{
-				if (player.curStateName != PlayerState.Idle)
-					player.ChangeState(PlayerState.Idle);
+				player.ChangeState(PlayerState.Idle);
 			}
 		}
 		if (fires.Count != 0)
 		{
 			foreach (var fire in fires)
 			{
-				if (fire.curStateName != FireState.Idle)
-					fire.ChangeState(FireState.Idle);
+				fire.ChangeState(FireState.Idle);
 			}
 		}
 		if (claimants.Count != 0)
@@ -184,17 +172,22 @@ public static class Turn
 	}
 	public static void OutOfSight(List<Fire> fireList, float sec)
 	{
-		foreach (var elem in fireList)
+		//foreach (var elem in fireList)
+		if (players.Count != 0)
 		{
-			if (AllTile.visionTile.Contains(GameManager.instance.tilemapManager.ReturnTile(elem.gameObject)))
-			{
-
-			}
+			GameManager.instance.ChangeTargetPlayer(players[0].gameObject);
 		}
-
 	}
 	public static void EndGame()
 	{
 
+	}
+
+	public static void SortCameraArea()
+	{
+		var sortedAreaCamera = from elem in areaCamera
+							   orderby elem.areaNum
+							   select elem;
+		areaCamera = sortedAreaCamera.ToList();
 	}
 }

@@ -9,16 +9,18 @@ public class VisionRange : MonoBehaviour
 	public List<GroundTile> crossResetQueue = new List<GroundTile>();
 	private List<GroundTile> prevTileList = new List<GroundTile>();
 	private List<int> visiableTileIndexList = new List<int>();
-
+	public GameManager gameManager;
 	public TilemapManager tilemapManager;
 	public int vision = 5;
     private void Awake()
     {
-		tilemapManager = GameManager.instance.tilemapManager;
+		gameManager = GameManager.instance;
+		tilemapManager = gameManager.tilemapManager;
     }
     public List<GroundTile> CheackVision()
 	{
 		crossQueue = new Queue<GroundTile>();
+		Debug.Log(tilemapManager);
 		var tileObject = tilemapManager.ReturnTile(transform.position);
 		crossQueue.Enqueue(tileObject);
 		crossResetQueue.Add(tileObject);

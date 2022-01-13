@@ -29,7 +29,7 @@ public class ClaimantMove
 		var startTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
 		var goalTile = gameManager.tilemapManager.ReturnTile(targetPlayer.gameObject);
 		var path = gameManager.tilemapManager.SetAstar(startTile, goalTile);
-		var targetTile = startTile;
+		var targetTile = goalTile;
 		for (var i = path.Count - 1; i >= 0; --i)
 		{
 			if (path[i].fillList.Count == 0)
@@ -40,7 +40,7 @@ public class ClaimantMove
 
 			foreach (var adjcent in path[i].nextTileList)
 			{
-				if (adjcent.fillList.Count == 0)
+				if (adjcent.fillList.Count == 0 )
 				{
 					targetTile = adjcent;
 					break;
@@ -48,19 +48,29 @@ public class ClaimantMove
 			}
 		}
 
-		if (startTile == targetTile)
-			yield break;
 
 		var pathList = gameManager.tilemapManager.SetAstar(startTile, targetTile);
 		var go = true;
 		var num = 0;
-		var moveSpeed = 5;
+		var moveSpeed = 3;
+
+		if (startTile.nextTileList.Contains(goalTile))
+		{
+			num = 0;
+			go = false;
+			EndMove(claimant, pathList);
+			yield break;
+		}
 		while (go)
 		{
 			if (pathList.Count == 0) yield break;
 			var newPos = new Vector3(pathList[num].transform.position.x, claimant.transform.position.y, pathList[num].transform.position.z);
 			if (claimant.transform.position != newPos)
 			{
+				if(AllTile.visionTile.Contains(pathList[num]))
+				{
+					Camera.main.transform.position = new Vector3(pathList[num].transform.position.x, Camera.main.transform.position.y, pathList[num].transform.position.z - 3);
+				}
 				var dis = Vector3.Distance(claimant.transform.position, newPos);
 				if (dis > 0)
 				{
@@ -92,7 +102,7 @@ public class ClaimantMove
 		var preTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
 		var go = true;
 		var num = 0;
-		var moveSpeed = 5;
+		var moveSpeed = 3;
 		var path = Random.Range(0, preTile.nextTileList.Count);
 		claimant.transform.position = new Vector3(preTile.transform.position.x, claimant.transform.position.y, preTile.transform.position.z);
 		while (go)
@@ -100,19 +110,20 @@ public class ClaimantMove
 			var newPos = new Vector3(preTile.nextTileList[path].transform.position.x, claimant.transform.position.y, preTile.nextTileList[path].transform.position.z);
 			var newTile = gameManager.tilemapManager.ReturnTile(newPos);
 
-			if (newTile.fillList.Count != 0)
+			if (newTile.fillList.Count != 0 || newTile.tileIsFire)
 			{
 				if (num <= claimant.speed)
 				{
+			if (AllTile.visionTile.Contains(preTile))
+			{
+				Camera.main.transform.position = new Vector3(preTile.transform.position.x, Camera.main.transform.position.y, preTile.transform.position.z - 3);
+			}
 					num++;
 					preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
 					path = Random.Range(0, preTile.nextTileList.Count);
 				}
 				else
 				{
-					num = 0;
-					go = false;
-					EndMove(claimant);
 					while (claimant.transform.position != preTile.transform.position)
 					{
 						var prePos = new Vector3(preTile.transform.position.x, claimant.transform.position.y, preTile.transform.position.z);
@@ -122,9 +133,15 @@ public class ClaimantMove
 							claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, prePos, moveSpeed * Time.deltaTime);
 							claimant.transform.LookAt(prePos);
 						}
+						else
+						{
+							num = 0;
+							go = false;
+							EndMove(claimant);
+							yield break;
+						}
 						yield return 0;
 					}
-					yield break;
 				}
 				continue;
 			}
@@ -152,6 +169,7 @@ public class ClaimantMove
 					num = 0;
 					go = false;
 					EndMove(claimant);
+					yield break;
 				}
 			}
 		}
