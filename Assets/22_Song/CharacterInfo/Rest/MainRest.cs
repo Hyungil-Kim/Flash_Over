@@ -63,6 +63,6 @@ public class MainRest : MonoBehaviour
     public void test()
     {
         EndStage();
-        Init();
+        //Init();
     }
 }

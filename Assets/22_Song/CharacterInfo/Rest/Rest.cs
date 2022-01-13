@@ -27,7 +27,7 @@ public class Rest : MonoBehaviour
     private void OnEnable()
     {
         
-        mainRest.test();
+        //mainRest.test();
         if (GameData.userData.restEndList.Count > 0)
         {
             OnRestOver();
