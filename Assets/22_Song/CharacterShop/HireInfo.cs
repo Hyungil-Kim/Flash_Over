@@ -38,11 +38,11 @@ public class HireInfo : MonoBehaviour
         def.text = $"Lung : {cd.baseStats.lung.stat}";
         stat.text = $"Str : {cd.baseStats.str.stat}";
 
-        personality.text = "";
-        foreach (var type in cd.personality.CheakAllPersonality())
-        {
-            personality.text = personality.text.Insert(personality.text.Length, $"\n{type}");
-        }
-        personality.text = personality.text.Remove(0, 1);
+        //personality.text = "";
+        //foreach (var type in cd.personality.CheakAllPersonality())
+        //{
+        //    personality.text = personality.text.Insert(personality.text.Length, $"\n{type}");
+        //}
+        //personality.text = personality.text.Remove(0, 1);
     }
 }

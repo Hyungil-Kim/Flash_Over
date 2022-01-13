@@ -41,25 +41,27 @@ public class GroundTile : MonoBehaviour
 
 	//tileState
 	public int tileArea;
-	
 	public int tileMesh;//임시
-	public bool tileIsWeat;//임시
-	public int tileWeatValue;
-	public int tileExp;
-	public float tileHp;
 	public int tileGrowthExp;
-	public bool tileIsFire;
-
 
 	//smoke
 	public GameObject smokePrefab;
+
+	//data
+	public bool tileIsWeat;
+	public bool tileIsFire;
 	public bool tileIsSmoke;
+
+	public int tileWeatValue;
+	public int tileExp;
+	public float tileHp;
+
 	public int tileSaveSmokeValue;
 	public int tileSmokeValue;
 
-	//vision
 	public int index;
 
+	//public TileSaveData data;
 
 	public GroundTile(int x , int y)
 	{
@@ -70,6 +72,8 @@ public class GroundTile : MonoBehaviour
 	{
 		//firePrefab = GetComponentInChildren<Fire>();
 		//AllTile.allTile.Add(index, this);
+		AllTile.allTile.Add(this);
+		AllTile.SaveTile.Add(this);
 	}
 	public void Start()
 	{
@@ -77,7 +81,6 @@ public class GroundTile : MonoBehaviour
 		tilemap = transform.GetComponentInParent<Tilemap>();
 		cellpos = tilemap.WorldToCell(transform.position);
 		index = cellpos.x + cellpos.y * tilemap.size.x;
-		AllTile.allTile.Add(this);
 		for (int dir = 0; dir < 4; dir++)
 		{
 			int[] checkX = { 1, 0, -1, 0 };
@@ -91,12 +94,81 @@ public class GroundTile : MonoBehaviour
 				nextTileList.Add(nextTile);
 			}
 		}
-		
         
 		if(tileIsFire || tileIsSmoke)
 		{
 			Turn.smokes.Add(this.GetComponentInChildren<Smoke>(true));
 		}
+		if(tileIsFire)
+        {
+			firePrefab.SetActive(true);
+        }
+		CheckParticle();
+	}
+	public TileSaveData GetData()
+    {
+		var sd = new TileSaveData();
+		var fire = firePrefab.GetComponent<Fire>();
+		sd.tileWeatValue = tileWeatValue;
+
+		sd.tileExp = tileExp;
+		sd.tileHp = tileHp;
+
+		sd.tileSaveSmokeValue = tileSaveSmokeValue;
+		sd.tileSmokeValue = tileSmokeValue;
+
+		sd.tileIsFire = tileIsFire;
+		if(sd.tileIsFire)
+        {
+			Debug.Log("isFire");
+        }
+		sd.tileIsWeat = tileIsWeat;
+		sd.tileIsSmoke = tileIsSmoke;
+		sd.firehp = fire.fireHp;
+
+		
+		return sd;
+    }
+	
+	public void SaveInit(TileSaveData sd)
+    {
+		var fire = firePrefab.GetComponent<Fire>();
+
+		tileWeatValue = sd.tileWeatValue;
+
+		tileExp = sd.tileExp;
+		tileHp = sd.tileHp;
+
+		tileSaveSmokeValue = sd.tileSaveSmokeValue;
+		tileSmokeValue = sd.tileSmokeValue;
+
+		tileIsFire = sd.tileIsFire;
+		tileIsWeat = sd.tileIsWeat;
+		tileIsSmoke = sd.tileIsSmoke;
+
+		fire.fireHp = sd.firehp;
+		
+		if(tileIsFire)
+        {
+			Debug.Log("SaveFire");
+			firePrefab.SetActive(true);
+        }
+		else
+        {
+			if (Turn.fires.Contains(firePrefab.GetComponent<Fire>()))
+			{
+				Turn.fires.Remove(firePrefab.GetComponent<Fire>());
+			}
+			firePrefab.SetActive(false);
+        }
+		if(tileIsSmoke)
+        {
+			smokePrefab.SetActive(true);
+        }
+		else
+        {
+			smokePrefab.SetActive(false);
+        }
 		CheckParticle();
 	}
 	public List<GroundTile> SetNextVision(GroundTile playerTile)

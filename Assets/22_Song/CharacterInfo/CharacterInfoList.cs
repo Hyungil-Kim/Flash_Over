@@ -48,14 +48,18 @@ public class CharacterInfoList : MonoBehaviour
                 sortUserCharacter = userCharacterList.Select((x) =>x).ToList();
                 break;
             case CharacterOrder.Str:
-                sortUserCharacter = userCharacterList.OrderBy((x) => x.baseStats.str).ToList();
+                sortUserCharacter = userCharacterList.OrderBy((x) => x.baseStats.str.stat).ToList();
+                break;
+            case CharacterOrder.Hp:
+                sortUserCharacter = userCharacterList.OrderBy((x) => x.baseStats.hp.stat).ToList();
+                break;
+            case CharacterOrder.Lung:
+                sortUserCharacter = userCharacterList.OrderBy((x) => x.baseStats.lung.stat).ToList();
                 break;
             case CharacterOrder.Name:
                 sortUserCharacter = userCharacterList.OrderBy((x) => x.characterName).ToList();
                 break;
-            case CharacterOrder.Hp:
-                sortUserCharacter = userCharacterList.OrderBy((x) => x.baseStats.hp).ToList();
-                break;
+
             default:
                 break;
         }
@@ -67,7 +71,7 @@ public class CharacterInfoList : MonoBehaviour
         {
             var index = i;
             var chaButton = chaList[index].GetComponent<ChaButton>();
-            chaButton.Init(sortUserCharacter[index]);
+            chaButton.Init(sortUserCharacter[index],sortIndex);
             chaButton.button.onClick.AddListener(() =>OnChaButton(index));
             chaList[index].SetActive(true);
         }

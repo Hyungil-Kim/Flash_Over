@@ -4,6 +4,9 @@ using UnityEngine;
 
 public static class AllTile
 {
+    public static List<GroundTile> SaveTile
+        = new List<GroundTile>();
+
     public static List<GroundTile> allTile
         = new List<GroundTile>();
     public static List<GroundTile> visionTile

@@ -116,12 +116,12 @@ public class CharacterInfoStat : MonoBehaviour
         }
         strstat.text = $"Èû : {curCharacter.totalStats.str.stat}";
 
-        personality.text = "";
-        foreach (var type in curCharacter.personality.CheakAllPersonality())
-        {
-            personality.text = personality.text.Insert(personality.text.Length, $"\n{type}");
-        }
-        personality.text = personality.text.Remove(0, 1);
+        //personality.text = "";
+        //foreach (var type in curCharacter.personality.CheakAllPersonality())
+        //{
+        //    personality.text = personality.text.Insert(personality.text.Length, $"\n{type}");
+        //}
+        //personality.text = personality.text.Remove(0, 1);
 
         weightslider.value = ((float)curCharacter.totalStats.str.stat - (float)curCharacter.weight) / (float)curCharacter.totalStats.str.stat;
         weight.text = $"{curCharacter.totalStats.str.stat - curCharacter.weight} / {curCharacter.totalStats.str.stat}";

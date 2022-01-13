@@ -19,17 +19,18 @@ public class PlayerIdleState : State
 		fsm.moveHelper.transform.localPosition = Vector3.zero;
 
 
-		fsm.moveHelper.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.shootButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.weapon1Button.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
+		//이거 여기 두면 계속 꺼져 안돼..
+		//fsm.moveHelper.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.shootButton.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.weapon1Button.gameObject.SetActive(false);
+		//fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
 
 	}
 
@@ -110,17 +111,25 @@ public class PlayerEndState : State
 	}
 	public override void Enter()
 	{
-		fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
+		//마찬가지로 .. 이걸 어떻게하나 
 
-		fsm.gameManager.uIManager.battleUiManager.shootButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.weapon1Button.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
-		fsm.gameManager.targetPlayer = null;
+		if (fsm.gameManager.targetPlayer == fsm)
+		{
+			fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
+			fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(false);
+			fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
+			fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
+			fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
+
+			fsm.gameManager.uIManager.battleUiManager.shootButton.gameObject.SetActive(false);
+			fsm.gameManager.uIManager.battleUiManager.weapon1Button.gameObject.SetActive(false);
+			fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
+			fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
+			fsm.gameManager.targetPlayer = null;
+		}
+
+
+
 		//var nextPlayer = Turn.players.Find((x) => x.index == fsm.index + 1);
 		//fsm.gameManager.GetClickedEndMouse(nextPlayer.gameObject);
 		//fsm.gameManager.ChangeTargetPlayer(nextPlayer.gameObject);

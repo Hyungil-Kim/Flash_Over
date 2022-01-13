@@ -85,7 +85,6 @@ public class UserData : MySaveData
             foreach (var character in GameData.userData.characterList)
             {
                 character.StatInit();
-                character.tiredScore = 70;
             }
         }
 

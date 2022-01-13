@@ -48,20 +48,85 @@ public class GameManager : MonoBehaviour
 	public bool showMeleeRange;
 	public bool showthrowwRange;
 
+	public int turnCount;
+
 	public void Awake()
 	{
 		instance = this;
 		tilemapManager = GetComponent<TilemapManager>();
+
 	}
 	public void Start()
 	{
 		//VisionCheck.Init();
 		var characters = GameObject.FindGameObjectsWithTag("CreateCharacter");
-        foreach (var character in characters)
-        {
-			character.GetComponent<CreateCharacter>().Create();
-        }
+		if (PlaySaveSystem.ps != null)
+		{
+
+			foreach (var tile in AllTile.allTile)
+			{
+				if (PlaySaveSystem.ps.tsd.TryGetValue(tile.index, out var tiledata))
+				{
+					tile.SaveInit(tiledata);
+				}
+			}
+			foreach (var character in characters)
+			{
+				
+				var create = character.GetComponent<CreateCharacter>();
+				var playerDict = PlaySaveSystem.ps.psd;
+				if (playerDict.ContainsKey(create.characterIndex))
+				{
+					create.Create(playerDict[create.characterIndex].cd);
+					var player = create.Character.GetComponent<Player>();
+					player.SaveInit(playerDict[create.characterIndex]);
+					if (player.playerState == PlayerState.Move)
+					{
+						player.playerState = PlayerState.Idle;
+					}
+				}
+			}
+			targetPlayer = Turn.players.Find((x) => x.index == PlaySaveSystem.ps.gsd.targetIndex);
+			
+			if(targetPlayer.playerState == PlayerState.Move)
+			{
+				targetPlayer = null;
+			}
+			else if (targetPlayer.playerState == PlayerState.Idle)
+			{
+				targetPlayer = null;
+			}
+
+            foreach (var claimant in Turn.claimants)
+            {
+				if (PlaySaveSystem.ps.csd.TryGetValue(claimant.index, out var claimantData))
+				{
+					claimant.SaveInit(claimantData);
+				}
+            }
+
+			turnCount = PlaySaveSystem.ps.gsd.turnCount;
+   
+			StartGame();
+		}
+		else
+		{
+			foreach (var character in characters)
+			{
+				var create = character.GetComponent<CreateCharacter>();
+				if (GameData.userData.fireManList.ContainsKey(create.characterIndex))
+				{
+					create.Create(GameData.userData.fireManList[create.characterIndex]);
+				}
+			}
+		}
 		
+	}
+	public void StartGame()
+    {
+		isStart = true;
+		Init();
+		uIManager.StartGame();
 	}
 	public void Init()
     {
@@ -182,7 +247,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (target.tag == "Player")
 				{
-					if (targetPlayer == null)
+					if (targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle)
 					{ 
 						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
 						Debug.Log(targetPlayer);
@@ -444,4 +509,15 @@ public class GameManager : MonoBehaviour
 
 		prevPos = currPos;
 	}
+
+	public void GameClear()
+    {
+        foreach (var player in Turn.players)
+        {
+			player.cd.tiredScore += turnCount * 10;
+        }
+
+		uIManager.gameclearUI.gameObject.SetActive(true);
+		uIManager.gameclearUI.Init();
+    }
 }

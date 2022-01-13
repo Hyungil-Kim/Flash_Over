@@ -11,6 +11,7 @@ public class TrainingRoom : MonoBehaviour
     public TextMeshProUGUI gold;
     private TrainingCharacter tc;
     private int totalGold = 0;
+    private bool isTraining = false;
     private void Start()
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -24,10 +25,11 @@ public class TrainingRoom : MonoBehaviour
             sliders[i].Init((TrainingStatType)i);
         }
         tc = GetComponentInParent<TrainingCharacter>();
-        Init();
+        //Init();
     }
     private void OnEnable()
     {
+        tc = GetComponentInParent<TrainingCharacter>();
         Init();
     }
     public void Init()
@@ -47,8 +49,8 @@ public class TrainingRoom : MonoBehaviour
     public void ButtonInit(int index)
     {
         buttons[index].interactable = true;
-        if (GameData.userData.gold - (totalGold + GetCost(index)) < 0)
-        {
+        if (GameData.userData.gold - (totalGold + GetCost(index)) < 0  || isTraining || tc.curCharacter.isTraining)
+        {   
             buttons[index].interactable = false;    
         }
     }
@@ -79,6 +81,7 @@ public class TrainingRoom : MonoBehaviour
                 break;
         }
         totalGold += trainingCost;
+        isTraining = true;  
         Init();
     }
     public int GetCost(int index)
@@ -108,11 +111,17 @@ public class TrainingRoom : MonoBehaviour
         }
         GameData.userData.gold -= totalGold;
         totalGold = 0;
+        if (isTraining)
+        {
+            tc.curCharacter.isTraining = isTraining;
+        }
         Init();
     }
     public void Back()
     {
         totalGold = 0;
+        isTraining = false;
+        
         for (int i = 0; i < sliders.Length; i++)
         {
             sliders[i].Back();

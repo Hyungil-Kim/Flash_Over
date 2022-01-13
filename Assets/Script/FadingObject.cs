@@ -30,12 +30,11 @@ public class FadingObject : MonoBehaviour, IEquatable<FadingObject>
 
         tilemap = GetComponentInParent<Tilemap>();
         cellpos = tilemap.WorldToCell(transform.position);
-        AllTile.wallTile.Add(this);
     }
-
+        
     private void Start()
     {
-
+        AllTile.wallTile.Add(this);
     }
     public bool Equals(FadingObject other)
     {

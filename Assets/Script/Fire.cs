@@ -13,7 +13,6 @@ public class Fire : FSM<FireState>
 {
     public GameManager gameManager;
 
-
     public float fireHp;
     public int fireExpGrowth;
     public int fireDamage;
@@ -50,6 +49,7 @@ public class Fire : FSM<FireState>
 		if(fireHp <= 0)
 		{
 			gameObject.SetActive(false);
+			gt.tileIsFire = false;
 			Turn.fires.Remove(this);
 		}
 	}

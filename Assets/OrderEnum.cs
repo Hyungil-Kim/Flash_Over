@@ -24,6 +24,8 @@ public enum CharacterOrder
 {
     Default,
     Str,
-    Name,
     Hp,
+    Lung,
+    Name,
+    
 }

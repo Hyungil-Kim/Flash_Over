@@ -20,14 +20,22 @@ public class GameClearUI : MonoBehaviour
     
     private void OnEnable()
     {
-        Init();
-        StartCoroutine(CoResultPrint());
+        //Init();  
+        //StartCoroutine(CoResultPrint());
     }
-    void Init()
+    public void Init()
     {
         title.text = $"STAGE{1} CLEAR!!";
-        saveperson.text = $"인명 구조 {1}/{3} => {100}골드";
-        playturn.text = $"소모한 턴 수 {50} => {100}골드";
+        var resque = 0;
+        foreach (var claimant in Turn.claimants)
+        {
+            if(claimant.exit)
+            {
+                resque++;
+            }
+        }
+        saveperson.text = $"인명 구조 {resque}/{Turn.claimants.Count} => {100}골드";
+        playturn.text = $"소모한 턴 수 {GameManager.instance.turnCount} => {100}골드";
         totalresult.text = $"합산 = {100 + 100}골드 !!";
         
         var sba = new StringBuilder();
@@ -39,15 +47,19 @@ public class GameClearUI : MonoBehaviour
         personality.text = sba.ToString();
         var sbb = new StringBuilder();
         //Dictionay<string, >
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < Turn.players.Count; i++)
         {
-            sbb.Append(string.Format($"대원 test.key 가 < test.value >상태가 되었습니다.\n"));
+            if (Turn.players[i].cd.GetTired())
+            {
+                sbb.Append(string.Format($"대원 {Turn.players[i].cd.characterName} 가 {Turn.players[i].cd.tiredType}상태가 되었습니다.\n"));
+            }
         }
         tired.text = sbb.ToString();
         foreach (var result in resultGo)
         {
             result.SetActive(false);
         }
+        StartCoroutine(CoResultPrint());
     }
     IEnumerator CoResultPrint()
     {

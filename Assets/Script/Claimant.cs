@@ -7,6 +7,7 @@ public enum ClaimantState
 	Idle,
 	Meet,
 	Resuce,
+	Exit,
 	End,
 }
 public enum ClaimantInjure
@@ -24,6 +25,7 @@ public class Claimant : FSM<ClaimantState>
 	public bool stun;
 	public bool confuse;
 	public bool eventOn;
+	public bool exit;
 	public int claimantArea;
 	public int hp;
 	public int airGauge;//산소통 이름변경 필요
@@ -38,9 +40,57 @@ public class Claimant : FSM<ClaimantState>
 	public int Maxap = 8; // 최대폐활량
 	public int lung = 100; // 폐 hp
 
+	public int index;
+	public ClaimantSaveData GetData()
+    {
+		var csd = new ClaimantSaveData();
+		csd.index = index;
+
+		csd.stun = stun;
+		csd.confuse =confuse;
+		csd.eventOn = eventOn;
+		csd.exit = exit;
+		csd.claimantArea = claimantArea;
+		csd.hp = hp;
+		csd.airGauge = airGauge;
+		csd.speed = speed;
+		csd.weight = weight;
+		csd.num = num;
+		csd.moveEnd = moveEnd;
+
+		csd.oxygentank = oxygentank;
+		csd.ap = ap;
+		csd.Maxap = Maxap;
+		csd.lung = lung;
+
+		return csd;
+	}
+	public void SaveInit(ClaimantSaveData sd)
+    {
+
+		stun = sd.stun;
+		confuse = sd.confuse;
+		eventOn = sd.eventOn;
+		exit = sd.exit ;
+		claimantArea = sd.claimantArea;
+		hp = sd.hp;
+		airGauge = sd.airGauge;
+		speed = sd.speed;
+		weight = sd.weight;
+		num = sd.num;
+		moveEnd = sd.moveEnd;
+		
+		oxygentank = sd.oxygentank;
+		ap = sd.ap;
+		Maxap = sd.Maxap; 
+		lung = sd.lung; 
+	}
 	public void Awake()
 	{
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+		Turn.claimants.Add(this);
+		index = Turn.claimants.Count;
+		Turn.saveClaimants.Add(index, this.gameObject);
 	}
 	public void Start()
 	{
@@ -49,7 +99,6 @@ public class Claimant : FSM<ClaimantState>
 		AddState(ClaimantState.Resuce, new ClaimantResuceState(this));
 		AddState(ClaimantState.End, new ClaimantEndState(this));
 		SetState(ClaimantState.Idle);
-		Turn.claimants.Add(this);
 	}
 	public void ClaimantAct()
 	{

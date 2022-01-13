@@ -11,9 +11,29 @@ public class ChaButton : MonoBehaviour
     public Image selected;
     public Button button;
     //private int chaIndex;
-    public void Init(CharacterData cd)//, int index)
+    public void Init(CharacterData cd,int sortindex)//, int index)
     {
-        chaName.text = cd.totalStats.str.ToString();
+        var orderType = (CharacterOrder)sortindex;
+        switch (orderType)
+        {
+            case CharacterOrder.Default:
+                chaName.text = cd.characterName;
+                break;
+            case CharacterOrder.Str:
+                chaName.text = cd.totalStats.str.stat.ToString();
+                break;
+            case CharacterOrder.Hp:
+                chaName.text = cd.totalStats.hp.stat.ToString();
+                break;
+            case CharacterOrder.Lung:
+                chaName.text = cd.totalStats.lung.stat.ToString();
+                break;
+            case CharacterOrder.Name:
+                chaName.text = cd.characterName;
+                break;
+            default:
+                break;
+        }
         if(cd.isSelected)
         {
             Selected();

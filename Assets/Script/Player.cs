@@ -18,24 +18,66 @@ public class Player : FSM<PlayerState>
 
     public bool handFull;
     public List<GameObject> handList = new List<GameObject>();
+    
     public int eventNum = 0;
     /// 
     public int oxygentank = 5;//ªÍº“≈ ≈©
     public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
     public int Maxap = 8; // √÷¥Î∆Û»∞∑Æ
     public int lung = 100; // ∆Û hp
+
+    public PlayerState playerState = PlayerState.Idle;
+    public void SaveInit(PlayerSaveData sd)
+    {
+        gameObject.transform.position = new Vector3(sd.posx,sd.posy,sd.posz);
+        playerState = StringToEnum.SToE<PlayerState>(sd.currentState);
+        cd = sd.cd;
+        //handList = sd.handList;
+        foreach (var index in sd.handListIndex)
+        {
+            handList.Add(Turn.saveClaimants[index]);
+            //handList.Add(Turn.claimants[index].gameObject);
+        }
+
+        eventNum = sd.eventNum;
+    }
+    public PlayerSaveData GetData()
+    {
+        var sd = new PlayerSaveData();
+        //sd.pos = gameObject.transform.position;
+        sd.posx = gameObject.transform.position.x;
+        sd.posy = gameObject.transform.position.y;
+        sd.posz = gameObject.transform.position.z;
+        Debug.Log(curStateName.ToString());
+        sd.currentState = curStateName.ToString();
+        sd.cd = cd;
+        //sd.handList = handList;
+        foreach (var item in handList)
+        {
+            sd.handListIndex.Add(item.GetComponent<Claimant>().index);
+        }
+        sd.eventNum = eventNum;
+        return sd;
+    }
 	private void Awake()
 	{
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         Turn.players.Add(this);
-    }
-	void Start()
-    { 
-        AddState(PlayerState.Idle, new PlayerIdleState(this));                             
+        AddState(PlayerState.Idle, new PlayerIdleState(this));
         AddState(PlayerState.Move, new PlayerMoveState(this));
         AddState(PlayerState.Action, new PlayerAttackState(this));
         AddState(PlayerState.End, new PlayerEndState(this));
-        SetState(PlayerState.Idle);
+        //SetState(PlayerState.Idle);
+
+    }
+    void Start()
+    {
+        //AddState(PlayerState.Idle, new PlayerIdleState(this));                             
+        //AddState(PlayerState.Move, new PlayerMoveState(this));
+        //AddState(PlayerState.Action, new PlayerAttackState(this));
+        //AddState(PlayerState.End, new PlayerEndState(this));
+        //SetState(PlayerState.Idle);
+        SetState(playerState);
         moveHelper.transform.localPosition = Vector3.zero;
     }
 

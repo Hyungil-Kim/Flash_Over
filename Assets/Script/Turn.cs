@@ -9,6 +9,8 @@ public static class Turn
 	public static List<Fire> fires = new List<Fire>();
 	public static List<Smoke> smokes = new List<Smoke>();
 	public static List<Claimant> claimants = new List<Claimant>();
+	public static Dictionary<int, GameObject> saveClaimants = new Dictionary<int, GameObject>();
+
 	public static List<Window> windows = new List<Window>();
 	public static List<CameraForFireZone> fireCamera = new List<CameraForFireZone>();
 
@@ -18,7 +20,17 @@ public static class Turn
 	public delegate void turnOff();
 	public static turnOff TurnOff;
 	public static CameraController cameraController;
-
+	public static void OnDestroy()
+    {
+		players.Clear();
+		fires.Clear();
+		smokes.Clear();
+		claimants.Clear();
+		windows.Clear();
+		fireCamera.Clear();
+		copylist.Clear();
+		saveClaimants.Clear();
+    }
 	public static IEnumerator CoTurnSystem()
 	{
 		foreach (var player in players)
@@ -167,6 +179,8 @@ public static class Turn
 					claimant.ChangeState(ClaimantState.Idle);
 			}
 		}
+		GameManager.instance.targetPlayer = null;
+		GameManager.instance.turnCount++;
 	}
 	public static void OutOfSight(List<Fire> fireList, float sec)
 	{

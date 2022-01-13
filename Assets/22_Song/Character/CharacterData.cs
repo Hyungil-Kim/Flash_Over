@@ -127,7 +127,7 @@ public class CharacterData
 
     public int stress;
 
-    public Personality personality;
+    //public Personality personality;
 
     //public WeaponData weapon;
     public HoseData hose;
@@ -143,9 +143,12 @@ public class CharacterData
 
     public bool isFireAble;
     public int tiredScore;
+    public TiredType tiredType;
 
     public bool isRest;
     public int restCount;
+
+    public bool isTraining;
 
     public void ApplyItemStat(ItemDataBase item)
     {
@@ -187,6 +190,19 @@ public class CharacterData
     public void StatInit()
     {
         totalStats = baseStats.DeepCopy();
+        switch (tiredType)
+        {
+            case TiredType.Normal:
+                break;
+            case TiredType.Tired:
+                totalStats.lung.stat -= totalStats.lung.stat / 3;
+                break;
+            case TiredType.BigTired:
+                totalStats.lung.stat /= 3;
+                break;
+            default:
+                break;
+        }
         if (hose != null)
         {
             ApplyItemStat(hose);
@@ -332,9 +348,9 @@ public class CharacterData
         }
 
         //성격 부여
-        personality = new Personality();
-        personality.SetPersonality(MyDataTableMgr.chaStatTable.GetTable("Personality").min,
-            MyDataTableMgr.chaStatTable.GetTable("Personality").max);
+        //personality = new Personality();
+        //personality.SetPersonality(MyDataTableMgr.chaStatTable.GetTable("Personality").min,
+        //    MyDataTableMgr.chaStatTable.GetTable("Personality").max);
 
         //스텟 최신화
         StatInit();
@@ -514,5 +530,26 @@ public class CharacterData
         StatInit();
         totalStats.str.stat *= 5;
         totalStats.hp.stat *= 2;
+    }
+    public bool GetTired()
+    {
+        var tired = TiredType.Normal;
+        switch (tiredScore / 50)
+        {
+            case 0:
+                break;
+            case 1:
+                tired = TiredType.Tired;
+                break;
+            case 2:
+                tired = TiredType.BigTired;
+                break;
+            default:
+                break;
+        }
+        bool istired = tired > tiredType;
+        tiredType = tired;
+        StatInit();
+        return istired;
     }
 }

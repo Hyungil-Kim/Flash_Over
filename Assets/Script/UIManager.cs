@@ -26,8 +26,6 @@ public class UIManager : MonoBehaviour
     }
     public void StartGame()
     {
-        gameManager.isStart = true;
-        gameManager.Init();
         startButton.gameObject.SetActive(false);
         icon.gameObject.SetActive(false);
         info.gameObject.SetActive(false);

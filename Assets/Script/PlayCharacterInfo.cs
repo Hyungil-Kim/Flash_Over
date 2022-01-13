@@ -52,17 +52,19 @@ public class PlayCharacterInfo : MonoBehaviour
         {
             chaName.text = $"{cd.characterName} »ê¼Ò : {cd.oxygen}";
             string tired = "¤¸¤¸";
-            if (cd.tiredScore < 30)
+            switch (cd.tiredType)
             {
-                tired = "¸ÖÂÄÇÔ";
-            }
-            else if (cd.tiredScore < 70)
-            {
-                tired = "ÇÇ°ïÇÔ";
-            }
-            else if (cd.tiredScore < 100)
-            {
-                tired = "ÁÖ°Å";
+                case TiredType.Normal:
+                    tired = "¸ÖÂÄÇÔ";
+                    break;
+                case TiredType.Tired:
+                    tired = "ÇÇ°ïÇÔ";
+                    break;
+                case TiredType.BigTired:
+                    tired = "ºòÇÇ°ïÇÔ";
+                    break;
+                default:
+                    break;
             }
             chaStat.text = $"Ã¼·Â : {cd.hp} µ¥¹ÌÁö : {cd.totalStats.dmg}\nÀÌµ¿ : {cd.totalStats.move} ÇÇ·Î : {tired}";
         }

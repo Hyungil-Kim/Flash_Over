@@ -5,5 +5,6 @@ public enum SaveDataType
 {
     Shop,
     PlayerData,
-    Option
+    Option,
+    Play
 }
