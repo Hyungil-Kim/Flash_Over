@@ -34,7 +34,7 @@ public class StageSelect : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(callBack);
             int layerMask = 1 << LayerMask.NameToLayer("UI");
             layerMask = ~layerMask;
-            if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
+            if (Physics.Raycast(ray, out hit, float.PositiveInfinity,layerMask))
             {
                 maps = hit.transform.gameObject;
                 Debug.Log(maps.name);
