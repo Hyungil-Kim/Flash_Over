@@ -10,8 +10,6 @@ public class PlayerIdleState : State
 	public PlayerIdleState(Player _fsm)
 	{
 		fsm = _fsm;
-	CameraController cameraController;
-
 	}
 	public override void Enter()
 	{
@@ -30,7 +28,6 @@ public class PlayerIdleState : State
 		fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.weapon1Button.gameObject.SetActive(false);
 		fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
-
 	}
 
 	public override void Exit()
@@ -54,6 +51,7 @@ public class PlayerMoveState : State
 	public override void Enter()
 	{
 		fsm.moveHelper.SetActive(true);
+		fsm.gameManager.move = fsm.cd.totalStats.move;
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
@@ -62,7 +60,6 @@ public class PlayerMoveState : State
 
 	public override void Exit()
 	{
-		
 	}
 
 	public override void Update()
@@ -126,7 +123,6 @@ public class PlayerEndState : State
 		//fsm.gameManager.ChangeTargetPlayer(nextPlayer.gameObject);
 		//Debug.Log($"다음 플레이어 인덱스 {nextPlayer.index}");
 		//fsm.gameManager.GetClickedEndMouse(Turn.players[fsm.index + 1].gameObject);
-
 		fsm.StartCoroutine(Turn.CoTurnSystem());
 	}
 

@@ -41,7 +41,6 @@ public class GroundTile : MonoBehaviour
 
 	//tileState
 	public int tileArea;
-	
 	public int tileMesh;//임시
 	public bool tileIsWeat;//임시
 	public int tileWeatValue;
@@ -91,8 +90,6 @@ public class GroundTile : MonoBehaviour
 				nextTileList.Add(nextTile);
 			}
 		}
-		
-        
 		if(tileIsFire || tileIsSmoke)
 		{
 			Turn.smokes.Add(this.GetComponentInChildren<Smoke>(true));

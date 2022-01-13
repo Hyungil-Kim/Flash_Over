@@ -93,10 +93,10 @@ public class MouseInput : MonoBehaviour
 	}
 	public void Update()
 	{
-		var touchList = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.ToArray();
-		if (touchList.Length == 2)
-		{
-			mulitiTouchCount(touchList);
-		}
+		//var touchList = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.ToArray();
+		//if (touchList.Length == 2)
+		//{
+		//	mulitiTouchCount(touchList);
+		//}
 	}
 }

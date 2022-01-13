@@ -23,7 +23,6 @@ public class TilemapManager : MonoBehaviour
 	}
 	public void Start()
 	{
-		//gameManager = GetComponent<GameManager>();
 	}
 	//타일맵관련
 	public GroundTile ReturnTile(GameObject gameObject)
@@ -158,11 +157,35 @@ public class TilemapManager : MonoBehaviour
 				{
 					defender.GetComponent<Claimant>().hp -= iDamage;
 				}
-				//오브젝트 추가
+				if(defender.tag == "Obstacle")
+				{
+					defender.GetComponent<Obstacle>().hp -= iDamage;
+				}
 			}
 			elem.ChangeTileState(elem, iDamage);
 			elem.CheckParticleOn(elem);
 		}
+	}
+	public void ExplotionDamage(Obstacle target, List<GroundTile> list)
+	{
+		foreach (var elem in list)
+		{
+			var damage = target.exploseDamage / (Mathf.Pow(2f, elem.checkSum));
+			damage = damage > 0 ? damage : 0;
+			var iDamage = Mathf.CeilToInt(damage);
+			foreach (var defender in elem.fillList)
+			{
+				if (defender.tag == "Player")
+				{
+					defender.GetComponent<Player>().cd.hp -= iDamage;
+				}
+				if (defender.tag == "Claimant")
+				{
+					defender.GetComponent<Claimant>().hp -= iDamage;
+				}
+			}
+		}
+		
 	}
 	public void EndMonsterAttack()
 	{

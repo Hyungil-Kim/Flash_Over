@@ -7,7 +7,7 @@ public class CameraForFireZone : MonoBehaviour
     public int areaNum;
     void Start()
     {
-        Turn.fireCamera.Add(this);
+        Turn.areaCamera.Add(this);
     }
 
     // Update is called once per frame

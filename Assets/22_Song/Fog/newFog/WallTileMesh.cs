@@ -17,6 +17,7 @@ public class WallTileMesh : MonoBehaviour
     }
     private void Start()
     {
+        tilemap = GameManager.instance.tilemap;
         Init();
     }
     void Update()
