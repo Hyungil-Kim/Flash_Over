@@ -13,6 +13,7 @@ public class MouseInput : MonoBehaviour
 
 	public MoveControlor mousePoint;
 	private GameManager gameManager;
+	private StageSelect stageSelect;
 	public float minZoomInch = 0.2f;
 	public float maxZoomInch = 0.5f;
 
@@ -54,7 +55,9 @@ public class MouseInput : MonoBehaviour
 		mousePoint.Mouse.Touch.performed += val => gameManager.ChangeMousePointer();
 		mousePoint.Mouse.Click.canceled += val => gameManager.GetClickedEndMouse();
 		mousePoint.Mouse.Touch.canceled += val => gameManager.CharacterChanageEnd();
+
 		mousePoint.Mouse.Touch.performed += val => gameManager.uIManager.gameclearUI.SkipResult(val); 
+
 	}
 
 

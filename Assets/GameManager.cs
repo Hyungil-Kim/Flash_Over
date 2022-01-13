@@ -49,10 +49,11 @@ public class GameManager : MonoBehaviour
 	public bool showMeleeRange;
 	public bool showthrowwRange;
 
-
 	public int turnCount;
 	public TextMeshProUGUI tMPro;
 	public TextMeshProUGUI pressPro;
+
+	public bool isUsingMap;
 
 
 	public void Awake()
@@ -169,7 +170,7 @@ public class GameManager : MonoBehaviour
 			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
 			layerMask = ~layerMask;
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
-			{
+			{	
 				target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
 				targetTile = tilemapManager.ReturnTile(target);
 				mouse3DPos = raycastHit.point;

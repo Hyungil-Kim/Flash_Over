@@ -53,6 +53,24 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""MultiTap(tapDelay=0.1)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UiTouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""0222fcca-c16b-4dd8-8954-bce15923b336"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UiMove"",
+                    ""type"": ""Value"",
+                    ""id"": ""e267a1ed-73c7-4ebd-9b03-d21f0f45921a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -86,6 +104,28 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""touch"",
                     ""action"": ""Touch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6b6a7ef-ae6d-4f05-bb4d-d352d27b9366"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""touch"",
+                    ""action"": ""UiTouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""416ebc4c-80b0-47c1-a162-2ac4a119dec3"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""touch"",
+                    ""action"": ""UiMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -638,6 +678,8 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         m_Mouse_Move = m_Mouse.FindAction("Move", throwIfNotFound: true);
         m_Mouse_Click = m_Mouse.FindAction("Click", throwIfNotFound: true);
         m_Mouse_Touch = m_Mouse.FindAction("Touch", throwIfNotFound: true);
+        m_Mouse_UiTouch = m_Mouse.FindAction("UiTouch", throwIfNotFound: true);
+        m_Mouse_UiMove = m_Mouse.FindAction("UiMove", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -712,6 +754,8 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
     private readonly InputAction m_Mouse_Move;
     private readonly InputAction m_Mouse_Click;
     private readonly InputAction m_Mouse_Touch;
+    private readonly InputAction m_Mouse_UiTouch;
+    private readonly InputAction m_Mouse_UiMove;
     public struct MouseActions
     {
         private @MoveControlor m_Wrapper;
@@ -719,6 +763,8 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Mouse_Move;
         public InputAction @Click => m_Wrapper.m_Mouse_Click;
         public InputAction @Touch => m_Wrapper.m_Mouse_Touch;
+        public InputAction @UiTouch => m_Wrapper.m_Mouse_UiTouch;
+        public InputAction @UiMove => m_Wrapper.m_Mouse_UiMove;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -737,6 +783,12 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @Touch.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnTouch;
                 @Touch.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnTouch;
                 @Touch.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnTouch;
+                @UiTouch.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiTouch;
+                @UiTouch.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiTouch;
+                @UiTouch.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiTouch;
+                @UiMove.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiMove;
+                @UiMove.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiMove;
+                @UiMove.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiMove;
             }
             m_Wrapper.m_MouseActionsCallbackInterface = instance;
             if (instance != null)
@@ -750,6 +802,12 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @Touch.started += instance.OnTouch;
                 @Touch.performed += instance.OnTouch;
                 @Touch.canceled += instance.OnTouch;
+                @UiTouch.started += instance.OnUiTouch;
+                @UiTouch.performed += instance.OnUiTouch;
+                @UiTouch.canceled += instance.OnUiTouch;
+                @UiMove.started += instance.OnUiMove;
+                @UiMove.performed += instance.OnUiMove;
+                @UiMove.canceled += instance.OnUiMove;
             }
         }
     }
@@ -882,6 +940,8 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnTouch(InputAction.CallbackContext context);
+        void OnUiTouch(InputAction.CallbackContext context);
+        void OnUiMove(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

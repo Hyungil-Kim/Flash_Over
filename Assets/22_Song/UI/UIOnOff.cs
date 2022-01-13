@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.EventSystems;
 public class UIOnOff : MonoBehaviour
 {
-
-
     public GameObject[] uiArray;
+    private GameObject returnButton;
+    private GameObject stage;
+    private GameObject stageName;
+    
+    //private GameObject stageSelsction;
     private Dictionary<string, GameObject> uiDict = new Dictionary<string, GameObject>();
     private void Start()
     {
@@ -16,6 +19,14 @@ public class UIOnOff : MonoBehaviour
             uiDict.Add(ui.name, ui);
         }
         GameData.userData.LoadUserData(1);
+        returnButton = uiArray[12].transform.gameObject;
+        stage= uiArray[13].transform.gameObject;
+        //stageSelsction = uiArray[11].transform.gameObject;
+    }
+    private void Update()
+    {
+       
+
     }
     public void Open(string uiName)
     {
@@ -26,9 +37,42 @@ public class UIOnOff : MonoBehaviour
         uiDict[uiName].SetActive(true);
     }
 
+    public void Closed()
+    {
+        uiArray[11].SetActive(false);
+        uiArray[13].SetActive(true);
+
+    }
+
     public void OnStart()
     {
-        SceneManager.LoadScene("SampleTileMap");
+        var name= stage.GetComponent<StageSelect>().maps.name;
+        Debug.Log(name);
+        SceneManager.LoadScene(name);
+
+    }
+
+    public void StageSelect()
+    {
+        foreach (var ui in uiArray)
+        {
+            ui.SetActive(false);
+        }
+        returnButton.SetActive(true);
+        stage.SetActive(true);
+
+    }
+
+    public void ReturnMainLobby(string uiName)
+    {
+        
+            foreach (var ui in uiArray)
+            {
+                ui.SetActive(false);
+            }
+            uiDict[uiName].SetActive(true);
+            returnButton.SetActive(false);
+
     }
     #region scean...babo
     //public void OnInventoryButton()
@@ -52,5 +96,5 @@ public class UIOnOff : MonoBehaviour
     //    SceneManager.LoadScene("testMainScene");
     //}
     #endregion
-
+   
 }
