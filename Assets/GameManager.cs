@@ -380,7 +380,6 @@ public class GameManager : MonoBehaviour
 		if (!point && isStart)
 		{
 			press = true;
-
 			if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Move && (targetPlayer == pretargetPlayer || pretargetPlayer == null))
 			{
 				StartCoroutine(playerMove.Move(setPathColor, setMoveColor, targetPlayer, move));

@@ -428,24 +428,24 @@ public class GroundTile : MonoBehaviour
         {
 			if(elem.tag == "Wall" && cheakVision )
             {
-				var material = elem.GetComponent<Renderer>().material;
-				material.renderQueue = 3020;
+				//var material = elem.GetComponent<Renderer>().material;
+				//material.renderQueue = 3020;
 				//material.shader.FindPropertyIndex("")
             }				
 			else if( elem.tag == "Wall" && !cheakVision)
             {
-				var material = elem.GetComponent<Renderer>().material;
-				material.renderQueue = 2000; 
+				//var material = elem.GetComponent<Renderer>().material;
+				//material.renderQueue = 2000; 
 			}
 			if(elem.tag == "Claimant" && cheakVision)
             {
-				elem.GetComponent<Renderer>().enabled = true;
-				var material = elem.GetComponent<Renderer>().material;
-				material.renderQueue = 3020;
+				//elem.GetComponent<Renderer>().enabled = true;
+				//var material = elem.GetComponent<Renderer>().material;
+				//material.renderQueue = 3020;
 			}
 			else if(elem.tag == "Claimant" && !cheakVision)
             {
-				elem.GetComponent<Renderer>().enabled = false;
+				//elem.GetComponent<Renderer>().enabled = false;
             }
         }
 	}
