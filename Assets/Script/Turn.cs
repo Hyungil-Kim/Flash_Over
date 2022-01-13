@@ -26,7 +26,7 @@ public static class Turn
 		smokes.Clear();
 		claimants.Clear();
 		windows.Clear();
-		fireCamera.Clear();
+		areaCamera.Clear();
 		copylist.Clear();
 		saveClaimants.Clear();
     }

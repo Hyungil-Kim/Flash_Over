@@ -20,29 +20,24 @@ public class CreateCharacter : MonoBehaviour
     }
     public void Create(CharacterData cd)
     {
-        //if (GameData.userData.fireManList.ContainsKey(characterIndex))
+
+        //if(cd != null)
         //{
         //    character = Instantiate(characterPrefab, transform);
-        //    character.GetComponent<Player>().cd = GameData.userData.fireManList[characterIndex];
+        //    character.GetComponent<Player>().cd = cd;
+        //    character.GetComponent<Player>().index = characterIndex;
         //    character.GetComponent<Player>().cd.GameStart();
         //}
-        if(cd != null)
-        {
-            character = Instantiate(characterPrefab, transform);
-            character.GetComponent<Player>().cd = cd;
-            character.GetComponent<Player>().index = characterIndex;
-            character.GetComponent<Player>().cd.GameStart();
-        }
-        //character = Instantiate(characterPrefab, transform);
-        //CharacterData cd = new CharacterData();
-        //cd.SetCharacter();
-        //cd.EquipItem(new HoseData(MyDataTableMgr.hoseTable.GetTable(1)), ItemType.Hose);
-        //cd.EquipItem(new HoseData(MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
-        //cd.EquipItem(new HoseData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
+        character = Instantiate(characterPrefab, transform);
+        CharacterData test = new CharacterData();
+        test.SetCharacter();
+        test.EquipItem(new HoseData(MyDataTableMgr.hoseTable.GetTable(1)), ItemType.Hose);
+        test.EquipItem(new HoseData(MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
+        test.EquipItem(new HoseData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
 
-        //character.GetComponent<Player>().cd = cd;
-        //character.GetComponent<Player>().cd.GameStart();
-        //character.GetComponent<Player>().index = characterIndex;
+        character.GetComponent<Player>().cd = test;
+        character.GetComponent<Player>().cd.GameStart();
+        character.GetComponent<Player>().index = characterIndex;
     }
     public void ChangeCharacter(Player player)
     {

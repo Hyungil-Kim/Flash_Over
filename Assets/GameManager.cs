@@ -124,6 +124,10 @@ public class GameManager : MonoBehaviour
 				{
 					create.Create(GameData.userData.fireManList[create.characterIndex]);
 				}
+				else
+                {
+					create.Create(null);
+				}
 			}
 		}
 	}
