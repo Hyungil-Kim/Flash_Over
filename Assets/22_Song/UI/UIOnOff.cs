@@ -19,7 +19,7 @@ public class UIOnOff : MonoBehaviour
             uiDict.Add(ui.name, ui);
         }
         GameData.userData.LoadUserData(1);
-        returnButton = uiArray[12].transform.gameObject;
+        returnButton = uiArray[11].transform.gameObject;
         stage= uiArray[13].transform.gameObject;
         //stageSelsction = uiArray[11].transform.gameObject;
     }

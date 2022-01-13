@@ -40,7 +40,7 @@ public class StageSelect : MonoBehaviour
                 Debug.Log(maps.name);
                 if(maps!=null)
                 {
-                    uiOnOff.uiArray[11].SetActive(true);
+                    uiOnOff.uiArray[12].SetActive(true);
                     uiOnOff.uiArray[13].SetActive(false);   
                 }
             }
