@@ -14,4 +14,11 @@ public static class MyDataTableMgr
     public static CharacterStatsTable chaStatTable = new CharacterStatsTable();
     public static ItemGradeTable itemGradeTable = new ItemGradeTable();
     public static LevelUpTable levelUpTable = new LevelUpTable();
+
+    public static FireTable fireTable = new FireTable();
+    public static ObjTable objTable = new ObjTable();
+    public static SmokeTable smokeTable = new SmokeTable();
+    public static TileTable tileTable = new TileTable();
+
+    public static StageInfoTable stageInfoTable = new StageInfoTable();
 }

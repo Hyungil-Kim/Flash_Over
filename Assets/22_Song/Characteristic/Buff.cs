@@ -7,15 +7,15 @@ public class Buff
     public string id;
     public string timing;
     public BuffTiming buffTiming;
-    
-
-    public virtual bool Cheak()
+    public CharacterData cd;
+    public bool ing;
+    public virtual bool Check()
     {
         return false;
     }
     public virtual void StartBuff()
     {
-
+        ing = true;
     }
     public virtual void WhileBuff()
     {
@@ -23,6 +23,6 @@ public class Buff
     }
     public virtual void EndBuff()
     {
-
+        ing = false;
     }
 }

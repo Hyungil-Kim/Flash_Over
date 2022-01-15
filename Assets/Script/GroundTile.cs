@@ -63,6 +63,8 @@ public class GroundTile : MonoBehaviour
 
 	//public TileSaveData data;
 
+	public int infoIndex;
+
 	public GroundTile(int x , int y)
 	{
 		cellpos.x = x;
@@ -347,6 +349,12 @@ public class GroundTile : MonoBehaviour
 				else if(elem.tag == "Wall")
 				{
 					isWall = true;
+					var materials = elem.GetComponentsInChildren<Renderer>();
+					foreach (var renderer in materials)
+					{
+						renderer.material.renderQueue = 3020;
+					}
+					
 					break;
 				}
 				else if(elem.tag == "Claimant")
@@ -501,16 +509,23 @@ public class GroundTile : MonoBehaviour
 		}
         foreach (var elem in visionList)
         {
-			if(elem.tag == "Wall" && cheakVision )
-            {
-				//var material = elem.GetComponent<Renderer>().material;
-				//material.renderQueue = 3020;
-				//material.shader.FindPropertyIndex("")
-            }				
-			else if( elem.tag == "Wall" && !cheakVision)
-            {
-				//var material = elem.GetComponent<Renderer>().material;
-				//material.renderQueue = 2000; 
+			//if(elem.tag == "Wall" && cheakVision )
+   //         {
+			//	var materials = elem.GetComponentsInChildren<Renderer>();
+   //             foreach (var renderer in materials)
+   //             {
+			//		renderer.material.renderQueue = 3020;
+			//	}
+   //         }				
+			if( elem.tag == "Wall" && !cheakVision)
+			{
+				var materials = elem.GetComponentsInChildren<Renderer>();
+				foreach (var renderer in materials)
+				{
+
+					var color = renderer.material.color;
+					renderer.material.color = color - new Color(0.5f, 0.5f, 0.5f);
+				}
 			}
 			if(elem.tag == "Claimant" && cheakVision)
             {

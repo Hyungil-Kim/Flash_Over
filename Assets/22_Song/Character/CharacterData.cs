@@ -89,6 +89,8 @@ public class CharacterData
 
     public CharacterStat totalStats = new CharacterStat();
 
+    public CharacterStat resultStats = new CharacterStat();
+
     public int hp;
 
     public int oxygen;
@@ -150,6 +152,8 @@ public class CharacterData
 
     public bool isTraining;
 
+    public List<Buff> buff = new List<Buff>();
+
     public void ApplyItemStat(ItemDataBase item)
     {
         item.owner = this;
@@ -159,28 +163,28 @@ public class CharacterData
             switch (statType)
             {
                 case CharacterStatType.Hp:
-                    AddStat(statType, item.dataTable.hp, totalStats);
+                    AddStat(statType, item.dataTable.hp, resultStats);
                     break;
                 case CharacterStatType.Str:
-                    AddStat(statType, item.dataTable.str, totalStats);
+                    AddStat(statType, item.dataTable.str, resultStats);
                     break;
                 case CharacterStatType.Lung:
-                    AddStat(statType, item.dataTable.lung, totalStats);
+                    AddStat(statType, item.dataTable.lung, resultStats);
                     break;
                 case CharacterStatType.Move:
-                    AddStat(statType, item.dataTable.move, totalStats);
+                    AddStat(statType, item.dataTable.move, resultStats);
                     break;
                 case CharacterStatType.Vision:
-                    AddStat(statType, item.dataTable.vision, totalStats);
+                    AddStat(statType, item.dataTable.vision, resultStats);
                     break;
                 case CharacterStatType.Dmg:
-                    AddStat(statType, item.dataTable.dmg, totalStats);
+                    AddStat(statType, item.dataTable.dmg, resultStats);
                     break;
                 case CharacterStatType.Def:
-                    AddStat(statType, item.dataTable.def, totalStats);
+                    AddStat(statType, item.dataTable.def, resultStats);
                     break;
                 case CharacterStatType.Sta:
-                    AddStat(statType, item.dataTable.sta, totalStats);
+                    AddStat(statType, item.dataTable.sta, resultStats);
                     break;
                 default:
                     break;
@@ -190,15 +194,16 @@ public class CharacterData
     public void StatInit()
     {
         totalStats = baseStats.DeepCopy();
+        resultStats = baseStats.DeepCopy();
         switch (tiredType)
         {
             case TiredType.Normal:
                 break;
             case TiredType.Tired:
-                totalStats.lung.stat -= totalStats.lung.stat / 3;
+                totalStats.lung.stat -= baseStats.lung.stat / 3;
                 break;
             case TiredType.BigTired:
-                totalStats.lung.stat /= 3;
+                totalStats.lung.stat = baseStats.lung.stat / 3;
                 break;
             default:
                 break;
@@ -352,10 +357,16 @@ public class CharacterData
         //personality.SetPersonality(MyDataTableMgr.chaStatTable.GetTable("Personality").min,
         //    MyDataTableMgr.chaStatTable.GetTable("Personality").max);
 
+        //임시로 나중에 가중치로 바뀌게 될지도 몰라 !
+        baseStats.str.stat *= 5;
+        baseStats.hp.stat *= 2;
+
+        //버프 디버프.. 일케 넣어주는게 맞을까..
+        buff.Add(new testBuff(this));
+
+
         //스텟 최신화
         StatInit();
-        totalStats.str.stat *= 5;
-        totalStats.hp.stat *= 2;
     }
     //스텟 추가
     public void AddStat(CharacterStatType statType, float statValue, CharacterStat stats)

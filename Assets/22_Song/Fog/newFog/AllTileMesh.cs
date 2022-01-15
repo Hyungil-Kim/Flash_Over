@@ -100,9 +100,9 @@ public class AllTileMesh : MonoBehaviour
             var verticesIndex = count * 4;
             var trisIndex = count * 6;
             vertices[verticesIndex] = new Vector3(worldPos.x, worldPos.y, worldPos.z);
-            vertices[verticesIndex + 1] = new Vector3(worldPos.x + 1, worldPos.y, worldPos.z);
-            vertices[verticesIndex + 2] = new Vector3(worldPos.x, worldPos.y, worldPos.z + 1);
-            vertices[verticesIndex + 3] = new Vector3(worldPos.x + 1, worldPos.y, worldPos.z + 1);
+            vertices[verticesIndex + 1] = new Vector3(worldPos.x + 4, worldPos.y, worldPos.z);
+            vertices[verticesIndex + 2] = new Vector3(worldPos.x, worldPos.y, worldPos.z + 4);
+            vertices[verticesIndex + 3] = new Vector3(worldPos.x + 4, worldPos.y, worldPos.z + 4);
 
             tris[trisIndex] = verticesIndex;
             tris[trisIndex + 1] = verticesIndex + 2;
