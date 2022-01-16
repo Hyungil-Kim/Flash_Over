@@ -315,7 +315,7 @@ public class GameManager : MonoBehaviour
 						targetPlayer.ap -= 3;
 						if(targetPlayer.ap < 0)
 						{
-							targetPlayer.lung += targetPlayer.ap;
+							targetPlayer.lung -= targetPlayer.ap;
 							targetPlayer.ap = 0;
 						}
 					}
@@ -340,7 +340,7 @@ public class GameManager : MonoBehaviour
 						targetPlayer.ap -= 3;
 						if (targetPlayer.ap < 0)
 						{
-							targetPlayer.lung += targetPlayer.ap;
+							targetPlayer.lung -= targetPlayer.ap;
 							targetPlayer.ap = 0;
 						}
 					}

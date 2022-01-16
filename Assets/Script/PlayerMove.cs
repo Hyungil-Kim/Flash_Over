@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-	private TilemapManager tilemapManager;
-	public List<Vector3> moveList = new List<Vector3>();
 	private GameManager gameManager;
+	private TilemapManager tilemapManager;
+	public Animator animator;
+	public List<Vector3> moveList = new List<Vector3>();
 	public Player moveObject;
 	public float speed = 3f;
 	public bool go = false;
@@ -52,12 +53,14 @@ public class PlayerMove : MonoBehaviour
 	public void MovePlayer()
 	{
 		moveObject = gameManager.targetPlayer;
+		animator = moveObject.GetComponent<Animator>();
 		if (!tilemapManager.CheckPlayer(moveObject.moveHelper) || tilemapManager.ReturnTile(moveObject.gameObject) == tilemapManager.ReturnTile(moveObject.moveHelper))
 		{
 
 			if (tilemapManager.ReturnTile(moveObject.moveHelper).isClaimant) return;
 			moveObject.moveHelper.transform.localPosition = Vector3.zero;
 			moveObject.moveHelper.gameObject.SetActive(false);
+			animator.SetBool("walk", true);
 			go = true;
 		}
 	}
@@ -160,6 +163,7 @@ public class PlayerMove : MonoBehaviour
 					hit = false;
 					breath = false;
 					go = false;
+					animator.SetBool("walk", false);
 					StartCoroutine(gameManager.tilemapManager.MoveEnd(moveObject));
 				}
 			}
@@ -177,9 +181,10 @@ public class PlayerMove : MonoBehaviour
 
 			if (moveObject.ap < 0)
 			{
-				moveObject.lung += moveObject.ap;
+				moveObject.lung -= moveObject.ap;
 				moveObject.ap = 0;
 			}
+			moveObject.CheckPlayerLung();
 			breath = true;
 		}
 	}
@@ -195,60 +200,9 @@ public class PlayerMove : MonoBehaviour
 				{
 					moveObject.handList[0].GetComponent<Claimant>().hp -= fireDamage;
 				}
+				moveObject.CheckPlayerHp();
 				hit = true;
 			}
 		}
 	}
-
-	//public void CopyList()
-	//{
-	//	preRoot = gameManager.tilemapManager.ReturnFinalList();
-	//	for (int i = 0; i < preRoot.Count; i++)
-	//	{
-	//		var nextCenterPos = gameManager.tilemapManager.ReturnPosition(preRoot[i].transform.position);
-	//		var newCenterPos = new Vector3(nextCenterPos.x, moveObject.transform.position.y, nextCenterPos.z);
-	//		moveList.Add(newCenterPos);//다음 타일의 중앙좌표 y는 플레이어
-	//	}
-	//}
-	//public void Move()
-	//{
-	//	moveObject = gameManager.targetPlayer.gameObject;
-	//	moveList = new List<Vector3>();
-	//	CopyList();
-	//	if (gameManager.moveHelper != null)//임시코드
-	//	{
-	//		gameManager.moveHelper.SetActive(false);
-	//	}
-	//	go = true;
-	//}
-	//public void Update()
-	//{
-	//	if (go)
-	//	{
-	//		if (moveObject.transform.position != moveList[num])
-	//		{
-	//			var dis = Vector3.Distance(moveObject.transform.position, moveList[num]);
-	//			if (dis > 0)
-	//			{
-	//				moveObject.transform.position = Vector3.MoveTowards(moveObject.transform.position, moveList[num], speed * Time.deltaTime);
-	//				moveObject.transform.LookAt(moveList[num]);
-	//			}
-	//		}
-	//		else
-	//		{
-	//			if (num < moveList.Count - 1)
-	//			{
-	//				num++;
-	//			}
-	//			else
-	//			{
-	//				num = 0;
-	//				go = false;
-	//				gameManager.tilemapManager.MoveEnd();
-	//			}
-	//		}
-	//	}
-	//}
-
-
 }

@@ -152,14 +152,17 @@ public class TilemapManager : MonoBehaviour
 				if (defender.tag == "Player")
 				{
 					defender.GetComponent<Player>().cd.hp -= iDamage;
+					defender.GetComponent<Player>().CheckPlayerHp();
 				}
 				if(defender.tag == "Claimant")
 				{
 					defender.GetComponent<Claimant>().hp -= iDamage;
+					defender.GetComponent<Claimant>().CheckClaimantHp();
 				}
 				if(defender.tag == "Obstacle")
 				{
 					defender.GetComponent<Obstacle>().hp -= iDamage;
+					defender.GetComponent<Obstacle>().CheckObstacleHp();					
 				}
 			}
 			elem.ChangeTileState(elem, iDamage);
@@ -215,7 +218,7 @@ public class TilemapManager : MonoBehaviour
 						var damage = attacker.cd.totalStats.dmg * (1 - (targetTile.GetComponent<GroundTile>().checkSum - 1) * 0.4);
 						damage = damage > 0 ? damage : 0;
 						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
-						Debug.Log(elem.GetComponentInChildren<Fire>().fireHp);
+						elem.GetComponentInChildren<Fire>().CheckFireHp();
 					}
 				}
 				break;
@@ -230,6 +233,8 @@ public class TilemapManager : MonoBehaviour
 						var damage = attacker.cd.totalStats.dmg * 0.4;
 						damage = damage > 0 ? damage : 0;
 						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
+						elem.GetComponentInChildren<Fire>().CheckFireHp();
+
 					}
 
 				}
@@ -239,7 +244,7 @@ public class TilemapManager : MonoBehaviour
 		attacker.ap -= 5;
 		if(attacker.ap <0)
 		{
-			attacker.lung += attacker.ap;
+			attacker.lung -= attacker.ap;
 			attacker.ap = 0;
 		}
 	}

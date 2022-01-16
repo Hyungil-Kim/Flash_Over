@@ -125,14 +125,20 @@ public class Claimant : FSM<ClaimantState>
 				break;
 		}
 	}
-	public void Update()
+	public void CheckClaimantHp()
 	{
-
-		//if (hp <= 0 || lung < 0)
-		//{
-		//	gameObject.SetActive(false);
-		//	Turn.claimants.Remove(this);
-		//}
-
+		if (hp <= 0)
+		{
+			gameObject.SetActive(false);
+			Turn.claimants.Remove(this);
+		}
+	}
+	public void CheckClaimantLung()
+	{
+		if (lung < 0)
+		{
+			gameObject.SetActive(false);
+			Turn.claimants.Remove(this);
+		}
 	}
 }

@@ -41,23 +41,23 @@ public class GroundTile : MonoBehaviour
 
 	//tileState
 	public int tileArea;
-	public int tileMesh;//임시
-	public int tileGrowthExp;
+	public int tileMesh;//타일 가중치
+	public int tileGrowthExp;// 타일 hp 0일때 가중치 역으로 바꿔줌
 
 	//smoke
 	public GameObject smokePrefab;
 
 	//data
-	public bool tileIsWeat;
-	public bool tileIsFire;
+	public bool tileIsWeat;	//물젖음?
+	public bool tileIsFire; //
 	public bool tileIsSmoke;
 
-	public int tileWeatValue;
-	public int tileExp;
-	public float tileHp;
+	public int tileWeatValue;//물 묻으면 생기는 가중치
+	public int tileExp;// 타일 경험치
+	public float tileHp; //타일 hp
 
-	public int tileSaveSmokeValue;
-	public int tileSmokeValue;
+	public int tileSaveSmokeValue;//연기 다음에 추가될 값
+	public int tileSmokeValue;//현재 연기값
 
 	public int index;
 
