@@ -12,6 +12,10 @@ public class UserData : MySaveData
     public int gold;
     public int slot;
     public string userName;
+
+    public int inGameTime;
+    
+
     //public List<WeaponData> weaponItemList
     //    = new List<WeaponData>();
 
@@ -85,6 +89,7 @@ public class UserData : MySaveData
             foreach (var character in GameData.userData.characterList)
             {
                 character.StatInit();
+                character.LoadCd();
             }
         }
 

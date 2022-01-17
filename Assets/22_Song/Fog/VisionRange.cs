@@ -98,6 +98,7 @@ public class VisionRange : MonoBehaviour
 			
 			curTile.CheakVision = true;
 		}
+		CheckBuff();
 		return crossResetQueue;
 	}
 	public void ResetTile()
@@ -140,5 +141,31 @@ public class VisionRange : MonoBehaviour
 			prevTileList[i].CheckParticle();
 		}
 		prevTileList.Clear();
+	}
+	public void CheckBuff()
+	{
+		bool rangeClaimant = false;
+		foreach (var tile in crossResetQueue)
+		{
+			if (tile.isClaimant)
+			{
+				rangeClaimant = true;
+				break;
+			}
+		}
+		var cd = gameObject.GetComponent<Player>().cd;
+		if (cd != null)
+		{
+			foreach (var buff in cd.buff)
+			{
+				if (buff.buffTiming.Check(BuffTiming.BuffTimingEnum.Move))
+				//if (buff.buffTiming.bufftiming == BuffTiming.BuffTimingEnum.Move)
+				{
+					buff.Check(rangeClaimant);
+
+					Debug.Log(cd.totalStats.str.stat);
+				}
+			}
+		}
 	}
 }

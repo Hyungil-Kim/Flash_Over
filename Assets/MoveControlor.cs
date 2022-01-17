@@ -71,6 +71,15 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TestTouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""fae55ba5-d4af-4ea5-bc59-85770cba6314"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -126,6 +135,17 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""touch"",
                     ""action"": ""UiMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32f3fe5f-81e8-42a7-85a4-6f9ab6f6de56"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""touch"",
+                    ""action"": ""TestTouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -680,6 +700,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         m_Mouse_Touch = m_Mouse.FindAction("Touch", throwIfNotFound: true);
         m_Mouse_UiTouch = m_Mouse.FindAction("UiTouch", throwIfNotFound: true);
         m_Mouse_UiMove = m_Mouse.FindAction("UiMove", throwIfNotFound: true);
+        m_Mouse_TestTouch = m_Mouse.FindAction("TestTouch", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -756,6 +777,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
     private readonly InputAction m_Mouse_Touch;
     private readonly InputAction m_Mouse_UiTouch;
     private readonly InputAction m_Mouse_UiMove;
+    private readonly InputAction m_Mouse_TestTouch;
     public struct MouseActions
     {
         private @MoveControlor m_Wrapper;
@@ -765,6 +787,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         public InputAction @Touch => m_Wrapper.m_Mouse_Touch;
         public InputAction @UiTouch => m_Wrapper.m_Mouse_UiTouch;
         public InputAction @UiMove => m_Wrapper.m_Mouse_UiMove;
+        public InputAction @TestTouch => m_Wrapper.m_Mouse_TestTouch;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -789,6 +812,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @UiMove.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiMove;
                 @UiMove.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiMove;
                 @UiMove.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnUiMove;
+                @TestTouch.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnTestTouch;
+                @TestTouch.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnTestTouch;
+                @TestTouch.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnTestTouch;
             }
             m_Wrapper.m_MouseActionsCallbackInterface = instance;
             if (instance != null)
@@ -808,6 +834,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @UiMove.started += instance.OnUiMove;
                 @UiMove.performed += instance.OnUiMove;
                 @UiMove.canceled += instance.OnUiMove;
+                @TestTouch.started += instance.OnTestTouch;
+                @TestTouch.performed += instance.OnTestTouch;
+                @TestTouch.canceled += instance.OnTestTouch;
             }
         }
     }
@@ -942,6 +971,7 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         void OnTouch(InputAction.CallbackContext context);
         void OnUiTouch(InputAction.CallbackContext context);
         void OnUiMove(InputAction.CallbackContext context);
+        void OnTestTouch(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

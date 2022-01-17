@@ -15,6 +15,7 @@ public class PlayerIdleState : State
 	{
 
 		fsm.moveHelper.transform.localPosition = Vector3.zero;
+		//fsm.gameObject.GetComponent<VisionRange>().CheckBuff();
 
 		//이거 여기 두면 계속 꺼져 안돼..
 		//fsm.moveHelper.SetActive(false);
@@ -107,8 +108,7 @@ public class PlayerEndState : State
 		fsm = _fsm;
 	}
 	public override void Enter()
-	{
-		//마찬가지로 .. 이걸 어떻게하나 
+	{ 
 
 		if (fsm.gameManager.targetPlayer == fsm)
 		{

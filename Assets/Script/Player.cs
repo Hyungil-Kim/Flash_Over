@@ -67,7 +67,7 @@ public class Player : FSM<PlayerState>
         AddState(PlayerState.Move, new PlayerMoveState(this));
         AddState(PlayerState.Action, new PlayerAttackState(this));
         AddState(PlayerState.End, new PlayerEndState(this));
-        //SetState(PlayerState.Idle);
+        SetState(playerState);
 
     }
     void Start()
@@ -100,10 +100,10 @@ public class Player : FSM<PlayerState>
         //}
 
         //test
-        foreach (var buff in cd.buff)
-        {
-            buff.Check();
-        }
+        //foreach (var buff in cd.buff)
+        //{
+        //    buff.Check();
+        //}
 	}
     private void OnDestroy()
     {

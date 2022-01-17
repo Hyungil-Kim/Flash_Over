@@ -153,6 +153,7 @@ public class CharacterData
     public bool isTraining;
 
     public List<Buff> buff = new List<Buff>();
+    
 
     public void ApplyItemStat(ItemDataBase item)
     {
@@ -362,8 +363,9 @@ public class CharacterData
         baseStats.hp.stat *= 2;
 
         //버프 디버프.. 일케 넣어주는게 맞을까..
-        buff.Add(new testBuff(this));
-
+        //buff.Add(new testBuff(this));
+        buff.Add(new HeavyWeight(this));
+        buff.Add(new SaveClaimant(this));
 
         //스텟 최신화
         StatInit();
@@ -562,5 +564,13 @@ public class CharacterData
         tiredType = tired;
         StatInit();
         return istired;
+    }
+
+    public void LoadCd()
+    {
+        foreach (var buf in buff)
+        {
+            buf.SetCharacter(this);
+        }
     }
 }

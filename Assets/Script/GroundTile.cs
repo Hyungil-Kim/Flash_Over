@@ -106,6 +106,7 @@ public class GroundTile : MonoBehaviour
 			firePrefab.SetActive(true);
         }
 		CheckParticle();
+		TestFogOfWar();
 	}
 	public TileSaveData GetData()
     {
@@ -290,6 +291,7 @@ public class GroundTile : MonoBehaviour
 	public void Update()
 	{
 		CheckFillToRay();
+		TestFogOfWar();
 		//var fire = firePrefab.GetComponentInChildren<ParticleSystem>();
 		//var smoke = smokePrefab.GetComponentInChildren<ParticleSystem>();
 
@@ -352,7 +354,7 @@ public class GroundTile : MonoBehaviour
 					var materials = elem.GetComponentsInChildren<Renderer>();
 					foreach (var renderer in materials)
 					{
-						renderer.material.renderQueue = 3020;
+						//renderer.material.renderQueue = 3020;
 					}
 					
 					break;
@@ -371,7 +373,39 @@ public class GroundTile : MonoBehaviour
 			isClaimant = null;
 		}
 	}
-	
+
+	private bool test;
+	public void TestFogOfWar()
+    {
+		if (!test)
+		{
+			RaycastHit[] hits;
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | (1 << LayerMask.NameToLayer("UI")));
+			layerMask = ~layerMask;
+			hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
+			foreach (var elem in hits)
+			{
+				if (elem.collider.gameObject.tag == "Wall")
+				{
+					test = true;
+					var materials = elem.collider.gameObject.GetComponentsInChildren<Renderer>();
+					foreach (var renderer in materials)
+					{
+						var color = renderer.material.color;
+						renderer.material.renderQueue = 3020;
+						if (cheakVision)
+						{
+							renderer.material.color = new Color(1f, 1f, 1f, 1f);
+						}
+						else
+						{
+							renderer.material.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+						}
+					}
+				}
+			}
+		}
+	}
 	public void SetTileColor(Color color)
 	{
 		colorTile.GetComponent<Renderer>().material.color = color;
@@ -517,16 +551,26 @@ public class GroundTile : MonoBehaviour
 			//		renderer.material.renderQueue = 3020;
 			//	}
    //         }				
+
+
 			if( elem.tag == "Wall" && !cheakVision)
 			{
 				var materials = elem.GetComponentsInChildren<Renderer>();
 				foreach (var renderer in materials)
 				{
-
-					var color = renderer.material.color;
-					renderer.material.color = color - new Color(0.5f, 0.5f, 0.5f);
+					renderer.material.color = new Color(0.5f, 0.5f, 0.5f, 1f);
 				}
 			}
+			else if (elem.tag == "Wall" && cheakVision)
+			{
+				var materials = elem.GetComponentsInChildren<Renderer>();
+				foreach (var renderer in materials)
+				{
+					renderer.material.color = new Color(1f, 1f, 1f, 1f);
+				}
+			}
+
+
 			if(elem.tag == "Claimant" && cheakVision)
             {
 				//elem.GetComponent<Renderer>().enabled = true;

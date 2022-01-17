@@ -12,5 +12,9 @@ public static class PlaySaveSystem
     public static void LoadInPlay(int slot)
     {
         ps = MySaveLoadSystem<PlaySave>.Load(SaveDataType.Play, slot);
+        foreach (var cd in ps.psd)
+        {
+            cd.Value.cd.LoadCd();
+        }
     }
 }

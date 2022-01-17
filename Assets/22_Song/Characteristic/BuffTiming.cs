@@ -16,6 +16,7 @@ public class BuffTiming
     public bool Check(BuffTimingEnum timing)
     {
         return bufftiming.HasFlag(timing);
+        //return (bufftiming & timing) != 0;
     }
     public void AddType(int index)
     {

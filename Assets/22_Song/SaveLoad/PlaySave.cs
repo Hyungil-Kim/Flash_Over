@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,13 @@ using UnityEngine;
 public class PlaySave : MySaveData
 {
     public string sceanName;
+
+    
+    public string stageName;
+    public string userName;
+    public string inGameTime;
+    public string dateTime;
+
 
     public Dictionary<int, TileSaveData> tsd = new Dictionary<int, TileSaveData>();
     public Dictionary<int, PlayerSaveData> psd = new Dictionary<int, PlayerSaveData>();

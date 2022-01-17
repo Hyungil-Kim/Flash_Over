@@ -27,6 +27,12 @@ public class SaveLoadManager : MonoBehaviour
             playdata.gsd.targetIndex = GameManager.instance.targetPlayer.index;
         }
         playdata.gsd.turnCount = GameManager.instance.turnCount;
+
+        playdata.inGameTime = $"{GameData.userData.inGameTime}주차";
+        playdata.stageName = "살려주세요";
+        playdata.dateTime = System.DateTime.Now.ToString();
+        playdata.userName = $"{GameData.userData.userName}"; 
+
         PlaySaveSystem.SaveInPlay(playdata, slot);
     }
     public void OnLoad(int slot)

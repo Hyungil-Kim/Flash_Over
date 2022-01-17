@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TestTouch",
+                    "type": "Button",
+                    "id": "fae55ba5-d4af-4ea5-bc59-85770cba6314",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -104,6 +113,17 @@
                     "processors": "",
                     "groups": "touch",
                     "action": "UiMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32f3fe5f-81e8-42a7-85a4-6f9ab6f6de56",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "touch",
+                    "action": "TestTouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -20,34 +20,37 @@ public class CreateCharacter : MonoBehaviour
     }
     public void Create(CharacterData cd)
     {
+        if (cd != null)
+        {
+            character = Instantiate(characterPrefab, transform);
+            character.GetComponent<Player>().cd = cd;
+            character.GetComponent<Player>().index = characterIndex;
+            character.GetComponent<Player>().cd.GameStart();
+        }
+        else
+        {
+            character = Instantiate(characterPrefab, transform);
+            CharacterData test = new CharacterData();
+            test.SetCharacter();
+            test.EquipItem(new HoseData(MyDataTableMgr.hoseTable.GetTable(1)), ItemType.Hose);
+            test.EquipItem(new HoseData(MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
+            test.EquipItem(new HoseData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
 
-        //if(cd != null)
-        //{
-        //    character = Instantiate(characterPrefab, transform);
-        //    character.GetComponent<Player>().cd = cd;
-        //    character.GetComponent<Player>().index = characterIndex;
-        //    character.GetComponent<Player>().cd.GameStart();
-        //}
-        character = Instantiate(characterPrefab, transform);
-        CharacterData test = new CharacterData();
-        test.SetCharacter();
-        test.EquipItem(new HoseData(MyDataTableMgr.hoseTable.GetTable(1)), ItemType.Hose);
-        test.EquipItem(new HoseData(MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
-        test.EquipItem(new HoseData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
-
-        character.GetComponent<Player>().cd = test;
-        character.GetComponent<Player>().cd.GameStart();
-        character.GetComponent<Player>().index = characterIndex;
+            character.GetComponent<Player>().cd = test;
+            character.GetComponent<Player>().cd.GameStart();
+            character.GetComponent<Player>().index = characterIndex;
+        }
     }
-    public void ChangeCharacter(Player player)
+    public void ChangeCharacter(CharacterData cd)
     {
-        if (player != null)
+        
+        if (cd != null)
         {
             DeleteCharacter();
         
             character = Instantiate(characterPrefab, transform);
             character.GetComponent<Player>().index = characterIndex;
-            character.GetComponent<Player>().cd = player.cd;
+            character.GetComponent<Player>().cd = cd;
         }
     }
     public void DeleteCharacter()
