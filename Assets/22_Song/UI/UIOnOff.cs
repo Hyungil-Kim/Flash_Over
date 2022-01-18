@@ -12,6 +12,7 @@ public class UIOnOff : MonoBehaviour
     
     //private GameObject stageSelsction;
     private Dictionary<string, GameObject> uiDict = new Dictionary<string, GameObject>();
+    private StageSelect stageSelect;
     private void Start()
     {
         foreach (var ui in uiArray)
@@ -46,7 +47,7 @@ public class UIOnOff : MonoBehaviour
 
     public void OnStart()
     {
-        var name= stage.GetComponent<StageSelect>().maps.name;
+        var name= stage.GetComponent<StageSelect>().hits.name;
         Debug.Log(name);
         SceneManager.LoadScene(name);
 
