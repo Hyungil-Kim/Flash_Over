@@ -16,7 +16,9 @@ public class Smoke : FSM<SmokeState>
 {
     private GameManager gameManager;
     public int level;
-    public int damage;
+    public int minValue;
+    public int maxValue;
+    public int decreaseVision;
     public int smokeArea;
     public void Awake()
     {

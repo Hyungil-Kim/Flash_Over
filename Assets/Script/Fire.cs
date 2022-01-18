@@ -14,10 +14,15 @@ public class Fire : FSM<FireState>
     public GameManager gameManager;
 
     public float fireHp;
-    public int fireExpGrowth;
-    public int fireDamage;
     public int fireLevel;
+
+	public int fireHpGrowth;//내 체력 상승치
+    public int fireExpGrowth;//주변타일(1칸범위) 체력 상승치
+
+    public int fireDamage;
     public int fireArea;
+	public int fireMinExp;
+	public int fireMaxExp;
 
 	public int fireMakeSmoke = 50;
 	public GroundTile gt;
@@ -44,7 +49,7 @@ public class Fire : FSM<FireState>
 	{
 		gameManager.tilemapManager.EndMonsterAttack();
 	}
-	public void Update()
+	public void CheckFireHp()
 	{
 		if(fireHp <= 0)
 		{

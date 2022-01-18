@@ -13,6 +13,7 @@ public class GroundTile : MonoBehaviour
 	public bool attackfloodFill = false;
 	public bool movefloodFill = false;
 	public bool isPlayer = false;
+	public bool isDoor = false;
 	public Claimant isClaimant = null;
 	public int checkSum = 0;
 	public int G, H;
@@ -41,24 +42,24 @@ public class GroundTile : MonoBehaviour
 
 	//tileState
 	public int tileArea;
-	public int tileMesh;//임시
-	public int tileGrowthExp;
+	public int tileMesh;//타일 가중치
+	public int tileGrowthExp;// 타일 hp 0일때 가중치 역으로 바꿔줌
 
 	//smoke
 	public GameObject smokePrefab;
 
 	//data
-	public bool tileIsWeat;
-	public bool tileIsFire;
+	public bool tileIsWeat;	//물젖음?
+	public bool tileIsFire; 
 	public bool tileIsSmoke;
 	public bool tileIsClaimant;
 
-	public int tileWeatValue;
-	public int tileExp;
-	public float tileHp;
+	public int tileWeatValue;//물 묻으면 생기는 가중치
+	public int tileExp;// 타일 경험치
+	public float tileHp; //타일 hp
 
-	public int tileSaveSmokeValue;
-	public int tileSmokeValue;
+	public int tileSaveSmokeValue;//연기 다음에 추가될 값
+	public int tileSmokeValue;//현재 연기값
 
 	public int index;
 
@@ -348,24 +349,25 @@ public class GroundTile : MonoBehaviour
 				if (elem.tag == "Player")
 				{
 					isPlayer = true;
-					break;
 				}
 				else if(elem.tag == "Wall")
 				{
 					isWall = true;
+
 					var materials = elem.GetComponentsInChildren<Renderer>();
 					foreach (var renderer in materials)
 					{
 						//renderer.material.renderQueue = 3020;
 					}
-					
-					break;
 				}
 				else if(elem.tag == "Claimant")
 				{
 					isClaimant = elem.GetComponent<Claimant>();
 					tileIsClaimant = true;
-					break;
+				}
+				else if(elem.tag == "Door")
+				{
+					isDoor = true;
 				}
 			}
 		}

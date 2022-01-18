@@ -8,26 +8,20 @@ public enum EndBurn
     NonDestroy,
     Explose
 }
-public enum DoorState
-{
-    Default,
-    Open,
-    Close
-}
 public class Obstacle : MonoBehaviour
 {
     public GameManager gameManager;
     public bool updateOn = true;
 
     /// //////////////////////////////////
-    public int obstacleMesh;
-    public int exploseRange;
-    public float exploseDamage;
-    public EndBurn endState;
+    public int obstacleMesh; //오브젝트 가중치
+    public int exploseRange; // 터지는 범위
+    public float exploseDamage;//터지는 데미지
+    public EndBurn endState; // 죽었을때 발생하는 상태
     ///////////////////////////////////// 
-    public float hp;
-    public bool isBurn;
-    public DoorState doorState;
+    public float hp; // 체력
+    public bool isBurn; //현재 타고있는지 
+    public float def; //방어력
    
 
     void Start()

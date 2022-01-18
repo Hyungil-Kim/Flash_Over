@@ -5,6 +5,7 @@ using System.Linq;
 public class ClaimantMove
 {
 	private bool breath = false;
+	private bool hit = false;
 	public void JustStay(Claimant claimant)
 	{
 		EndMove(claimant);
@@ -12,6 +13,8 @@ public class ClaimantMove
 	public void EndMove(Claimant claimant, List<GroundTile> list)
 	{
 		claimant.SetState(ClaimantState.End);
+		var animator = claimant.GetComponent<Animator>();
+		animator.SetBool("walk", false);
 		foreach (var elem in list)
 		{
 			elem.Reset();
@@ -38,6 +41,7 @@ public class ClaimantMove
 		}
 		var path = gameManager.tilemapManager.SetAstar(startTile, goalTile);
 		var targetTile = goalTile;
+		var animator = claimant.GetComponent<Animator>();
 		for (var i = path.Count - 1; i >= 0; --i)
 		{
 			if (path[i].fillList.Count == 0)
@@ -61,11 +65,13 @@ public class ClaimantMove
 		var go = true;
 		var num = 0;
 		var moveSpeed = 3;
+		animator.SetBool("walk", true);
 
 		if (startTile.nextTileList.Contains(goalTile))
 		{
 			num = 0;
 			go = false;
+			//animator.SetBool("walk", false);
 			EndMove(claimant, pathList);
 			yield break;
 		}
@@ -84,6 +90,7 @@ public class ClaimantMove
 				{
 					claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, newPos, moveSpeed * Time.deltaTime);
 					claimant.transform.LookAt(newPos);
+					hitCheck(newPos,claimant);
 					BreathCheck(newPos, claimant);
 				}
 				yield return 0;
@@ -94,11 +101,13 @@ public class ClaimantMove
 				{
 					num++;
 					breath = false;
+					hit = false;
 				}
 				else
 				{
 					num = 0;
 					go = false;
+					animator.SetBool("walk", false);
 					EndMove(claimant, pathList);
 				}
 			}
@@ -195,10 +204,26 @@ public class ClaimantMove
 
 			if (claimant.ap < 0)
 			{
-				claimant.lung += claimant.ap;
+				claimant.lung -= claimant.ap;
 				claimant.ap = 0;
 			}
+			claimant.CheckClaimantLung();
 			breath = true;
+		}
+	}
+	public void hitCheck(Vector3 newPos, Claimant claimant)
+	{
+		var gameManager = GameManager.instance;
+		var tilemapManager = gameManager.tilemapManager;
+		if (!hit)
+		{
+			if (tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>())
+			{
+				var fireDamage = tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>().fireDamage;
+				claimant.hp -= fireDamage;
+				claimant.CheckClaimantHp();
+				hit = true;
+			}
 		}
 	}
 }

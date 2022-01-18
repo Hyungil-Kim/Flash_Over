@@ -20,6 +20,9 @@ public class BattleUiManager : MonoBehaviour
 	public Button rescueButton;
 	public Button putDownButton;
 
+	public Button openDoorButton;
+	public Button closeDoorButton;
+
 	public UseItemManager useItemManager;
 	
 
@@ -74,6 +77,8 @@ public class BattleUiManager : MonoBehaviour
 				
 				gameManager.pickup = false;
 				gameManager.putdown = false;
+				gameManager.open = false;
+				gameManager.close = false;
 
 				if(!attackButton.gameObject.activeSelf)
 				{
@@ -90,7 +95,7 @@ public class BattleUiManager : MonoBehaviour
 					itemButton.gameObject.SetActive(true);
 					waitButton.gameObject.SetActive(true);
 					attackButton.gameObject.SetActive(true);
-				StartCoroutine(useItemManager.UseItemEnd());
+					StartCoroutine(useItemManager.Cancle());
 				break;
 			case PlayerState.End:
 				break;
@@ -128,6 +133,20 @@ public class BattleUiManager : MonoBehaviour
 		uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
 		uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
 		useItemManager.gameObject.SetActive(true);
+	}
+	public void DoorInteractionOpen()
+	{
+		Cancle();
+		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
+		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
+		gameManager.open = true;
+	}
+	public void DoorInteractionClose()
+	{
+		Cancle();
+		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
+		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
+		gameManager.close = true;
 	}
 	public void EndTurn()
 	{

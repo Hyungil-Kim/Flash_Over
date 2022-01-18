@@ -84,29 +84,43 @@ public class Player : FSM<PlayerState>
         moveHelper.transform.localPosition = Vector3.zero;
     }
 
-    void Update()
+    public void CheckPlayerHp()
     {
-        //if (cd.hp <= 0 || lung <= 0)
-        //{
-        //	if (handFull)
-        //	{
-        //		handList[0].SetActive(false);
-        //		handFull = false;
-        //		if (handList[0].tag == "Claimant")
-        //		{
-        //			Turn.claimants.Remove(handList[0].GetComponent<Claimant>());
-        //			handList.RemoveAt(0);
-        //		}
-        //	}
-        //	gameObject.SetActive(false);
-        //	Turn.players.Remove(this);
-        //}
-
-        //test
-        //foreach (var buff in cd.buff)
-        //{
-        //    buff.Check();
-        //}
+		if (cd.hp <= 0)
+		{
+			if (handFull)
+			{
+				handList[0].SetActive(false);
+				handFull = false;
+				if (handList[0].tag == "Claimant")
+				{
+					Turn.claimants.Remove(handList[0].GetComponent<Claimant>());
+					handList.RemoveAt(0);
+				}
+			}
+            SetState(PlayerState.End);
+			gameObject.SetActive(false);
+			Turn.players.Remove(this);
+		}
+	}
+    public void CheckPlayerLung()
+    {
+		if (lung <= 0)
+		{
+			if (handFull)
+			{
+				handList[0].SetActive(false);
+				handFull = false;
+				if (handList[0].tag == "Claimant")
+				{
+					Turn.claimants.Remove(handList[0].GetComponent<Claimant>());
+					handList.RemoveAt(0);
+				}
+			}
+            SetState(PlayerState.End);
+			gameObject.SetActive(false);
+			Turn.players.Remove(this);
+		}
 	}
     private void OnDestroy()
     {
