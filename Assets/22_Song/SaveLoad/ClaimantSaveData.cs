@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class ClaimantSaveData
 {
+	public Player targetPlayer;
 
+	public float posx;
+	public float posy;
+	public float posz;
 	public bool stun;
 	public bool confuse;
 	public bool eventOn;

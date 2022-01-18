@@ -62,12 +62,15 @@ public class Claimant : FSM<ClaimantState>
 		csd.ap = ap;
 		csd.Maxap = Maxap;
 		csd.lung = lung;
-
+		csd.posx = gameObject.transform.position.x;
+		csd.posy = gameObject.transform.position.y;
+		csd.posz = gameObject.transform.position.z;
+		csd.targetPlayer = targetPlayer;
 		return csd;
 	}
 	public void SaveInit(ClaimantSaveData sd)
     {
-
+		targetPlayer = sd.targetPlayer;
 		stun = sd.stun;
 		confuse = sd.confuse;
 		eventOn = sd.eventOn;
@@ -83,7 +86,9 @@ public class Claimant : FSM<ClaimantState>
 		oxygentank = sd.oxygentank;
 		ap = sd.ap;
 		Maxap = sd.Maxap; 
-		lung = sd.lung; 
+		lung = sd.lung;
+		gameObject.transform.position = new Vector3(sd.posx, sd.posy, sd.posz);
+		
 	}
 	public void Awake()
 	{

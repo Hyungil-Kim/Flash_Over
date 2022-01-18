@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 					player.SaveInit(playerDict[create.characterIndex]);
 					if (player.playerState == PlayerState.Move)
 					{
-						//player.playerState = PlayerState.Idle;
+						player.playerState = PlayerState.Idle;
 					}
 				}
 			}
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
 		if (AllTileMesh.instance != null)
 		{
 			AllTileMesh.instance.Init();
-			if (Turn.players.Count != 0) 
+			if (Turn.players.Count != 0 && PlaySaveSystem.ps == null) 
 			{
 				ChangeTargetPlayer(Turn.players[0].gameObject);
 			}
@@ -183,6 +183,14 @@ public class GameManager : MonoBehaviour
 					uIManager.OnCharacterInfo();
 					uIManager.info.Init();
 					break;
+				}
+				else if(target.tag == "CreateQuad")
+                {
+					change = target.GetComponentInParent<CreateCharacter>();
+					changePlayer = change.GetComponentInChildren<Player>();
+					uIManager.OnCharacterIcon();
+					uIManager.OnCharacterInfo();
+					uIManager.info.Init();
 				}
 				else
                 {

@@ -8215,6 +8215,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 01ff1084-fa02-4be8-b8ec-c2f08cbfefec
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0222fcca-c16b-4dd8-8954-bce15923b336
+    m_ActionName: Mouse/UiTouch[/Device Simulator Touchscreen/press]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e267a1ed-73c7-4ebd-9b03-d21f0f45921a
+    m_ActionName: Mouse/UiMove[/Device Simulator Touchscreen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fae55ba5-d4af-4ea5-bc59-85770cba6314
+    m_ActionName: Mouse/TestTouch[/Device Simulator Touchscreen/press]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Mouse
@@ -8301,6 +8313,18 @@ PrefabInstance:
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215800930336060986, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215800930336060986, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215800930336060986, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
@@ -10555,6 +10579,14 @@ PrefabInstance:
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215800930336060986, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215800930336060986, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3215800930336060986, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalPosition.y

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public enum PlayerState
 {
     Idle,
@@ -10,6 +11,7 @@ public enum PlayerState
 }
 public class Player : FSM<PlayerState>
 {
+
     public GameManager gameManager;
     public GameObject moveHelper;
 
