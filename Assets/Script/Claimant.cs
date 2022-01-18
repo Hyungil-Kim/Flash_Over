@@ -22,6 +22,7 @@ public class Claimant : FSM<ClaimantState>
 {
 	public GameManager gameManager;
 	public Player targetPlayer;
+	public int targetPlayerIndex;
 	public bool stun;
 	public bool confuse;
 	public bool eventOn;
@@ -65,12 +66,12 @@ public class Claimant : FSM<ClaimantState>
 		csd.posx = gameObject.transform.position.x;
 		csd.posy = gameObject.transform.position.y;
 		csd.posz = gameObject.transform.position.z;
-		csd.targetPlayer = targetPlayer;
+		csd.targetPlayerIndex = targetPlayer.index;
 		return csd;
 	}
 	public void SaveInit(ClaimantSaveData sd)
     {
-		targetPlayer = sd.targetPlayer;
+		targetPlayerIndex = sd.targetPlayerIndex;
 		stun = sd.stun;
 		confuse = sd.confuse;
 		eventOn = sd.eventOn;
@@ -110,7 +111,7 @@ public class Claimant : FSM<ClaimantState>
 		switch (num)
 		{
 			case 0:
-				StartCoroutine(claimantMove.MoveToPlayer(this,targetPlayer));
+				StartCoroutine(claimantMove.MoveToPlayer(this,targetPlayer,targetPlayerIndex));
 				break;
 			case 1:
 				StartCoroutine(claimantMove.MoveConfuse(this));

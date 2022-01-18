@@ -23,11 +23,19 @@ public class ClaimantMove
 		claimant.SetState(ClaimantState.End);
 		claimant.moveEnd = true;
 	}
-	public IEnumerator MoveToPlayer(Claimant claimant, Player targetPlayer)
+	public IEnumerator MoveToPlayer(Claimant claimant, Player targetPlayer, int playerIndex)
 	{
 		var gameManager = GameManager.instance;
 		var startTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
-		var goalTile = gameManager.tilemapManager.ReturnTile(targetPlayer.gameObject);
+		GroundTile goalTile;
+		if (targetPlayer != null)
+		{
+			goalTile = gameManager.tilemapManager.ReturnTile(targetPlayer.gameObject);
+		}
+		else
+        {
+			goalTile = gameManager.tilemapManager.ReturnTile(Turn.players[playerIndex].gameObject);
+		}
 		var path = gameManager.tilemapManager.SetAstar(startTile, goalTile);
 		var targetTile = goalTile;
 		for (var i = path.Count - 1; i >= 0; --i)

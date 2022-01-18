@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClaimantSaveData
 {
-	public Player targetPlayer;
+	public int targetPlayerIndex;
 
 	public float posx;
 	public float posy;
