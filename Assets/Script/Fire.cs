@@ -21,6 +21,7 @@ public class Fire : FSM<FireState>
 
     public int fireDamage;
     public int fireArea;
+	public int fireMinExp;
 	public int fireMaxExp;
 
 	public int fireMakeSmoke = 50;

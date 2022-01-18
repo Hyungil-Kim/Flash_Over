@@ -13,6 +13,8 @@ public class ClaimantMove
 	public void EndMove(Claimant claimant, List<GroundTile> list)
 	{
 		claimant.SetState(ClaimantState.End);
+		var animator = claimant.GetComponent<Animator>();
+		animator.SetBool("walk", false);
 		foreach (var elem in list)
 		{
 			elem.Reset();

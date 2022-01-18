@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
 
 	public bool pickup;
 	public bool putdown;
+	public bool open;
+	public bool close;
+
 
 	public bool showMeleeRange;
 	public bool showthrowwRange;
@@ -79,7 +82,7 @@ public class GameManager : MonoBehaviour
 			}
 			foreach (var character in characters)
 			{
-				
+
 				var create = character.GetComponent<CreateCharacter>();
 				var playerDict = PlaySaveSystem.ps.psd;
 				if (playerDict.ContainsKey(create.characterIndex))
@@ -94,8 +97,8 @@ public class GameManager : MonoBehaviour
 				}
 			}
 			targetPlayer = Turn.players.Find((x) => x.index == PlaySaveSystem.ps.gsd.targetIndex);
-			
-			if(targetPlayer.playerState == PlayerState.Move)
+
+			if (targetPlayer.playerState == PlayerState.Move)
 			{
 				targetPlayer = null;
 			}
@@ -104,16 +107,16 @@ public class GameManager : MonoBehaviour
 				targetPlayer = null;
 			}
 
-            foreach (var claimant in Turn.claimants)
-            {
+			foreach (var claimant in Turn.claimants)
+			{
 				if (PlaySaveSystem.ps.csd.TryGetValue(claimant.index, out var claimantData))
 				{
 					claimant.SaveInit(claimantData);
 				}
-            }
+			}
 
 			turnCount = PlaySaveSystem.ps.gsd.turnCount;
-   
+
 			StartGame();
 		}
 		else
@@ -126,25 +129,25 @@ public class GameManager : MonoBehaviour
 					create.Create(GameData.userData.fireManList[create.characterIndex]);
 				}
 				else
-                {
+				{
 					create.Create(null);
 				}
 			}
 		}
 	}
 	public void StartGame()
-    {
+	{
 		isStart = true;
 		Init();
 		uIManager.StartGame();
 	}
 	public void Init()
-    {
+	{
 		if (AllTileMesh.instance != null)
 		{
 			AllTileMesh.instance.Init();
-			if (Turn.players.Count != 0) 
-			{ 
+			if (Turn.players.Count != 0)
+			{
 				ChangeTargetPlayer(Turn.players[0].gameObject);
 			}
 		}
@@ -170,7 +173,7 @@ public class GameManager : MonoBehaviour
 			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
 			layerMask = ~layerMask;
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
-			{	
+			{
 				target = raycastHit.transform.gameObject;// 레이 맞은 오브젝트
 				targetTile = tilemapManager.ReturnTile(target);
 				mouse3DPos = raycastHit.point;
@@ -222,22 +225,29 @@ public class GameManager : MonoBehaviour
 					break;
 			}
 			pretargetPlayer = targetPlayer;
-			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);  
+			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 		}
 		uIManager.OnCharacterInfo();
 		uIManager.info.Init();
 	}
 
-	
+
 	public void GetClickedEndMouse()
 	{
-			press = false;
+		press = false;
 		if (!point && isStart)
 		{
 			Debug.Log("Start");
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
 			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+			if(targetPlayer !=null)
+			{
+				if(targetPlayer.curStateName == PlayerState.Move)
+				{
+					layerMask += 1 << LayerMask.NameToLayer("Door");
+				}
+			}
 			layerMask = ~layerMask;
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			{
@@ -256,7 +266,7 @@ public class GameManager : MonoBehaviour
 				if (target.tag == "Player")
 				{
 					if (targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle)
-					{ 
+					{
 						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
 						switch (targetPlayer.curStateName)
 						{
@@ -298,70 +308,159 @@ public class GameManager : MonoBehaviour
 
 					preTile = tilemapManager.ReturnTile(mousePos);
 				}
-				else if (pickup && targetPlayer.curStateName == PlayerState.Action)
+				else if (pickup)
 				{
-					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-					if (target.tag == "Claimant" && targetTile.nextTileList.Contains(playerTile))
+					PickUp();
+				}
+				else if (putdown)
+				{
+					PutDown();
+				}
+				else if (showMeleeRange)
+				{
+					var useitem = uIManager.battleUiManager.useItemManager;
+					if (useitem.listRange.Contains(targetTile))
 					{
-						target.GetComponent<Claimant>().SetState(ClaimantState.Resuce);
-						playerMove.moveList.Add(target.transform.position);
-						targetPlayer.handList.Add(target);
-						uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
-						playerMove.moveList.Add(targetPlayer.transform.position);
-						//target.SetActive(false);
-						playerMove.go = true;
-						targetPlayer.handFull = true;
-						pickup = false;
-						targetPlayer.ap -= 3;
-						if(targetPlayer.ap < 0)
+						if (useitem.itemType == ConsumItemType.Heal)
 						{
-							targetPlayer.lung -= targetPlayer.ap;
-							targetPlayer.ap = 0;
+							if (target.tag == "Claimant")
+							{
+								var claimant = target.GetComponent<Claimant>();
+								switch (useitem.healItemType)
+								{
+									case HealItemType.HpHeal:
+										claimant.hp += useitem.damage;
+										break;
+									case HealItemType.StaminaHeal:
+										break;
+								}
+								StartCoroutine(useitem.UseItemEnd(targetPlayer));
+								showMeleeRange = false;
+							}
+							else if (target.tag == "Player")
+							{
+								var player = target.GetComponent<Player>();
+								if (player.handFull)
+									return;
+								switch (useitem.healItemType)
+								{
+									case HealItemType.HpHeal:
+										player.cd.hp += useitem.damage;
+										break;
+									case HealItemType.StaminaHeal:
+										break;
+								}
+								StartCoroutine(useitem.UseItemEnd(targetPlayer));
+								showMeleeRange = false;
+							}
+						}
+						else if (useitem.itemType == ConsumItemType.Damage)
+						{
+							var fire = GetComponentInChildren<Fire>();
+							fire.fireHp -= useitem.damage;
+							StartCoroutine(useitem.UseItemEnd(targetPlayer));
+							showMeleeRange = false;
 						}
 					}
 				}
-				else if (putdown && targetPlayer.curStateName == PlayerState.Action)
+				else if (showthrowwRange)
 				{
-					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-					if (target.tag == "Ground" && targetTile.nextTileList.Contains(playerTile))
+					var useitem = uIManager.battleUiManager.useItemManager;
+					if (useitem.listRange.Contains(targetTile))
 					{
-						var hand = targetPlayer.handList[0];
-						playerMove.moveList.Add(target.transform.position);
-						uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
-						playerMove.moveList.Add(targetPlayer.transform.position);
-						hand.transform.position = new Vector3(target.transform.position.x, targetPlayer.handList[0].transform.position.y, target.transform.position.z);
-						//hand.SetActive(true);
-						if(hand.tag == "Claimant")
-							hand.GetComponent<Claimant>().SetState(ClaimantState.End);
-						targetPlayer.handList.RemoveAt(0);
-						playerMove.go = true;
-						targetPlayer.handFull = false;
-						putdown = false;
-						targetPlayer.ap -= 3;
-						if (targetPlayer.ap < 0)
+						if (useitem.preTile == null)
 						{
-							targetPlayer.lung -= targetPlayer.ap;
-							targetPlayer.ap = 0;
+							useitem.throwListRange = tilemapManager.ReturnFloodFillRange(targetTile, Color.black, useitem.throwRange);
+							useitem.preTile = targetTile;
+						}
+						else if (useitem.preTile != targetTile)
+						{
+							tilemapManager.ResetFloodFill(useitem.throwListRange);
+							var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+							useitem.listRange = tilemapManager.ReturnFloodFillRange(playerTile,setMoveColor, useitem.itemRange);
+							foreach(var elem in useitem.listRange)
+							{
+								elem.ResetExceptColor();
+							}
+							useitem.throwListRange = tilemapManager.ReturnFloodFillRange(targetTile, Color.black, useitem.throwRange);
+							useitem.preTile = targetTile;
+						}
+						else if (useitem.preTile == targetTile)
+						{
+							if (useitem.itemType == ConsumItemType.Heal)
+							{
+								foreach (var elem in useitem.throwListRange)
+								{
+									foreach (var ob in elem.fillList)
+									{
+										if (ob.tag == "Player")
+										{
+											var player = target.GetComponent<Player>();
+											switch (useitem.healItemType)
+											{
+												case HealItemType.HpHeal:
+													player.cd.hp += useitem.damage;
+													break;
+												case HealItemType.StaminaHeal:
+													break;
+											}
+											break;
+										}
+										else if (ob.tag == "Claimant")
+										{
+											var claimant = target.GetComponent<Claimant>();
+											switch (useitem.healItemType)
+											{
+												case HealItemType.HpHeal:
+													claimant.hp += useitem.damage;
+													break;
+												case HealItemType.StaminaHeal:
+													break;
+											}
+											break;
+										}
+									}
+								}
+							}
+							else if (useitem.itemType == ConsumItemType.Damage)
+							{
+								foreach (var elem in useitem.throwListRange)
+								{
+									if (elem.tileIsFire)
+									{
+										var fire = GetComponentInChildren<Fire>();
+										fire.fireHp -= useitem.damage;
+									}
+								}
+							}
+							StartCoroutine(useitem.UseItemEnd(targetPlayer));
+							showthrowwRange = false;
 						}
 					}
+					
 				}
-				else if (showMeleeRange && !showthrowwRange && targetPlayer.curStateName == PlayerState.Action)
+				else if (open && targetPlayer.curStateName == PlayerState.Action)
 				{
-					if (target.tag == "Ground" && uIManager.battleUiManager.useItemManager.listRange.Contains(targetTile))
+					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+					if (target.tag == "Door" && targetTile.nextTileList.Contains(playerTile))
 					{
-						StartCoroutine(uIManager.battleUiManager.useItemManager.UseItemEnd());
+						tilemapManager.ResetFloodFill();
+						StartCoroutine(target.GetComponentInChildren<Door>().OpenDoor());
 					}
+					open = false;
 				}
-				else if (showMeleeRange && showthrowwRange && targetPlayer.curStateName == PlayerState.Action)
+				else if (close && targetPlayer.curStateName == PlayerState.Action)
 				{
-					if (target.tag == "Ground" && uIManager.battleUiManager.useItemManager.listRange.Contains(targetTile))
+					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+					if (target.tag == "Door" && targetTile.nextTileList.Contains(playerTile))
 					{
-
-						
+						tilemapManager.ResetFloodFill();
+						StartCoroutine(target.GetComponentInChildren<Door>().CloseDoor());
 					}
+					close = false;
 				}
 				else
-                {
+				{
 					uIManager.OffCharacterInfo();
 				}
 
@@ -401,7 +500,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 	public void CharacterChanageEnd()
-    {
+	{
 		if (!isStart)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
@@ -432,8 +531,8 @@ public class GameManager : MonoBehaviour
 						}
 					}
 				}
-				if(changePlayer == null)
-                {
+				if (changePlayer == null)
+				{
 					uIManager.OffCharacterInfo();
 				}
 				uIManager.OffCharacterIcon();
@@ -441,7 +540,7 @@ public class GameManager : MonoBehaviour
 				changePlayer = null;
 				change = null;
 			}
-			
+
 		}
 	}
 	public void GetClickingMouse()
@@ -457,7 +556,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	public void ChangeMousePointer()
-    {
+	{
 		if (!point && isStart)
 		{
 			press = true;
@@ -502,7 +601,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void LateUpdate()
 	{
-		if(drag && isStart)
+		if (drag && isStart)
 		{
 			CameraMove();
 		}
@@ -525,13 +624,61 @@ public class GameManager : MonoBehaviour
 	}
 
 	public void GameClear()
-    {
-        foreach (var player in Turn.players)
-        {
+	{
+		foreach (var player in Turn.players)
+		{
 			player.cd.tiredScore += turnCount * 10;
-        }
+		}
 
 		uIManager.gameclearUI.gameObject.SetActive(true);
 		uIManager.gameclearUI.Init();
-    }
+	}
+
+	public void PickUp()
+	{
+		var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+		if (target.tag == "Claimant" && targetTile.nextTileList.Contains(playerTile))
+		{
+			target.GetComponent<Claimant>().SetState(ClaimantState.Resuce);
+			playerMove.moveList.Add(target.transform.position);
+			targetPlayer.handList.Add(target);
+			uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
+			playerMove.moveList.Add(targetPlayer.transform.position);
+			//target.SetActive(false);
+			playerMove.go = true;
+			targetPlayer.handFull = true;
+			pickup = false;
+			targetPlayer.ap -= 3;
+			if (targetPlayer.ap < 0)
+			{
+				targetPlayer.lung -= targetPlayer.ap;
+				targetPlayer.ap = 0;
+			}
+		}
+	}
+	public void PutDown()
+	{
+		var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+		if (target.tag == "Ground" && targetTile.nextTileList.Contains(playerTile))
+		{
+			var hand = targetPlayer.handList[0];
+			playerMove.moveList.Add(target.transform.position);
+			uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
+			playerMove.moveList.Add(targetPlayer.transform.position);
+			hand.transform.position = new Vector3(target.transform.position.x, targetPlayer.handList[0].transform.position.y, target.transform.position.z);
+			//hand.SetActive(true);
+			if (hand.tag == "Claimant")
+				hand.GetComponent<Claimant>().SetState(ClaimantState.End);
+			targetPlayer.handList.RemoveAt(0);
+			playerMove.go = true;
+			targetPlayer.handFull = false;
+			putdown = false;
+			targetPlayer.ap -= 3;
+			if (targetPlayer.ap < 0)
+			{
+				targetPlayer.lung -= targetPlayer.ap;
+				targetPlayer.ap = 0;
+			}
+		}
+	}
 }

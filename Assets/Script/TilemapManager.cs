@@ -129,6 +129,11 @@ public class TilemapManager : MonoBehaviour
 		ResetAttackRange(weapontype);
 		attackRange.Attack(target, this, weapontype, 5, attackSetColor);
 	}
+	public List<GroundTile> AttackFloodFill(GameObject target,Color attackSetColor,int range)
+	{
+		var list = testAttackRange.CrossFloodFill(this,target,attackSetColor, range);
+		return list;
+	}
 	public void FireAttack(Fire target, Color attackSetColor)
 	{
 		var list = testAttackRange.CrossFloodFill(this, target.gameObject, attackSetColor, target.fireLevel);

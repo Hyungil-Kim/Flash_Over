@@ -13,6 +13,7 @@ public class GroundTile : MonoBehaviour
 	public bool attackfloodFill = false;
 	public bool movefloodFill = false;
 	public bool isPlayer = false;
+	public bool isDoor = false;
 	public Claimant isClaimant = null;
 	public int checkSum = 0;
 	public int G, H;
@@ -49,7 +50,7 @@ public class GroundTile : MonoBehaviour
 
 	//data
 	public bool tileIsWeat;	//물젖음?
-	public bool tileIsFire; //
+	public bool tileIsFire; 
 	public bool tileIsSmoke;
 
 	public int tileWeatValue;//물 묻으면 생기는 가중치
@@ -342,17 +343,18 @@ public class GroundTile : MonoBehaviour
 				if (elem.tag == "Player")
 				{
 					isPlayer = true;
-					break;
 				}
 				else if(elem.tag == "Wall")
 				{
 					isWall = true;
-					break;
 				}
 				else if(elem.tag == "Claimant")
 				{
 					isClaimant = elem.GetComponent<Claimant>();
-					break;
+				}
+				else if(elem.tag == "Door")
+				{
+					isDoor = true;
 				}
 			}
 		}
