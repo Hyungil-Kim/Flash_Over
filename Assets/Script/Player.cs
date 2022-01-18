@@ -34,6 +34,7 @@ public class Player : FSM<PlayerState>
         gameObject.transform.position = new Vector3(sd.posx,sd.posy,sd.posz);
         playerState = StringToEnum.SToE<PlayerState>(sd.currentState);
         cd = sd.cd;
+        
         //handList = sd.handList;
         foreach (var index in sd.handListIndex)
         {

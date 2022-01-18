@@ -18,7 +18,12 @@ public class UIOnOff : MonoBehaviour
         {
             uiDict.Add(ui.name, ui);
         }
-        GameData.userData.LoadUserData(1);
+        //GameData.userData.LoadUserData(1);
+        if(GameData.userData.characterList.Count == 0)
+        {
+            var cd = new CharacterData();
+            cd.SettingFixCharacter(10, 10, 10, 5, 5);
+        }
         returnButton = uiArray[11].transform.gameObject;
         stage= uiArray[13].transform.gameObject;
         //stageSelsction = uiArray[11].transform.gameObject;

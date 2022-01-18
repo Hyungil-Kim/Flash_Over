@@ -63,26 +63,6 @@ public class UserData : MySaveData
         if (GameData.userData == null)
         {
             GameData.userData = new UserData();
-
-            //CharacterData cd = new CharacterData();
-            //cd.baseStats.hp.stat = 10;
-            //cd.baseStats.lung.stat = 10;
-            //cd.baseStats.str.stat = 9;
-            //cd.baseStats.move = 4;
-            //cd.baseStats.vision = 4;
-
-            //cd.StatInit();
-
-            //cd.hp = 20;
-            //cd.oxygen = 10;
-
-            //cd.bunkerGear = new BunkerGearData(MyDataTableMgr.bunkerGearTable.GetTable(0));
-            //cd.oxygenTank = new OxygenTankData(MyDataTableMgr.oxygenTankTable.GetTable(0));
-
-            //cd.personality = new Personality();
-            //cd.personality.AddPersonality(0);
-
-            //GameData.userData.characterList.Add(cd);
         }
         else if (GameData.userData.characterList != null)
         {

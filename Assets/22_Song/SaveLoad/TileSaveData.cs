@@ -17,6 +17,7 @@ public class TileSaveData
 	public bool tileIsFire;
 	public bool tileIsWeat;
 	public bool tileIsSmoke;
+	public bool tileIsClaimant;
 
 	public float firehp;
 }

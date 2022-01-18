@@ -164,28 +164,28 @@ public class CharacterData
             switch (statType)
             {
                 case CharacterStatType.Hp:
-                    AddStat(statType, item.dataTable.hp, resultStats);
+                    AddStat(statType, item.dataTable.hp, totalStats);
                     break;
                 case CharacterStatType.Str:
-                    AddStat(statType, item.dataTable.str, resultStats);
+                    AddStat(statType, item.dataTable.str, totalStats);
                     break;
                 case CharacterStatType.Lung:
-                    AddStat(statType, item.dataTable.lung, resultStats);
+                    AddStat(statType, item.dataTable.lung, totalStats);
                     break;
                 case CharacterStatType.Move:
-                    AddStat(statType, item.dataTable.move, resultStats);
+                    AddStat(statType, item.dataTable.move, totalStats);
                     break;
                 case CharacterStatType.Vision:
-                    AddStat(statType, item.dataTable.vision, resultStats);
+                    AddStat(statType, item.dataTable.vision, totalStats);
                     break;
                 case CharacterStatType.Dmg:
-                    AddStat(statType, item.dataTable.dmg, resultStats);
+                    AddStat(statType, item.dataTable.dmg, totalStats);
                     break;
                 case CharacterStatType.Def:
-                    AddStat(statType, item.dataTable.def, resultStats);
+                    AddStat(statType, item.dataTable.def, totalStats);
                     break;
                 case CharacterStatType.Sta:
-                    AddStat(statType, item.dataTable.sta, resultStats);
+                    AddStat(statType, item.dataTable.sta, totalStats);
                     break;
                 default:
                     break;
@@ -369,6 +369,41 @@ public class CharacterData
 
         //스텟 최신화
         StatInit();
+    }
+    public void SettingFixCharacter(int hp, int lung, int str, int move, int vision)
+    {
+        characterName = "아무개";
+        characterGrade = "평범한";
+        characterClass = "소방관";
+        AddStat(CharacterStatType.Hp, hp, baseStats);
+        AddStat(CharacterStatType.Lung, lung, baseStats);
+        AddStat(CharacterStatType.Move, move, baseStats);
+        AddStat(CharacterStatType.Str, str, baseStats);
+        AddStat(CharacterStatType.Vision, vision, baseStats);
+
+        baseStats.str.stat *= 5;
+        baseStats.hp.stat *= 2;
+
+        buff.Add(new HeavyWeight(this));
+        buff.Add(new SaveClaimant(this));
+
+        //스텟 최신화
+        StatInit();
+
+        //장비
+        var oxygenItem = new OxygenTankData(MyDataTableMgr.oxygenTankTable.GetTable(0));
+        GameData.userData.oxygenTankList.Add(oxygenItem);
+        EquipItem(oxygenItem, ItemType.OxygenTank);
+        var bunkergearItem = new BunkerGearData(MyDataTableMgr.bunkerGearTable.GetTable(0));
+        GameData.userData.bunkerGearList.Add(bunkergearItem);
+        EquipItem(bunkergearItem, ItemType.BunkerGear);
+        var hoseItem = new HoseData(MyDataTableMgr.hoseTable.GetTable(0));
+        GameData.userData.hoseList.Add(hoseItem);
+        EquipItem(hoseItem, ItemType.Hose);
+        isHire = true;
+
+        GameData.userData.characterList.Add(this);
+
     }
     //스텟 추가
     public void AddStat(CharacterStatType statType, float statValue, CharacterStat stats)

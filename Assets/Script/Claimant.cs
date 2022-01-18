@@ -23,6 +23,7 @@ public class Claimant : FSM<ClaimantState>
 	public GameManager gameManager;
 	public Player targetPlayer;
 	public int targetPlayerIndex;
+
 	public bool stun;
 	public bool confuse;
 	public bool eventOn;
@@ -67,6 +68,7 @@ public class Claimant : FSM<ClaimantState>
 		csd.posy = gameObject.transform.position.y;
 		csd.posz = gameObject.transform.position.z;
 		csd.targetPlayerIndex = targetPlayer.index;
+		
 		return csd;
 	}
 	public void SaveInit(ClaimantSaveData sd)
@@ -89,6 +91,8 @@ public class Claimant : FSM<ClaimantState>
 		Maxap = sd.Maxap; 
 		lung = sd.lung;
 		gameObject.transform.position = new Vector3(sd.posx, sd.posy, sd.posz);
+
+		targetPlayer = Turn.players.Find((x) => x.index == targetPlayerIndex);
 		
 	}
 	public void Awake()

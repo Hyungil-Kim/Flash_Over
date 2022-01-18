@@ -51,6 +51,7 @@ public class GroundTile : MonoBehaviour
 	public bool tileIsWeat;
 	public bool tileIsFire;
 	public bool tileIsSmoke;
+	public bool tileIsClaimant;
 
 	public int tileWeatValue;
 	public int tileExp;
@@ -127,6 +128,7 @@ public class GroundTile : MonoBehaviour
         }
 		sd.tileIsWeat = tileIsWeat;
 		sd.tileIsSmoke = tileIsSmoke;
+		sd.tileIsClaimant = tileIsClaimant;
 		sd.firehp = fire.fireHp;
 
 		
@@ -148,7 +150,7 @@ public class GroundTile : MonoBehaviour
 		tileIsFire = sd.tileIsFire;
 		tileIsWeat = sd.tileIsWeat;
 		tileIsSmoke = sd.tileIsSmoke;
-
+		tileIsClaimant = sd.tileIsClaimant;
 		fire.fireHp = sd.firehp;
 		
 		if(tileIsFire)
@@ -362,6 +364,7 @@ public class GroundTile : MonoBehaviour
 				else if(elem.tag == "Claimant")
 				{
 					isClaimant = elem.GetComponent<Claimant>();
+					tileIsClaimant = true;
 					break;
 				}
 			}
@@ -371,6 +374,7 @@ public class GroundTile : MonoBehaviour
 			isWall = false;
 			isPlayer = false;
 			isClaimant = null;
+			tileIsClaimant = false;
 		}
 	}
 

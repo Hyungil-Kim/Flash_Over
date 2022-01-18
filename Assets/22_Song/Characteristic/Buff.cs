@@ -14,6 +14,7 @@ public class Buff
 
     public bool ing;
     public bool check;
+
     public virtual bool Check(bool checkCondision = false)
     {
         if (check)

@@ -87,21 +87,31 @@ public class GameManager : MonoBehaviour
 					create.Create(playerDict[create.characterIndex].cd);
 					var player = create.Character.GetComponent<Player>();
 					player.SaveInit(playerDict[create.characterIndex]);
-					if (player.playerState == PlayerState.Move)
-					{
-						player.playerState = PlayerState.Idle;
-					}
+					//if (player.playerState == PlayerState.Move)
+					//{
+					//	player.playerState = PlayerState.Idle;
+					//}
 				}
 			}
 			targetPlayer = Turn.players.Find((x) => x.index == PlaySaveSystem.ps.gsd.targetIndex);
-			
-			if(targetPlayer.playerState == PlayerState.Move)
+
+			if (targetPlayer != null)
 			{
-				//targetPlayer = null;
-			}
-			if (targetPlayer.playerState == PlayerState.Idle)
-			{
-				targetPlayer = null;
+				if (targetPlayer.playerState == PlayerState.Move)
+				{
+					targetTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+					tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
+					playerMove.ResetMoveList();
+					playerMove.AddMoveList(targetTile.transform.position, setPathColor);
+					pretargetPlayer = targetPlayer;
+					preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+					uIManager.OnCharacterInfo();
+					uIManager.info.Init();
+				}
+				if (targetPlayer.playerState == PlayerState.Idle || targetPlayer.playerState == PlayerState.End)
+				{
+					targetPlayer = null;
+				}
 			}
 
             foreach (var claimant in Turn.claimants)
@@ -115,6 +125,7 @@ public class GameManager : MonoBehaviour
 			turnCount = PlaySaveSystem.ps.gsd.turnCount;
    
 			StartGame();
+			PlaySaveSystem.ps = null;
 		}
 		else
 		{
@@ -125,7 +136,7 @@ public class GameManager : MonoBehaviour
 				{
 					create.Create(GameData.userData.fireManList[create.characterIndex]);
 				}
-				else
+				else if(GameData.userData.fireManList.Count == 0)
                 {
 					create.Create(null);
 				}
@@ -147,6 +158,10 @@ public class GameManager : MonoBehaviour
 			{
 				ChangeTargetPlayer(Turn.players[0].gameObject);
 			}
+			else if(targetPlayer != null)
+            {
+				ChangeTargetPlayer(targetPlayer.gameObject);
+            }
 		}
 	}
 	public void GetTilePosition(Vector2 mousePosition)
@@ -251,11 +266,12 @@ public class GameManager : MonoBehaviour
 				case PlayerState.End:
 					break;
 			}
+
 			pretargetPlayer = targetPlayer;
-			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);  
+			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+			uIManager.OnCharacterInfo();
+			uIManager.info.Init();
 		}
-		uIManager.OnCharacterInfo();
-		uIManager.info.Init();
 	}
 
 	
@@ -447,15 +463,18 @@ public class GameManager : MonoBehaviour
 				if(target.tag == "CreateQuad")
                 {
 					var createCharacter = target.GetComponentInParent<CreateCharacter>();
-					var cd = createCharacter.GetComponentInChildren<Player>().cd;
-					if (createCharacter != change)
+					var createCharacterdata = createCharacter.GetComponentInChildren<Player>();
+					if (change != null)
 					{
-						createCharacter.ChangeCharacter(changePlayer.cd);
-						if (change != null)
+						if (createCharacter != change)
 						{
+							createCharacter.ChangeCharacter(changePlayer.cd);
 							change.DeleteCharacter();
-							change.ChangeCharacter(cd);
-						}	
+							if(createCharacterdata != null)
+                            {
+								change.ChangeCharacter(createCharacterdata.cd);
+                            }
+						}
 					}
 					break;
 				}

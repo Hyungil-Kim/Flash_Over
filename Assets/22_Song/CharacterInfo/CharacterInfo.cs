@@ -11,6 +11,7 @@ public class CharacterInfo : MonoBehaviour
     public int currentCharacterIndex;
     public ItemType currentItemType;
     public CharacterData curCharacter;
+
     private void OnEnable()
     {
         //GameData.userData.LoadUserData(1);
@@ -24,7 +25,7 @@ public class CharacterInfo : MonoBehaviour
     {
         chaStatPanal.gameObject.SetActive(false);
         chaListPanal.gameObject.SetActive(true);
-        chaListPanal.Init();
+        //chaListPanal.Init();
     }
     public void OnInventory()
     {
@@ -51,4 +52,5 @@ public class CharacterInfo : MonoBehaviour
         }
         OnExitStat();
     }
+
 }

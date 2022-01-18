@@ -29,12 +29,13 @@ public class CreateCharacter : MonoBehaviour
         }
         else
         {
+            //test
             character = Instantiate(characterPrefab, transform);
             CharacterData test = new CharacterData();
             test.SetCharacter();
             test.EquipItem(new HoseData(MyDataTableMgr.hoseTable.GetTable(1)), ItemType.Hose);
-            test.EquipItem(new HoseData(MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
-            test.EquipItem(new HoseData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
+            test.EquipItem(new BunkerGearData(MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
+            test.EquipItem(new OxygenTankData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
 
             character.GetComponent<Player>().cd = test;
             character.GetComponent<Player>().cd.GameStart();

@@ -11,6 +11,11 @@ public class LoadSlot : MonoBehaviour
     public TextMeshProUGUI stageName;
     public TextMeshProUGUI userName;
     public TextMeshProUGUI saveTime;
+    private void Start()
+    {
+        //test?
+        Init();
+    }
     public void Init()
     {
         var ps = MySaveLoadSystem<PlaySave>.Load(SaveDataType.Play, slot);

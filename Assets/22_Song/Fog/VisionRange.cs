@@ -147,7 +147,7 @@ public class VisionRange : MonoBehaviour
 		bool rangeClaimant = false;
 		foreach (var tile in crossResetQueue)
 		{
-			if (tile.isClaimant)
+			if (tile.tileIsClaimant)
 			{
 				rangeClaimant = true;
 				break;

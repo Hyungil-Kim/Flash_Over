@@ -7,7 +7,7 @@ public class Characteristic
 }
 public class HeavyWeight : Buff
 {
-    private int prevValue;
+    public int prevValue;
     public HeavyWeight(CharacterData characterdata)
     {
         cd = characterdata;
@@ -50,7 +50,7 @@ public class HeavyWeight : Buff
 
 public class SaveClaimant : Buff
 {
-    private int prevValue;
+    public int prevValue;
     public SaveClaimant(CharacterData characterdata)
     {
         cd = characterdata;
@@ -82,10 +82,8 @@ public class SaveClaimant : Buff
     }
     public override void EndBuff()
     {
-        cd.totalStats.str.stat = prevValue;
         
+        cd.totalStats.str.stat = prevValue;
         base.EndBuff();
     }
-
-
 }

@@ -16,13 +16,22 @@ public class CharacterInfoInventory : MonoBehaviour
     //    new List<ConsumableItemData>();
     private int maxItem = GameData.userData.maxItem;
 
+
+    public GameObject weightFull;
+    public AlreadyEquip alreadyEquip;
+
     //private ItemType curType;
     //private ItemDataBase curData;
+    private void OnEnable()
+    {
+        var type = GetComponentInParent<CharacterInfo>().currentItemType;
+        Init(type);
+    }
 
- 
+
     private void Start()
     {
-
+        
     }
     public void Init(ItemType type)
     {
@@ -79,5 +88,15 @@ public class CharacterInfoInventory : MonoBehaviour
     public void ItemInit(ItemDataBase data, ItemType type)
     {
         itemInfo.Init(data, type);
+    }
+    public void WeightFull()
+    {
+        weightFull.SetActive(true);
+    }
+    public void AlreadyEquip(CharacterData character, ItemDataBase itemData, ItemType itemType)
+    {
+        alreadyEquip.Init(character, itemData, itemType);
+        alreadyEquip.exit = GetComponentInParent<CharacterInfo>().OnExitInventory;
+        alreadyEquip.gameObject.SetActive(true);
     }
 }
