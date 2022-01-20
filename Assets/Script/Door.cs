@@ -43,8 +43,4 @@ public class Door : MonoBehaviour
 		parentTile.isWall = true;
 		yield break;
 	}
-	public void Update()
-	{
-		Debug.Log(transform.eulerAngles.y);
-	}
 }

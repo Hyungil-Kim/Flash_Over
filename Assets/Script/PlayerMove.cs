@@ -6,12 +6,12 @@ public class PlayerMove : MonoBehaviour
 {
 	private GameManager gameManager;
 	private TilemapManager tilemapManager;
-	public Animator animator;
+	private Animator animator;
 	public List<Vector3> moveList = new List<Vector3>();
-	public Player moveObject;
+	private Player moveObject;
 	public float speed = 3f;
 	public bool go = false;
-	int num = 0;
+	private int num = 0;
 	private bool hit = false;
 	private bool breath = false;
 	public void Awake()
@@ -56,8 +56,7 @@ public class PlayerMove : MonoBehaviour
 		animator = moveObject.GetComponent<Animator>();
 		if (!tilemapManager.CheckPlayer(moveObject.moveHelper) || tilemapManager.ReturnTile(moveObject.gameObject) == tilemapManager.ReturnTile(moveObject.moveHelper))
 		{
-
-			if (tilemapManager.ReturnTile(moveObject.moveHelper).isClaimant) return;
+			if (tilemapManager.ReturnTile(moveObject.moveHelper).isClaimant && !moveObject.handFull) return;
 			moveObject.moveHelper.transform.localPosition = Vector3.zero;
 			moveObject.moveHelper.gameObject.SetActive(false);
 			animator.SetBool("walk", true);
@@ -99,7 +98,6 @@ public class PlayerMove : MonoBehaviour
 							var preTile = tilemapManager.ReturnTile(moveList[moveList.Count - 2]);
 							RemoveMoveList(moveList, setMoveColor);
 							movePoint += 1;
-
 						}
 						else
 						{

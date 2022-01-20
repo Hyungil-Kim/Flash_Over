@@ -339,7 +339,7 @@ public class TilemapManager : MonoBehaviour
 			}
 		}
 	}
-
+	
 
 	public IEnumerator WithPlayer(Claimant claimant, Player targetPlayer)
 	{

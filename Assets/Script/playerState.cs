@@ -86,6 +86,34 @@ public class PlayerAttackState : State
 		fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(true);
+		var nextTile = fsm.gameManager.tilemapManager.ReturnTile(fsm.gameManager.targetPlayer.gameObject);
+		foreach(var elem in nextTile.nextTileList)
+		{
+			foreach(var ob in elem.fillList)
+			{
+				if(ob.tag == "Door")
+				{
+					var door = ob.GetComponent<Door>();
+					if (door.curDoorState == DoorState.Open)
+					{
+						fsm.gameManager.uIManager.battleUiManager.closeDoorButton.gameObject.SetActive(true);
+					}
+					else if(door.curDoorState == DoorState.Close)
+					{
+						fsm.gameManager.uIManager.battleUiManager.openDoorButton.gameObject.SetActive(true);
+					}
+					break;
+				}
+				else if(ob.tag == "FuseBox")
+				{
+					if(!FuseBox.FuseOFF)
+					{
+						fsm.gameManager.uIManager.battleUiManager.fuseOffButton.gameObject.SetActive(true);
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	public override void Exit()

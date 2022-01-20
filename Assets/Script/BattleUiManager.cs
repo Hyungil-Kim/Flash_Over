@@ -23,9 +23,11 @@ public class BattleUiManager : MonoBehaviour
 	public Button openDoorButton;
 	public Button closeDoorButton;
 
-	public UseItemManager useItemManager;
-	
+	public Button fuseOffButton;
 
+	public UseItemManager useItemManager;
+
+	public Door findDoor;
 	// Start is called before the first frame update
 
 	public void Start()
@@ -137,9 +139,8 @@ public class BattleUiManager : MonoBehaviour
 	public void DoorInteractionOpen()
 	{
 		Cancle();
-		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
-		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
-		gameManager.open = true;
+		StartCoroutine(findDoor.OpenDoor());
+
 	}
 	public void DoorInteractionClose()
 	{
@@ -147,6 +148,12 @@ public class BattleUiManager : MonoBehaviour
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
 		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
 		gameManager.close = true;
+	}
+	public void FuseBoxInteractionOff()
+	{
+		Cancle();
+		
+		
 	}
 	public void EndTurn()
 	{

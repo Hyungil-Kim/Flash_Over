@@ -14,6 +14,7 @@ public class GroundTile : MonoBehaviour
 	public bool movefloodFill = false;
 	public bool isPlayer = false;
 	public bool isDoor = false;
+	public bool isObstacle = false;
 	public Claimant isClaimant = null;
 	public int checkSum = 0;
 	public int G, H;
@@ -25,7 +26,6 @@ public class GroundTile : MonoBehaviour
 	public List<GameObject> fillList;
 	public Tilemap tilemap;
 	public GameObject firePrefab;
-
 	public bool cheakVision = false;
 	public bool CheakVision
     {
@@ -369,6 +369,10 @@ public class GroundTile : MonoBehaviour
 				{
 					isDoor = true;
 				}
+				else if(elem.layer == LayerMask.NameToLayer("Obstacle"))
+				{
+					isObstacle = true;
+				}
 			}
 		}
 		else
@@ -377,6 +381,7 @@ public class GroundTile : MonoBehaviour
 			isPlayer = false;
 			isClaimant = null;
 			tileIsClaimant = false;
+			isObstacle = false;
 		}
 	}
 
