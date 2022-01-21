@@ -6,12 +6,12 @@ public class PlayerMove : MonoBehaviour
 {
 	private GameManager gameManager;
 	private TilemapManager tilemapManager;
-	public Animator animator;
+	private Animator animator;
 	public List<Vector3> moveList = new List<Vector3>();
-	public Player moveObject;
+	private Player moveObject;
 	public float speed = 3f;
 	public bool go = false;
-	int num = 0;
+	private int num = 0;
 	private bool hit = false;
 	private bool breath = false;
 	public void Awake()
@@ -44,10 +44,6 @@ public class PlayerMove : MonoBehaviour
 	}
 	public void ResetMoveList()
 	{
-		foreach (var elem in moveList)      // 있어야 하나
-		{
-			tilemapManager.ReturnTile(elem).Reset();
-		}
 		moveList.Clear();
 	}
 	public void MovePlayer()
@@ -56,8 +52,7 @@ public class PlayerMove : MonoBehaviour
 		animator = moveObject.GetComponent<Animator>();
 		if (!tilemapManager.CheckPlayer(moveObject.moveHelper) || tilemapManager.ReturnTile(moveObject.gameObject) == tilemapManager.ReturnTile(moveObject.moveHelper))
 		{
-
-			if (tilemapManager.ReturnTile(moveObject.moveHelper).isClaimant) return;
+			if (tilemapManager.ReturnTile(moveObject.moveHelper).isClaimant && !moveObject.handFull) return;
 			moveObject.moveHelper.transform.localPosition = Vector3.zero;
 			moveObject.moveHelper.gameObject.SetActive(false);
 			animator.SetBool("walk", true);
@@ -99,7 +94,6 @@ public class PlayerMove : MonoBehaviour
 							var preTile = tilemapManager.ReturnTile(moveList[moveList.Count - 2]);
 							RemoveMoveList(moveList, setMoveColor);
 							movePoint += 1;
-
 						}
 						else
 						{
@@ -122,6 +116,9 @@ public class PlayerMove : MonoBehaviour
 	{
 		if (go)
 		{
+			gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
+			gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
+			gameManager.uIManager.battleUiManager.selectNextPlayer.gameObject.SetActive(false);
 			//움직일때 따라가는거?
 			Camera.main.transform.position = new Vector3(moveObject.transform.position.x, Camera.main.transform.position.y, moveObject.transform.position.z - 3);
 			if (moveList.Count == 0)

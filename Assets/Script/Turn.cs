@@ -36,7 +36,6 @@ public static class Turn
 		{
 			if(player.curStateName==PlayerState.Idle)
             {
-				cameraController.CameraMoving(player);
 				GameManager.instance.ChangeTargetPlayer(player.gameObject);
 				GameManager.instance.move = player.cd.totalStats.move;
 
@@ -84,6 +83,16 @@ public static class Turn
 				}
 			}
 		}
+		foreach(var fire in fires)
+		{
+			fire.CheckFireHp();
+		}
+		if(fires.Count == 0)
+		{
+			var gameClearUI = GameManager.instance.uIManager.gameclearUI;
+			gameClearUI.gameObject.SetActive(true);
+		}
+		
 		if (smokes.Count != 0)
 		{
 			foreach (var smoke in smokes)
@@ -168,8 +177,8 @@ public static class Turn
 			}
 		}
 		GameManager.instance.targetPlayer = null;
-
 		GameManager.instance.turnCount++;
+		GameManager.instance.TurnSystem();
 	}
 	public static void OutOfSight(List<Fire> fireList, float sec)
 	{
@@ -181,7 +190,6 @@ public static class Turn
 	}
 	public static void EndGame()
 	{
-
 	}
 
 	public static void SortCameraArea()

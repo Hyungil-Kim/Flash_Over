@@ -10,9 +10,10 @@ public class Door : MonoBehaviour
 {
 	public DoorState curDoorState;
 	public GroundTile parentTile;
+	private GameManager gameManager;
 	public void Start()
 	{
-		var gameManager = GameManager.instance;
+		gameManager = GameManager.instance;
 		parentTile = gameManager.tilemapManager.ReturnTile(this.gameObject);
 		if (curDoorState == DoorState.Open)
 		{
@@ -31,20 +32,19 @@ public class Door : MonoBehaviour
 			yield return new WaitForSeconds(0.01f);
 		}
 		parentTile.isWall = false;
+		gameManager.targetPlayer.curStateName = PlayerState.End;
 		yield break;
 	}
 	public IEnumerator CloseDoor()
 	{
+		var gameManager = GameManager.instance;
 		while (transform.eulerAngles.y >= 2)
 		{
 			transform.Rotate(0, -2, 0);
 			yield return new WaitForSeconds(0.01f);
 		}
 		parentTile.isWall = true;
+		gameManager.targetPlayer.curStateName = PlayerState.End;
 		yield break;
-	}
-	public void Update()
-	{
-		Debug.Log(transform.eulerAngles.y);
 	}
 }

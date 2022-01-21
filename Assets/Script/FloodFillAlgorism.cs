@@ -16,17 +16,17 @@ public class FloodFillAlgorism
 
 	public void FloodFill(Tilemap tilemap, Vector3 startPos, Color newColor, int speed)
 	{
+
 		cellPos = tilemap.WorldToCell(startPos);
 		tileObject = tilemap.GetInstantiatedObject(cellPos).GetComponent<GroundTile>();
 		objectQueue.Enqueue(tileObject);
 		resetQueue.Enqueue(tileObject);
 		while (objectQueue.Count > 0)
 		{
-			
 			var curQueue = objectQueue.Peek();
 			var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 
-			if (!curTile.isWall)
+			if (!curTile.isWall && !curTile.isObstacle)
 			{
 				curTile.SetTileColor(newColor);
 			}
@@ -43,7 +43,7 @@ public class FloodFillAlgorism
 					{
 						resetQueue.Enqueue(nextQueue);
 					}
-					if (nextQueue.checkSum <= speed  && !nextQueue.isWall)
+					if (nextQueue.checkSum <= speed  && !nextQueue.isWall && !nextQueue.isObstacle)
 					{
 						objectQueue.Enqueue(nextQueue);
 					}
@@ -64,7 +64,7 @@ public class FloodFillAlgorism
 			var curQueue = objectQueue.Peek();
 			var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 
-			if (!curTile.isWall)
+			if (!curTile.isWall && !curTile.isObstacle)
 			{
 				if(movelist.Contains(curTile.transform.position))
 				{
@@ -89,7 +89,7 @@ public class FloodFillAlgorism
 					{
 						resetQueue.Enqueue(nextQueue);
 					}
-					if (nextQueue.checkSum <= speed && !nextQueue.isWall)
+					if (nextQueue.checkSum <= speed && !nextQueue.isWall && !nextQueue.isObstacle)
 					{
 						objectQueue.Enqueue(nextQueue);
 					}
