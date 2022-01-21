@@ -15,6 +15,7 @@ public class PlayerIdleState : State
 	{
 
 		fsm.moveHelper.transform.localPosition = Vector3.zero;
+		fsm.gameManager.readyPlayerAction = true;
 		//fsm.gameObject.GetComponent<VisionRange>().CheckBuff();
 
 		//이거 여기 두면 계속 꺼져 안돼..
@@ -54,10 +55,10 @@ public class PlayerMoveState : State
 	{
 		fsm.moveHelper.SetActive(true);
 		fsm.gameManager.move = fsm.cd.totalStats.move;
+		fsm.gameManager.uIManager.battleUiManager.AllButtonOff();
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(true);
-		fsm.gameManager.uIManager.battleUiManager.putDownButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.rescueButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.selectNextPlayer.gameObject.SetActive(true);
 	}
 
 	public override void Exit()
@@ -78,11 +79,9 @@ public class PlayerAttackState : State
 	}
 	public override void Enter()
 	{
-		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
-		fsm.gameManager.uIManager.battleUiManager.shootButton.gameObject.SetActive(false);
+		fsm.gameManager.uIManager.battleUiManager.AllButtonOff();
 
 		fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(true);
-
 		fsm.gameManager.uIManager.battleUiManager.attackButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.itemButton.gameObject.SetActive(true);
 		fsm.gameManager.uIManager.battleUiManager.waitButton.gameObject.SetActive(true);
@@ -114,6 +113,7 @@ public class PlayerAttackState : State
 				}
 			}
 		}
+		fsm.gameManager.tilemapManager.CheckClaimant(fsm.gameManager.targetPlayer);
 	}
 
 	public override void Exit()
@@ -150,6 +150,7 @@ public class PlayerEndState : State
 			fsm.gameManager.uIManager.battleUiManager.weapon1Button.gameObject.SetActive(false);
 			fsm.gameManager.uIManager.battleUiManager.weapon2Button.gameObject.SetActive(false);
 			fsm.gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
+			fsm.gameManager.readyPlayerAction = true;
 			fsm.gameManager.targetPlayer = null;
 		}
 

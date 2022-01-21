@@ -20,8 +20,9 @@ public class GameClearUI : MonoBehaviour
     
     private void OnEnable()
     {
-        //Init();  
-        //StartCoroutine(CoResultPrint());
+        StopAllCoroutines();
+        Init();  
+        StartCoroutine(CoResultPrint());
     }
     public void Init()
     {

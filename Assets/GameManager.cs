@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager instance;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
 	public bool press;
 	public GroundTile groundTile;
 	public CameraController cameraController;
+	public bool readyPlayerAction = true;
 
 	public int num = -1;
 	public int move;
@@ -43,9 +45,6 @@ public class GameManager : MonoBehaviour
 
 	public bool pickup;
 	public bool putdown;
-	public bool open;
-	public bool close;
-
 
 	public bool showMeleeRange;
 	public bool showthrowwRange;
@@ -53,6 +52,7 @@ public class GameManager : MonoBehaviour
 	public int turnCount;
 	public TextMeshProUGUI tMPro;
 	public TextMeshProUGUI pressPro;
+	public TextMeshProUGUI ready;
 
 	public bool isUsingMap;
 
@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+		Turn.players = Turn.players.OrderBy((x) => x.index).ToList();
 	}
 	public void StartGame()
 	{
@@ -248,15 +249,28 @@ public class GameManager : MonoBehaviour
 	{
 		target = go;// 레이 맞은 오브젝트s
 		targetTile = tilemapManager.ReturnTile(target);
-		if (targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle)
+		var player = target.GetComponent<Player>();
+		
+		if ((player.curStateName == PlayerState.Idle || player.curStateName == PlayerState.Action))
 		{
-			targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
-
-			tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
-			playerMove.ResetMoveList();
-			playerMove.AddMoveList(targetTile.transform.position, setPathColor);
-			targetPlayer.ChangeState(PlayerState.Move);
-
+			switch (player.curStateName)
+			{
+				case PlayerState.Idle:
+					targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
+					tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
+					playerMove.ResetMoveList();
+					playerMove.AddMoveList(targetTile.transform.position, setPathColor);
+					targetPlayer.ChangeState(PlayerState.Move);//버튼띄우기
+					break;
+				case PlayerState.Move:
+					break;
+				case PlayerState.Action:
+					targetPlayer = target.GetComponent<Player>();
+					//버튼 띄우기
+					break;
+				case PlayerState.End:
+					break;
+			}
 			pretargetPlayer = targetPlayer;
 			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 		}
@@ -298,7 +312,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (target.tag == "Player")
 				{
-					if (targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle)
+					if ((targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle) || (readyPlayerAction && target.GetComponent<Player>().curStateName == PlayerState.Action))
 					{
 						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
 						switch (targetPlayer.curStateName)
@@ -312,7 +326,6 @@ public class GameManager : MonoBehaviour
 							case PlayerState.Move:
 								break;
 							case PlayerState.Action:
-								tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
 								break;
 							case PlayerState.End:
 								break;
@@ -479,6 +492,7 @@ public class GameManager : MonoBehaviour
 	{
 		tMPro.text = move.ToString();
 		pressPro.text = press.ToString();
+		ready.text = playerMove.moveList.Count.ToString();
 		//mousePos = multiTouch.mousePoint.Mouse.Move.ReadValue<Vector2>();
 		var pointer = IsPointerOverUI();
 		if (pointer)
@@ -578,6 +592,7 @@ public class GameManager : MonoBehaviour
 				targetPlayer.lung -= targetPlayer.ap;
 				targetPlayer.ap = 0;
 			}
+			targetPlayer.SetState(PlayerState.End);
 		}
 	}
 	public void UseItemMeleeRange()
@@ -701,5 +716,11 @@ public class GameManager : MonoBehaviour
 				showthrowwRange = false;
 			}
 		}
+	}
+
+
+	public void TurnSystem()
+	{
+		StartCoroutine(Turn.CoTurnSystem());
 	}
 }

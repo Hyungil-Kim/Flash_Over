@@ -64,7 +64,7 @@ public class Player : FSM<PlayerState>
     }
 	private void Awake()
 	{
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        gameManager = GameManager.instance;
         Turn.players.Add(this);
         AddState(PlayerState.Idle, new PlayerIdleState(this));
         AddState(PlayerState.Move, new PlayerMoveState(this));
@@ -86,6 +86,7 @@ public class Player : FSM<PlayerState>
 
     public void CheckPlayerHp()
     {
+        
 		if (cd.hp <= 0)
 		{
 			if (handFull)
@@ -101,6 +102,14 @@ public class Player : FSM<PlayerState>
             SetState(PlayerState.End);
 			gameObject.SetActive(false);
 			Turn.players.Remove(this);
+            if(Turn.players.Count != 0)
+			{
+                gameManager.tilemapManager.SelectNextPlayer();
+			}
+            else
+			{
+                //½ÇÆÐÃ¢
+			}
 		}
 	}
     public void CheckPlayerLung()

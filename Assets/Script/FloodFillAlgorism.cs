@@ -16,13 +16,13 @@ public class FloodFillAlgorism
 
 	public void FloodFill(Tilemap tilemap, Vector3 startPos, Color newColor, int speed)
 	{
+
 		cellPos = tilemap.WorldToCell(startPos);
 		tileObject = tilemap.GetInstantiatedObject(cellPos).GetComponent<GroundTile>();
 		objectQueue.Enqueue(tileObject);
 		resetQueue.Enqueue(tileObject);
 		while (objectQueue.Count > 0)
 		{
-			
 			var curQueue = objectQueue.Peek();
 			var curTile = tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 

@@ -44,10 +44,6 @@ public class PlayerMove : MonoBehaviour
 	}
 	public void ResetMoveList()
 	{
-		foreach (var elem in moveList)      // 있어야 하나
-		{
-			tilemapManager.ReturnTile(elem).Reset();
-		}
 		moveList.Clear();
 	}
 	public void MovePlayer()
@@ -120,6 +116,9 @@ public class PlayerMove : MonoBehaviour
 	{
 		if (go)
 		{
+			gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(false);
+			gameManager.uIManager.battleUiManager.cancleButton.gameObject.SetActive(false);
+			gameManager.uIManager.battleUiManager.selectNextPlayer.gameObject.SetActive(false);
 			//움직일때 따라가는거?
 			Camera.main.transform.position = new Vector3(moveObject.transform.position.x, Camera.main.transform.position.y, moveObject.transform.position.z - 3);
 			if (moveList.Count == 0)
