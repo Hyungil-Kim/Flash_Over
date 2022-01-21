@@ -8,26 +8,28 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class GroundTile : MonoBehaviour
 {
-    public bool isWall;
-    public GroundTile ParentTile;
-    public bool attackfloodFill = false;
-    public bool movefloodFill = false;
-    public bool isPlayer = false;
-    public bool isDoor = false;
-    public Claimant isClaimant = null;
-    public int checkSum = 0;
-    public int G, H;
-    public GameObject colorTile;
-    public Color oldColor;
-    public Vector3Int cellpos;
-    public List<GroundTile> nextTileList = new List<GroundTile>();
-    public List<GroundTile> nextVisionList = new List<GroundTile>();
-    public List<GameObject> fillList;
-    public Tilemap tilemap;
-    public GameObject firePrefab;
 
-    public bool cheakVision = false;
-    public bool CheakVision
+	public bool isWall;
+	public GroundTile ParentTile;
+	public bool attackfloodFill = false;
+	public bool movefloodFill = false;
+	public bool isPlayer = false;
+	public bool isDoor = false;
+	public bool isObstacle = false;
+	public Claimant isClaimant = null;
+	public int checkSum = 0;
+	public int G, H;
+	public GameObject colorTile;
+	public Color oldColor;
+	public Vector3Int cellpos;
+	public List<GroundTile> nextTileList = new List<GroundTile>();
+	public List<GroundTile> nextVisionList = new List<GroundTile>();
+	public List<GameObject> fillList;
+	public Tilemap tilemap;
+	public GameObject firePrefab;
+	public bool cheakVision = false;
+	public bool CheakVision
+
     {
         get { return cheakVision; }
         set { cheakVision = value; }
@@ -468,33 +470,135 @@ public class GroundTile : MonoBehaviour
         {
             weat = 0;
         }
-        if (tile.tileIsFire)
-        {
-            if (tile.tileHp > 0)
-            {
-                tile.tileHp -= fire.fireDamage;
-            }
+//<<<<<<< HEAD
+//        if (tile.tileIsFire)
+//        {
+//            if (tile.tileHp > 0)
+//            {
+//                tile.tileHp -= fire.fireDamage;
+//            }
 
-            tile.tileHp = tile.tileHp < 0 ? 0 : tileHp;
+//            tile.tileHp = tile.tileHp < 0 ? 0 : tileHp;
 
-            if (tile.tileHp < 0 && tile.tileGrowthExp >= 0)
-            {
-                tile.tileGrowthExp *= -1;
-            }
+//            if (tile.tileHp < 0 && tile.tileGrowthExp >= 0)
+//            {
+//                tile.tileGrowthExp *= -1;
+//            }
 
-        }
-        tile.tileExp = damage * (tile.tileMesh - weat + objectsMesh);
+//        }
+//        tile.tileExp = damage * (tile.tileMesh - weat + objectsMesh);
 
-        if (tile.tileIsFire)
-        {
-            tile.tileSmokeValue = fire.fireMakeSmoke + tile.tileSaveSmokeValue;
-        }
-        else
-        {
-            tile.tileSmokeValue = tile.tileSaveSmokeValue;
-        }
-    }
-    public void CheckParticleOn(GroundTile tile)
+//        if (tile.tileIsFire)
+//        {
+//            tile.tileSmokeValue = fire.fireMakeSmoke + tile.tileSaveSmokeValue;
+//        }
+//        else
+//        {
+//            tile.tileSmokeValue = tile.tileSaveSmokeValue;
+//        }
+//    }
+//    public void CheckParticleOn(GroundTile tile)
+//=======
+		return nextVisionList;
+	}
+	public int F { get { return G + H; } }
+
+	public void Update()
+	{
+		CheckFillToRay();
+		TestFogOfWar();
+		//var fire = firePrefab.GetComponentInChildren<ParticleSystem>();
+		//var smoke = smokePrefab.GetComponentInChildren<ParticleSystem>();
+
+		//if (tileIsFire)
+  //      {
+		//	firePrefab.SetActive(true);
+  //      }
+		//else if(tileIsFire && CheakVision)
+  //      {
+		//	fire.Play();
+		//}
+		//else
+  //      {
+		//	if(fire.isPlaying)
+  //          {
+		//		fire.Stop();
+  //          }
+  //      }
+		//if (smokePrefab)
+		//{
+		//	smokePrefab.SetActive(true);
+		//}
+		//else if (tileIsSmoke && CheakVision)
+		//{
+		//	smoke.Play();
+		//}
+		//else
+		//{
+		//	if (smoke.isPlaying)
+		//	{
+		//		smoke.Stop();
+		//	}
+		//}
+	}
+
+	public void CheckFillToRay()
+	{
+		fillList = new List<GameObject>();
+		RaycastHit[] hits;
+		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | (1 << LayerMask.NameToLayer("UI")));
+		layerMask = ~layerMask;
+		hits =Physics.RaycastAll(transform.position, transform.up, 10,layerMask);
+		for(int i = 0; i <hits.Length;i++)
+		{
+			RaycastHit hit = hits[i];
+			fillList.Add(hit.collider.gameObject);
+		}
+		if(fillList.Count > 0)
+		{
+			foreach(var elem in fillList)
+			{
+				if (elem.tag == "Player")
+				{
+					isPlayer = true;
+				}
+				else if(elem.tag == "Wall")
+				{
+					isWall = true;
+
+					var materials = elem.GetComponentsInChildren<Renderer>();
+					foreach (var renderer in materials)
+					{
+						//renderer.material.renderQueue = 3020;
+					}
+				}
+				else if(elem.tag == "Claimant")
+				{
+					isClaimant = elem.GetComponent<Claimant>();
+					tileIsClaimant = true;
+				}
+				else if(elem.tag == "Door")
+				{
+					isDoor = true;
+				}
+				else if(elem.layer == LayerMask.NameToLayer("Obstacle"))
+				{
+					isObstacle = true;
+				}
+			}
+		}
+		else
+		{
+			isWall = false;
+			isPlayer = false;
+			isClaimant = null;
+			tileIsClaimant = false;
+			isObstacle = false;
+		}
+	}
+
+	private bool test;
+	public void TestFogOfWar()
     {
 
         if (tile.tileExp <= 0)//tile.tileExp <= 100

@@ -56,8 +56,6 @@ public class RestList : MonoBehaviour
             case CharacterOrder.Name:
                 sortUserCharacter = userCharacterList.OrderBy((x) => x.characterName).ToList();
                 break;
-
-                break;
             default:
                 break;
         }
