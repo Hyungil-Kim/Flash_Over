@@ -123,6 +123,7 @@ public class BattleUiManager : MonoBehaviour
 	{
 		if(gameManager.num != -1)
 		{ 
+			
 			tilemapManager.DoAttack(gameManager.targetPlayer, gameManager.num);
 			gameManager.targetPlayer.SetState(PlayerState.End);
 		}
