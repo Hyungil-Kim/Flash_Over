@@ -36,7 +36,7 @@ public class ClaimantMove
 			goalTile = gameManager.tilemapManager.ReturnTile(targetPlayer.gameObject);
 		}
 		else
-        {
+		{
 			goalTile = gameManager.tilemapManager.ReturnTile(Turn.players[playerIndex].gameObject);
 		}
 		var path = gameManager.tilemapManager.SetAstar(startTile, goalTile);
@@ -52,7 +52,7 @@ public class ClaimantMove
 
 			foreach (var adjcent in path[i].nextTileList)
 			{
-				if (adjcent.fillList.Count == 0 )
+				if (adjcent.fillList.Count == 0)
 				{
 					targetTile = adjcent;
 					break;
@@ -81,7 +81,7 @@ public class ClaimantMove
 			var newPos = new Vector3(pathList[num].transform.position.x, claimant.transform.position.y, pathList[num].transform.position.z);
 			if (claimant.transform.position != newPos)
 			{
-				if(AllTile.visionTile.Contains(pathList[num]))
+				if (AllTile.visionTile.Contains(pathList[num]))
 				{
 					Camera.main.transform.position = new Vector3(pathList[num].transform.position.x, Camera.main.transform.position.y, pathList[num].transform.position.z - 3);
 				}
@@ -90,7 +90,7 @@ public class ClaimantMove
 				{
 					claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, newPos, moveSpeed * Time.deltaTime);
 					claimant.transform.LookAt(newPos);
-					hitCheck(newPos,claimant);
+					hitCheck(newPos, claimant);
 					BreathCheck(newPos, claimant);
 				}
 				yield return 0;
@@ -127,14 +127,14 @@ public class ClaimantMove
 			var newPos = new Vector3(preTile.nextTileList[path].transform.position.x, claimant.transform.position.y, preTile.nextTileList[path].transform.position.z);
 			var newTile = gameManager.tilemapManager.ReturnTile(newPos);
 
-			if (newTile.fillList.Count != 0 || newTile.tileIsFire)
+			if (newTile.fillList.Count != 0 || newTile.tileIsFire || newTile.isObstacle)
 			{
 				if (num <= claimant.speed)
 				{
-			if (AllTile.visionTile.Contains(preTile))
-			{
-				Camera.main.transform.position = new Vector3(preTile.transform.position.x, Camera.main.transform.position.y, preTile.transform.position.z - 3);
-			}
+					if (AllTile.visionTile.Contains(preTile))
+					{
+						Camera.main.transform.position = new Vector3(preTile.transform.position.x, Camera.main.transform.position.y, preTile.transform.position.z - 3);
+					}
 					num++;
 					preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
 					path = Random.Range(0, preTile.nextTileList.Count);

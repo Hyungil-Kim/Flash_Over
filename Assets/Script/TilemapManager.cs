@@ -55,11 +55,11 @@ public class TilemapManager : MonoBehaviour
 
 		}
 	}
-	public void ShowFloodFillRange(GroundTile target, Color moveSetColor,int range)
+	public void ShowFloodFillRange(GroundTile target, Color moveSetColor, int range)
 	{
 		floodFill.FloodFill(tilemap, target.transform.position, moveSetColor, range);
 	}
-	public List<GroundTile> ReturnFloodFillRange(GroundTile target,Color color, int range)
+	public List<GroundTile> ReturnFloodFillRange(GroundTile target, Color color, int range)
 	{
 		return floodFill.ReturnFloodFill(tilemap, target.transform.position, color, range);
 	}
@@ -68,11 +68,11 @@ public class TilemapManager : MonoBehaviour
 		floodFill.ResetTile(tilemap);
 		gameManager.playerMove.moveList.Clear();
 		var visionList = targetPlayer.GetComponent<VisionRange>().CheackVision();
-		foreach(var elem in visionList)
+		foreach (var elem in visionList)
 		{
 			if (elem.isClaimant)
 			{
-				foreach(var listElem in elem.fillList)
+				foreach (var listElem in elem.fillList)
 				{
 					if (listElem.tag == "Claimant")
 					{
@@ -85,8 +85,7 @@ public class TilemapManager : MonoBehaviour
 				}
 			}
 		}
-			CheckClaimant(targetPlayer);
-			targetPlayer.SetState(PlayerState.Action);
+		targetPlayer.SetState(PlayerState.Action);
 	}
 	public IEnumerator meetClaimant()
 	{
@@ -129,9 +128,9 @@ public class TilemapManager : MonoBehaviour
 		ResetAttackRange(weapontype);
 		attackRange.Attack(target, this, weapontype, 5, attackSetColor);
 	}
-	public List<GroundTile> AttackFloodFill(GameObject target,Color attackSetColor,int range)
+	public List<GroundTile> AttackFloodFill(GameObject target, Color attackSetColor, int range)
 	{
-		var list = testAttackRange.CrossFloodFill(this,target,attackSetColor, range);
+		var list = testAttackRange.CrossFloodFill(this, target, attackSetColor, range);
 		return list;
 	}
 	public void FireAttack(Fire target, Color attackSetColor)
@@ -159,15 +158,15 @@ public class TilemapManager : MonoBehaviour
 					defender.GetComponent<Player>().cd.hp -= iDamage;
 					defender.GetComponent<Player>().CheckPlayerHp();
 				}
-				if(defender.tag == "Claimant")
+				if (defender.tag == "Claimant")
 				{
 					defender.GetComponent<Claimant>().hp -= iDamage;
 					defender.GetComponent<Claimant>().CheckClaimantHp();
 				}
-				if(defender.tag == "Obstacle")
+				if (defender.tag == "Obstacle")
 				{
 					defender.GetComponent<Obstacle>().hp -= iDamage;
-					defender.GetComponent<Obstacle>().CheckObstacleHp();					
+					defender.GetComponent<Obstacle>().CheckObstacleHp();
 				}
 			}
 			elem.ChangeTileState(elem, iDamage);
@@ -193,7 +192,7 @@ public class TilemapManager : MonoBehaviour
 				}
 			}
 		}
-		
+
 	}
 	public void EndMonsterAttack()
 	{
@@ -246,8 +245,12 @@ public class TilemapManager : MonoBehaviour
 				break;
 		}
 		ResetAttackRange(num);
+		if(!FuseBox.FuseOFF)
+		{
+			attacker.cd.hp -= (int)FuseBox.ShockDamage;
+		}
 		attacker.ap -= 5;
-		if(attacker.ap <0)
+		if (attacker.ap < 0)
 		{
 			attacker.lung -= attacker.ap;
 			attacker.ap = 0;
@@ -340,22 +343,59 @@ public class TilemapManager : MonoBehaviour
 		}
 	}
 
-
-	public IEnumerator WithPlayer(Claimant claimant, Player targetPlayer)
+	public void SelectNextPlayer()
 	{
-		var preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
-		var targetTile = GameManager.instance.tilemapManager.ReturnTile(targetPlayer.gameObject);
-		var moveSpeed = 5;
-		var newPos = new Vector3(targetTile.transform.position.x, claimant.transform.position.y, targetTile.transform.position.z);
-		if (claimant.transform.position != newPos)
+		if (gameManager.targetPlayer != null && gameManager.readyPlayerAction)
 		{
-			var dis = Vector3.Distance(claimant.transform.position, newPos);
-			if (dis > 0)
+			var targetPlayer = gameManager.targetPlayer;
+			switch (targetPlayer.curStateName)
 			{
-				claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, newPos, moveSpeed * Time.deltaTime);
-				claimant.transform.LookAt(newPos);
+				case PlayerState.Move:
+					//tilemapManager.ResetFloodFill();
+					targetPlayer.curStateName = PlayerState.Idle;
+					targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
+					//버튼제거
+					break;
+				case PlayerState.Action:
+					Debug.Log("1");
+					//버튼제거
+					break;
 			}
-			yield return 0;
+			targetPlayer = FindNextPlayer(targetPlayer);
+			gameManager.ChangeTargetPlayer(targetPlayer.gameObject);
+
 		}
+	}
+	public Player FindNextPlayer(Player targetPlayer)
+	{
+		var search = true;
+		for (int i = 0; i < Turn.players.Count; i++)
+		{
+			if (targetPlayer.index == Turn.players[i].index)
+			{
+				while (search)
+				{
+					if (i + 1 < Turn.players.Count)
+					{
+						if (Turn.players[i + 1].curStateName != PlayerState.End)
+						{
+							targetPlayer = Turn.players[i + 1];
+							search = false;
+							return targetPlayer;
+						}
+						else
+						{
+							i++;
+						}
+					}
+					else
+					{
+						i = -1;
+					}
+				}
+				break;
+			}
+		}
+		return targetPlayer;
 	}
 }

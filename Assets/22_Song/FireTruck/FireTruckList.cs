@@ -57,8 +57,6 @@ public class FireTruckList : MonoBehaviour
             case CharacterOrder.Name:
                 sortUserCharacter = userCharacterList.OrderBy((x) => x.characterName).ToList();
                 break;
-
-                break;
             default:
                 break;
         }

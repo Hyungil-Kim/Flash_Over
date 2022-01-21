@@ -45,7 +45,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141136}
-  m_Mesh: {fileID: 4300000, guid: 9335282423b65634a93e00a5d3b38fca, type: 3}
+  m_Mesh: {fileID: 4300000, guid: eb6954857927e5a40be8490ed1e4d0b9, type: 3}
 --- !u!23 &2305264
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -140,12 +140,14 @@ MonoBehaviour:
   tileIsWeat: 0
   tileIsFire: 0
   tileIsSmoke: 0
+  tileIsClaimant: 0
   tileWeatValue: 0
   tileExp: 0
   tileHp: 20
   tileSaveSmokeValue: 0
   tileSmokeValue: 0
   index: 0
+  infoIndex: 0
 --- !u!1 &3096985226070265613
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +175,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3096985226070265613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.009, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -187,7 +189,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3096985226070265613}
-  m_Mesh: {fileID: 4300000, guid: 9335282423b65634a93e00a5d3b38fca, type: 3}
+  m_Mesh: {fileID: 4300000, guid: eb6954857927e5a40be8490ed1e4d0b9, type: 3}
 --- !u!23 &608055498457161197
 MeshRenderer:
   m_ObjectHideFlags: 0

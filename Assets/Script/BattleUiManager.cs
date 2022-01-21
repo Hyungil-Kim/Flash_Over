@@ -23,9 +23,12 @@ public class BattleUiManager : MonoBehaviour
 	public Button openDoorButton;
 	public Button closeDoorButton;
 
-	public UseItemManager useItemManager;
-	
+	public Button fuseOffButton;
+	public Button selectNextPlayer;
 
+	public UseItemManager useItemManager;
+
+	public Door findDoor;
 	// Start is called before the first frame update
 
 	public void Start()
@@ -57,6 +60,8 @@ public class BattleUiManager : MonoBehaviour
 		putDownButton.gameObject.SetActive(false);
 		waitButton.gameObject.SetActive(false);
 		attackButton.gameObject.SetActive(false);
+		gameManager.readyPlayerAction = false;
+
 	}
 	public void Cancle()
 	{
@@ -65,20 +70,31 @@ public class BattleUiManager : MonoBehaviour
 			case PlayerState.Idle:
 				break;
 			case PlayerState.Move:
-				tilemapManager.ResetFloodFill();
-				gameManager.targetPlayer.curStateName = PlayerState.Idle;
-				gameManager.targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
+				if (gameManager.playerMove.moveList.Count <= 1)
+				{
+					tilemapManager.ResetFloodFill();
+					gameManager.targetPlayer.curStateName = PlayerState.Idle;
+					gameManager.targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
 
-				//gameManager.cameraController.CameraForObjectsCenter(gameManager.pretargetPlayer.gameObject);
-				gameManager.targetPlayer = null;
-				gameManager.playerMove.moveList.Clear();
+					//gameManager.cameraController.CameraForObjectsCenter(gameManager.pretargetPlayer.gameObject);
+					gameManager.targetPlayer = null;
+					gameManager.playerMove.moveList.Clear();
+				}
+				else
+				{
+					tilemapManager.ResetFloodFill();
+					gameManager.targetPlayer.curStateName = PlayerState.Idle;
+					gameManager.targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
+
+					//gameManager.cameraController.CameraForObjectsCenter(gameManager.pretargetPlayer.gameObject);
+					gameManager.ChangeTargetPlayer(gameManager.targetPlayer.gameObject);
+					
+				}
 				break;
 			case PlayerState.Action:
 				
 				gameManager.pickup = false;
 				gameManager.putdown = false;
-				gameManager.open = false;
-				gameManager.close = false;
 
 				if(!attackButton.gameObject.activeSelf)
 				{
@@ -96,11 +112,13 @@ public class BattleUiManager : MonoBehaviour
 					waitButton.gameObject.SetActive(true);
 					attackButton.gameObject.SetActive(true);
 					StartCoroutine(useItemManager.Cancle());
+				gameManager.readyPlayerAction = true;
 				break;
 			case PlayerState.End:
 				break;
 		}
 	}
+
 	public void DoAttack()
 	{
 		if(gameManager.num != -1)
@@ -116,6 +134,7 @@ public class BattleUiManager : MonoBehaviour
 			return;
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
 		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
+		gameManager.readyPlayerAction = false;
 		gameManager.pickup = true;
 	}
 	public void DoPutDownClaimant()
@@ -125,6 +144,7 @@ public class BattleUiManager : MonoBehaviour
 			return;
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
 		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
+		gameManager.readyPlayerAction = false;
 		gameManager.putdown = true;
 	}
 	public void UseItem()
@@ -132,22 +152,31 @@ public class BattleUiManager : MonoBehaviour
 		Cancle();
 		uIManager.battleUiManager.waitButton.gameObject.SetActive(false);
 		uIManager.battleUiManager.attackButton.gameObject.SetActive(false);
+		gameManager.readyPlayerAction = false;
 		useItemManager.gameObject.SetActive(true);
 	}
 	public void DoorInteractionOpen()
 	{
 		Cancle();
-		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
-		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
-		gameManager.open = true;
+		StartCoroutine(findDoor.OpenDoor());
+
 	}
 	public void DoorInteractionClose()
 	{
 		Cancle();
-		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
-		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
-		gameManager.close = true;
+		StartCoroutine(findDoor.CloseDoor());
 	}
+	public void FuseBoxInteractionOff()
+	{
+		Cancle();
+		FuseBox.FuseOFF = true;
+		gameManager.targetPlayer.curStateName = PlayerState.End;
+	}
+	public void SelectNextPlayer()
+	{
+		gameManager.tilemapManager.SelectNextPlayer();
+	}
+	
 	public void EndTurn()
 	{
 		switch (gameManager.targetPlayer.curStateName)
@@ -182,5 +211,22 @@ public class BattleUiManager : MonoBehaviour
 				break;
 		}
 	}
+	public void AllButtonOff()
+	{
+		weapon1Button.gameObject.SetActive(false);
+		weapon2Button.gameObject.SetActive(false);
+		itemButton.gameObject.SetActive(false);
+		waitButton.gameObject.SetActive(false);
+		shootButton.gameObject.SetActive(false);
+		moveButton.gameObject.SetActive(false);
+		cancleButton.gameObject.SetActive(false);
+		attackButton.gameObject.SetActive(false);
+		rescueButton.gameObject.SetActive(false);
+		putDownButton.gameObject.SetActive(false);
+		openDoorButton.gameObject.SetActive(false);
+		closeDoorButton.gameObject.SetActive(false);
 
+		fuseOffButton.gameObject.SetActive(false);
+		selectNextPlayer.gameObject.SetActive(false);
+	}
 }

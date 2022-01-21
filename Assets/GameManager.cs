@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager instance;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
 	public bool press;
 	public GroundTile groundTile;
 	public CameraController cameraController;
+	public bool readyPlayerAction = true;
 
 	public int num = -1;
 	public int move;
@@ -43,9 +45,6 @@ public class GameManager : MonoBehaviour
 
 	public bool pickup;
 	public bool putdown;
-	public bool open;
-	public bool close;
-
 
 	public bool showMeleeRange;
 	public bool showthrowwRange;
@@ -53,6 +52,7 @@ public class GameManager : MonoBehaviour
 	public int turnCount;
 	public TextMeshProUGUI tMPro;
 	public TextMeshProUGUI pressPro;
+	public TextMeshProUGUI ready;
 
 	public bool isUsingMap;
 
@@ -70,85 +70,80 @@ public class GameManager : MonoBehaviour
 
 		if (PlaySaveSystem.ps != null)
 		{
-			if (PlaySaveSystem.ps.isPlay)
+
+			foreach (var tile in AllTile.allTile)
 			{
-				foreach (var tile in AllTile.allTile)
+				if (PlaySaveSystem.ps.tsd.TryGetValue(tile.index, out var tiledata))
 				{
-					if (PlaySaveSystem.ps.tsd.TryGetValue(tile.index, out var tiledata))
-					{
-						tile.SaveInit(tiledata);
-					}
-				}
-				foreach (var character in characters)
-				{
-
-					var create = character.GetComponent<CreateCharacter>();
-					var playerDict = PlaySaveSystem.ps.psd;
-					if (playerDict.ContainsKey(create.characterIndex))
-					{
-						create.Create(playerDict[create.characterIndex].cd);
-						var player = create.Character.GetComponent<Player>();
-						player.SaveInit(playerDict[create.characterIndex]);
-						//if (player.playerState == PlayerState.Move)
-						//{
-						//	player.playerState = PlayerState.Idle;
-						//}
-					}
-				}
-				targetPlayer = Turn.players.Find((x) => x.index == PlaySaveSystem.ps.gsd.targetIndex);
-
-				if (targetPlayer != null)
-				{
-					if (targetPlayer.playerState == PlayerState.Move)
-					{
-						targetTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-						tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
-						playerMove.ResetMoveList();
-						playerMove.AddMoveList(targetTile.transform.position, setPathColor);
-						pretargetPlayer = targetPlayer;
-						preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-						uIManager.OnCharacterInfo();
-						uIManager.info.Init();
-					}
-					if (targetPlayer.playerState == PlayerState.Idle || targetPlayer.playerState == PlayerState.End)
-					{
-						targetPlayer = null;
-					}
-				}
-
-				foreach (var claimant in Turn.claimants)
-				{
-					if (PlaySaveSystem.ps.csd.TryGetValue(claimant.index, out var claimantData))
-					{
-						claimant.SaveInit(claimantData);
-					}
-				}
-
-				turnCount = PlaySaveSystem.ps.gsd.turnCount;
-
-				StartGame();
-				PlaySaveSystem.ps = null;
-			}
-			else
-			{
-				foreach (var character in characters)
-				{
-					var create = character.GetComponent<CreateCharacter>();
-					if (GameData.userData.fireManList.ContainsKey(create.characterIndex))
-					{
-						create.Create(GameData.userData.fireManList[create.characterIndex]);
-					}
-					else if (GameData.userData.fireManList.Count == 0)
-					{
-						create.Create(null);
-					}
+					tile.SaveInit(tiledata);
 				}
 			}
-			if (PlaySaveSystem.ps != null)
+			foreach (var character in characters)
 			{
-				PlaySaveSystem.ps.isPlay = true;
+
+				var create = character.GetComponent<CreateCharacter>();
+				var playerDict = PlaySaveSystem.ps.psd;
+				if (playerDict.ContainsKey(create.characterIndex))
+				{
+					create.Create(playerDict[create.characterIndex].cd);
+					var player = create.Character.GetComponent<Player>();
+					player.SaveInit(playerDict[create.characterIndex]);
+					//if (player.playerState == PlayerState.Move)
+					//{
+					//	player.playerState = PlayerState.Idle;
+					//}
+				}
+			}
+			targetPlayer = Turn.players.Find((x) => x.index == PlaySaveSystem.ps.gsd.targetIndex);
+
+			if (targetPlayer != null)
+			{
+				if (targetPlayer.playerState == PlayerState.Move)
+				{
+					targetTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+					tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
+					playerMove.ResetMoveList();
+					playerMove.AddMoveList(targetTile.transform.position, setPathColor);
+					pretargetPlayer = targetPlayer;
+					preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+					uIManager.OnCharacterInfo();
+					uIManager.info.Init();
+				}
+				if (targetPlayer.playerState == PlayerState.Idle || targetPlayer.playerState == PlayerState.End)
+				{
+					targetPlayer = null;
+				}
+			}
+
+			foreach (var claimant in Turn.claimants)
+			{
+				if (PlaySaveSystem.ps.csd.TryGetValue(claimant.index, out var claimantData))
+				{
+					claimant.SaveInit(claimantData);
+				}
+			}
+
+			turnCount = PlaySaveSystem.ps.gsd.turnCount;
+
+			StartGame();
+			PlaySaveSystem.ps = null;
+		}
+		else
+		{
+			foreach (var character in characters)
+			{
+				var create = character.GetComponent<CreateCharacter>();
+				if (GameData.userData.fireManList.ContainsKey(create.characterIndex))
+				{
+					create.Create(GameData.userData.fireManList[create.characterIndex]);
+				}
+				else if (GameData.userData.fireManList.Count == 0)
+				{
+					create.Create(null);
+				}
 			}
 		}
+		Turn.players = Turn.players.OrderBy((x) => x.index).ToList();
 	}
 	public void StartGame()
 	{
@@ -161,14 +156,14 @@ public class GameManager : MonoBehaviour
 		if (AllTileMesh.instance != null)
 		{
 			AllTileMesh.instance.Init();
-			if (Turn.players.Count != 0 && PlaySaveSystem.ps == null) 
+			if (Turn.players.Count != 0 && PlaySaveSystem.ps == null)
 			{
 				ChangeTargetPlayer(Turn.players[0].gameObject);
 			}
-			else if(targetPlayer != null)
-            {
+			else if (targetPlayer != null)
+			{
 				ChangeTargetPlayer(targetPlayer.gameObject);
-            }
+			}
 		}
 	}
 	public void GetTilePosition(Vector2 mousePosition)
@@ -195,10 +190,10 @@ public class GameManager : MonoBehaviour
 			RaycastHit[] hits;
 			hits = Physics.RaycastAll(ray, float.PositiveInfinity, layerMask);
 			foreach (var hit in hits)
-            {
+			{
 				var target = hit.transform.gameObject;
-				if(target.tag == "Player")
-                {
+				if (target.tag == "Player")
+				{
 					changePlayer = target.GetComponent<Player>();
 					change = target.GetComponentInParent<CreateCharacter>();
 					uIManager.OnCharacterIcon();
@@ -206,8 +201,8 @@ public class GameManager : MonoBehaviour
 					uIManager.info.Init();
 					break;
 				}
-				else if(target.tag == "CreateQuad")
-                {
+				else if (target.tag == "CreateQuad")
+				{
 					change = target.GetComponentInParent<CreateCharacter>();
 					changePlayer = change.GetComponentInChildren<Player>();
 					uIManager.OnCharacterIcon();
@@ -215,11 +210,11 @@ public class GameManager : MonoBehaviour
 					uIManager.info.Init();
 				}
 				else
-                {
+				{
 					changePlayer = null;
 					change = null;
 				}
-            }
+			}
 
 			//	if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 			//{	
@@ -254,33 +249,33 @@ public class GameManager : MonoBehaviour
 	{
 		target = go;// 레이 맞은 오브젝트s
 		targetTile = tilemapManager.ReturnTile(target);
-		if (targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle)
+		var player = target.GetComponent<Player>();
+		
+		if ((player.curStateName == PlayerState.Idle || player.curStateName == PlayerState.Action))
 		{
-			targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
-			switch (targetPlayer.curStateName)
+			switch (player.curStateName)
 			{
 				case PlayerState.Idle:
+					targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
 					tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
 					playerMove.ResetMoveList();
 					playerMove.AddMoveList(targetTile.transform.position, setPathColor);
-					targetPlayer.ChangeState(PlayerState.Move);
+					targetPlayer.ChangeState(PlayerState.Move);//버튼띄우기
 					break;
 				case PlayerState.Move:
 					break;
 				case PlayerState.Action:
-					tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
+					targetPlayer = target.GetComponent<Player>();
+					//버튼 띄우기
 					break;
 				case PlayerState.End:
 					break;
 			}
-
 			pretargetPlayer = targetPlayer;
 			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-
-			uIManager.OnCharacterInfo();
-			uIManager.info.Init();
-
 		}
+		uIManager.OnCharacterInfo();
+		uIManager.info.Init();
 	}
 
 
@@ -293,9 +288,9 @@ public class GameManager : MonoBehaviour
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
 			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
-			if(targetPlayer !=null)
+			if (targetPlayer != null)
 			{
-				if(targetPlayer.curStateName == PlayerState.Move)
+				if (targetPlayer.curStateName == PlayerState.Move)
 				{
 					layerMask += 1 << LayerMask.NameToLayer("Door");
 				}
@@ -317,7 +312,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (target.tag == "Player")
 				{
-					if (targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle)
+					if ((targetPlayer == null && target.GetComponent<Player>().curStateName == PlayerState.Idle) || (readyPlayerAction && target.GetComponent<Player>().curStateName == PlayerState.Action))
 					{
 						targetPlayer = target.GetComponent<Player>(); // 현재 선택된 플레이어를 저장하기위해 사용
 						switch (targetPlayer.curStateName)
@@ -331,7 +326,6 @@ public class GameManager : MonoBehaviour
 							case PlayerState.Move:
 								break;
 							case PlayerState.Action:
-								tilemapManager.ChangeColorAttack(targetPlayer.gameObject, num, setAttackColor);
 								break;
 							case PlayerState.End:
 								break;
@@ -370,146 +364,11 @@ public class GameManager : MonoBehaviour
 				}
 				else if (showMeleeRange)
 				{
-					var useitem = uIManager.battleUiManager.useItemManager;
-					if (useitem.listRange.Contains(targetTile))
-					{
-						if (useitem.itemType == ConsumItemType.Heal)
-						{
-							if (target.tag == "Claimant")
-							{
-								var claimant = target.GetComponent<Claimant>();
-								switch (useitem.healItemType)
-								{
-									case HealItemType.HpHeal:
-										claimant.hp += useitem.damage;
-										break;
-									case HealItemType.StaminaHeal:
-										break;
-								}
-								StartCoroutine(useitem.UseItemEnd(targetPlayer));
-								showMeleeRange = false;
-							}
-							else if (target.tag == "Player")
-							{
-								var player = target.GetComponent<Player>();
-								if (player.handFull)
-									return;
-								switch (useitem.healItemType)
-								{
-									case HealItemType.HpHeal:
-										player.cd.hp += useitem.damage;
-										break;
-									case HealItemType.StaminaHeal:
-										break;
-								}
-								StartCoroutine(useitem.UseItemEnd(targetPlayer));
-								showMeleeRange = false;
-							}
-						}
-						else if (useitem.itemType == ConsumItemType.Damage)
-						{
-							var fire = GetComponentInChildren<Fire>();
-							fire.fireHp -= useitem.damage;
-							StartCoroutine(useitem.UseItemEnd(targetPlayer));
-							showMeleeRange = false;
-						}
-					}
+					UseItemMeleeRange();
 				}
 				else if (showthrowwRange)
 				{
-					var useitem = uIManager.battleUiManager.useItemManager;
-					if (useitem.listRange.Contains(targetTile))
-					{
-						if (useitem.preTile == null)
-						{
-							useitem.throwListRange = tilemapManager.ReturnFloodFillRange(targetTile, Color.black, useitem.throwRange);
-							useitem.preTile = targetTile;
-						}
-						else if (useitem.preTile != targetTile)
-						{
-							tilemapManager.ResetFloodFill(useitem.throwListRange);
-							var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-							useitem.listRange = tilemapManager.ReturnFloodFillRange(playerTile,setMoveColor, useitem.itemRange);
-							foreach(var elem in useitem.listRange)
-							{
-								elem.ResetExceptColor();
-							}
-							useitem.throwListRange = tilemapManager.ReturnFloodFillRange(targetTile, Color.black, useitem.throwRange);
-							useitem.preTile = targetTile;
-						}
-						else if (useitem.preTile == targetTile)
-						{
-							if (useitem.itemType == ConsumItemType.Heal)
-							{
-								foreach (var elem in useitem.throwListRange)
-								{
-									foreach (var ob in elem.fillList)
-									{
-										if (ob.tag == "Player")
-										{
-											var player = target.GetComponent<Player>();
-											switch (useitem.healItemType)
-											{
-												case HealItemType.HpHeal:
-													player.cd.hp += useitem.damage;
-													break;
-												case HealItemType.StaminaHeal:
-													break;
-											}
-											break;
-										}
-										else if (ob.tag == "Claimant")
-										{
-											var claimant = target.GetComponent<Claimant>();
-											switch (useitem.healItemType)
-											{
-												case HealItemType.HpHeal:
-													claimant.hp += useitem.damage;
-													break;
-												case HealItemType.StaminaHeal:
-													break;
-											}
-											break;
-										}
-									}
-								}
-							}
-							else if (useitem.itemType == ConsumItemType.Damage)
-							{
-								foreach (var elem in useitem.throwListRange)
-								{
-									if (elem.tileIsFire)
-									{
-										var fire = GetComponentInChildren<Fire>();
-										fire.fireHp -= useitem.damage;
-									}
-								}
-							}
-							StartCoroutine(useitem.UseItemEnd(targetPlayer));
-							showthrowwRange = false;
-						}
-					}
-					
-				}
-				else if (open && targetPlayer.curStateName == PlayerState.Action)
-				{
-					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-					if (target.tag == "Door" && targetTile.nextTileList.Contains(playerTile))
-					{
-						tilemapManager.ResetFloodFill();
-						StartCoroutine(target.GetComponentInChildren<Door>().OpenDoor());
-					}
-					open = false;
-				}
-				else if (close && targetPlayer.curStateName == PlayerState.Action)
-				{
-					var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-					if (target.tag == "Door" && targetTile.nextTileList.Contains(playerTile))
-					{
-						tilemapManager.ResetFloodFill();
-						StartCoroutine(target.GetComponentInChildren<Door>().CloseDoor());
-					}
-					close = false;
+					UseItemthrowRange();
 				}
 				else
 				{
@@ -562,11 +421,11 @@ public class GameManager : MonoBehaviour
 
 
 			hits = Physics.RaycastAll(ray, float.PositiveInfinity, layerMask);
-            foreach (var hit in hits)
-            {
+			foreach (var hit in hits)
+			{
 				var target = hit.transform.gameObject;
-				if(target.tag == "CreateQuad")
-                {
+				if (target.tag == "CreateQuad")
+				{
 					var createCharacter = target.GetComponentInParent<CreateCharacter>();
 					var createCharacterdata = createCharacter.GetComponentInChildren<Player>();
 					if (change != null)
@@ -575,10 +434,10 @@ public class GameManager : MonoBehaviour
 						{
 							createCharacter.ChangeCharacter(changePlayer.cd);
 							change.DeleteCharacter();
-							if(createCharacterdata != null)
-                            {
+							if (createCharacterdata != null)
+							{
 								change.ChangeCharacter(createCharacterdata.cd);
-                            }
+							}
 						}
 					}
 					break;
@@ -633,6 +492,7 @@ public class GameManager : MonoBehaviour
 	{
 		tMPro.text = move.ToString();
 		pressPro.text = press.ToString();
+		ready.text = playerMove.moveList.Count.ToString();
 		//mousePos = multiTouch.mousePoint.Mouse.Move.ReadValue<Vector2>();
 		var pointer = IsPointerOverUI();
 		if (pointer)
@@ -732,6 +592,135 @@ public class GameManager : MonoBehaviour
 				targetPlayer.lung -= targetPlayer.ap;
 				targetPlayer.ap = 0;
 			}
+			targetPlayer.SetState(PlayerState.End);
 		}
+	}
+	public void UseItemMeleeRange()
+	{
+		var useitem = uIManager.battleUiManager.useItemManager;
+		if (useitem.listRange.Contains(targetTile))
+		{
+			if (useitem.itemType == ConsumItemType.Heal)
+			{
+				if (target.tag == "Claimant")
+				{
+					var claimant = target.GetComponent<Claimant>();
+					switch (useitem.healItemType)
+					{
+						case HealItemType.HpHeal:
+							claimant.hp += useitem.damage;
+							break;
+						case HealItemType.StaminaHeal:
+							break;
+					}
+					StartCoroutine(useitem.UseItemEnd(targetPlayer));
+					showMeleeRange = false;
+				}
+				else if (target.tag == "Player")
+				{
+					var player = target.GetComponent<Player>();
+					if (player.handFull)
+						return;
+					switch (useitem.healItemType)
+					{
+						case HealItemType.HpHeal:
+							player.cd.hp += useitem.damage;
+							break;
+						case HealItemType.StaminaHeal:
+							break;
+					}
+					StartCoroutine(useitem.UseItemEnd(targetPlayer));
+					showMeleeRange = false;
+				}
+			}
+			else if (useitem.itemType == ConsumItemType.Damage)
+			{
+				var fire = GetComponentInChildren<Fire>();
+				fire.fireHp -= useitem.damage;
+				StartCoroutine(useitem.UseItemEnd(targetPlayer));
+				showMeleeRange = false;
+			}
+		}
+	}
+	public void UseItemthrowRange()
+	{
+		var useitem = uIManager.battleUiManager.useItemManager;
+		if (useitem.listRange.Contains(targetTile))
+		{
+			if (useitem.preTile == null)
+			{
+				useitem.throwListRange = tilemapManager.ReturnFloodFillRange(targetTile, Color.black, useitem.throwRange);
+				useitem.preTile = targetTile;
+			}
+			else if (useitem.preTile != targetTile)
+			{
+				tilemapManager.ResetFloodFill(useitem.throwListRange);
+				var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+				useitem.listRange = tilemapManager.ReturnFloodFillRange(playerTile, setMoveColor, useitem.itemRange);
+				foreach (var elem in useitem.listRange)
+				{
+					elem.ResetExceptColor();
+				}
+				useitem.throwListRange = tilemapManager.ReturnFloodFillRange(targetTile, Color.black, useitem.throwRange);
+				useitem.preTile = targetTile;
+			}
+			else if (useitem.preTile == targetTile)
+			{
+				if (useitem.itemType == ConsumItemType.Heal)
+				{
+					foreach (var elem in useitem.throwListRange)
+					{
+						foreach (var ob in elem.fillList)
+						{
+							if (ob.tag == "Player")
+							{
+								var player = target.GetComponent<Player>();
+								switch (useitem.healItemType)
+								{
+									case HealItemType.HpHeal:
+										player.cd.hp += useitem.damage;
+										break;
+									case HealItemType.StaminaHeal:
+										break;
+								}
+								break;
+							}
+							else if (ob.tag == "Claimant")
+							{
+								var claimant = target.GetComponent<Claimant>();
+								switch (useitem.healItemType)
+								{
+									case HealItemType.HpHeal:
+										claimant.hp += useitem.damage;
+										break;
+									case HealItemType.StaminaHeal:
+										break;
+								}
+								break;
+							}
+						}
+					}
+				}
+				else if (useitem.itemType == ConsumItemType.Damage)
+				{
+					foreach (var elem in useitem.throwListRange)
+					{
+						if (elem.tileIsFire)
+						{
+							var fire = GetComponentInChildren<Fire>();
+							fire.fireHp -= useitem.damage;
+						}
+					}
+				}
+				StartCoroutine(useitem.UseItemEnd(targetPlayer));
+				showthrowwRange = false;
+			}
+		}
+	}
+
+
+	public void TurnSystem()
+	{
+		StartCoroutine(Turn.CoTurnSystem());
 	}
 }
