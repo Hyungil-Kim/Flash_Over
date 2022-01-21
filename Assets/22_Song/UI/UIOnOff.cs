@@ -3,18 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+
+
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
+using UnityEngine.InputSystem.EnhancedTouch;
+
 public class UIOnOff : MonoBehaviour
 {
+    //터치아무데나해도 ui창 사라지는거 하고 싶어서
+    public MoveControlor mousePoint;
+
     public GameObject[] uiArray;
     private GameObject returnButton;
     private GameObject stage;
     private GameObject stageName;
-    
+
+    public GameObject notEnoughMoney;
+
     //private GameObject stageSelsction;
     private Dictionary<string, GameObject> uiDict = new Dictionary<string, GameObject>();
     private StageSelect stageSelect;
+
+    public static UIOnOff instance;
     private void Start()
     {
+        instance = this;
         foreach (var ui in uiArray)
         {
             uiDict.Add(ui.name, ui);
@@ -28,11 +42,19 @@ public class UIOnOff : MonoBehaviour
         returnButton = uiArray[11].transform.gameObject;
         stage= uiArray[13].transform.gameObject;
         //stageSelsction = uiArray[11].transform.gameObject;
+
+        //mousePoint = new MoveControlor();
+        //mousePoint.Mouse.TestTouch.started += val => OffNotEnoughMoney();
+        //mousePoint.Enable();//mouse포지션 실행\
+        //EnhancedTouchSupport.Enable();
+        if (PlaySaveSystem.ps != null)
+        {
+            PlaySaveSystem.ps.isPlay = false;
+        }
     }
     private void Update()
     {
        
-
     }
     public void Open(string uiName)
     {
@@ -102,5 +124,14 @@ public class UIOnOff : MonoBehaviour
     //    SceneManager.LoadScene("testMainScene");
     //}
     #endregion
-   
+
+    public void OnNotEnoughMoney()
+    {
+        notEnoughMoney.SetActive(true);
+    }
+    public void OffNotEnoughMoney()
+    {
+        notEnoughMoney.SetActive(false);
+    }
+    
 }

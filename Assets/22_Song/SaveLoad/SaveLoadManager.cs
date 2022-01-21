@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SaveLoadManager : MonoBehaviour
 {
+    public void MainSave(int slot)
+    {
+        var playdata = new PlaySave();
+        playdata.isPlay = false;
+        playdata.sceanName = SceneManager.GetActiveScene().name;
+        playdata.ud = GameData.userData;
+
+        PlaySaveSystem.SaveInPlay(playdata, slot);
+    }
     public void OnSave(int slot)
     {
         var playdata = new PlaySave();
@@ -31,7 +40,9 @@ public class SaveLoadManager : MonoBehaviour
         playdata.inGameTime = $"{GameData.userData.inGameTime}주차";
         playdata.stageName = "살려주세요";
         playdata.dateTime = System.DateTime.Now.ToString();
-        playdata.userName = $"{GameData.userData.userName}"; 
+        playdata.userName = $"{GameData.userData.userName}";
+
+        playdata.isPlay = true;
 
         PlaySaveSystem.SaveInPlay(playdata, slot);
     }
@@ -44,6 +55,9 @@ public class SaveLoadManager : MonoBehaviour
         AllTile.visionTile.Clear();
         AllTile.prevVisionTile.Clear();
         AllTile.wallTile.Clear();
-        SceneManager.LoadScene(PlaySaveSystem.ps.sceanName);
+        if (PlaySaveSystem.ps != null)
+        {
+            SceneManager.LoadScene(PlaySaveSystem.ps.sceanName);
+        }
     }
 }

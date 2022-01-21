@@ -31,7 +31,7 @@ public class CharacterInfo : MonoBehaviour
     {
         chaStatPanal.gameObject.SetActive(false);
         inventory.gameObject.SetActive(true);
-        inventory.Init(currentItemType);
+        inventory.Init(/*currentItemType*/);
     }
     public void OnExitInventory()
     {

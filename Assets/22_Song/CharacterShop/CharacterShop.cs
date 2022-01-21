@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+public enum CharacterShopUpgrade
+{
+    Count,
+    Grade,
+    Characteristic
+}
+public class CharacterShopUpgradeData
+{
+    public int countUpgrade;
+    public int gradeUpgrade;
+    public int characteristicUpgrade;
+}
 public class CharacterShop : MonoBehaviour
 {
     public HireInfo hireInfo;
@@ -56,7 +68,7 @@ public class CharacterShop : MonoBehaviour
         for (int i = 0; i < maxChaList; i++)
         {
             CharacterData cd = new CharacterData();
-            cd.SetCharacter();
+            cd.NewSetCharacter();
             var prefab = shopChaList[i].GetComponent<ShopChaPrefab>();
             prefab.SetValue(cd);
             GameData.userData.shopChaList.Add(cd);
@@ -120,4 +132,23 @@ public class CharacterShop : MonoBehaviour
     {
         needGold.SetActive(false);
     }
+    public void Upgrade(int index)
+    {
+        var upgradeIndex = (CharacterShopUpgrade)index;
+        switch (upgradeIndex)
+        {
+            case CharacterShopUpgrade.Count:
+                GameData.userData.chaShopData.countUpgrade++;
+                break;
+            case CharacterShopUpgrade.Grade:
+                GameData.userData.chaShopData.gradeUpgrade++;
+                break;
+            case CharacterShopUpgrade.Characteristic:
+                GameData.userData.chaShopData.characteristicUpgrade++;
+                break;
+            default:
+                break;
+        }
+    }
+
 }

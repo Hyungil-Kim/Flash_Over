@@ -21,4 +21,11 @@ public static class MyDataTableMgr
     public static TileTable tileTable = new TileTable();
 
     public static StageInfoTable stageInfoTable = new StageInfoTable();
+
+    public static HpStatTable hpStatTable = new HpStatTable();
+    public static LungStatTable lungStatTable = new LungStatTable();
+    public static StrStatTable strStatTable = new StrStatTable();
+
+    public static ClaimantTable claimantTable = new ClaimantTable();
+    public static EventTable eventTable = new EventTable();
 }

@@ -67,8 +67,11 @@ public class Claimant : FSM<ClaimantState>
 		csd.posx = gameObject.transform.position.x;
 		csd.posy = gameObject.transform.position.y;
 		csd.posz = gameObject.transform.position.z;
-		csd.targetPlayerIndex = targetPlayer.index;
-		
+
+		if (targetPlayer != null)
+		{
+			csd.targetPlayerIndex = targetPlayer.index;
+		}
 		return csd;
 	}
 	public void SaveInit(ClaimantSaveData sd)

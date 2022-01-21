@@ -34,3 +34,8 @@ public class ItemTableDataBase : TableDataBase
     public int vision;
     public int sta;
 }
+public class StatTableDataBase : TableDataBase
+{
+    public int increaseStat;
+    public int maxexp;
+}

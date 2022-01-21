@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+public class ShopUpgradeData
+{
 
+}
 public class Shop : MonoBehaviour
 {
     public int maxItemCount;

@@ -14,8 +14,10 @@ public class UserData : MySaveData
     public string userName;
 
     public int inGameTime;
-    
 
+    public CharacterShopUpgradeData chaShopData = new CharacterShopUpgradeData();
+    public TrainingRoomUpgradeData traingShopData = new TrainingRoomUpgradeData();
+    public RestUpgradeData restShopData = new RestUpgradeData();
     //public List<WeaponData> weaponItemList
     //    = new List<WeaponData>();
 
@@ -37,6 +39,9 @@ public class UserData : MySaveData
 
     public int shopLevel = 0;
     public DateTime shopTime;
+    
+
+
 
     public List<CharacterData> shopChaList
         = new List<CharacterData>();

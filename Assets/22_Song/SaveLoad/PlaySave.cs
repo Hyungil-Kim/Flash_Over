@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlaySave : MySaveData
 {
+    public bool isPlay;
+
     public string sceanName;
 
     
@@ -19,10 +21,16 @@ public class PlaySave : MySaveData
     public Dictionary<int, ClaimantSaveData> csd = new Dictionary<int, ClaimantSaveData>();
     public GMSaveData gsd = new GMSaveData();
 
-    public UserData ud = GameData.userData;
+    public UserData ud;
+    //public UserData ud = GameData.userData;
 
     public void Init()
     {
-
+        foreach (var player in psd)
+        {
+            player.Value.cd.LoadCd();
+            
+        }
+        GameData.userData = ud;
     }
 }

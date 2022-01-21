@@ -70,77 +70,83 @@ public class GameManager : MonoBehaviour
 
 		if (PlaySaveSystem.ps != null)
 		{
-
-			foreach (var tile in AllTile.allTile)
+			if (PlaySaveSystem.ps.isPlay)
 			{
-				if (PlaySaveSystem.ps.tsd.TryGetValue(tile.index, out var tiledata))
+				foreach (var tile in AllTile.allTile)
 				{
-					tile.SaveInit(tiledata);
+					if (PlaySaveSystem.ps.tsd.TryGetValue(tile.index, out var tiledata))
+					{
+						tile.SaveInit(tiledata);
+					}
+				}
+				foreach (var character in characters)
+				{
+
+					var create = character.GetComponent<CreateCharacter>();
+					var playerDict = PlaySaveSystem.ps.psd;
+					if (playerDict.ContainsKey(create.characterIndex))
+					{
+						create.Create(playerDict[create.characterIndex].cd);
+						var player = create.Character.GetComponent<Player>();
+						player.SaveInit(playerDict[create.characterIndex]);
+						//if (player.playerState == PlayerState.Move)
+						//{
+						//	player.playerState = PlayerState.Idle;
+						//}
+					}
+				}
+				targetPlayer = Turn.players.Find((x) => x.index == PlaySaveSystem.ps.gsd.targetIndex);
+
+				if (targetPlayer != null)
+				{
+					if (targetPlayer.playerState == PlayerState.Move)
+					{
+						targetTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+						tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
+						playerMove.ResetMoveList();
+						playerMove.AddMoveList(targetTile.transform.position, setPathColor);
+						pretargetPlayer = targetPlayer;
+						preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
+						uIManager.OnCharacterInfo();
+						uIManager.info.Init();
+					}
+					if (targetPlayer.playerState == PlayerState.Idle || targetPlayer.playerState == PlayerState.End)
+					{
+						targetPlayer = null;
+					}
+				}
+
+				foreach (var claimant in Turn.claimants)
+				{
+					if (PlaySaveSystem.ps.csd.TryGetValue(claimant.index, out var claimantData))
+					{
+						claimant.SaveInit(claimantData);
+					}
+				}
+
+				turnCount = PlaySaveSystem.ps.gsd.turnCount;
+
+				StartGame();
+				PlaySaveSystem.ps = null;
+			}
+			else
+			{
+				foreach (var character in characters)
+				{
+					var create = character.GetComponent<CreateCharacter>();
+					if (GameData.userData.fireManList.ContainsKey(create.characterIndex))
+					{
+						create.Create(GameData.userData.fireManList[create.characterIndex]);
+					}
+					else if (GameData.userData.fireManList.Count == 0)
+					{
+						create.Create(null);
+					}
 				}
 			}
-			foreach (var character in characters)
+			if (PlaySaveSystem.ps != null)
 			{
-
-				var create = character.GetComponent<CreateCharacter>();
-				var playerDict = PlaySaveSystem.ps.psd;
-				if (playerDict.ContainsKey(create.characterIndex))
-				{
-					create.Create(playerDict[create.characterIndex].cd);
-					var player = create.Character.GetComponent<Player>();
-					player.SaveInit(playerDict[create.characterIndex]);
-					//if (player.playerState == PlayerState.Move)
-					//{
-					//	player.playerState = PlayerState.Idle;
-					//}
-				}
-			}
-			targetPlayer = Turn.players.Find((x) => x.index == PlaySaveSystem.ps.gsd.targetIndex);
-
-			if (targetPlayer != null)
-			{
-				if (targetPlayer.playerState == PlayerState.Move)
-				{
-					targetTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-					tilemapManager.ShowMoveRange(targetTile, targetPlayer, pretargetPlayer, setMoveColor);
-					playerMove.ResetMoveList();
-					playerMove.AddMoveList(targetTile.transform.position, setPathColor);
-					pretargetPlayer = targetPlayer;
-					preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-					uIManager.OnCharacterInfo();
-					uIManager.info.Init();
-				}
-				if (targetPlayer.playerState == PlayerState.Idle || targetPlayer.playerState == PlayerState.End)
-				{
-					targetPlayer = null;
-				}
-			}
-
-			foreach (var claimant in Turn.claimants)
-			{
-				if (PlaySaveSystem.ps.csd.TryGetValue(claimant.index, out var claimantData))
-				{
-					claimant.SaveInit(claimantData);
-				}
-			}
-
-			turnCount = PlaySaveSystem.ps.gsd.turnCount;
-
-			StartGame();
-			PlaySaveSystem.ps = null;
-		}
-		else
-		{
-			foreach (var character in characters)
-			{
-				var create = character.GetComponent<CreateCharacter>();
-				if (GameData.userData.fireManList.ContainsKey(create.characterIndex))
-				{
-					create.Create(GameData.userData.fireManList[create.characterIndex]);
-				}
-				else if(GameData.userData.fireManList.Count == 0)
-                {
-					create.Create(null);
-				}
+				PlaySaveSystem.ps.isPlay = true;
 			}
 		}
 	}

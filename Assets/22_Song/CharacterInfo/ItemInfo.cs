@@ -80,7 +80,35 @@ public class ItemInfo : MonoBehaviour
         var character = parent.curCharacter;
         if (itemData != null)
         {
-            if (character.weight < itemData.dataTable.weight)
+            var equipWeight = 0;
+            switch (itemType)
+            {
+                case ItemType.Hose:
+                    if (character.hose != null)
+                    {
+                        equipWeight = character.hose.dataTable.weight;
+                    }
+                    break;
+                case ItemType.BunkerGear:
+                    if (character.bunkerGear != null)
+                    {
+                        equipWeight = character.bunkerGear.dataTable.weight;
+                    }
+                    break;
+                case ItemType.OxygenTank:
+                    if (character.oxygenTank != null)
+                    {
+                        equipWeight = character.oxygenTank.dataTable.weight;
+                    }
+                    break;
+                case ItemType.Max:
+                    break;
+                case ItemType.Consumable:
+                    break;
+                default:
+                    break;
+            }
+            if (character.weight - equipWeight < itemData.dataTable.weight)
             {
                 //무게 부족
                 weightFull.SetActive(true);
