@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-
+using TMPro;
 
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
