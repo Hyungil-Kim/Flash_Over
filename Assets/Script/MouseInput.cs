@@ -13,7 +13,9 @@ public class MouseInput : MonoBehaviour
 
 	public MoveControlor mousePoint;
 	private GameManager gameManager;
-	private StageSelect stageSelect;
+
+	//private StageSelect stageSelect;
+
 	public float minZoomInch = 0.2f;
 	public float maxZoomInch = 0.5f;
 
