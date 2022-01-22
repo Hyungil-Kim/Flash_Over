@@ -64,8 +64,9 @@ public class UIOnOff : MonoBehaviour
             PlaySaveSystem.ps.isPlay = false;
         }
 
+        //임시로 주석처리
+        //offScreen = uiArray[14].GetComponent<OffScreenIndicator>();
 
-        offScreen = uiArray[14].GetComponent<OffScreenIndicator>();
         //stageSelsction = uiArray[11].transform.gameObject;
     }
     private void Update()
