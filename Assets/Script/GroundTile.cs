@@ -583,14 +583,24 @@ public class GroundTile : MonoBehaviour
 
 			if(elem.tag == "Claimant" && cheakVision)
             {
+				var materials = elem.GetComponentsInChildren<Renderer>();
+                foreach (var renderer in materials)
+                {
+					renderer.enabled = true;
+                }
 				//elem.GetComponent<Renderer>().enabled = true;
 				//var material = elem.GetComponent<Renderer>().material;
 				//material.renderQueue = 3020;
 			}
 			else if(elem.tag == "Claimant" && !cheakVision)
             {
+				var materials = elem.GetComponentsInChildren<Renderer>();
+				foreach (var renderer in materials)
+				{
+					renderer.enabled = false;
+				}
 				//elem.GetComponent<Renderer>().enabled = false;
-            }
+			}
         }
 	}
 	public void ParticleOff()

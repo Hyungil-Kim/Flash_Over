@@ -43,6 +43,8 @@ public class Claimant : FSM<ClaimantState>
 	public int lung = 100; // Æó hp
 
 	public int index;
+
+	private Vector3 prevPos;
 	public ClaimantSaveData GetData()
     {
 		var csd = new ClaimantSaveData();
@@ -98,7 +100,15 @@ public class Claimant : FSM<ClaimantState>
 		targetPlayer = Turn.players.Find((x) => x.index == targetPlayerIndex);
 		
 	}
-	public void Awake()
+    private void Update()
+    {
+		if (transform.position != prevPos)
+		{
+			GameManager.instance.tilemapManager.ReturnTile(gameObject).CheckParticle();
+			prevPos = transform.position;
+		}
+    }
+    public void Awake()
 	{
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 		Turn.claimants.Add(this);

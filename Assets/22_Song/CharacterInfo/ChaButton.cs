@@ -11,6 +11,10 @@ public class ChaButton : MonoBehaviour
     public Image selected;
     public Button button;
     //private int chaIndex;
+    public void DefaultSetting()
+    {
+        
+    }
     public void Init(CharacterData cd,int sortindex)//, int index)
     {
         var orderType = (CharacterOrder)sortindex;

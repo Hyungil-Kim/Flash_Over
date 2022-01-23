@@ -19,6 +19,8 @@ public static class Turn
 	public delegate void turnOff();
 	public static turnOff TurnOff;
 	public static CameraController cameraController;
+
+	
 	public static void OnDestroy()
     {
 		players.Clear();
