@@ -119,6 +119,7 @@ MonoBehaviour:
   movefloodFill: 0
   isPlayer: 0
   isDoor: 0
+  isObstacle: 0
   isClaimant: {fileID: 0}
   checkSum: 0
   G: 0
@@ -138,12 +139,12 @@ MonoBehaviour:
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
   tileIsWeat: 0
-  tileIsFire: 0
+  tileIsFire: 1
   tileIsSmoke: 0
   tileIsClaimant: 0
   tileWeatValue: 0
-  tileExp: 0
-  tileHp: 20
+  tileExp: 5
+  tileHp: 9999
   tileSaveSmokeValue: 0
   tileSmokeValue: 0
   index: 0
@@ -258,7 +259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1271764609937064, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4717135665064498, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: m_RootOrder
@@ -306,6 +307,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: fireHp
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
+      propertyPath: fireLevel
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}

@@ -9664,7 +9664,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4717135665064498
 Transform:
   m_ObjectHideFlags: 0
@@ -9697,10 +9697,13 @@ MonoBehaviour:
   prevStateName: 0
   gameManager: {fileID: 0}
   fireHp: 20
+  fireLevel: 0
+  fireHpGrowth: 0
   fireExpGrowth: 0
   fireDamage: 0
-  fireLevel: 0
   fireArea: 0
+  fireMinExp: 0
+  fireMaxExp: 0
   fireMakeSmoke: 50
   gt: {fileID: 0}
 --- !u!1 &1296216733508822

@@ -85,7 +85,16 @@ public class TilemapManager : MonoBehaviour
 				}
 			}
 		}
-		targetPlayer.SetState(PlayerState.Action);
+		if (gameManager.pickup || gameManager.putdown)
+		{
+			gameManager.pickup = false;
+			gameManager.putdown = false;
+			targetPlayer.SetState(PlayerState.End);
+		}
+		else 
+		{
+			targetPlayer.SetState(PlayerState.Action);
+		}
 	}
 	public IEnumerator meetClaimant()
 	{
