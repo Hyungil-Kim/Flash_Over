@@ -60,4 +60,9 @@ public class SaveLoadManager : MonoBehaviour
             SceneManager.LoadScene(PlaySaveSystem.ps.sceanName);
         }
     }
+
+    public void BackMainScean()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
 }
