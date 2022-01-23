@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
-
+using UnityEngine.VFX;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
@@ -528,8 +528,8 @@ public class GroundTile : MonoBehaviour
 		if (tileIsFire && cheakVision)
 		{
 			//firePrefab.SetActive(true);
-			var particle = firePrefab.GetComponentInChildren<ParticleSystem>();
-			particle.Play();
+			var particle = firePrefab.GetComponentInChildren<VisualEffect>();
+			particle.enabled=true;
 		}
 		else
 		{
