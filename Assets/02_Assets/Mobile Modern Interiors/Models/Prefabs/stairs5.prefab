@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 446920}
   - component: {fileID: 3352856}
   - component: {fileID: 2365040}
+  - component: {fileID: 5073759325161563622}
   m_Layer: 0
   m_Name: stairs5
   m_TagString: Untagged
@@ -280,6 +281,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5073759325161563622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0
 --- !u!1 &194226
 GameObject:
   m_ObjectHideFlags: 0

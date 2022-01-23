@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3388178}
   - component: {fileID: 2329756}
   - component: {fileID: 13518116}
+  - component: {fileID: -1488442242493480729}
   m_Layer: 0
   m_Name: dog_bowl2
   m_TagString: Untagged
@@ -97,3 +98,24 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.27441427
   m_Center: {x: 0, y: 0.07974295, z: 0.000000014901161}
+--- !u!114 &-1488442242493480729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0

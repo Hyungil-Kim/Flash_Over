@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3327930}
   - component: {fileID: 2330810}
   - component: {fileID: 6559470}
+  - component: {fileID: -3723119803231579089}
   m_Layer: 0
   m_Name: desk1
   m_TagString: Untagged
@@ -97,3 +98,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2002912, y: 1.3938227, z: 0.8086051}
   m_Center: {x: 0.00013944507, y: 0.6969112, z: -0.0011497736}
+--- !u!114 &-3723119803231579089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3311914}
   - component: {fileID: 2324086}
   - component: {fileID: 13665608}
+  - component: {fileID: -1563548891857227786}
   m_Layer: 0
   m_Name: soup_turren1
   m_TagString: Untagged
@@ -98,3 +99,24 @@ CapsuleCollider:
   m_Height: 0.35520577
   m_Direction: 1
   m_Center: {x: 0, y: 0.17458871, z: 0}
+--- !u!114 &-1563548891857227786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0
