@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
 	public GroundTile groundTile;
 	public CameraController cameraController;
 	public bool readyPlayerAction = true;
-
 	public int num = -1;
 	public int move;
 	private Vector3 mouse3DPos;
@@ -560,7 +559,6 @@ public class GameManager : MonoBehaviour
 			//target.SetActive(false);
 			playerMove.go = true;
 			targetPlayer.handFull = true;
-			pickup = false;
 			targetPlayer.ap -= 3;
 			if (targetPlayer.ap < 0)
 			{
@@ -585,14 +583,12 @@ public class GameManager : MonoBehaviour
 			targetPlayer.handList.RemoveAt(0);
 			playerMove.go = true;
 			targetPlayer.handFull = false;
-			putdown = false;
 			targetPlayer.ap -= 3;
 			if (targetPlayer.ap < 0)
 			{
 				targetPlayer.lung -= targetPlayer.ap;
 				targetPlayer.ap = 0;
 			}
-			targetPlayer.SetState(PlayerState.End);
 		}
 	}
 	public void UseItemMeleeRange()

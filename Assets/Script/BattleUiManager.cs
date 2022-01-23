@@ -38,23 +38,30 @@ public class BattleUiManager : MonoBehaviour
 	}
 	public void OnClickWeapon1()
 	{
-		tilemapManager.ResetAttackRange(gameManager.num);
 		gameManager.num = 1;
 		tilemapManager.ChangeColorAttack(gameManager.targetPlayer.gameObject, gameManager.num, gameManager.setAttackColor);
-
+		weapon1Button.gameObject.SetActive(false);
+		weapon2Button.gameObject.SetActive(true);
 	}
     public void OnClickWeapon2()
     {
-		tilemapManager.ResetAttackRange(gameManager.num);
 		gameManager.num = 2;
 		tilemapManager.ChangeColorAttack(gameManager.targetPlayer.gameObject, gameManager.num, gameManager.setAttackColor);
+		weapon1Button.gameObject.SetActive(true);
+		weapon2Button.gameObject.SetActive(false);
 	}
 	public void OnClickAttackButton()
 	{
 		shootButton.gameObject.SetActive(true);
-		weapon1Button.gameObject.SetActive(true);
-		weapon2Button.gameObject.SetActive(true);
-
+		gameManager.num = 1;
+		if (gameManager.num == 1)
+		{
+			OnClickWeapon1();
+		}
+		else if (gameManager.num ==2)
+		{
+			OnClickWeapon2();
+		}
 		itemButton.gameObject.SetActive(false);
 		rescueButton.gameObject.SetActive(false);
 		putDownButton.gameObject.SetActive(false);
@@ -95,11 +102,10 @@ public class BattleUiManager : MonoBehaviour
 				
 				gameManager.pickup = false;
 				gameManager.putdown = false;
-
+				gameManager.num = -1;
 				if(!attackButton.gameObject.activeSelf)
 				{
 					tilemapManager.ResetAttackRange(gameManager.num);
-					gameManager.num = -1;
 					shootButton.gameObject.SetActive(false);
 					weapon1Button.gameObject.SetActive(false);
 					weapon2Button.gameObject.SetActive(false);
@@ -193,7 +199,6 @@ public class BattleUiManager : MonoBehaviour
 				if (!attackButton.gameObject.activeSelf)
 				{
 					tilemapManager.ResetAttackRange(gameManager.num);
-					gameManager.num = -1;
 					shootButton.gameObject.SetActive(false);
 					weapon1Button.gameObject.SetActive(false);
 					weapon2Button.gameObject.SetActive(false);

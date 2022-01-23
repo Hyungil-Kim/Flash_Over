@@ -83,11 +83,14 @@ public static class Turn
 				}
 			}
 		}
-		foreach(var fire in fires)
+		if (fires.Count != 0)
 		{
-			fire.CheckFireHp();
+			foreach (var fire in fires)
+			{
+				fire.CheckFireHp();
+			}
 		}
-		if(fires.Count == 0)
+		else
 		{
 			var gameClearUI = GameManager.instance.uIManager.gameclearUI;
 			gameClearUI.gameObject.SetActive(true);
