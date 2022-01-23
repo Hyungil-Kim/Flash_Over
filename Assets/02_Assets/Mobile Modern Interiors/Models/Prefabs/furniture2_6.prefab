@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3300344}
   - component: {fileID: 2357296}
   - component: {fileID: 6558566}
+  - component: {fileID: 7870213354320223910}
   m_Layer: 0
   m_Name: furniture2_6
   m_TagString: Untagged
@@ -97,3 +98,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.800003, y: 0.6000002, z: 0.5000038}
   m_Center: {x: 0, y: 0.30000004, z: 0}
+--- !u!114 &7870213354320223910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0

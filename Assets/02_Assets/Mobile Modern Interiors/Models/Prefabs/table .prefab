@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3341242}
   - component: {fileID: 2361370}
   - component: {fileID: 6520702}
+  - component: {fileID: 1042829149246449222}
   m_Layer: 0
   m_Name: 'table '
   m_TagString: Untagged
@@ -97,3 +98,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.7284544, y: 0.19, z: 2.3910456}
   m_Center: {x: 0.00000011920929, y: 1.45, z: 0}
+--- !u!114 &1042829149246449222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0

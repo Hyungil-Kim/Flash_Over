@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2326932}
   - component: {fileID: 6574068}
   - component: {fileID: 6574192}
+  - component: {fileID: -8798914797242594699}
   m_Layer: 0
   m_Name: curtain3_1
   m_TagString: Untagged
@@ -111,3 +112,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 3.1595135, z: 0.51616585}
   m_Center: {x: 1.42, y: 1.580523, z: 0}
+--- !u!114 &-8798914797242594699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3350932}
   - component: {fileID: 2315462}
   - component: {fileID: 6547140}
+  - component: {fileID: -837972354026710214}
   m_Layer: 0
   m_Name: sconce_3
   m_TagString: Untagged
@@ -97,3 +98,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.53790325, y: 0.1333673, z: 0.15380576}
   m_Center: {x: 0, y: 0.06847593, z: 0.010384593}
+--- !u!114 &-837972354026710214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3368822}
   - component: {fileID: 2372708}
   - component: {fileID: 13623664}
+  - component: {fileID: 8366123680101577889}
   m_Layer: 0
   m_Name: towel_1
   m_TagString: Untagged
@@ -98,3 +99,24 @@ CapsuleCollider:
   m_Height: 0.76666343
   m_Direction: 1
   m_Center: {x: 0.038628656, y: 0.38024372, z: 0.013399459}
+--- !u!114 &8366123680101577889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0

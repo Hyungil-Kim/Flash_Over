@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6571604}
   - component: {fileID: 2963113886157212935}
   m_Layer: 11
-  m_Name: floor4 4
+  m_Name: floor4_2
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,17 +134,17 @@ MonoBehaviour:
   firePrefab: {fileID: 1271764609937064, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
   cheakVision: 0
   cheakSumVision: 0
-  tileArea: 3
+  tileArea: 2
   tileMesh: 0
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
   tileIsWeat: 0
-  tileIsFire: 1
+  tileIsFire: 0
   tileIsSmoke: 0
   tileIsClaimant: 0
   tileWeatValue: 0
-  tileExp: 5
-  tileHp: 9999
+  tileExp: 0
+  tileHp: 20
   tileSaveSmokeValue: 0
   tileSmokeValue: 0
   index: 0
@@ -259,7 +259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1271764609937064, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4717135665064498, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: m_RootOrder
@@ -307,10 +307,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
       propertyPath: fireHp
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
-      propertyPath: fireLevel
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3852539636842607258, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}

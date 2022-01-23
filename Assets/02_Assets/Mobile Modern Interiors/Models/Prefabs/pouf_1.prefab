@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3367978}
   - component: {fileID: 2357212}
   - component: {fileID: 6501902}
+  - component: {fileID: -5600032059442912557}
   m_Layer: 0
   m_Name: pouf_1
   m_TagString: Untagged
@@ -97,3 +98,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.59999996, y: 0.4049723, z: 0.59999996}
   m_Center: {x: 0, y: 0.20161939, z: 0}
+--- !u!114 &-5600032059442912557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0

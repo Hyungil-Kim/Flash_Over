@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3315464}
   - component: {fileID: 2358324}
   - component: {fileID: 6560274}
+  - component: {fileID: 3394117173930483856}
   m_Layer: 0
   m_Name: kitchen_cabinet1_5
   m_TagString: Untagged
@@ -97,3 +98,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2000024, y: 1.6000004, z: 1.1421173}
   m_Center: {x: -0.0000052154064, y: 0.8000002, z: -0.003938645}
+--- !u!114 &3394117173930483856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf2da6f75329841a268a08f5f0cc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  updateOn: 1
+  obstacleMesh: 0
+  exploseRange: 0
+  exploseDamage: 0
+  endState: 0
+  hp: 0
+  isBurn: 0
+  def: 0
