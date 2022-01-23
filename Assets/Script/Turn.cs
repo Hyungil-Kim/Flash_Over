@@ -89,8 +89,11 @@ public static class Turn
 		}
 		if(fires.Count == 0)
 		{
-			var gameClearUI = GameManager.instance.uIManager.gameclearUI;
-			gameClearUI.gameObject.SetActive(true);
+
+			//일단 주석!
+			//test
+			//var gameClearUI = GameManager.instance.uIManager.gameclearUI;
+			//gameClearUI.gameObject.SetActive(true);
 		}
 		
 		if (smokes.Count != 0)

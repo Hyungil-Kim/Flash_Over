@@ -143,6 +143,8 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+		//PlaySaveSystem.ps.isPlay = true;
+
 		Turn.players = Turn.players.OrderBy((x) => x.index).ToList();
 	}
 	public void StartGame()

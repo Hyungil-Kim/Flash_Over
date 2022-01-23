@@ -108,7 +108,7 @@ public class GroundTile : MonoBehaviour
 			firePrefab.SetActive(true);
         }
 		CheckParticle();
-		TestFogOfWar();
+		//TestFogOfWar();
 	}
 	public TileSaveData GetData()
     {
@@ -396,14 +396,13 @@ public class GroundTile : MonoBehaviour
 			hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
 			foreach (var elem in hits)
 			{
-				if (elem.collider.gameObject.tag == "Wall")
+				test = true;
+				var materials = elem.collider.gameObject.GetComponentsInChildren<Renderer>();
+				foreach (var renderer in materials)
 				{
-					test = true;
-					var materials = elem.collider.gameObject.GetComponentsInChildren<Renderer>();
-					foreach (var renderer in materials)
+					renderer.material.renderQueue = 3030;
+					if (elem.collider.gameObject.tag == "Wall")
 					{
-						var color = renderer.material.color;
-						renderer.material.renderQueue = 3020;
 						if (cheakVision)
 						{
 							renderer.material.color = new Color(1f, 1f, 1f, 1f);
@@ -564,7 +563,7 @@ public class GroundTile : MonoBehaviour
    //         }				
 
 
-			if( elem.tag == "Wall" && !cheakVision)
+			if( /*elem.tag == "Wall" &&*/ !cheakVision)
 			{
 				var materials = elem.GetComponentsInChildren<Renderer>();
 				foreach (var renderer in materials)
@@ -572,7 +571,7 @@ public class GroundTile : MonoBehaviour
 					renderer.material.color = new Color(0.5f, 0.5f, 0.5f, 1f);
 				}
 			}
-			else if (elem.tag == "Wall" && cheakVision)
+			else if (/*elem.tag == "Wall" &&*/ cheakVision)
 			{
 				var materials = elem.GetComponentsInChildren<Renderer>();
 				foreach (var renderer in materials)
@@ -599,4 +598,6 @@ public class GroundTile : MonoBehaviour
 		firePrefab.SetActive(false);
 		smokePrefab.SetActive(false);
 	}
+
+
 }
