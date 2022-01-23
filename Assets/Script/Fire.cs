@@ -26,6 +26,9 @@ public class Fire : FSM<FireState>
 
 	public int fireMakeSmoke = 50;
 	public GroundTile gt;
+
+	public GameObject fire;
+
 	public void Awake()
 	{
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -39,7 +42,11 @@ public class Fire : FSM<FireState>
 		AddState(FireState.End, new FireEndState(this));
 		SetState(FireState.Idle);
 		Turn.fires.Add(this);
-		GetComponentInChildren<ParticleSystem>().Stop();
+		var particle = GetComponentInChildren<ParticleSystem>();
+		if(particle !=null)
+        {
+			particle.Stop();
+        }
 	}
 	public void FireAct()
 	{
@@ -58,4 +65,18 @@ public class Fire : FSM<FireState>
 			Turn.fires.Remove(this);
 		}
 	}
+	public void OnFire()
+    {
+		if (fire != null)
+		{
+			fire.SetActive(true);
+		}
+	}
+	public void OffFire()
+    {
+		if (fire != null)
+		{
+			fire.SetActive(false);
+		}
+    }
 }

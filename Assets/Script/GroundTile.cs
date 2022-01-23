@@ -16,6 +16,7 @@ public class GroundTile : MonoBehaviour
 	public bool isDoor = false;
 	public bool isObstacle = false;
 	public Claimant isClaimant = null;
+	public Obstacle obstacle;
 	public int checkSum = 0;
 	public int G, H;
 	public GameObject colorTile;
@@ -135,7 +136,10 @@ public class GroundTile : MonoBehaviour
 		sd.tileIsWeat = tileIsWeat;
 		sd.tileIsSmoke = tileIsSmoke;
 		sd.tileIsClaimant = tileIsClaimant;
-		sd.firehp = fire.fireHp;
+		if (fire != null)
+		{
+			sd.firehp = fire.fireHp;
+		}
 
 		
 		return sd;
@@ -157,7 +161,10 @@ public class GroundTile : MonoBehaviour
 		tileIsWeat = sd.tileIsWeat;
 		tileIsSmoke = sd.tileIsSmoke;
 		tileIsClaimant = sd.tileIsClaimant;
-		fire.fireHp = sd.firehp;
+		if (fire != null)
+		{
+			fire.fireHp = sd.firehp;
+		}
 		
 		if(tileIsFire)
         {
@@ -300,39 +307,7 @@ public class GroundTile : MonoBehaviour
 	{
 		CheckFillToRay();
 		TestFogOfWar();
-		//var fire = firePrefab.GetComponentInChildren<ParticleSystem>();
-		//var smoke = smokePrefab.GetComponentInChildren<ParticleSystem>();
 
-		//if (tileIsFire)
-  //      {
-		//	firePrefab.SetActive(true);
-  //      }
-		//else if(tileIsFire && CheakVision)
-  //      {
-		//	fire.Play();
-		//}
-		//else
-  //      {
-		//	if(fire.isPlaying)
-  //          {
-		//		fire.Stop();
-  //          }
-  //      }
-		//if (smokePrefab)
-		//{
-		//	smokePrefab.SetActive(true);
-		//}
-		//else if (tileIsSmoke && CheakVision)
-		//{
-		//	smoke.Play();
-		//}
-		//else
-		//{
-		//	if (smoke.isPlaying)
-		//	{
-		//		smoke.Stop();
-		//	}
-		//}
 	}
 
 	public void CheckFillToRay()
@@ -359,11 +334,6 @@ public class GroundTile : MonoBehaviour
 				{
 					isWall = true;
 
-					var materials = elem.GetComponentsInChildren<Renderer>();
-					foreach (var renderer in materials)
-					{
-						//renderer.material.renderQueue = 3020;
-					}
 				}
 				else if(elem.tag == "Claimant")
 				{
@@ -377,6 +347,7 @@ public class GroundTile : MonoBehaviour
 				else if(elem.layer == LayerMask.NameToLayer("Obstacle"))
 				{
 					isObstacle = true;
+					obstacle = elem.GetComponentInChildren<Obstacle>();
 				}
 			}
 		}
@@ -396,11 +367,12 @@ public class GroundTile : MonoBehaviour
 		if (!test)
 		{
 			RaycastHit[] hits;
-			int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") | 1 << LayerMask.NameToLayer("Obstacle");
+			int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") /*| 1 << LayerMask.NameToLayer("Obstacle")*/;
 			layerMask = ~layerMask;
 			hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
 			foreach (var elem in hits)
 			{
+				
 				test = true;
 				var materials = elem.collider.gameObject.GetComponentsInChildren<Renderer>();
 				foreach (var renderer in materials)
@@ -415,6 +387,17 @@ public class GroundTile : MonoBehaviour
 						else
 						{
 							renderer.material.color = new Color(0.5f, 0.5f, 0.5f);
+						}
+					}
+					if(elem.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+                    {
+						if (cheakVision)
+						{
+							renderer.enabled = true;
+						}
+						else
+						{
+							renderer.enabled = false;
 						}
 					}
 				}
@@ -497,12 +480,17 @@ public class GroundTile : MonoBehaviour
 			tile.firePrefab.SetActive(false);
 		}
 		else if (tile.tileExp >= 10) //tile.tileExp >= 100
-		{
+		{	
 			tile.tileIsFire = true;
 			tile.firePrefab.SetActive(true);
 			if (tile.cheakVision)
 			{
-				firePrefab.GetComponentInChildren<ParticleSystem>().Play();
+				var fire = firePrefab.GetComponent<Fire>();
+				if(fire != null)
+                {
+					fire.OnFire();
+                }
+				//firePrefab.GetComponentInChildren<ParticleSystem>().Play();
 			}
 			//tile.firePrefab.SetActive(true);
 		}
@@ -528,13 +516,19 @@ public class GroundTile : MonoBehaviour
 		if (tileIsFire && cheakVision)
 		{
 			//firePrefab.SetActive(true);
-			var particle = firePrefab.GetComponentInChildren<VisualEffect>();
-			particle.enabled=true;
+			var fire = firePrefab.GetComponent<Fire>();
+			if(fire !=null)
+            {
+				fire.OnFire();
+            }
 		}
-		else
+		else if (!tileIsFire || !cheakVision )
 		{
-			//firePrefab.SetActive(false);
-			firePrefab.GetComponentInChildren<ParticleSystem>().Stop();
+			var fire = firePrefab.GetComponent<Fire>();
+			if (fire != null)
+			{
+				fire.OffFire();
+			}
 		}
 		if (tileIsSmoke && cheakVision)
 		{
@@ -546,9 +540,11 @@ public class GroundTile : MonoBehaviour
 			//smokePrefab.SetActive(false);
 			smokePrefab.GetComponent<ParticleSystem>().Stop();
 		}
+
+
 		var visionList = new List<GameObject>();
 		RaycastHit[] hits;
-		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | (1 << LayerMask.NameToLayer("UI")) | (1 << LayerMask.NameToLayer("Obstacle")));
+		int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") /*| 1 << LayerMask.NameToLayer("Obstacle")*/;
 		layerMask = ~layerMask;
 		hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
 		for (int i = 0; i < hits.Length; i++)
@@ -558,17 +554,8 @@ public class GroundTile : MonoBehaviour
 		}
         foreach (var elem in visionList)
         {
-			//if(elem.tag == "Wall" && cheakVision )
-   //         {
-			//	var materials = elem.GetComponentsInChildren<Renderer>();
-   //             foreach (var renderer in materials)
-   //             {
-			//		renderer.material.renderQueue = 3020;
-			//	}
-   //         }				
 
-
-			if( /*elem.tag == "Wall" &&*/ !cheakVision )
+			if(elem.tag == "Wall" && !cheakVision )
 			{
 				var materials = elem.GetComponentsInChildren<Renderer>();
 				foreach (var renderer in materials)
@@ -576,7 +563,7 @@ public class GroundTile : MonoBehaviour
 					renderer.material.color = new Color(0.5f, 0.5f, 0.5f);
 				}
 			}
-			else if (/*elem.tag == "Wall" &&*/ cheakVision)
+			else if (elem.tag == "Wall" && cheakVision)
 			{
 				var materials = elem.GetComponentsInChildren<Renderer>();
 				foreach (var renderer in materials)
@@ -585,7 +572,6 @@ public class GroundTile : MonoBehaviour
 				}
 			}
 
-
 			if(elem.tag == "Claimant" && cheakVision)
             {
 				var materials = elem.GetComponentsInChildren<Renderer>();
@@ -593,9 +579,7 @@ public class GroundTile : MonoBehaviour
                 {
 					renderer.enabled = true;
                 }
-				//elem.GetComponent<Renderer>().enabled = true;
-				//var material = elem.GetComponent<Renderer>().material;
-				//material.renderQueue = 3020;
+
 			}
 			else if(elem.tag == "Claimant" && !cheakVision)
             {
@@ -606,7 +590,25 @@ public class GroundTile : MonoBehaviour
 				}
 				//elem.GetComponent<Renderer>().enabled = false;
 			}
-        }
+			if (elem.tag == "Claimant" && cheakVision)
+			{
+				var materials = elem.GetComponentsInChildren<Renderer>();
+				foreach (var renderer in materials)
+				{
+					renderer.enabled = true;
+				}
+
+			}
+			else if (elem.tag == "Claimant" && !cheakVision)
+			{
+				var materials = elem.GetComponentsInChildren<Renderer>();
+				foreach (var renderer in materials)
+				{
+					renderer.enabled = false;
+				}
+				//elem.GetComponent<Renderer>().enabled = false;
+			}
+		}
 	}
 	public void ParticleOff()
     {

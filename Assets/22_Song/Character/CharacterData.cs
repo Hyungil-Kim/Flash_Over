@@ -199,8 +199,33 @@ public class CharacterData
     public bool isTraining;
 
     public List<Buff> buff = new List<Buff>();
-    
 
+    public string state
+    {
+        get
+        {
+            if(isRest)
+            {
+                return "휴식중";
+            }
+            else if(tiredType == TiredType.Tired)
+            {
+                return "피곤함";
+            }
+            else if(tiredType == TiredType.Tired)
+            {
+                return "못나감";
+            }
+            else if(isSelected)
+            {
+                return "출동준비완료";
+            }
+            else
+            {
+                return "출동대기중";
+            }
+        }
+    }
     public void ApplyItemStat(ItemDataBase item)
     {
         item.owner = this;

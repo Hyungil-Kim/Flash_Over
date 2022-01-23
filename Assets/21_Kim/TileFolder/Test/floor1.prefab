@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6571604}
   - component: {fileID: 2963113886157212935}
   m_Layer: 11
-  m_Name: floor4 4
+  m_Name: floor1
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   nextVisionList: []
   fillList: []
   tilemap: {fileID: 0}
-  firePrefab: {fileID: 1271764609937064, guid: 613ca44e1395bfb479cc551ba89ca721, type: 3}
+  firePrefab: {fileID: 790996446283228917}
   cheakVision: 0
   cheakSumVision: 0
   tileArea: 3
@@ -319,14 +319,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: m_TagString
       value: Monster
       objectReference: {fileID: 0}
+    - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+      propertyPath: fireHp
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+      propertyPath: fireMaxExp
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+--- !u!1 &790996446283228917 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+  m_PrefabInstance: {fileID: 3129094537804371778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &790996446283228918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2420379088188289460, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}

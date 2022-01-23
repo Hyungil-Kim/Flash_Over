@@ -66,7 +66,7 @@ public static class Turn
 				{
 					if (all.tileIsFire && all.tileArea == i)
 					{
-						Camera.main.transform.position = areaCamera[i].transform.position;
+						//Camera.main.transform.position = areaCamera[i].transform.position;
 						yield return new WaitForSeconds(0.5f);
 						break;
 					}

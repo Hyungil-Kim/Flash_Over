@@ -8,6 +8,7 @@ public class UserData : MySaveData
     //상점레벨, 캐릭터 상점 레벨에 따른 데이터 테이블도 존재할테고 그에 따라 바꿔줘야하는데 일단 ! 그냥 박자
     public int maxCharacter = 30;
     public int maxItem = 30;
+    public int gofireman = 5;
 
     public int gold;
     public int slot;

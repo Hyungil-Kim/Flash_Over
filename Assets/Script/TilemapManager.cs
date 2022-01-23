@@ -155,32 +155,32 @@ public class TilemapManager : MonoBehaviour
 	}
 	public void FireDamage(Fire target, List<GroundTile> list)
 	{
-		foreach (var elem in list)
-		{
-			var damage = target.fireDamage / (Mathf.Pow(2f, elem.checkSum));
-			damage = damage > 0 ? damage : 0;
-			var iDamage = Mathf.CeilToInt(damage);
-			foreach (var defender in elem.fillList)
-			{
-				if (defender.tag == "Player")
-				{
-					defender.GetComponent<Player>().cd.hp -= iDamage;
-					defender.GetComponent<Player>().CheckPlayerHp();
-				}
-				if (defender.tag == "Claimant")
-				{
-					defender.GetComponent<Claimant>().hp -= iDamage;
-					defender.GetComponent<Claimant>().CheckClaimantHp();
-				}
-				if (defender.tag == "Obstacle")
-				{
-					defender.GetComponent<Obstacle>().hp -= iDamage;
-					defender.GetComponent<Obstacle>().CheckObstacleHp();
-				}
-			}
-			elem.ChangeTileState(elem, iDamage);
-			elem.CheckParticleOn(elem);
-		}
+		//foreach (var elem in list)
+		//{
+		//	var damage = target.fireDamage / (Mathf.Pow(2f, elem.checkSum));
+		//	damage = damage > 0 ? damage : 0;
+		//	var iDamage = Mathf.CeilToInt(damage);
+		//	foreach (var defender in elem.fillList)
+		//	{
+		//		if (defender.tag == "Player")
+		//		{
+		//			defender.GetComponent<Player>().cd.hp -= iDamage;
+		//			defender.GetComponent<Player>().CheckPlayerHp();
+		//		}
+		//		if (defender.tag == "Claimant")
+		//		{
+		//			defender.GetComponent<Claimant>().hp -= iDamage;
+		//			defender.GetComponent<Claimant>().CheckClaimantHp();
+		//		}
+		//		if (defender.tag == "Obstacle")
+		//		{
+		//			defender.GetComponent<Obstacle>().hp -= iDamage;
+		//			defender.GetComponent<Obstacle>().CheckObstacleHp();
+		//		}
+		//	}
+		//	elem.ChangeTileState(elem, iDamage);
+		//	elem.CheckParticleOn(elem);
+		//}
 	}
 	public void ExplotionDamage(Obstacle target, List<GroundTile> list)
 	{

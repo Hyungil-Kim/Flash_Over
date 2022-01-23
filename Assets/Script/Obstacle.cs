@@ -22,7 +22,8 @@ public class Obstacle : MonoBehaviour
     public float hp; // 체력
     public bool isBurn; //현재 타고있는지 
     public float def; //방어력
-   
+
+    public bool isSight;
 
     void Start()
     {

@@ -8327,7 +8327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.34
+      value: 5.45
       objectReference: {fileID: 0}
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8335,7 +8335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.96
+      value: -7.98
       objectReference: {fileID: 0}
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9059,6 +9059,7 @@ MonoBehaviour:
   hp: 0
   isBurn: 0
   def: 0
+  isSight: 0
 --- !u!4 &332094483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 410168, guid: 616c42ebc563a4e47bb0a66b8ed0160e, type: 3}
@@ -10440,6 +10441,7 @@ MonoBehaviour:
   hp: 0
   isBurn: 0
   def: 0
+  isSight: 0
 --- !u!4 &490678508 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442958, guid: 2d348e84a5072ff45b7e742f4085a7fb, type: 3}
@@ -13873,6 +13875,7 @@ MonoBehaviour:
   hp: 100
   isBurn: 0
   def: 0
+  isSight: 0
 --- !u!4 &1069815685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 414622, guid: bfd5e322d56798540b9dc8e4d1b1c268, type: 3}
@@ -16936,6 +16939,14 @@ PrefabInstance:
     - target: {fileID: 110092, guid: 7cf092e35e654f04290af18189039ce6, type: 3}
       propertyPath: m_Name
       value: wall1_8 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 110092, guid: 7cf092e35e654f04290af18189039ce6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 110092, guid: 7cf092e35e654f04290af18189039ce6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 110092, guid: 7cf092e35e654f04290af18189039ce6, type: 3}
       propertyPath: m_TagString

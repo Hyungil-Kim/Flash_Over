@@ -18,58 +18,84 @@ public class FireTruck : MonoBehaviour
     private void OnEnable()
     {
         outFireMan.Clear();
-        for (int i = 0; i < maxFireMan; i++)
+        for (int i = 0; i < GameData.userData.gofireman; i++)
         {
             var index = i;
             var newGo = Instantiate(prefab, content);
-            var button = newGo.GetComponent<Button>();
-            button.onClick.AddListener(() => SetCurFireMan(index));
-            newGo.SetActive(false);
+            var firemanprefab = newGo.GetComponent<FireManInfoPrefab>();
+            firemanprefab.releasebutton.onClick.AddListener(() => OnRelease(index));
+            //newGo.SetActive(false);
             fireManList.Add(newGo);
         }
 
-        for (int i = 0; i < GameData.userData.maxFireMan; i++)
+        for (int i = 0; i < GameData.userData.gofireman; i++)
         {
             fireManList[i].SetActive(true);
         }
 
     }
 
+    //public void OnChaIcon(CharacterData cd)
+    //{
+    //    for (int i = 0; i < GameData.userData.maxFireMan; i++)
+    //    {
+    //        if (fireManList[i].GetComponent<FireMan>().cd == cd)
+    //        {
+    //            var firemanCheak = fireManList[i].GetComponent<FireMan>();
+    //            firemanCheak.cd = null;
+    //            firemanCheak.Init();
+    //        }
+    //    }
+    //    var fireman = fireManList[curFiremanIndex].GetComponent<FireMan>();
+    //    fireman.cd = cd;
+    //    cd.isSelected = true;
+    //    fireman.Init();
+
+    //    if (outFireMan.ContainsValue(cd))
+    //    {
+    //        var keyNumber = outFireMan.FirstOrDefault((x) => x.Value == cd).Key;
+    //        outFireMan.Remove(keyNumber);
+    //    }   
+    //    outFireMan.Add(curFiremanIndex,cd);
+
+    //    characterList.SetActive(false);
+    //}
     public void OnChaIcon(CharacterData cd)
     {
-        for (int i = 0; i < GameData.userData.maxFireMan; i++)
-        {
-            if (fireManList[i].GetComponent<FireMan>().cd == cd)
-            {
-                var firemanCheak = fireManList[i].GetComponent<FireMan>();
-                firemanCheak.cd = null;
-                firemanCheak.Init();
-            }
-        }
-        var fireman = fireManList[curFiremanIndex].GetComponent<FireMan>();
-        fireman.cd = cd;
+        //for (int i = 0; i < GameData.userData.maxFireMan; i++)
+        //{
+        //    if (fireManList[i].GetComponent<FireMan>().cd == cd)
+        //    {
+        //        var firemanCheak = fireManList[i].GetComponent<FireMan>();
+        //        firemanCheak.cd = null;
+        //        firemanCheak.Init();
+        //    }
+        //}
+
+        var fireman = fireManList[outFireMan.Count].GetComponent<FireManInfoPrefab>();
         cd.isSelected = true;
-        fireman.Init();
+        fireman.Init(cd);
 
-        if (outFireMan.ContainsValue(cd))
-        {
-            var keyNumber = outFireMan.FirstOrDefault((x) => x.Value == cd).Key;
-            outFireMan.Remove(keyNumber);
-        }   
-        outFireMan.Add(curFiremanIndex,cd);
 
-        characterList.SetActive(false);
+        //if (outFireMan.ContainsValue(cd))
+        //{
+        //    var keyNumber = outFireMan.FirstOrDefault((x) => x.Value == cd).Key;
+        //    outFireMan.Remove(keyNumber);
+        //}
+        outFireMan.Add(outFireMan.Count, cd);
+
+        //characterList.SetActive(false);
     }
-    public void OnRelease()
+    public void OnRelease(int index)
     {
-        if(outFireMan.ContainsKey(curFiremanIndex))
+        if(outFireMan.ContainsKey(index))
         {
-            outFireMan[curFiremanIndex].isSelected = false;
-            outFireMan.Remove(curFiremanIndex);
+            outFireMan[index].isSelected = false;
+            outFireMan.Remove(index);
         }
-        characterList.SetActive(false);
-        fireManList[curFiremanIndex].GetComponent<FireMan>().cd = null;
-        fireManList[curFiremanIndex].GetComponent<FireMan>().Init();
+        //characterList.SetActive(false);
+        //fireManList[curFiremanIndex].GetComponent<FireManInfoPrefab>().cd = null;
+        fireManList[index].GetComponent<FireManInfoPrefab>().Init(null);
     }
     public void OnStart()
     {

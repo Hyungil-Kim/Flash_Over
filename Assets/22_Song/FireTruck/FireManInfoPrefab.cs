@@ -18,35 +18,54 @@ public class FireManInfoPrefab : MonoBehaviour
     public FireManItem consum1;
     public FireManItem consum2;
 
+    public Button releasebutton;
+
     //public TextMeshProUGUI personality;
     public void Init(CharacterData cd)
     {
-        hose.Init(cd.hose, ItemType.Hose);
-        bunkerGear.Init(cd.bunkerGear, ItemType.BunkerGear);
-        oxygenTank.Init(cd.oxygenTank, ItemType.OxygenTank);
-        consum1.Init(cd.consum1, ItemType.Consumable);
-        consum2.Init(cd.consum2, ItemType.Consumable);
+        if (cd != null)
+        {
+            hose.Init(cd.hose, ItemType.Hose);
+            bunkerGear.Init(cd.bunkerGear, ItemType.BunkerGear);
+            oxygenTank.Init(cd.oxygenTank, ItemType.OxygenTank);
+            consum1.Init(cd.consum1, ItemType.Consumable);
+            consum2.Init(cd.consum2, ItemType.Consumable);
 
 
-        info.text = $"{cd.characterClass}\n{cd.characterGrade}  {cd.characterName}";
+            info.text = $"{cd.characterClass}\n{cd.characterGrade}  {cd.characterName}";
 
-        var statSB = new StringBuilder();
-        statSB.Append(string.Format($"Hp : {cd.totalStats.hp.stat}\n"));
-        statSB.Append(string.Format($"Lung : {cd.totalStats.lung.stat}\n"));
-        statSB.Append(string.Format($"Str : {cd.totalStats.str.stat}\n"));
-        statSB.Append(string.Format($"Move : {cd.totalStats.move}\n"));
-        statSB.Append(string.Format($"Vision : {cd.totalStats.vision}\n"));
-        statSB.Append(string.Format($"Dmg : {cd.totalStats.dmg}\n"));
-        statSB.Append(string.Format($"Def : {cd.totalStats.def}\n"));
-        statSB.Append(string.Format($"Sta : {cd.totalStats.sta}"));
-        stat.text = statSB.ToString();
-        var firemanInfo = GetComponentInParent<FireManInfo>();
-        weight.text = $"남은 무게 : {cd.weight}";
-        
-        hose.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
-        bunkerGear.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
-        oxygenTank.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
-        consum1.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd, 1));
-        consum2.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd, 2));
+            var statSB = new StringBuilder();
+            statSB.Append(string.Format($"Hp : {cd.totalStats.hp.stat}\n"));
+            statSB.Append(string.Format($"Lung : {cd.totalStats.lung.stat}\n"));
+            statSB.Append(string.Format($"Str : {cd.totalStats.str.stat}\n"));
+            statSB.Append(string.Format($"Move : {cd.totalStats.move}\n"));
+            statSB.Append(string.Format($"Vision : {cd.totalStats.vision}\n"));
+            statSB.Append(string.Format($"Dmg : {cd.totalStats.dmg}\n"));
+            statSB.Append(string.Format($"Def : {cd.totalStats.def}\n"));
+            statSB.Append(string.Format($"Sta : {cd.totalStats.sta}"));
+            stat.text = statSB.ToString();
+            var firemanInfo = GetComponentInParent<FireManInfo>();
+            weight.text = $"남은 무게 : {cd.weight}";
+
+            hose.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
+            bunkerGear.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
+            oxygenTank.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
+            consum1.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd, 1));
+            consum2.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd, 2));
+        }
+        else
+        {
+            hose.Init(null, ItemType.Hose);
+            bunkerGear.Init(null, ItemType.BunkerGear);
+            oxygenTank.Init(null, ItemType.OxygenTank);
+            consum1.Init(null, ItemType.Consumable);
+            consum2.Init(null, ItemType.Consumable);
+
+
+            info.text = $"";
+
+            stat.text = "";
+            weight.text = $"";
+        }
     }
 }
