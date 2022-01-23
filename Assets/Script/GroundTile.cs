@@ -109,6 +109,11 @@ public class GroundTile : MonoBehaviour
         }
 		CheckParticle();
 		//TestFogOfWar();
+		//var materials = GetComponentsInChildren<Renderer>();
+		//foreach (var renderer in materials)
+		//{
+		//	renderer.material.renderQueue = 2450;
+		//}
 	}
 	public TileSaveData GetData()
     {
@@ -391,7 +396,7 @@ public class GroundTile : MonoBehaviour
 		if (!test)
 		{
 			RaycastHit[] hits;
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | (1 << LayerMask.NameToLayer("UI")));
+			int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") | 1 << LayerMask.NameToLayer("Obstacle");
 			layerMask = ~layerMask;
 			hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
 			foreach (var elem in hits)
@@ -405,11 +410,11 @@ public class GroundTile : MonoBehaviour
 					{
 						if (cheakVision)
 						{
-							renderer.material.color = new Color(1f, 1f, 1f, 1f);
+							renderer.material.color = new Color(1f, 1f, 1f);
 						}
 						else
 						{
-							renderer.material.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+							renderer.material.color = new Color(0.5f, 0.5f, 0.5f);
 						}
 					}
 				}
@@ -519,8 +524,8 @@ public class GroundTile : MonoBehaviour
 		}
 	}
 	public void CheckParticle()
-    {
-		if(tileIsFire && cheakVision)
+	{
+		if (tileIsFire && cheakVision)
 		{
 			//firePrefab.SetActive(true);
 			var particle = firePrefab.GetComponentInChildren<ParticleSystem>();
@@ -531,7 +536,7 @@ public class GroundTile : MonoBehaviour
 			//firePrefab.SetActive(false);
 			firePrefab.GetComponentInChildren<ParticleSystem>().Stop();
 		}
-		if(tileIsSmoke && cheakVision)
+		if (tileIsSmoke && cheakVision)
 		{
 			//smokePrefab.SetActive(true);
 			smokePrefab.GetComponent<ParticleSystem>().Play();
@@ -543,7 +548,7 @@ public class GroundTile : MonoBehaviour
 		}
 		var visionList = new List<GameObject>();
 		RaycastHit[] hits;
-		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | (1 << LayerMask.NameToLayer("UI")));
+		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | (1 << LayerMask.NameToLayer("UI")) | (1 << LayerMask.NameToLayer("Obstacle")));
 		layerMask = ~layerMask;
 		hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
 		for (int i = 0; i < hits.Length; i++)
@@ -563,12 +568,12 @@ public class GroundTile : MonoBehaviour
    //         }				
 
 
-			if( /*elem.tag == "Wall" &&*/ !cheakVision)
+			if( /*elem.tag == "Wall" &&*/ !cheakVision )
 			{
 				var materials = elem.GetComponentsInChildren<Renderer>();
 				foreach (var renderer in materials)
 				{
-					renderer.material.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+					renderer.material.color = new Color(0.5f, 0.5f, 0.5f);
 				}
 			}
 			else if (/*elem.tag == "Wall" &&*/ cheakVision)
@@ -576,7 +581,7 @@ public class GroundTile : MonoBehaviour
 				var materials = elem.GetComponentsInChildren<Renderer>();
 				foreach (var renderer in materials)
 				{
-					renderer.material.color = new Color(1f, 1f, 1f, 1f);
+					renderer.material.color = new Color(1f, 1f, 1f);
 				}
 			}
 

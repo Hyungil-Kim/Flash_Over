@@ -42,7 +42,7 @@
 
 	SubShader
 	{
-		Tags{ "Queue" = "Geometry+1" }
+		Tags{ "Queue" = "Geometry" }
 			ZTest Less
 			Blend SrcAlpha OneMinusSrcAlpha
 			Color[_Color]
