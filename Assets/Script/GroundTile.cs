@@ -132,11 +132,13 @@ public class GroundTile : MonoBehaviour
         {
 			Debug.Log("isFire");
         }
-		sd.tileIsWeat = tileIsWeat;
-		sd.tileIsSmoke = tileIsSmoke;
-		sd.tileIsClaimant = tileIsClaimant;
-		sd.firehp = fire.fireHp;
-
+			sd.tileIsWeat = tileIsWeat;
+			sd.tileIsSmoke = tileIsSmoke;
+			sd.tileIsClaimant = tileIsClaimant;
+		if (fire != null)
+		{
+			sd.firehp = fire.fireHp;
+		}
 		
 		return sd;
     }

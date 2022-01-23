@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public Button startButton;
     public Image icon;
     public PlayCharacterInfo info;
+    public UpperUIManager upperUIManager;
+    public MenuManager menuManager;
 
     public GameClearUI gameclearUI;
     // Start is called before the first frame update
