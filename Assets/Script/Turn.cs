@@ -88,6 +88,7 @@ public static class Turn
 			foreach (var fire in fires)
 			{
 				fire.CheckFireHp();
+				break;
 			}
 		}
 		else
