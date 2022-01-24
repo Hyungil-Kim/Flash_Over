@@ -44,7 +44,7 @@ public class FireManInfoPrefab : MonoBehaviour
             statSB.Append(string.Format($"Def : {cd.totalStats.def}\n"));
             statSB.Append(string.Format($"Sta : {cd.totalStats.sta}"));
             stat.text = statSB.ToString();
-            var firemanInfo = GetComponentInParent<FireManInfo>();
+            var firemanInfo = GetComponentInParent<FireTruck>();
             weight.text = $"남은 무게 : {cd.weight}";
 
             hose.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));

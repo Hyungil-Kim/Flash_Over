@@ -7,14 +7,19 @@ using System.Linq;
 public class FireTruck : MonoBehaviour
 {
     public int curFiremanIndex;
-    public GameObject characterList;
     public GameObject prefab;
-    public FireManInfo fireManInfo;
     public Transform content;
     public int maxFireMan;
 
+    public NewFireTruckList fireTruckList;
+    public FireTruckInventory inventory;
+    public ConsumShop consumShop;
+
+
     private List<GameObject> fireManList = new List<GameObject>();
     private Dictionary<int, CharacterData> outFireMan = new Dictionary<int, CharacterData>();
+
+    public CharacterData curcharacter;
     private void OnEnable()
     {
         outFireMan.Clear();
@@ -34,7 +39,22 @@ public class FireTruck : MonoBehaviour
         }
 
     }
-
+    public void OnInventory(ItemType type)
+    {
+        consumShop.gameObject.SetActive(false);
+        inventory.gameObject.SetActive(true);
+        inventory.Init(type);
+    }
+    public void OnShop()
+    {
+        inventory.gameObject.SetActive(false);
+        consumShop.gameObject.SetActive(true);
+    }
+    public void SetCharacter(CharacterData cd,int index = 0)
+    {
+        fireTruckList.SetCharacter(cd, index);
+        curcharacter = cd;
+    }
     //public void OnChaIcon(CharacterData cd)
     //{
     //    for (int i = 0; i < GameData.userData.maxFireMan; i++)
@@ -72,17 +92,18 @@ public class FireTruck : MonoBehaviour
         //    }
         //}
 
-        var fireman = fireManList[outFireMan.Count].GetComponent<FireManInfoPrefab>();
-        cd.isSelected = true;
-        fireman.Init(cd);
-
-
         //if (outFireMan.ContainsValue(cd))
         //{
         //    var keyNumber = outFireMan.FirstOrDefault((x) => x.Value == cd).Key;
         //    outFireMan.Remove(keyNumber);
         //}
-        outFireMan.Add(outFireMan.Count, cd);
+        if (!outFireMan.ContainsValue(cd))
+        {
+            var fireman = fireManList[outFireMan.Count].GetComponent<FireManInfoPrefab>();
+            outFireMan.Add(outFireMan.Count, cd);
+            cd.isSelected = true;
+            fireman.Init(cd);
+        }
 
         //characterList.SetActive(false);
     }
@@ -125,14 +146,14 @@ public class FireTruck : MonoBehaviour
         }
     }
 
-    public void SetCurFireMan(int index)
-    {
-        curFiremanIndex = index;
-        characterList.SetActive(true);
-    }
-    public void OnReady()
-    {
-        GameData.userData.fireManList = outFireMan;
-        fireManInfo.gameObject.SetActive(true);
-    }
+    //public void SetCurFireMan(int index)
+    //{
+    //    curFiremanIndex = index;
+    //    characterList.SetActive(true);
+    //}
+    //public void OnReady()
+    //{
+    //    GameData.userData.fireManList = outFireMan;
+    //    fireManInfo.gameObject.SetActive(true);
+    //}
 }

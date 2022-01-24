@@ -15,7 +15,7 @@ public class NewFireTruckList : MonoBehaviour
     private List<GameObject> chaList = new List<GameObject>();
     private bool isReverse;
     private List<CharacterData> sortUserCharacter;
-
+    
     private void Awake()
     {
         maxChaCount = GameData.userData.maxCharacter;
@@ -28,6 +28,11 @@ public class NewFireTruckList : MonoBehaviour
         DropDownInit();
     }
     private void OnEnable()
+    {
+        sortIndex = 0;
+        Init();
+    }
+    private void Start()
     {
         sortIndex = 0;
         Init();
@@ -88,6 +93,7 @@ public class NewFireTruckList : MonoBehaviour
         var parent = GetComponentInParent<FireTruck>();
         var cd = sortUserCharacter[index];
         parent.OnChaIcon(cd);
+        Init();
 
     }
     public void OnExit()
@@ -104,4 +110,28 @@ public class NewFireTruckList : MonoBehaviour
         isReverse = istrue;
         Init();
     }
+    public void SetCharacter(CharacterData cd, int index = 0)
+    {
+        switch (index)
+        {
+            case 1:
+                if (cd.consum1 != null)
+                {
+                    GameData.userData.gold += cd.consum1.itemData.cost;
+                    cd.UseConsumItem(1);
+                }
+                break;
+            case 2:
+                if (cd.consum2 != null)
+                {
+                    GameData.userData.gold += cd.consum2.itemData.cost;
+                    cd.UseConsumItem(2);
+                }
+                break;
+            default:
+                break;
+        }
+        Init();
+    }
+
 }

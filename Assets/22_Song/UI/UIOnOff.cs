@@ -48,7 +48,7 @@ public class UIOnOff : MonoBehaviour
         if(GameData.userData.characterList.Count == 0)
         {
             var cd = new CharacterData();
-            cd.SettingFixCharacter(10, 10, 10, 5, 5);
+            cd.SettingFixCharacter(20, 10, 50, 5, 5);
         }
         returnButton = uiArray[11].transform.gameObject;
         stage= uiArray[13].transform.gameObject;

@@ -8327,7 +8327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.43
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8335,7 +8335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.92
+      value: -18.07
       objectReference: {fileID: 0}
     - target: {fileID: 3215800929546829935, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9059,6 +9059,7 @@ MonoBehaviour:
   hp: 0
   isBurn: 0
   def: 0
+  isSight: 0
 --- !u!4 &332094483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 410168, guid: 616c42ebc563a4e47bb0a66b8ed0160e, type: 3}
@@ -10452,6 +10453,7 @@ MonoBehaviour:
   hp: 0
   isBurn: 0
   def: 0
+  isSight: 0
 --- !u!4 &490678508 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442958, guid: 2d348e84a5072ff45b7e742f4085a7fb, type: 3}
@@ -13994,6 +13996,7 @@ MonoBehaviour:
   hp: 100
   isBurn: 0
   def: 0
+  isSight: 0
 --- !u!4 &1069815685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 414622, guid: bfd5e322d56798540b9dc8e4d1b1c268, type: 3}
@@ -20969,8 +20972,6 @@ Tilemap:
     m_Data: {fileID: 2404655449198737440, guid: 79bb86ff029757446a4e83c00a60f319, type: 3}
   - m_RefCount: 13
     m_Data: {fileID: 4115210704510977894, guid: 88216b975091cba4aac85e677265031f, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -7, y: -23, z: 0}

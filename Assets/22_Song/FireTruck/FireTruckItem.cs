@@ -21,7 +21,7 @@ public class FireTruckItem : MonoBehaviour
     }
     public void OnClick()
     {
-        var firemanInfo = GetComponentInParent<FireManInfo>();
+        var firetruck= GetComponentInParent<FireTruck>();
         switch (itemType)
         {
             case ItemType.Consumable:
@@ -57,10 +57,10 @@ public class FireTruckItem : MonoBehaviour
                 //}
                 break;
             default:
-                if (firemanInfo.CurCharacter.weight > itemData.dataTable.weight)
+                if (firetruck.curcharacter.weight > itemData.dataTable.weight)
                 {
-                    firemanInfo.CurCharacter.EquipItem(itemData, itemType);
-                    firemanInfo.CharacterInit();
+                    firetruck.curcharacter.EquipItem(itemData, itemType);
+                    firetruck.fireTruckList.Init();
                 }
                 break;
         }

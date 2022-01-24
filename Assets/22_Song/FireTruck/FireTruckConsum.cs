@@ -18,41 +18,44 @@ public class FireTruckConsum : MonoBehaviour
     
     public void OnClick()
     {
-        var firemanInfo = GetComponentInParent<FireManInfo>();
+        var fireTruck = GetComponentInParent<FireTruck>();
         var itemData = new ConsumableItemData(consumData, 1);
-        var consum1 = firemanInfo.CurCharacter.consum1;
-        var consum2 = firemanInfo.CurCharacter.consum2;
+        if (fireTruck.curcharacter != null)
+        {
+            var consum1 = fireTruck.curcharacter.consum1;
+            var consum2 = fireTruck.curcharacter.consum2;
 
-        if(GameData.userData.gold < itemData.itemData.cost || firemanInfo.CurCharacter.weight < itemData.itemData.weight)
-        {
-            return;
-        }
+            if (GameData.userData.gold < itemData.itemData.cost || fireTruck.curcharacter.weight < itemData.itemData.weight)
+            {
+                return;
+            }
 
-        if(consum1 != null && consum1.dataTable.itemName == itemData.dataTable.itemName)
-        {
-            
-            consum1.count++;
+            if (consum1 != null && consum1.dataTable.itemName == itemData.dataTable.itemName)
+            {
 
-        }
-        else if (consum2 != null && consum2.dataTable.itemName == itemData.dataTable.itemName)
-        {
+                consum1.count++;
 
-            consum2.count++;
+            }
+            else if (consum2 != null && consum2.dataTable.itemName == itemData.dataTable.itemName)
+            {
 
+                consum2.count++;
+
+            }
+            else if (consum1 == null)
+            {
+                fireTruck.curcharacter.consum1 = itemData;
+            }
+            else if (consum2 == null)
+            {
+                fireTruck.curcharacter.consum2 = itemData;
+            }
+            else
+            {
+                return;
+            }
+            GameData.userData.gold -= itemData.itemData.cost;
+            fireTruck.fireTruckList.Init();
         }
-        else if (consum1 == null)
-        {
-            firemanInfo.CurCharacter.consum1 = itemData;
-        }
-        else if (consum2 == null)
-        {
-            firemanInfo.CurCharacter.consum2 = itemData;
-        }
-        else
-        {
-            return;
-        }
-        GameData.userData.gold -= itemData.itemData.cost;
-        firemanInfo.CharacterInit();
     }
 }
