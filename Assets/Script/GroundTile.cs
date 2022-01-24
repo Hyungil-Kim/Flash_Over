@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class GroundTile : MonoBehaviour
 {
+	
 	public bool isWall;
 	public GroundTile ParentTile;
 	public bool attackfloodFill = false;
@@ -48,7 +49,7 @@ public class GroundTile : MonoBehaviour
 
 	//smoke
 	public GameObject smokePrefab;
-
+	public Smoke smoke;
 	//data
 	public bool tileIsWeat;	//¹°Á¥À½?
 	public bool tileIsFire; 
@@ -79,6 +80,7 @@ public class GroundTile : MonoBehaviour
 		//AllTile.allTile.Add(index, this);
 		AllTile.allTile.Add(this);
 		AllTile.SaveTile.Add(this);
+		smoke = GetComponentInChildren<Smoke>();
 	}
 	public void Start()
 	{
@@ -368,7 +370,7 @@ public class GroundTile : MonoBehaviour
 		if (!test)
 		{
 			RaycastHit[] hits;
-			int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") /*| 1 << LayerMask.NameToLayer("Obstacle")*/;
+			int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") | 1 << LayerMask.NameToLayer("Obstacle");
 			layerMask = ~layerMask;
 			hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
 			foreach (var elem in hits)
@@ -546,7 +548,7 @@ public class GroundTile : MonoBehaviour
 
 		var visionList = new List<GameObject>();
 		RaycastHit[] hits;
-		int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") /*| 1 << LayerMask.NameToLayer("Obstacle")*/;
+		int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") | 1 << LayerMask.NameToLayer("Obstacle");
 		layerMask = ~layerMask;
 		hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
 		for (int i = 0; i < hits.Length; i++)
