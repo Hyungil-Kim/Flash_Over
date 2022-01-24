@@ -119,6 +119,7 @@ public class StageSelect : MonoBehaviour
     }
 
     public void RandomSelect()
+    
     {
         random = Random.Range(0, 6);
         level1[random].GetComponentInChildren<VisualEffect>().enabled = true;

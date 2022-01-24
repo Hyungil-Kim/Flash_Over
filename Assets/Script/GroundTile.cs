@@ -530,6 +530,7 @@ public class GroundTile : MonoBehaviour
 			{
 				fire.OffFire();
 			}
+
 		}
 		if (tileIsSmoke && cheakVision)
 		{
