@@ -534,7 +534,7 @@ public class GroundTile : MonoBehaviour
 		else
 		{
 			//firePrefab.SetActive(false);
-			firePrefab.GetComponentInChildren<ParticleSystem>().Stop();
+			firePrefab.GetComponentInChildren<VisualEffect>().Stop();
 		}
 		if (tileIsSmoke && cheakVision)
 		{

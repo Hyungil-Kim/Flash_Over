@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4195734769006192301}
-  m_Layer: 0
+  - component: {fileID: 6296318248930745502}
+  m_Layer: 15
   m_Name: CrossWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -33,6 +34,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6296318248930745502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361862892039255113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951cd1d656edc0a428e7a3ba3d598f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Renderers: []
+  Position: {x: 0, y: 0, z: 0}
+  Materials: []
+  InitialAlpha: 0
+  cellpos: {x: 0, y: 0, z: 0}
 --- !u!1001 &1468534816914161747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43,6 +61,10 @@ PrefabInstance:
     - target: {fileID: 7970702044888298642, guid: f9ab152777383cb4db244c073dfedb75, type: 3}
       propertyPath: m_Name
       value: wall1_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970702044888298642, guid: f9ab152777383cb4db244c073dfedb75, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7970702044888458964, guid: f9ab152777383cb4db244c073dfedb75, type: 3}
       propertyPath: m_RootOrder
@@ -105,6 +127,10 @@ PrefabInstance:
     - target: {fileID: 7970702044888298642, guid: f9ab152777383cb4db244c073dfedb75, type: 3}
       propertyPath: m_Name
       value: wall1_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970702044888298642, guid: f9ab152777383cb4db244c073dfedb75, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7970702044888458964, guid: f9ab152777383cb4db244c073dfedb75, type: 3}
       propertyPath: m_RootOrder

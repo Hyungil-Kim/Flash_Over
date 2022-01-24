@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.VFX;
 public class FadeObjectBlockingObject : MonoBehaviour
 {
     [SerializeField]
     private LayerMask LayerMask;
     [SerializeField]
     private GameObject[] Player;
+    private GameObject[] Players;
     private GameObject[] Fire;
 
     [SerializeField]
@@ -34,7 +36,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
 
     private void Start()
     {
-        Player= GameObject.FindGameObjectsWithTag("Player");
+        Player= GameObject.FindGameObjectsWithTag("CreateCharacter");
         Fire= GameObject.FindGameObjectsWithTag("Monster");
         Player = Player.Concat(Fire).ToArray();
         StartCoroutine(CheckForObjects());
@@ -49,7 +51,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
             for (int i = 0; i < Player.Length; i++)
             {
                 int hits = Physics.RaycastNonAlloc(Camera.transform.position, (Player[i].transform.position - Camera.transform.position).normalized, Hits, Vector3.Distance(Camera.transform.position, Player[i].transform.position), LayerMask);
-                if (hits > 0)
+                if (hits > 0&&Player[i].GetComponentInChildren<VisualEffect>().enabled==true)
                 {
                     for (int j = 0; j < hits; j++)
                     {
