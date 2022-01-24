@@ -302,10 +302,13 @@ public class TilemapManager : MonoBehaviour
 
 		foreach (var elem in ground.nextTileList)
 		{
-			if (elem.tag != "Wall")
+			if (!elem.isWall)
+			{
 				elem.tileSmokeValue += elem.tileSaveSmokeValue;
+			}
 		}
 		ground.tileSmokeValue += ground.tileSaveSmokeValue;
+		
 	}
 	public void ResetSmokeValue(Smoke smoke)
 	{

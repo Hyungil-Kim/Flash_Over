@@ -251,7 +251,7 @@ public class GameManager : MonoBehaviour
 		target = go;// 레이 맞은 오브젝트s
 		targetTile = tilemapManager.ReturnTile(target);
 		var player = target.GetComponent<Player>();
-		
+		cameraController.CameraMoving(player);
 		if ((player.curStateName == PlayerState.Idle || player.curStateName == PlayerState.Action))
 		{
 			switch (player.curStateName)
@@ -494,6 +494,8 @@ public class GameManager : MonoBehaviour
 		tMPro.text = move.ToString();
 		pressPro.text = press.ToString();
 		ready.text = playerMove.moveList.Count.ToString();
+		var t = turnCount + " turn";
+		uIManager.upperUIManager.turn.text = t;
 		//mousePos = multiTouch.mousePoint.Mouse.Move.ReadValue<Vector2>();
 		var pointer = IsPointerOverUI();
 		if (pointer)
@@ -705,8 +707,8 @@ public class GameManager : MonoBehaviour
 					{
 						if (elem.tileIsFire)
 						{
-							var fire = GetComponentInChildren<Fire>();
-							fire.fireHp -= useitem.damage;
+							var fire = elem.GetComponentInChildren<Fire>();
+							fire.fireHp -= (float)useitem.damage;
 						}
 					}
 				}

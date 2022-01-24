@@ -76,7 +76,7 @@ public class Smoke : FSM<SmokeState>
         {
             level++;
         }
-        Mathf.Clamp(level, 0, 3);
+        level = Mathf.Clamp(level, 0, 3);
         data = MyDataTableMgr.smokeTable.GetTable(level);
     }
 }

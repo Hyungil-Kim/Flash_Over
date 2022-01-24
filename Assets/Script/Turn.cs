@@ -92,14 +92,15 @@ public static class Turn
 				fire.CheckFireHp();
 				break;
 			}
+			Debug.Log(fires.Count);
 		}
 		else
 		{
 
 			//일단 주석!
 			//test
-			//var gameClearUI = GameManager.instance.uIManager.gameclearUI;
-			//gameClearUI.gameObject.SetActive(true);
+			var gameClearUI = GameManager.instance.uIManager.gameclearUI;
+			gameClearUI.gameObject.SetActive(true);
 		}
 		
 		if (smokes.Count != 0)

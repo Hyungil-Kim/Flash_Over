@@ -44,7 +44,7 @@ public class ScreenTouch : MonoBehaviour
 	void Awake()
     {
 		mousePoint = new MoveControlor();
-		stageSelect = GameObject.Find("StageSelect").GetComponent<StageSelect>();
+		stageSelect = GameObject.Find("StageSelectFix").GetComponent<StageSelect>();
 
 		mousePoint.Mouse.UiMove.performed += val => stageSelect.ScreenMove(val.ReadValue<Vector2>());
 		mousePoint.Mouse.UiTouch.started += val => stageSelect.ScreenDrag(mousePoint.Mouse.UiMove.ReadValue<Vector2>());
