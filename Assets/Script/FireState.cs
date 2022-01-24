@@ -11,11 +11,11 @@ public class FireIdleState : State
 	}
 	public override void Enter()
 	{
-		if (fsm.fireHp <= fsm.fireMaxExp)
+		if (fsm.fireHp >= fsm.fireMaxExp)
 		{
 			fsm.fireLevel++;
 		}
-		else if (fsm.fireHp > fsm.fireMinExp)
+		else if (fsm.fireHp < fsm.fireMinExp)
 		{
 			fsm.fireLevel--;
 		}

@@ -98,7 +98,7 @@ public class AttackRange
 					nextQueue.checkSum = curTile.checkSum + 1;
 					if (nextQueue.checkSum <= range &&
 					   (tileObject.transform.position.x == nextQueue.transform.position.x ^ tileObject.transform.position.z == nextQueue.transform.position.z) &&
-						!nextQueue.attackfloodFill)
+						!nextQueue.attackfloodFill && !curTile.isWall)
 					{
 						LineCheckLookPos(curQueue, nextQueue,(Move)Mathf.RoundToInt(targetObject.transform.rotation.eulerAngles.y)); 
 					}
@@ -154,7 +154,7 @@ public class AttackRange
 					var curLineCondition = tileObject.transform.position.x == curQueue.transform.position.x ^ tileObject.transform.position.z == curQueue.transform.position.z;
 					var nextLineCondition = tileObject.transform.position.x == nextQueue.transform.position.x ^ tileObject.transform.position.z == nextQueue.transform.position.z;
 
-					if (squrCondition && (curLineCondition || curQueue.checkSum == 0) && !nextQueue.attackfloodFill)
+					if (squrCondition && (curLineCondition || curQueue.checkSum == 0) && !nextQueue.attackfloodFill && !curTile.isWall)
 					{
 						if (!(curQueue.checkSum == 1 && !nextLineCondition))
 						{
@@ -279,10 +279,10 @@ public class AttackRange
 				CrossFloodFill(tilemapManager, attackObject, color, range);
 				break;
 			case 1:
-				LineFloodFill(tilemapManager, attackObject, color, range);
+				LineFloodFill(tilemapManager, attackObject, color, 4);
 				break;
 			case 2:
-				TriFloodFill(tilemapManager, attackObject, color, range);
+				TriFloodFill(tilemapManager, attackObject, color, 2);
 				break;
 		}
 	}

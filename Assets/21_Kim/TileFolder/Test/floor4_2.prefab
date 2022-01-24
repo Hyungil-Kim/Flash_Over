@@ -136,7 +136,7 @@ MonoBehaviour:
   cheakVision: 0
   cheakSumVision: 0
   tileArea: 3
-  tileMesh: 0
+  tileMesh: 1
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
   tileIsWeat: 0
@@ -144,10 +144,10 @@ MonoBehaviour:
   tileIsSmoke: 0
   tileIsClaimant: 0
   tileWeatValue: 0
-  tileExp: 0
-  tileHp: 9999
+  tileExp: 100
+  tileHp: 150
   tileSaveSmokeValue: 0
-  tileSmokeValue: 0
+  tileSmokeValue: 1
   index: 0
   infoIndex: 0
 --- !u!1 &3096985226070265613
@@ -321,6 +321,26 @@ PrefabInstance:
     - target: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: m_TagString
       value: Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+      propertyPath: fireHp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+      propertyPath: fireDamage
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+      propertyPath: fireMaxExp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+      propertyPath: fireMinExp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+      propertyPath: fireMakeSmoke
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
