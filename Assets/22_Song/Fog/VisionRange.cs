@@ -87,9 +87,10 @@ public class VisionRange : MonoBehaviour
 				//		crossQueue.Enqueue(nextQueue);
 				//	}
 				//}
-				if (curQueue.smoke != null)
+				var smoke = curQueue.GetComponentInChildren<Smoke>();
+				if (smoke != null)
 				{
-					nextQueue.CheakVisionSum = curTile.CheakVisionSum + 1 + /*curQueue.tileSmokeValue / 10*/ curQueue.smoke.data.decreasevision;
+					nextQueue.CheakVisionSum = curTile.CheakVisionSum + 1 + /*curQueue.tileSmokeValue / 10*/ smoke.data.decreasevision;
 				}
 				else
                 {

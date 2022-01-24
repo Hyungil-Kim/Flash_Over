@@ -18,7 +18,7 @@ public class CharacterInfo : MonoBehaviour
     }
     public void OnChaIcon()
     {
-        //chaListPanal.gameObject.SetActive(false);
+        chaListPanal.gameObject.SetActive(false);
         chaStatPanal.gameObject.SetActive(true);
     }
     public void OnExitStat()

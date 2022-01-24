@@ -80,7 +80,6 @@ public class GroundTile : MonoBehaviour
 		//AllTile.allTile.Add(index, this);
 		AllTile.allTile.Add(this);
 		AllTile.SaveTile.Add(this);
-		smoke = GetComponentInChildren<Smoke>();
 	}
 	public void Start()
 	{

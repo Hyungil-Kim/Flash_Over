@@ -37,7 +37,8 @@ public class FireTruck : MonoBehaviour
         {
             fireManList[i].SetActive(true);
         }
-
+        inventory.gameObject.SetActive(false);
+        consumShop.gameObject.SetActive(false);
     }
     public void OnInventory(ItemType type)
     {
@@ -55,6 +56,11 @@ public class FireTruck : MonoBehaviour
         fireTruckList.SetCharacter(cd, index);
         curcharacter = cd;
     }
+    public void OnBack()
+    {
+        inventory.gameObject.SetActive(false);
+        consumShop.gameObject.SetActive(false);
+    }    
     //public void OnChaIcon(CharacterData cd)
     //{
     //    for (int i = 0; i < GameData.userData.maxFireMan; i++)
@@ -113,7 +119,9 @@ public class FireTruck : MonoBehaviour
         {
             outFireMan[index].isSelected = false;
             outFireMan.Remove(index);
+            fireTruckList.Init();
         }
+
         //characterList.SetActive(false);
         //fireManList[curFiremanIndex].GetComponent<FireManInfoPrefab>().cd = null;
         fireManList[index].GetComponent<FireManInfoPrefab>().Init(null);
