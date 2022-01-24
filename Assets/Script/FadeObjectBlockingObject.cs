@@ -51,7 +51,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
             for (int i = 0; i < Player.Length; i++)
             {
                 int hits = Physics.RaycastNonAlloc(Camera.transform.position, (Player[i].transform.position - Camera.transform.position).normalized, Hits, Vector3.Distance(Camera.transform.position, Player[i].transform.position), LayerMask);
-                if (hits > 0&&Player[i].GetComponentInChildren<VisualEffect>().enabled==true)
+                if (hits > 0)// &&Player[i].GetComponentInChildren<VisualEffect>().enabled==true)
                 {
                     for (int j = 0; j < hits; j++)
                     {
@@ -79,8 +79,6 @@ public class FadeObjectBlockingObject : MonoBehaviour
             }
             
             yield return Wait;
-           
-
         }
     }
 

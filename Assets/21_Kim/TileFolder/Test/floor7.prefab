@@ -121,6 +121,7 @@ MonoBehaviour:
   isDoor: 0
   isObstacle: 0
   isClaimant: {fileID: 0}
+  obstacle: {fileID: 0}
   checkSum: 0
   G: 0
   H: 0
@@ -134,7 +135,7 @@ MonoBehaviour:
   firePrefab: {fileID: 389382635313850724}
   cheakVision: 0
   cheakSumVision: 0
-  tileArea: 4
+  tileArea: 0
   tileMesh: 0
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
@@ -332,31 +333,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
   m_PrefabInstance: {fileID: 2662107339798698195}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5826412305040968745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 389382635313850724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ee31a5da4d2d942b9ed78cf07d4525, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curStateName: 0
-  prevStateName: 0
-  gameManager: {fileID: 0}
-  fireHp: 0
-  fireLevel: 0
-  fireHpGrowth: 0
-  fireExpGrowth: 0
-  fireDamage: 0
-  fireArea: 0
-  fireMinExp: 0
-  fireMaxExp: 0
-  fireMakeSmoke: 50
-  gt: {fileID: 0}
 --- !u!4 &389382635313850727 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2420379088188289460, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
@@ -419,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2656448762285885171, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8097830639952835611, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_Materials.Array.data[0]

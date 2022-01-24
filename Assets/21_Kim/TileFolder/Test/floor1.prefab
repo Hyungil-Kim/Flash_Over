@@ -121,6 +121,7 @@ MonoBehaviour:
   isDoor: 0
   isObstacle: 0
   isClaimant: {fileID: 0}
+  obstacle: {fileID: 0}
   checkSum: 0
   G: 0
   H: 0
@@ -134,12 +135,12 @@ MonoBehaviour:
   firePrefab: {fileID: 790996446283228917}
   cheakVision: 0
   cheakSumVision: 0
-  tileArea: 3
+  tileArea: 1
   tileMesh: 0
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
   tileIsWeat: 0
-  tileIsFire: 1
+  tileIsFire: 0
   tileIsSmoke: 0
   tileIsClaimant: 0
   tileWeatValue: 0
@@ -402,7 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2656448762285885171, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8097830639952835611, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_Materials.Array.data[0]

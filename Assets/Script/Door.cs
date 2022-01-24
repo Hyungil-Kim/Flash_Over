@@ -12,6 +12,7 @@ public class Door : MonoBehaviour
 	public Transform parentPos;
 	public GroundTile parentTile;
 	private GameManager gameManager;
+	private int Count = 0;
 	public void Start()
 	{
 		gameManager = GameManager.instance;
@@ -19,9 +20,11 @@ public class Door : MonoBehaviour
 	}
 	public IEnumerator OpenDoor()
 	{
-		while (transform.eulerAngles.y < 90)
+		Debug.Log(transform.eulerAngles.y);
+		while (Count <= 90)
 		{
 			transform.Rotate(0, 2, 0);
+			Count += 2;
 			yield return new WaitForSeconds(0.01f);
 		}
 		parentTile.isWall = false;
@@ -32,9 +35,10 @@ public class Door : MonoBehaviour
 	public IEnumerator CloseDoor()
 	{
 		var gameManager = GameManager.instance;
-		while (transform.eulerAngles.y > 2)
+		while (Count >= 2)
 		{
 			transform.Rotate(0, -2, 0);
+			Count -= 2;
 			yield return new WaitForSeconds(0.01f);
 		}
 		parentTile.isWall = true;
