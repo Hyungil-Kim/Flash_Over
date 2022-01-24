@@ -121,12 +121,13 @@ public class ClaimantMove
 		var num = 0;
 		var moveSpeed = 3;
 		var path = Random.Range(0, preTile.nextTileList.Count);
+		var animator = claimant.GetComponent<Animator>();
+			animator.SetBool("walk", true);
 		claimant.transform.position = new Vector3(preTile.transform.position.x, claimant.transform.position.y, preTile.transform.position.z);
 		while (go)
 		{
 			var newPos = new Vector3(preTile.nextTileList[path].transform.position.x, claimant.transform.position.y, preTile.nextTileList[path].transform.position.z);
 			var newTile = gameManager.tilemapManager.ReturnTile(newPos);
-
 			if (newTile.fillList.Count != 0 || newTile.tileIsFire || newTile.isObstacle)
 			{
 				if (num <= claimant.speed)
@@ -154,6 +155,7 @@ public class ClaimantMove
 						{
 							num = 0;
 							go = false;
+							animator.SetBool("walk", false);
 							EndMove(claimant);
 							yield break;
 						}
@@ -185,6 +187,7 @@ public class ClaimantMove
 				{
 					num = 0;
 					go = false;
+					animator.SetBool("walk", false);
 					EndMove(claimant);
 					yield break;
 				}

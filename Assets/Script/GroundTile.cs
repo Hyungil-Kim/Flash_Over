@@ -497,12 +497,12 @@ public class GroundTile : MonoBehaviour
 			//tile.firePrefab.SetActive(true);
 		}
 
-		if (tile.tileSmokeValue < 5 && tile.tag != "Wall")//임시 연기 표시기준
+		if (tile.tileSmokeValue < 5 && !tile.isWall)//임시 연기 표시기준
 		{
 			tile.tileIsSmoke = false;
 			//tile.smokePrefab.SetActive(false);
 		}
-		else if((tile.tileSmokeValue >= 5 && tile.tag != "Wall"))
+		else if((tile.tileSmokeValue >= 5 && !tile.isWall))
 		{
 			tile.tileIsSmoke = true;
 			tile.smokePrefab.SetActive(true);
