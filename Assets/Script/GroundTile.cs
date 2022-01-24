@@ -43,7 +43,7 @@ public class GroundTile : MonoBehaviour
 
 	//tileState
 	public int tileArea;
-	public int tileMesh;//타일 가중치
+	public float tileMesh;//타일 가중치
 	public int tileGrowthExp;// 타일 hp 0일때 가중치 역으로 바꿔줌
 
 	//smoke
@@ -425,7 +425,7 @@ public class GroundTile : MonoBehaviour
 
 	public void ChangeTileState(GroundTile tile,int damage)
 	{
-		var objectsMesh = 0;
+		var objectsMesh = 0f;
 		for (int i = 0; i < tile.fillList.Count; i++)//오브젝트매질 검사
 		{
 			if (tile.fillList[i].GetComponent<Obstacle>() != null)
@@ -460,7 +460,7 @@ public class GroundTile : MonoBehaviour
 			}
 
 		}
-		tile.tileExp = damage * (tile.tileMesh - weat + objectsMesh);
+		tile.tileExp = damage * (int)(tile.tileMesh - weat + objectsMesh);
 
 		if (tile.tileIsFire)
 		{
@@ -474,7 +474,7 @@ public class GroundTile : MonoBehaviour
 	public void CheckParticleOn(GroundTile tile)
 	{
 
-		if (tile.tileExp <= 0)//tile.tileExp <= 100
+		if (tile.tileExp <= 1)//tile.tileExp <= 100
 		{
 
 			tile.tileIsFire = false;

@@ -135,7 +135,7 @@ public class TilemapManager : MonoBehaviour
 	public void ChangeColorAttack(GameObject target, int weapontype, Color attackSetColor)//숫자 무기 사거리로 바꿔야함
 	{
 		ResetAttackRange(weapontype);
-		attackRange.Attack(target, this, weapontype, 5, attackSetColor);
+		attackRange.Attack(target, this, weapontype, 2, attackSetColor);
 	}
 	public List<GroundTile> AttackFloodFill(GameObject target, Color attackSetColor, int range)
 	{
@@ -155,32 +155,32 @@ public class TilemapManager : MonoBehaviour
 	}
 	public void FireDamage(Fire target, List<GroundTile> list)
 	{
-		//foreach (var elem in list)
-		//{
-		//	var damage = target.fireDamage / (Mathf.Pow(2f, elem.checkSum));
-		//	damage = damage > 0 ? damage : 0;
-		//	var iDamage = Mathf.CeilToInt(damage);
-		//	foreach (var defender in elem.fillList)
-		//	{
-		//		if (defender.tag == "Player")
-		//		{
-		//			defender.GetComponent<Player>().cd.hp -= iDamage;
-		//			defender.GetComponent<Player>().CheckPlayerHp();
-		//		}
-		//		if (defender.tag == "Claimant")
-		//		{
-		//			defender.GetComponent<Claimant>().hp -= iDamage;
-		//			defender.GetComponent<Claimant>().CheckClaimantHp();
-		//		}
-		//		if (defender.tag == "Obstacle")
-		//		{
-		//			defender.GetComponent<Obstacle>().hp -= iDamage;
-		//			defender.GetComponent<Obstacle>().CheckObstacleHp();
-		//		}
-		//	}
-		//	elem.ChangeTileState(elem, iDamage);
-		//	elem.CheckParticleOn(elem);
-		//}
+		foreach (var elem in list)
+		{
+			var damage = target.fireDamage / (Mathf.Pow(2f, elem.checkSum));
+			damage = damage > 0 ? damage : 0;
+			var iDamage = Mathf.CeilToInt(damage);
+			foreach (var defender in elem.fillList)
+			{
+				if (defender.tag == "Player")
+				{
+					defender.GetComponent<Player>().cd.hp -= iDamage;
+					defender.GetComponent<Player>().CheckPlayerHp();
+				}
+				else if (defender.tag == "Claimant")
+				{
+					defender.GetComponent<Claimant>().hp -= iDamage;
+					defender.GetComponent<Claimant>().CheckClaimantHp();
+				}
+				else if (defender.tag == "Obstacle")
+				{
+					defender.GetComponent<Obstacle>().hp -= iDamage;
+					defender.GetComponent<Obstacle>().CheckObstacleHp();
+				}
+			}
+			elem.ChangeTileState(elem, iDamage);
+			elem.CheckParticleOn(elem);
+		}
 	}
 	public void ExplotionDamage(Obstacle target, List<GroundTile> list)
 	{

@@ -14,7 +14,7 @@ public class Obstacle : MonoBehaviour
     public bool updateOn = true;
 
     /// //////////////////////////////////
-    public int obstacleMesh; //오브젝트 가중치
+    public float obstacleMesh; //오브젝트 가중치
     public int exploseRange; // 터지는 범위
     public float exploseDamage;//터지는 데미지
     public EndBurn endState; // 죽었을때 발생하는 상태
