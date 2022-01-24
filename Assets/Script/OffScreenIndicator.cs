@@ -55,7 +55,7 @@ public class OffScreenIndicator : MonoBehaviour
             Indicator indicator = null;
 
             if (target.NeedBoxIndicator && isTargetVisible&&target.gameObject.GetComponentInChildren<VisualEffect>().enabled == true)
-            {
+            {   
                 //Debug.Log(target.name);
                 screenPosition.z = 0;
                 indicator = GetIndicator(ref target.indicator, IndicatorType.MARKER); // Gets the box indicator from the pool.
