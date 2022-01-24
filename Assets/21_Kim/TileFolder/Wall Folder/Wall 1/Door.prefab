@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5526091022608291436}
   m_Layer: 17
   m_Name: Door
-  m_TagString: Wall
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,6 +33,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1839906575853420162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1236395550198736897}
+  m_Layer: 17
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1236395550198736897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839906575853420162}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.97, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2553270629088792379}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3280098310015092041
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,10 +73,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2553270629088792379}
-  - component: {fileID: 1340556662229030403}
-  m_Layer: 0
+  - component: {fileID: 8198577465622667299}
+  m_Layer: 17
   m_Name: DoorZoint
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,10 +94,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1193334102592140287}
+  - {fileID: 1236395550198736897}
   m_Father: {fileID: 5526091022608291436}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1340556662229030403
+--- !u!114 &8198577465622667299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curDoorState: 0
+  parentPos: {fileID: 1236395550198736897}
   parentTile: {fileID: 0}
 --- !u!1001 &1193334102591930467
 PrefabInstance:
@@ -93,11 +126,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 158726, guid: 869beb14d06f3894aac6efabecf48c81, type: 3}
       propertyPath: m_Layer
-      value: 17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 158726, guid: 869beb14d06f3894aac6efabecf48c81, type: 3}
       propertyPath: m_TagString
-      value: Door
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 471964, guid: 869beb14d06f3894aac6efabecf48c81, type: 3}
       propertyPath: m_RootOrder
@@ -213,6 +246,34 @@ PrefabInstance:
     - target: {fileID: 420196, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3354740, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -4248894413840927280, guid: 168700c2866c3cd46ac4020c5f889f5e, type: 3}
+    - target: {fileID: 6589792, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}
+      propertyPath: m_Size.x
+      value: 1.9538355
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589792, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589792, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}
+      propertyPath: m_Size.z
+      value: 0.20000142
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589792, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0000003874302
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589792, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}
+      propertyPath: m_Center.y
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589792, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}
+      propertyPath: m_Center.z
+      value: -0.00000033155084
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6e84a76b40608b47acaf2c5cbbc0465, type: 3}

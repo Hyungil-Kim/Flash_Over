@@ -13,11 +13,6 @@ public class CameraController : MonoBehaviour
     public List<Player> playerList = new List<Player>();
     private GroundTile groundTile;
 
-    public GameObject area1;
-    public GameObject area2;
-    public GameObject area3;
-    public List<CameraForFireZone> cameraForFireZones;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +23,7 @@ public class CameraController : MonoBehaviour
         offset = new Vector3(0, 6, -3);
         gameManager = GameManager.instance;
         target = gameManager.targetPlayer;
-        //transform.position = playerList.transform.position + offset;
+        transform.position = playerList[0].transform.position + offset;
 
         //클릭 판단
     }

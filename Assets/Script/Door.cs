@@ -9,12 +9,42 @@ public enum DoorState
 public class Door : MonoBehaviour
 {
 	public DoorState curDoorState;
+	public Transform parentPos;
 	public GroundTile parentTile;
 	private GameManager gameManager;
 	public void Start()
 	{
 		gameManager = GameManager.instance;
-		parentTile = gameManager.tilemapManager.ReturnTile(this.gameObject);
+		CheckDoor();
+	}
+	public IEnumerator OpenDoor()
+	{
+		while (transform.eulerAngles.y < 90)
+		{
+			transform.Rotate(0, 2, 0);
+			yield return new WaitForSeconds(0.01f);
+		}
+		parentTile.isWall = false;
+		CheckDoor();
+		gameManager.targetPlayer.SetState(PlayerState.End);
+		yield break;
+	}
+	public IEnumerator CloseDoor()
+	{
+		var gameManager = GameManager.instance;
+		while (transform.eulerAngles.y > 2)
+		{
+			transform.Rotate(0, -2, 0);
+			yield return new WaitForSeconds(0.01f);
+		}
+		parentTile.isWall = true;
+		CheckDoor();
+		gameManager.targetPlayer.SetState(PlayerState.End);
+		yield break;
+	}
+	public void CheckDoor()
+	{
+		parentTile = gameManager.tilemapManager.ReturnTile(parentPos.position);
 		if (curDoorState == DoorState.Open)
 		{
 			parentTile.isWall = false;
@@ -23,28 +53,5 @@ public class Door : MonoBehaviour
 		{
 			parentTile.isWall = true;
 		}
-	}
-	public IEnumerator OpenDoor()
-	{
-		while (transform.eulerAngles.y <= 90)
-		{
-			transform.Rotate(0, 2, 0);
-			yield return new WaitForSeconds(0.01f);
-		}
-		parentTile.isWall = false;
-		gameManager.targetPlayer.curStateName = PlayerState.End;
-		yield break;
-	}
-	public IEnumerator CloseDoor()
-	{
-		var gameManager = GameManager.instance;
-		while (transform.eulerAngles.y >= 2)
-		{
-			transform.Rotate(0, -2, 0);
-			yield return new WaitForSeconds(0.01f);
-		}
-		parentTile.isWall = true;
-		gameManager.targetPlayer.curStateName = PlayerState.End;
-		yield break;
 	}
 }
