@@ -121,6 +121,7 @@ MonoBehaviour:
   isDoor: 0
   isObstacle: 0
   isClaimant: {fileID: 0}
+  obstacle: {fileID: 0}
   checkSum: 0
   G: 0
   H: 0
@@ -134,7 +135,7 @@ MonoBehaviour:
   firePrefab: {fileID: 1840496456568624599}
   cheakVision: 0
   cheakSumVision: 0
-  tileArea: 3
+  tileArea: 4
   tileMesh: 0
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
@@ -144,7 +145,7 @@ MonoBehaviour:
   tileIsClaimant: 0
   tileWeatValue: 0
   tileExp: 0
-  tileHp: 20
+  tileHp: 9999
   tileSaveSmokeValue: 0
   tileSmokeValue: 0
   index: 0
@@ -255,7 +256,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2420379086117478592, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2420379086117478595, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: m_Enabled
@@ -337,31 +338,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
   m_PrefabInstance: {fileID: 4043150762247480416}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8937618790623798119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840496456568624599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ee31a5da4d2d942b9ed78cf07d4525, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curStateName: 0
-  prevStateName: 0
-  gameManager: {fileID: 0}
-  fireHp: 0
-  fireLevel: 0
-  fireHpGrowth: 0
-  fireExpGrowth: 0
-  fireDamage: 0
-  fireArea: 0
-  fireMinExp: 0
-  fireMaxExp: 0
-  fireMakeSmoke: 50
-  gt: {fileID: 0}
 --- !u!1001 &4806018589356127785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -419,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2656448762285885171, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8097830639952835611, guid: ee517603bcbd79747a85ded8df0336d1, type: 3}
       propertyPath: m_Materials.Array.data[0]
