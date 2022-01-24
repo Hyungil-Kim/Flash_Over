@@ -38,6 +38,7 @@ public class BattleUiManager : MonoBehaviour
 	}
 	public void OnClickWeapon1()
 	{
+		tilemapManager.ResetAttackRange(gameManager.num);
 		gameManager.num = 1;
 		tilemapManager.ChangeColorAttack(gameManager.targetPlayer.gameObject, gameManager.num, gameManager.setAttackColor);
 		weapon1Button.gameObject.SetActive(false);
@@ -45,6 +46,7 @@ public class BattleUiManager : MonoBehaviour
 	}
     public void OnClickWeapon2()
     {
+		tilemapManager.ResetAttackRange(gameManager.num);
 		gameManager.num = 2;
 		tilemapManager.ChangeColorAttack(gameManager.targetPlayer.gameObject, gameManager.num, gameManager.setAttackColor);
 		weapon1Button.gameObject.SetActive(true);
@@ -102,14 +104,11 @@ public class BattleUiManager : MonoBehaviour
 				
 				gameManager.pickup = false;
 				gameManager.putdown = false;
-				gameManager.num = -1;
-				if(!attackButton.gameObject.activeSelf)
-				{
 					tilemapManager.ResetAttackRange(gameManager.num);
+				gameManager.num = -1;
 					shootButton.gameObject.SetActive(false);
 					weapon1Button.gameObject.SetActive(false);
 					weapon2Button.gameObject.SetActive(false);
-				}
 				if(useItemManager.gameObject.activeSelf)
 				{
 					useItemManager.gameObject.SetActive(false);

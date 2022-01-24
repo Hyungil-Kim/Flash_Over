@@ -93,6 +93,7 @@ public class PlayerAttackState : State
 				if(ob.tag == "Door")
 				{
 					var door = ob.GetComponent<Door>();
+					fsm.gameManager.uIManager.battleUiManager.findDoor = door;
 					if (door.curDoorState == DoorState.Open)
 					{
 						fsm.gameManager.uIManager.battleUiManager.closeDoorButton.gameObject.SetActive(true);
@@ -100,7 +101,7 @@ public class PlayerAttackState : State
 					else if(door.curDoorState == DoorState.Close)
 					{
 						fsm.gameManager.uIManager.battleUiManager.openDoorButton.gameObject.SetActive(true);
-					}
+					} 
 					break;
 				}
 				else if(ob.tag == "FuseBox")
