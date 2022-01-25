@@ -279,7 +279,7 @@ public class AttackRange
 				CrossFloodFill(tilemapManager, attackObject, color, range);
 				break;
 			case 1:
-				LineFloodFill(tilemapManager, attackObject, color, 4);
+				LineFloodFill(tilemapManager, attackObject, color, 2);
 				break;
 			case 2:
 				TriFloodFill(tilemapManager, attackObject, color, 2);
