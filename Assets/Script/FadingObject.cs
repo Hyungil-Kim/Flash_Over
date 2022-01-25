@@ -28,8 +28,8 @@ public class FadingObject : MonoBehaviour, IEquatable<FadingObject>
 
         InitialAlpha = Materials[0].color.a;
 
-        tilemap = GetComponentInParent<Tilemap>();
-       // cellpos = tilemap.WorldToCell(transform.position);
+        //tilemap = GetComponentInParent<Tilemap>();
+        //cellpos = tilemap.WorldToCell(transform.position);
     }
         
     private void Start()

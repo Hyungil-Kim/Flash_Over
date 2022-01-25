@@ -32,13 +32,13 @@ public class FadeObjectBlockingObject : MonoBehaviour
     private List<int> IndexesToClear = new List<int>();
     private Dictionary<FadingObject, Coroutine> RunningCoroutines = new Dictionary<FadingObject, Coroutine>();
 
-    private RaycastHit[] Hits = new RaycastHit[10];
+    private RaycastHit[] Hits = new RaycastHit[1000];
 
     private void Start()
     {
         Player= GameObject.FindGameObjectsWithTag("CreateCharacter");
-        Fire= GameObject.FindGameObjectsWithTag("Monster");
-        Player = Player.Concat(Fire).ToArray();
+        //Fire= GameObject.FindGameObjectsWithTag("Monster");
+        //Player = Player.Concat(Fire).ToArray();
         StartCoroutine(CheckForObjects());
     }
 
