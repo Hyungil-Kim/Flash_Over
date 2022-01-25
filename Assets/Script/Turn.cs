@@ -20,7 +20,7 @@ public static class Turn
 	public static turnOff TurnOff;
 	public static CameraController cameraController;
 
-	
+
 	public static void OnDestroy()
     {
 		players.Clear();

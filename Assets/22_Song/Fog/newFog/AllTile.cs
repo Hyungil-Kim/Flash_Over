@@ -15,4 +15,7 @@ public static class AllTile
         = new List<GroundTile>();
     public static List<FadingObject> wallTile
         = new List<FadingObject>();
+
+    public static List<ObstacleSight> obstacleSight = new List<ObstacleSight>();
+
 }

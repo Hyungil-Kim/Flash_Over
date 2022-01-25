@@ -29,6 +29,7 @@ public class GroundTile : MonoBehaviour
 	public Tilemap tilemap;
 	public GameObject firePrefab;
 	public bool cheakVision = false;
+	public bool obstacleVision = false;
 	public bool CheakVision
     {
         get { return cheakVision; }
@@ -389,17 +390,6 @@ public class GroundTile : MonoBehaviour
 						else
 						{
 							renderer.material.color = new Color(0.5f, 0.5f, 0.5f);
-						}
-					}
-					if(elem.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-                    {
-						if (cheakVision)
-						{
-							renderer.enabled = true;
-						}
-						else
-						{
-							renderer.enabled = false;
 						}
 					}
 				}

@@ -139,6 +139,7 @@ MonoBehaviour:
   tileMesh: 1
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
+  smoke: {fileID: 0}
   tileIsWeat: 0
   tileIsFire: 0
   tileIsSmoke: 0
@@ -341,32 +342,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
   m_PrefabInstance: {fileID: 1063647135230051063}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7167570655041603034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3410417458010452800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ee31a5da4d2d942b9ed78cf07d4525, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curStateName: 0
-  prevStateName: 0
-  gameManager: {fileID: 0}
-  fireHp: 1
-  fireLevel: 0
-  fireHpGrowth: 0
-  fireExpGrowth: 1
-  fireDamage: 10
-  fireArea: 0
-  fireMinExp: 0
-  fireMaxExp: 0
-  fireMakeSmoke: 20
-  gt: {fileID: 0}
-  fire: {fileID: 0}
 --- !u!4 &3410417458010452803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2420379088188289460, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}

@@ -45,6 +45,11 @@ public static class VisionCheck
         foreach (var tile in AllTile.prevVisionTile)
         {
             tile.CheckParticle();
+            tile.obstacleVision = tile.CheakVision;
+        }
+        foreach (var obstacle in AllTile.obstacleSight)
+        {
+            obstacle.CheckSight();
         }
         AllTile.prevVisionTile.Clear();
     }

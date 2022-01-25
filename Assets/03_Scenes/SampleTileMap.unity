@@ -18624,6 +18624,23 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!1 &1704620762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 705209617391240792, guid: f9537f2b87828e847a0613436d246c07, type: 3}
+  m_PrefabInstance: {fileID: 1718768421}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1704620763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704620762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba62fbdb298e4f4fa5c769dac08e7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1709245753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18734,7 +18751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705209617391240792, guid: f9537f2b87828e847a0613436d246c07, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 1236395550198736897, guid: f9537f2b87828e847a0613436d246c07, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18746,11 +18763,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2095572020884003174, guid: f9537f2b87828e847a0613436d246c07, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 2095572020884003174, guid: f9537f2b87828e847a0613436d246c07, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 2095572020890691948, guid: f9537f2b87828e847a0613436d246c07, type: 3}
       propertyPath: m_Size.y
