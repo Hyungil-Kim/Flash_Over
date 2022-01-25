@@ -13,6 +13,7 @@ public class FireTruck : MonoBehaviour
 
     public NewFireTruckList fireTruckList;
     public FireTruckInventory inventory;
+    public FireManCharacter firemanCharacter;
     public ConsumShop consumShop;
 
 
@@ -20,6 +21,10 @@ public class FireTruck : MonoBehaviour
     private Dictionary<int, CharacterData> outFireMan = new Dictionary<int, CharacterData>();
 
     public CharacterData curcharacter;
+
+    public Image icon;
+    public CharacterData iconCharacter;
+
     private void OnEnable()
     {
         outFireMan.Clear();
@@ -29,6 +34,7 @@ public class FireTruck : MonoBehaviour
             var newGo = Instantiate(prefab, content);
             var firemanprefab = newGo.GetComponent<FireManInfoPrefab>();
             firemanprefab.releasebutton.onClick.AddListener(() => OnRelease(index));
+            firemanprefab.index = index;
             //newGo.SetActive(false);
             fireManList.Add(newGo);
         }
@@ -109,9 +115,25 @@ public class FireTruck : MonoBehaviour
             outFireMan.Add(outFireMan.Count, cd);
             cd.isSelected = true;
             fireman.Init(cd);
+            fireTruckList.Init();
         }
 
         //characterList.SetActive(false);
+    }
+
+    public void OnCharacter(int index)
+    {
+        if (iconCharacter != null)
+        {
+            if (!outFireMan.ContainsValue(iconCharacter))
+            {
+                var fireman = fireManList[index].GetComponent<FireManInfoPrefab>();
+                outFireMan.Add(index, iconCharacter);
+                iconCharacter.isSelected = true;
+                fireman.Init(iconCharacter);
+                fireTruckList.Init();
+            }
+        }
     }
     public void OnRelease(int index)
     {
@@ -154,6 +176,24 @@ public class FireTruck : MonoBehaviour
         }
     }
 
+    public void OnIcon(Sprite sprite, CharacterData cd)
+    {
+        iconCharacter = cd;
+        icon.sprite = sprite;
+        icon.gameObject.SetActive(true);
+    }
+    public void IconUpdate()
+    {
+        var pos = UIOnOff.instance.mousepos;
+
+        icon.GetComponent<RectTransform>().position = pos;
+    }
+    public void OffIcon()
+    {
+        iconCharacter = null;
+        icon.sprite = null;
+        icon.gameObject.SetActive(false);
+    }
     //public void SetCurFireMan(int index)
     //{
     //    curFiremanIndex = index;

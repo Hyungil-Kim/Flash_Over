@@ -16,18 +16,21 @@ public class Fire : FSM<FireState>
     public float fireHp;
     public int fireLevel;
 
-	public int fireHpGrowth;//내 체력 상승치
-    public int fireExpGrowth;//주변타일(1칸범위) 체력 상승치
+	//public int data.increaseHp;//내 체력 상승치
+    //public int data.increaseExp;//주변타일(1칸범위) 체력 상승치
 
-    public int fireDamage;
+    //public int data.dmg;
     public int fireArea;
-	public int fireMinExp;
-	public int fireMaxExp;
+	//public int data.minhp;
+	//public int data.maxhp;
 
-	public int fireMakeSmoke = 50;
+	//public int data.makeSmoke = 50;
 	public GroundTile gt;
 
 	public GameObject fire;
+
+
+	public FireData data ;
 
 	public void Awake()
 	{
@@ -37,6 +40,7 @@ public class Fire : FSM<FireState>
 	}
 	public void Start()
 	{
+		data = MyDataTableMgr.fireTable.GetTable(fireLevel);
 		fireArea = gameManager.tilemapManager.ReturnTile(this.gameObject).tileArea;
 		AddState(FireState.Idle, new FireIdleState(this));
 		AddState(FireState.End, new FireEndState(this));
@@ -47,6 +51,7 @@ public class Fire : FSM<FireState>
         {
 			particle.Stop();
         }
+		
 	}
 	public void FireAct()
 	{

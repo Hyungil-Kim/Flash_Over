@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class FireTruckPrefab : MonoBehaviour
+public class FireTruckPrefab : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public Image icon;
     public TextMeshProUGUI chaName;
     public TextMeshProUGUI state;
     public Button button;
 
+    private FireTruck fireTruck;
+    private CharacterData curCd;
+    private void Start()
+    {
+        fireTruck = GetComponentInParent<FireTruck>();
+    }
     public void Init(CharacterData cd, int sortindex)
     {
+        curCd = cd;
         var orderType = (CharacterOrder)sortindex;
         switch (orderType)
         {
@@ -37,4 +45,23 @@ public class FireTruckPrefab : MonoBehaviour
         //icon.sprite = cd.
         state.text = cd.state;
     }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        fireTruck.OnIcon(icon.sprite, curCd);
+        transform.SetAsLastSibling();
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        fireTruck.IconUpdate();
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        fireTruck.OffIcon();
+
+    }
+
+
 }

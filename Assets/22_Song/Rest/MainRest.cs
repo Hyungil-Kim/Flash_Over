@@ -5,6 +5,7 @@ public class MainRest : MonoBehaviour
 {
     public int maxSlot = 4;
     public int baseSlot = 2;
+    public float probability;
     public GameObject restPrefab;
 
     List<GameObject> restPrefabList = new List<GameObject>();
@@ -66,6 +67,7 @@ public class MainRest : MonoBehaviour
             {
                 cd.Value.isRest = false;
                 cd.Value.tiredScore = 0;
+                cd.Value.RemoveBad(probability);
                 keyList.Add(cd.Key);
                 GameData.userData.restEndList.Add(cd.Value);
             }

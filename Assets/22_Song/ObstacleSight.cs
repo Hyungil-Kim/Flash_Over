@@ -15,7 +15,7 @@ public class ObstacleSight : MonoBehaviour
         var renderers = GetComponentsInChildren<Renderer>();
         foreach (var renderer in renderers)
         {
-            if (tile.CheakVision)
+            if (tile.obstacleVision)
             {
                 renderer.material.color = new Color(1f, 1f, 1f);
             }

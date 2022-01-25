@@ -54,7 +54,7 @@ public class VisionRange : MonoBehaviour
 			}
 		}
 		curTile.CheakVision = true;
-
+		curTile.obstacleVision = true;
 
 
 		while (crossQueue.Count > 0)
@@ -103,7 +103,6 @@ public class VisionRange : MonoBehaviour
 					crossQueue.Enqueue(nextQueue);
 				}
 			}
-			
 			curTile.CheakVision = true;
 		}
 		CheckBuff();

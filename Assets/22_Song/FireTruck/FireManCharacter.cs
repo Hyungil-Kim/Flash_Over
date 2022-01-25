@@ -43,4 +43,5 @@ public class FireManCharacter : MonoBehaviour
             count++;
         }
     }
+
 }

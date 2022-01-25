@@ -11,11 +11,11 @@ public class FireIdleState : State
 	}
 	public override void Enter()
 	{
-		if (fsm.fireHp >= fsm.fireMaxExp)
+		if (fsm.fireHp >= fsm.data.maxhp)
 		{
 			fsm.fireLevel++;
 		}
-		else if (fsm.fireHp < fsm.fireMinExp)
+		else if (fsm.fireHp < fsm.data.minhp)
 		{
 			fsm.fireLevel--;
 		}
@@ -58,7 +58,7 @@ public class FireEndState : State
 		{
 			weat = 0;
 		}
-		fsm.fireHp = fsm.fireExpGrowth * (ground.tileMesh - weat + objectsMesh);
+		fsm.fireHp = fsm.data.increaseExp * (ground.tileMesh - weat + objectsMesh);
 		if(fsm.fireHp > 0 && fsm.fireHp <= 10)
 		{
 			fsm.fireLevel = 1;

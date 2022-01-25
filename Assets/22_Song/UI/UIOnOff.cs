@@ -36,6 +36,7 @@ public class UIOnOff : MonoBehaviour
     public static UIOnOff instance;
     private Indicator Indicator;
     private string mapName;
+    public Vector2 mousepos;
     private void Start()
     {
 
@@ -55,10 +56,11 @@ public class UIOnOff : MonoBehaviour
 
         //stageSelsction = uiArray[11].transform.gameObject;
 
-        //mousePoint = new MoveControlor();
+        mousePoint = new MoveControlor();
         //mousePoint.Mouse.TestTouch.started += val => OffNotEnoughMoney();
-        //mousePoint.Enable();//mouse포지션 실행\
-        //EnhancedTouchSupport.Enable();
+        mousePoint.Mouse.Move.performed += val => GetMousePos(val.ReadValue<Vector2>());
+        mousePoint.Enable();
+        EnhancedTouchSupport.Enable();
         if (PlaySaveSystem.ps != null)
         {
             PlaySaveSystem.ps.isPlay = false;
@@ -72,6 +74,10 @@ public class UIOnOff : MonoBehaviour
     private void Update()
     {
        
+    }
+    public void GetMousePos(Vector2 pos)
+    {
+        mousepos = pos;
     }
     public void Open(string uiName)
     {

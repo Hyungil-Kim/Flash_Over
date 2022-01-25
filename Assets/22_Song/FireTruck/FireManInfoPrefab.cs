@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
-public class FireManInfoPrefab : MonoBehaviour
+public class FireManInfoPrefab : MonoBehaviour, IDropHandler
 {
     public Image icon;
     public FireManItem hose;
@@ -20,6 +21,12 @@ public class FireManInfoPrefab : MonoBehaviour
 
     public Button releasebutton;
 
+    public int index;
+    private FireTruck fireTruck;
+    private void Start()
+    {
+        fireTruck = GetComponentInParent<FireTruck>();
+    }
     //public TextMeshProUGUI personality;
     public void Init(CharacterData cd)
     {
@@ -67,5 +74,11 @@ public class FireManInfoPrefab : MonoBehaviour
             stat.text = "";
             weight.text = $"";
         }
+    }
+
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        fireTruck.OnCharacter(index);
     }
 }

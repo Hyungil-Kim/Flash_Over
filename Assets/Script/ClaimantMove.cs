@@ -222,7 +222,7 @@ public class ClaimantMove
 		{
 			if (tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>())
 			{
-				var fireDamage = tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>().fireDamage;
+				var fireDamage = tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>().data.dmg;
 				claimant.hp -= fireDamage;
 				claimant.CheckClaimantHp();
 				hit = true;

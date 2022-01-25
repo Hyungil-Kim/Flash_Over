@@ -33,7 +33,9 @@ public static class VisionCheck
                 if (!AllTile.visionTile.Contains(visionRange[j]))
                 {   
                     visionRange[j].CheckParticle();
+                    visionRange[j].obstacleVision = visionRange[j].CheakVision;
                     AllTile.visionTile.Add(visionRange[j]);
+                    
                     //visionRange[j].CheakVisionSum = 0;
                 }
                 if(AllTile.prevVisionTile.Contains(visionRange[j]))
@@ -44,8 +46,8 @@ public static class VisionCheck
         }
         foreach (var tile in AllTile.prevVisionTile)
         {
-            tile.CheckParticle();
             tile.obstacleVision = tile.CheakVision;
+            tile.CheckParticle();
         }
         foreach (var obstacle in AllTile.obstacleSight)
         {

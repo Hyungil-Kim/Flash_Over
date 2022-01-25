@@ -440,7 +440,7 @@ public class GroundTile : MonoBehaviour
 		{
 			if (tile.tileHp > 0)
 			{ 
-				tile.tileHp -= fire.fireDamage;
+				tile.tileHp -= fire.data.dmg;
 			}
 			
 			tile.tileHp = tile.tileHp < 0 ? 0 : tileHp;
@@ -455,7 +455,7 @@ public class GroundTile : MonoBehaviour
 
 		if (tile.tileIsFire)
 		{
-			tile.tileSmokeValue = fire.fireMakeSmoke +tile.tileSaveSmokeValue;
+			tile.tileSmokeValue = fire.data.makeSmoke +tile.tileSaveSmokeValue;
 		}
 		else
 		{

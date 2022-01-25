@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public enum CharacterStatType
 {
     Hp,
@@ -134,8 +134,10 @@ public class CharacterData
 
     public CharacterStat resultStats = new CharacterStat();
 
+    public int maxhp;
     public int hp;
 
+    public int maxoxygen;
     public int oxygen;
 
     public int addWeight;
@@ -199,7 +201,7 @@ public class CharacterData
     public bool isTraining;
 
     public List<Buff> buff = new List<Buff>();
-
+    public List<Buff> BadBuff = new List<Buff>();
     public string state
     {
         get
@@ -518,6 +520,8 @@ public class CharacterData
         buff.Add(new HeavyWeight(this));
         buff.Add(new SaveClaimant(this));
 
+        BadBuff = buff.Where((x) => x.isBad).ToList();
+
         //Ω∫≈› √÷Ω≈»≠
         StatInit();
     }
@@ -806,8 +810,10 @@ public class CharacterData
     }
     public void GameStart()
     {
-        hp = totalStats.hp.stat;
-        oxygen = totalStats.lung.stat;
+        maxhp = totalStats.hp.stat;
+        hp = maxhp;
+        maxoxygen = totalStats.lung.stat;
+        oxygen = maxoxygen;
         addWeight = 0;
     }
     public void SetStat()
@@ -843,6 +849,17 @@ public class CharacterData
         foreach (var buf in buff)
         {
             buf.SetCharacter(this);
+        }
+    }
+    public void RemoveBad(float probability)
+    {
+        var random = Random.value;
+        if(random <= probability)
+        {
+            var index = Random.Range(0, BadBuff.Count);
+            var removeBuff = BadBuff[index];
+            buff.Remove(removeBuff);
+            BadBuff.Remove(removeBuff);
         }
     }
 }

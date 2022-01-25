@@ -191,7 +191,7 @@ public class PlayerMove : MonoBehaviour
 		{
 			if (tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>())
 			{
-				var fireDamage = tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>().fireDamage;
+				var fireDamage = tilemapManager.ReturnTile(newPos).GetComponentInChildren<Fire>().data.dmg;
 				moveObject.cd.hp -= fireDamage;
 				if (moveObject.handList.Count != 0 && moveObject.handList[0].GetComponent<Claimant>())
 				{

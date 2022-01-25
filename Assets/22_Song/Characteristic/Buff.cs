@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Buff
 {
+    public bool isBad;
     public string id;
     public string timing;
     public BuffTiming buffTiming = new BuffTiming();

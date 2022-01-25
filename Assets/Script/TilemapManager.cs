@@ -157,7 +157,7 @@ public class TilemapManager : MonoBehaviour
 	{
 		foreach (var elem in list)
 		{
-			var damage = target.fireDamage / (Mathf.Pow(2f, elem.checkSum));
+			var damage = target.data.dmg / (Mathf.Pow(2f, elem.checkSum));
 			damage = damage > 0 ? damage : 0;
 			var iDamage = Mathf.CeilToInt(damage);
 			foreach (var defender in elem.fillList)
