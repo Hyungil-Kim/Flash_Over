@@ -32,7 +32,8 @@ public class CreateCharacter : MonoBehaviour
             //test
             character = Instantiate(characterPrefab, transform);
             CharacterData test = new CharacterData();
-            test.NewSetCharacter();
+            //test.NewSetCharacter();
+            test.SettingFixCharacter(20, 10, 50, 8, 8);
             test.EquipItem(new HoseData(MyDataTableMgr.hoseTable.GetTable(1)), ItemType.Hose);
             test.EquipItem(new BunkerGearData(MyDataTableMgr.bunkerGearTable.GetTable(1)), ItemType.BunkerGear);
             test.EquipItem(new OxygenTankData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);

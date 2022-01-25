@@ -90,9 +90,9 @@ public class PlayerAttackState : State
 		{
 			foreach(var ob in elem.fillList)
 			{
-				if(ob.tag == "Door")
+				if(ob.tag == "DoorColider")
 				{
-					var door = ob.GetComponent<Door>();
+					var door = ob.GetComponentInParent<Door>();
 					fsm.gameManager.uIManager.battleUiManager.findDoor = door;
 					if (door.curDoorState == DoorState.Open)
 					{

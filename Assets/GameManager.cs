@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
 		if (!isStart)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default"));
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("SafeZone"));
 			layerMask = ~layerMask;
 
 			RaycastHit[] hits;
@@ -416,7 +416,7 @@ public class GameManager : MonoBehaviour
 		if (!isStart)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default"));
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("SafeZone"));
 			layerMask = ~layerMask;
 			RaycastHit[] hits;
 

@@ -20,29 +20,36 @@ public class Door : MonoBehaviour
 	}
 	public IEnumerator OpenDoor()
 	{
-		Debug.Log(transform.eulerAngles.y);
+		parentTile.isWall = false;
+		parentTile.isDoor = false;
 		while (Count <= 90)
 		{
 			transform.Rotate(0, 2, 0);
 			Count += 2;
 			yield return new WaitForSeconds(0.01f);
 		}
-		parentTile.isWall = false;
 		CheckDoor();
+		parentTile.isDoor = true;
+		parentTile.isWall = true;
+		this.curDoorState = DoorState.Open;
 		gameManager.targetPlayer.SetState(PlayerState.End);
 		yield break;
 	}
 	public IEnumerator CloseDoor()
 	{
 		var gameManager = GameManager.instance;
+		parentTile.isWall = false;
+		parentTile.isDoor = false;
 		while (Count >= 2)
 		{
 			transform.Rotate(0, -2, 0);
 			Count -= 2;
 			yield return new WaitForSeconds(0.01f);
 		}
-		parentTile.isWall = true;
 		CheckDoor();
+		parentTile.isDoor = true;
+		parentTile.isWall = true;
+		this.curDoorState = DoorState.Close;
 		gameManager.targetPlayer.SetState(PlayerState.End);
 		yield break;
 	}

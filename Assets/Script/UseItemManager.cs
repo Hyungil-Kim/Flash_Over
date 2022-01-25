@@ -72,6 +72,7 @@ public class UseItemManager : MonoBehaviour
 	{
 		itemRange = 3;
 		throwRange = 2;
+		damage = 50;
 		itemType = ConsumItemType.Damage;
 		gameObject.SetActive(false);
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);

@@ -343,7 +343,7 @@ public class GroundTile : MonoBehaviour
 					isClaimant = elem.GetComponent<Claimant>();
 					tileIsClaimant = true;
 				}
-				else if(elem.tag == "Door")
+				else if(elem.tag == "DoorColider")
 				{
 					isDoor = true;
 				}
