@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class GroundTile : MonoBehaviour
 {
-	
+	private GameManager gameManager;
 	public bool isWall;
 	public GroundTile ParentTile;
 	public bool attackfloodFill = false;
@@ -17,6 +17,7 @@ public class GroundTile : MonoBehaviour
 	public bool isDoor = false;
 	public bool isObstacle = false;
 	public Claimant isClaimant = null;
+	public bool isSafeZone;
 	public Obstacle obstacle;
 	public int checkSum = 0;
 	public int G, H;
@@ -84,6 +85,7 @@ public class GroundTile : MonoBehaviour
 	}
 	public void Start()
 	{
+		gameManager = GameManager.instance;
 		oldColor = colorTile.GetComponent<Renderer>().material.color;
 		tilemap = transform.GetComponentInParent<Tilemap>();
 		cellpos = tilemap.WorldToCell(transform.position);
@@ -352,6 +354,11 @@ public class GroundTile : MonoBehaviour
 					isObstacle = true;
 					obstacle = elem.GetComponentInChildren<Obstacle>();
 				}
+				else if(elem.layer == LayerMask.NameToLayer("SafeZone"))
+				{
+					isSafeZone = true;
+					gameManager.exitTiles.Add(this);
+				}
 			}
 		}
 		else
@@ -361,6 +368,7 @@ public class GroundTile : MonoBehaviour
 			isClaimant = null;
 			tileIsClaimant = false;
 			isObstacle = false;
+			isSafeZone = false;
 		}
 	}
 

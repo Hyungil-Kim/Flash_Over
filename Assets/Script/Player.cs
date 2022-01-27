@@ -26,7 +26,7 @@ public class Player : FSM<PlayerState>
     public int oxygentank = 5;//魂家攀农
     public int ap = 8; // 泅犁企劝樊
     public int Maxap = 8; // 弥措企劝樊
-    public int lung = 100; // 企 hp
+    public int lung = 0; // 企 hp
 
     public PlayerState playerState = PlayerState.Idle;
     public void SaveInit(PlayerSaveData sd)
@@ -114,7 +114,7 @@ public class Player : FSM<PlayerState>
 	}
     public void CheckPlayerLung()
     {
-		if (lung <= 0)
+		if (lung >= 100)
 		{
 			if (handFull)
 			{

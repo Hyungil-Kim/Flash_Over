@@ -91,7 +91,7 @@ public class TilemapManager : MonoBehaviour
 			gameManager.putdown = false;
 			targetPlayer.SetState(PlayerState.End);
 		}
-		else 
+		else
 		{
 			targetPlayer.SetState(PlayerState.Action);
 		}
@@ -254,7 +254,7 @@ public class TilemapManager : MonoBehaviour
 				break;
 		}
 		ResetAttackRange(num);
-		if(!FuseBox.FuseOFF)
+		if (!FuseBox.FuseOFF)
 		{
 			attacker.cd.hp -= (int)FuseBox.ShockDamage;
 		}
@@ -308,7 +308,7 @@ public class TilemapManager : MonoBehaviour
 			}
 		}
 		ground.tileSmokeValue += ground.tileSaveSmokeValue;
-		
+
 	}
 	public void ResetSmokeValue(Smoke smoke)
 	{
@@ -409,5 +409,18 @@ public class TilemapManager : MonoBehaviour
 			}
 		}
 		return targetPlayer;
+	}
+	public void Escape(Claimant claimant)
+	{
+		switch (claimant.claimantCurInjure)
+		{
+
+		}
+			if (ReturnTile(claimant.gameObject).isSafeZone)
+			{	
+			//ani
+			claimant.gameObject.SetActive(false);
+			gameManager.escape++;
+			}
 	}
 }
