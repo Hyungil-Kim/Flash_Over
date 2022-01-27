@@ -79,10 +79,12 @@ public class ClaimantEndState : State
 	}
 	public override void Exit()
 	{
-		if (fsm.oxygentank != 0)
-		{
-			fsm.ap = fsm.data.lung;
-			fsm.oxygentank -= 1;
-		}
+
+		//if (fsm.oxygentank != 0)
+		//{
+		//	fsm.ap = fsm.data.lung;
+		//	fsm.oxygentank -= 1;
+		//}
+
 	}
 }

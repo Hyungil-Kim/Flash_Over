@@ -24,6 +24,7 @@ public class Claimant : FSM<ClaimantState>
 	public Player targetPlayer;
 	public int targetPlayerIndex;
 
+
 	public int id;
 
 	public bool stun;
@@ -39,11 +40,12 @@ public class Claimant : FSM<ClaimantState>
 	public int num = -1;
 	public bool moveEnd;
 	private ClaimantMove claimantMove = new ClaimantMove();
-	//
-	public int oxygentank = 5;//ªÍº“≈ ≈©
+	public ClaimantInjure claimantCurInjure = ClaimantInjure.Idle;
 	public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
+
 	//public int data.lung = 8; // √÷¥Î∆Û»∞∑Æ
-	public int lung = 100; // ∆Û hp
+	public int lung = 0; // ∆Û hp
+
 
 	public int index;
 
@@ -56,6 +58,7 @@ public class Claimant : FSM<ClaimantState>
 		var csd = new ClaimantSaveData();
 		csd.index = index;
 		csd.id = id;
+		data = MyDataTableMgr.claimantTable.GetTable(id);
 
 		csd.stun = stun;
 		csd.confuse =confuse;
@@ -70,7 +73,6 @@ public class Claimant : FSM<ClaimantState>
 		csd.num = num;
 		csd.moveEnd = moveEnd;
 
-		csd.oxygentank = oxygentank;
 		csd.ap = ap;
 		csd.Maxap = data.lung;
 		csd.lung = lung;
@@ -101,7 +103,6 @@ public class Claimant : FSM<ClaimantState>
 		num = sd.num;
 		moveEnd = sd.moveEnd;
 		
-		oxygentank = sd.oxygentank;
 		ap = sd.ap;
 		data.lung = sd.Maxap; 
 		lung = sd.lung;
@@ -142,7 +143,7 @@ public class Claimant : FSM<ClaimantState>
 		switch (num)
 		{
 			case 0:
-				StartCoroutine(claimantMove.MoveToPlayer(this,targetPlayer,targetPlayerIndex));
+				StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer, targetPlayerIndex));
 				break;
 			case 1:
 				StartCoroutine(claimantMove.MoveConfuse(this));
@@ -161,6 +162,7 @@ public class Claimant : FSM<ClaimantState>
 				}
 				break;
 		}
+		//StartCoroutine(claimantMove.MoveToExit(this));
 	}
 	public void CheckClaimantHp()
 	{
@@ -172,7 +174,7 @@ public class Claimant : FSM<ClaimantState>
 	}
 	public void CheckClaimantLung()
 	{
-		if (lung < 0)
+		if (lung >= 100)
 		{
 			gameObject.SetActive(false);
 			Turn.claimants.Remove(this);

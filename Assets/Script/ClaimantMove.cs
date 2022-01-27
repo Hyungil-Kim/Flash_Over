@@ -113,6 +113,103 @@ public class ClaimantMove
 			}
 		}
 	}
+	public List<GroundTile> FindShortPath(Claimant claimant)
+	{
+		var gameManager = GameManager.instance;
+		var startTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
+		var dummyList = new List<List<GroundTile>>();
+		GroundTile goalTile;
+		foreach (var exit in gameManager.exitTiles)
+		{
+			dummyList.Add(gameManager.tilemapManager.SetAstar(startTile, exit));
+		}
+		var path = dummyList.OrderBy((x) => x.Count).ToList();
+
+		return path[0];
+
+	}
+	public IEnumerator MoveToExit(Claimant claimant)
+	{
+		var gameManager = GameManager.instance;
+		var path = FindShortPath(claimant);
+		var startTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
+		GroundTile targetTile = null;
+		foreach(var elem in path)
+		{
+			if(elem.tag == "SafeZone")
+			{
+				targetTile = elem;
+			} 
+		}
+		var animator = claimant.GetComponent<Animator>();
+		for (var i = path.Count - 1; i >= 0; --i)
+		{
+			if (path[i].fillList.Count == 0)
+			{
+				targetTile = path[i];
+				break;
+			}
+
+			foreach (var adjcent in path[i].nextTileList)
+			{
+				if (adjcent.fillList.Count == 0)
+				{
+					targetTile = adjcent;
+					break;
+				}
+			}
+		}
+		var go = true;
+		var num = 0;
+		var moveSpeed = 3;
+		animator.SetBool("walk", true);
+
+		if (startTile.nextTileList.Contains(targetTile))
+		{
+			num = 0;
+			go = false;
+			//animator.SetBool("walk", false);
+			EndMove(claimant, path);
+			yield break;
+		}
+		while (go)
+		{
+			if (path.Count == 0) yield break;
+			var newPos = new Vector3(path[num].transform.position.x, claimant.transform.position.y, path[num].transform.position.z);
+			if (claimant.transform.position != newPos)
+			{
+				if (AllTile.visionTile.Contains(path[num]))
+				{
+					Camera.main.transform.position = new Vector3(path[num].transform.position.x, Camera.main.transform.position.y, path[num].transform.position.z - 3);
+				}
+				var dis = Vector3.Distance(claimant.transform.position, newPos);
+				if (dis > 0)
+				{
+					claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, newPos, moveSpeed * Time.deltaTime);
+					claimant.transform.LookAt(newPos);
+					hitCheck(newPos, claimant);
+					BreathCheck(newPos, claimant);
+				}
+				yield return 0;
+			}
+			else
+			{
+				if (num < path.Count - 1 && num <= claimant.speed)
+				{
+					num++;
+					breath = false;
+					hit = false;
+				}
+				else
+				{
+					num = 0;
+					go = false;
+					animator.SetBool("walk", false);
+					EndMove(claimant, path);
+				}
+			}
+		}
+	}
 	public IEnumerator MoveConfuse(Claimant claimant)
 	{
 		var gameManager = GameManager.instance;

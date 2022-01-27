@@ -13,7 +13,7 @@ public static class Turn
 
 	public static List<Window> windows = new List<Window>();
 	public static List<CameraForFireZone> areaCamera = new List<CameraForFireZone>();
-	public static int maxArea = 4;
+	public static int maxArea = 10;
 	public static List<Smoke> copylist = new List<Smoke>();
 
 	public delegate void turnOff();
@@ -147,11 +147,13 @@ public static class Turn
 					{
 						claimant.moveEnd = false;
 						claimant.ClaimantAct();
-						claimant.oxygentank -= 1;
-						if (claimant.oxygentank <= 0)
-						{
-							claimant.ap = claimant.data.lung;
-						}
+
+						//claimant.oxygentank -= 1;
+						//if (claimant.oxygentank <= 0)
+						//{
+						//	claimant.ap = claimant.data.lung;
+						//}
+
 						yield return new WaitUntil(() => claimant.moveEnd == true);
 					}
 

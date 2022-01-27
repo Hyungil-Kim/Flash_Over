@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour
 	public TextMeshProUGUI ready;
 
 	public bool isUsingMap;
-
+	public int escape;
+	public List<GroundTile> exitTiles;
 
 	public void Awake()
 	{
 		instance = this;
 		tilemapManager = GetComponent<TilemapManager>();
-
 	}
 	public void Start()
 	{
@@ -592,6 +592,10 @@ public class GameManager : MonoBehaviour
 			{
 				targetPlayer.lung -= targetPlayer.ap;
 				targetPlayer.ap = 0;
+			}
+			if(target.GetComponent<GroundTile>().isSafeZone)
+			{
+				tilemapManager.Escape(hand.GetComponent<Claimant>());
 			}
 		}
 	}
