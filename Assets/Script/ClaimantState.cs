@@ -81,7 +81,7 @@ public class ClaimantEndState : State
 	{
 		if (fsm.oxygentank != 0)
 		{
-			fsm.ap = fsm.Maxap;
+			fsm.ap = fsm.data.lung;
 			fsm.oxygentank -= 1;
 		}
 	}

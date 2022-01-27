@@ -33,6 +33,7 @@ public class ItemTableDataBase : TableDataBase
     public int move;
     public int vision;
     public int sta;
+    public int durability;
 }
 public class StatTableDataBase : TableDataBase
 {

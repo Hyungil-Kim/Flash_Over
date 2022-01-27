@@ -34,6 +34,7 @@ public class BunkerGearTable : MyDataTableBase<BunkerGearTableData>
             tableData.def = int.Parse(table["DEF"]);
             tableData.move = int.Parse(table["MOVE"]);
             tableData.vision = int.Parse(table["VISION"]);
+            tableData.durability = int.Parse(table["Durability"]);
 
             tables.Add(tableData);
         }

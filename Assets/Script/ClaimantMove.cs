@@ -97,7 +97,7 @@ public class ClaimantMove
 			}
 			else
 			{
-				if (num < pathList.Count - 1 && num <= claimant.speed)
+				if (num < pathList.Count - 1 && num <= claimant.data.move)
 				{
 					num++;
 					breath = false;
@@ -130,7 +130,7 @@ public class ClaimantMove
 			var newTile = gameManager.tilemapManager.ReturnTile(newPos);
 			if (newTile.fillList.Count != 0 || newTile.tileIsFire || newTile.isObstacle)
 			{
-				if (num <= claimant.speed)
+				if (num <= claimant.data.move)
 				{
 					if (AllTile.visionTile.Contains(preTile))
 					{
@@ -177,7 +177,7 @@ public class ClaimantMove
 			}
 			else
 			{
-				if (num <= claimant.speed)
+				if (num <= claimant.data.move)
 				{
 					num++;
 					preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);

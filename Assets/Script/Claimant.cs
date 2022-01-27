@@ -24,31 +24,38 @@ public class Claimant : FSM<ClaimantState>
 	public Player targetPlayer;
 	public int targetPlayerIndex;
 
+	public int id;
+
 	public bool stun;
 	public bool confuse;
 	public bool eventOn;
 	public bool exit;
 	public int claimantArea;
+	//public int data.hp;
 	public int hp;
 	public int airGauge;//산소통 이름변경 필요
-	public int speed;
-	public int weight;
+	//public int data.move;
+	//public int data.weight;
 	public int num = -1;
 	public bool moveEnd;
 	private ClaimantMove claimantMove = new ClaimantMove();
 	//
 	public int oxygentank = 5;//산소탱크
 	public int ap = 8; // 현재폐활량
-	public int Maxap = 8; // 최대폐활량
+	//public int data.lung = 8; // 최대폐활량
 	public int lung = 100; // 폐 hp
 
 	public int index;
 
 	private Vector3 prevPos;
+
+	public ClaimantData data;
 	public ClaimantSaveData GetData()
     {
+		
 		var csd = new ClaimantSaveData();
 		csd.index = index;
+		csd.id = id;
 
 		csd.stun = stun;
 		csd.confuse =confuse;
@@ -56,15 +63,16 @@ public class Claimant : FSM<ClaimantState>
 		csd.exit = exit;
 		csd.claimantArea = claimantArea;
 		csd.hp = hp;
+
 		csd.airGauge = airGauge;
-		csd.speed = speed;
-		csd.weight = weight;
+		csd.speed = data.move;
+		csd.weight = data.weight;
 		csd.num = num;
 		csd.moveEnd = moveEnd;
 
 		csd.oxygentank = oxygentank;
 		csd.ap = ap;
-		csd.Maxap = Maxap;
+		csd.Maxap = data.lung;
 		csd.lung = lung;
 		csd.posx = gameObject.transform.position.x;
 		csd.posy = gameObject.transform.position.y;
@@ -78,22 +86,24 @@ public class Claimant : FSM<ClaimantState>
 	}
 	public void SaveInit(ClaimantSaveData sd)
     {
+		id = sd.id;
+
 		targetPlayerIndex = sd.targetPlayerIndex;
 		stun = sd.stun;
 		confuse = sd.confuse;
 		eventOn = sd.eventOn;
 		exit = sd.exit ;
 		claimantArea = sd.claimantArea;
-		hp = sd.hp;
+		data.hp = sd.hp;
 		airGauge = sd.airGauge;
-		speed = sd.speed;
-		weight = sd.weight;
+		data.move = sd.speed;
+		data.weight = sd.weight;
 		num = sd.num;
 		moveEnd = sd.moveEnd;
 		
 		oxygentank = sd.oxygentank;
 		ap = sd.ap;
-		Maxap = sd.Maxap; 
+		data.lung = sd.Maxap; 
 		lung = sd.lung;
 		gameObject.transform.position = new Vector3(sd.posx, sd.posy, sd.posz);
 
@@ -117,6 +127,10 @@ public class Claimant : FSM<ClaimantState>
 	}
 	public void Start()
 	{
+		data = MyDataTableMgr.claimantTable.GetTable(id);
+		ap = data.lung;
+		hp = data.hp;
+
 		AddState(ClaimantState.Idle, new ClaimantIdleState(this));
 		AddState(ClaimantState.Meet, new ClaimantMeetState(this));
 		AddState(ClaimantState.Resuce, new ClaimantResuceState(this));

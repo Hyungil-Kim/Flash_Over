@@ -6,6 +6,7 @@ using TMPro;
 
 public class HireInfo : MonoBehaviour
 {
+    public RawImage icon;
     public TextMeshProUGUI chaName;
     public TextMeshProUGUI chaGrade;
     public TextMeshProUGUI chaClass;
@@ -30,6 +31,9 @@ public class HireInfo : MonoBehaviour
             personality.text = "";
             return;
         }
+        icon.texture = Resources.Load<RenderTexture>($"{cd.iconName}");
+        
+
         chaName.text = cd.characterName;
         chaGrade.text = cd.characterGrade;
         chaClass.text = cd.characterClass;

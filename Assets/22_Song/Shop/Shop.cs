@@ -17,22 +17,43 @@ public class Shop : MonoBehaviour
     public GameObject notEnoughGold;
     List<GameObject> shopItemList = new List<GameObject>();
 
+    public int hoseItemCount = 2;
+    public int bunkerGearItemCount = 2;
+    public int oxygenTankItemCount = 2;
+
     public TextMeshProUGUI gold;
     private void Awake()
     {
-        //우선실행하면 빈 아이템프리펩을 맥스아이템갯수만큼 만들어줄거예요
-        for (int i = 0; i < maxItemCount; i++)
+        ////우선실행하면 빈 아이템프리펩을 맥스아이템갯수만큼 만들어줄거예요
+        //for (int i = 0; i < maxItemCount; i++)
+        //{
+        //    var index = i;
+        //    var shopItem = Instantiate(shopItemPrefab, content.transform);
+        //    var shopItemScript = shopItem.GetComponent<ShopItem>();
+        //    shopItemScript.buyButton.onClick.AddListener(() => OnBuyButton(index));
+        //    shopItemScript.backGroundButton.onClick.AddListener(() => OnItemInfo(index));
+        //    shopItemList.Add(shopItem);
+        //}
+    }
+    public void Init()
+    {
+        if (shopItemList.Count == 0)
         {
-            var index = i;
-            var shopItem = Instantiate(shopItemPrefab, content.transform);
-            var shopItemScript = shopItem.GetComponent<ShopItem>();
-            shopItemScript.buyButton.onClick.AddListener(() => OnBuyButton(index));
-            shopItemScript.backGroundButton.onClick.AddListener(() => OnItemInfo(index));
-            shopItemList.Add(shopItem);
+            //우선실행하면 빈 아이템프리펩을 맥스아이템갯수만큼 만들어줄거예요
+            for (int i = 0; i < hoseItemCount + bunkerGearItemCount + oxygenTankItemCount; i++)
+            {
+                var index = i;
+                var shopItem = Instantiate(shopItemPrefab, content.transform);
+                var shopItemScript = shopItem.GetComponent<ShopItem>();
+                shopItemScript.buyButton.onClick.AddListener(() => OnBuyButton(index));
+                shopItemScript.backGroundButton.onClick.AddListener(() => OnItemInfo(index));
+                shopItemList.Add(shopItem);
+            }
         }
     }
     private void OnEnable()
     {
+        Init();
         //로드 된 상점아이템이 없으면 상점목록을 업데이트해줄거예요
         if (GameData.userData.shopItemList.Count == 0)
         {
@@ -112,28 +133,71 @@ public class Shop : MonoBehaviour
     }
     public void ShopUpdate()
     {
-        //아이템리스트를 비우고
+        ////아이템리스트를 비우고
+        //GameData.userData.shopItemList.Clear();
+        //for (int i = 0; i < maxItemCount; i++)
+        //{
+        //    //가중치 등급 뽑기
+        //    var gradeWeight = MyDataTableMgr.itemGradeTable.GetTable(GameData.userData.shopLevel);
+        //    var itemGrade = new WeightList<ItemGrade>();
+        //    itemGrade.AddGrade(ItemGrade.Normal, gradeWeight.normal);
+        //    itemGrade.AddGrade(ItemGrade.Rare, gradeWeight.rare);
+        //    itemGrade.AddGrade(ItemGrade.Unique, gradeWeight.unique);
+        //    itemGrade.AddGrade(ItemGrade.Special, gradeWeight.special);
+
+        //    //등급별 아이템 뽑기 !
+        //    var grade = itemGrade.GetRandomGrade();
+        //    var randomType = (ItemType)Random.Range(0, (int)ItemType.Max);
+        //    var gradeItem = GetRandomItem(grade, randomType);
+
+
+        //    //현재 상점아이템리스트 추가
+        //    GameData.userData.shopItemList.Add(gradeItem);
+        //    SetList(gradeItem, i);
+
+        //    GameData.userData.SaveUserData(1);
+        //}
         GameData.userData.shopItemList.Clear();
-        for (int i = 0; i < maxItemCount; i++)
+
+
+        RandomItem(ItemType.Hose, 
+            0, hoseItemCount);
+        RandomItem(ItemType.BunkerGear, 
+            hoseItemCount, bunkerGearItemCount);
+        RandomItem(ItemType.OxygenTank, 
+            hoseItemCount + bunkerGearItemCount, oxygenTankItemCount);
+        
+    }
+    public void RandomItem(ItemType type, int startIndex, int endIndex)
+    {
+        for (int i = startIndex; i < startIndex+endIndex; i++)
         {
-            //가중치 등급 뽑기
-            var gradeWeight = MyDataTableMgr.itemGradeTable.GetTable(GameData.userData.shopLevel);
-            var itemGrade = new WeightList<ItemGrade>();
-            itemGrade.AddGrade(ItemGrade.Normal, gradeWeight.normal);
-            itemGrade.AddGrade(ItemGrade.Rare, gradeWeight.rare);
-            itemGrade.AddGrade(ItemGrade.Unique, gradeWeight.unique);
-            itemGrade.AddGrade(ItemGrade.Special, gradeWeight.special);
-
-            //등급별 아이템 뽑기 !
-            var grade = itemGrade.GetRandomGrade();
-            var randomType = (ItemType)Random.Range(0, (int)ItemType.Max);
-            var gradeItem = GetRandomItem(grade, randomType);
-
-            //현재 상점아이템리스트 추가
-            GameData.userData.shopItemList.Add(gradeItem);
-            SetList(gradeItem, i);
-
-            GameData.userData.SaveUserData(1);
+            var random = 0;
+            ItemDataBase item = null;
+            ItemTableDataBase itemTable = null;
+            var index = i;
+            switch (type)
+            {
+                case ItemType.Hose:
+                    random = Random.Range(0, MyDataTableMgr.hoseTable.tables.Count);
+                    itemTable = MyDataTableMgr.hoseTable.tables[random];
+                    item = new HoseData(itemTable);
+                    break;
+                case ItemType.BunkerGear:
+                    random = Random.Range(0, MyDataTableMgr.bunkerGearTable.tables.Count);
+                    itemTable = MyDataTableMgr.bunkerGearTable.tables[random];
+                    item = new BunkerGearData(itemTable);
+                    break;
+                case ItemType.OxygenTank:
+                    random = Random.Range(0, MyDataTableMgr.oxygenTankTable.tables.Count);
+                    itemTable = MyDataTableMgr.oxygenTankTable.tables[random];
+                    item = new OxygenTankData(itemTable);
+                    break;
+                default:
+                    break;
+            }
+            GameData.userData.shopItemList.Add(item);
+            SetList(item, index);
         }
     }
     //public ItemDataBase GetRandomConsumItem(ItemGrade grade)

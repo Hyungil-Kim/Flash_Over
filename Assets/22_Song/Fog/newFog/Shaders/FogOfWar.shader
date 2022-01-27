@@ -3,7 +3,7 @@
 	Properties
 	{
 
-		//_MainTex ("Texture", 2D) = "white" {}
+		_MainTex ("Texture", 2D) = "white" {}
 		_Color("Color", Color) = (0,0,0,0)
 
 	}

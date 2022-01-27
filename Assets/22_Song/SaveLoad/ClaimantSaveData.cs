@@ -5,6 +5,7 @@ using UnityEngine;
 public class ClaimantSaveData
 {
 	public int targetPlayerIndex;
+	public int id;
 
 	public float posx;
 	public float posy;

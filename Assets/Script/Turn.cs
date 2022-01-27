@@ -150,7 +150,7 @@ public static class Turn
 						claimant.oxygentank -= 1;
 						if (claimant.oxygentank <= 0)
 						{
-							claimant.ap = claimant.Maxap;
+							claimant.ap = claimant.data.lung;
 						}
 						yield return new WaitUntil(() => claimant.moveEnd == true);
 					}

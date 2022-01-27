@@ -35,6 +35,8 @@ public class OxygenTankTable : MyDataTableBase<OxygenTankTableData>
             tableData.move = int.Parse(table["MOVE"]);
             tableData.vision = int.Parse(table["VISION"]);
             tableData.sta = int.Parse(table["STA"]);
+            tableData.durability = int.Parse(table["Durability"]);
+
             tables.Add(tableData);
         }
 

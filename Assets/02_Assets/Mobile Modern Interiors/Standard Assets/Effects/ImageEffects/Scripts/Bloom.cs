@@ -323,7 +323,7 @@ namespace UnityStandardAssets.ImageEffects
             lensFlareMaterial.SetVector ("colorB", new Vector4 (flareColorB.r, flareColorB.g, flareColorB.b, flareColorB.a) * lensflareIntensity);
             lensFlareMaterial.SetVector ("colorC", new Vector4 (flareColorC.r, flareColorC.g, flareColorC.b, flareColorC.a) * lensflareIntensity);
             lensFlareMaterial.SetVector ("colorD", new Vector4 (flareColorD.r, flareColorD.g, flareColorD.b, flareColorD.a) * lensflareIntensity);
-            to.MarkRestoreExpected(); // additive blending, RT restore expected
+            to.MarkRestoreExpected(); // additive blending, RT restore expected 
             Graphics.Blit (from, to, lensFlareMaterial);
         }
 

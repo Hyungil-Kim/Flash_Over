@@ -9,7 +9,7 @@ public class ClaimantInfo : MonoBehaviour
 
     public void Init(Claimant claimant)
     {
-        first.text = $"무게 : {claimant.weight} 체력 : {claimant.hp}";
+        first.text = $"무게 : {claimant.data.weight} 체력 : {claimant.hp}";
         second.text = $"산소 : {claimant.airGauge}";
     }
 }

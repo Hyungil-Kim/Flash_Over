@@ -124,6 +124,8 @@ public class TrainingStat
 
 public class CharacterData
 {
+    public string iconName = "testicon";
+
     public bool isHire;
 
     public bool isSelected;
@@ -144,6 +146,7 @@ public class CharacterData
 
     public int grade;
 
+    public string prefabName = "male";
 
     public int weight
     {
@@ -531,8 +534,6 @@ public class CharacterData
     //    characterName = "아무개";
     //    characterGrade = "평범한";
     //    characterClass = "소방관";
-
-
 
     //    //변수선언
     //    //list : 랜덤하게 뽑아올려고 만듬..맨 위 스탯부터 랜덤배정되면 아래 스탯은 비교적 적게 낮을 확률이 늘어날것같아서
