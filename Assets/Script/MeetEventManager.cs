@@ -13,16 +13,24 @@ public class MeetEventManager : MonoBehaviour
     public int value1 = 0;
     public int value2 = 1;
     public int returnValue;
-    public void OnClickButton1()
+    public GameManager gameManager;
+	public void Start()
 	{
-        GameManager.instance.tilemapManager.SaveClaimant.SetState(ClaimantState.Idle);
-        GameManager.instance.tilemapManager.SaveClaimant.num = value1;
-        GameManager.instance.tilemapManager.SaveClaimant.targetPlayer = GameManager.instance.targetPlayer;
+      gameManager = GameManager.instance;
+	}
+	public void OnClickButton1()
+	{
+        gameManager.tilemapManager.SaveClaimant.SetState(ClaimantState.Idle);
+        gameManager.tilemapManager.SaveClaimant.num = value1;
+        gameManager.tilemapManager.SaveClaimant.eventOn = true;
+        gameManager.tilemapManager.SaveClaimant.targetPlayer = GameManager.instance.targetPlayer;
     }
     public void OnClickButton2()
     {
-        GameManager.instance.tilemapManager.SaveClaimant.SetState(ClaimantState.Idle);
-        GameManager.instance.tilemapManager.SaveClaimant.num = value2;
-        GameManager.instance.tilemapManager.SaveClaimant.targetPlayer = GameManager.instance.targetPlayer;
+        gameManager.tilemapManager.SaveClaimant.SetState(ClaimantState.Idle);
+        gameManager.tilemapManager.SaveClaimant.num = value2;
+        gameManager.tilemapManager.SaveClaimant.eventOn = true;
+        gameManager.tilemapManager.SaveClaimant.targetPlayer = GameManager.instance.targetPlayer;
     }
+ 
 }

@@ -136,7 +136,7 @@ public class ClaimantMove
 		GroundTile targetTile = null;
 		foreach(var elem in path)
 		{
-			if(elem.tag == "SafeZone")
+			if(elem.tag == "Exit")
 			{
 				targetTile = elem;
 			} 
@@ -152,7 +152,7 @@ public class ClaimantMove
 
 			foreach (var adjcent in path[i].nextTileList)
 			{
-				if (adjcent.fillList.Count == 0)
+				if (adjcent.fillList.Count == 0 && adjcent)
 				{
 					targetTile = adjcent;
 					break;
@@ -194,8 +194,19 @@ public class ClaimantMove
 			}
 			else
 			{
-				if (num < path.Count - 1 && num <= claimant.speed)
+				if (num < path.Count - 1 && num <= claimant.data.move)
 				{
+					if(num != path.Count-1)
+					{
+						if(!path[num + 1].safeArea)
+						{
+							num = 0;
+							go = false;
+							claimant.num = 0;
+							EndMove(claimant, path);
+							yield break;
+						}
+					}
 					num++;
 					breath = false;
 					hit = false;
@@ -204,7 +215,6 @@ public class ClaimantMove
 				{
 					num = 0;
 					go = false;
-					animator.SetBool("walk", false);
 					EndMove(claimant, path);
 				}
 			}
@@ -247,6 +257,8 @@ public class ClaimantMove
 						{
 							claimant.transform.position = Vector3.MoveTowards(claimant.transform.position, prePos, moveSpeed * Time.deltaTime);
 							claimant.transform.LookAt(prePos);
+							breath = false;
+							hit = false;
 						}
 						else
 						{
@@ -277,6 +289,8 @@ public class ClaimantMove
 				if (num <= claimant.data.move)
 				{
 					num++;
+					breath = false;
+					hit = false;
 					preTile = GameManager.instance.tilemapManager.ReturnTile(claimant.gameObject);
 					path = Random.Range(0, preTile.nextTileList.Count);
 				}

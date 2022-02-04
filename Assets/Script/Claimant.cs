@@ -37,7 +37,7 @@ public class Claimant : FSM<ClaimantState>
 	public int airGauge;//산소통 이름변경 필요
 	//public int data.move;
 	//public int data.weight;
-	public int num = -1;
+	public int num = 0;
 	public bool moveEnd;
 	private ClaimantMove claimantMove = new ClaimantMove();
 	public ClaimantInjure claimantCurInjure = ClaimantInjure.Idle;
@@ -143,13 +143,37 @@ public class Claimant : FSM<ClaimantState>
 		switch (num)
 		{
 			case 0:
-				StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer, targetPlayerIndex));
+				claimantMove.JustStay(this);
 				break;
 			case 1:
-				StartCoroutine(claimantMove.MoveConfuse(this));
+				if (stun)
+				{
+					claimantMove.JustStay(this);
+				}
+				else
+				{
+					StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer, targetPlayerIndex));
+				}
 				break;
 			case 2:
-				claimantMove.JustStay(this);
+				if (stun)
+				{
+					claimantMove.JustStay(this);
+				}
+				else
+				{
+					StartCoroutine(claimantMove.MoveConfuse(this));
+				}
+				break;
+			case 3:
+				if (stun)
+				{
+					claimantMove.JustStay(this);
+				}
+				else
+				{
+					StartCoroutine(claimantMove.MoveToExit(this));
+				}
 				break;
 			default:
 				if (stun)
@@ -162,10 +186,18 @@ public class Claimant : FSM<ClaimantState>
 				}
 				break;
 		}
-		//StartCoroutine(claimantMove.MoveToExit(this));
+		
 	}
 	public void CheckClaimantHp()
 	{
+		if (data.hp / 2 >= hp)
+		{
+			this.stun = true;
+		}
+		else
+		{
+			this.stun = false;
+		}
 		if (hp <= 0)
 		{
 			gameObject.SetActive(false);

@@ -17,7 +17,7 @@ public class GroundTile : MonoBehaviour
 	public bool isDoor = false;
 	public bool isObstacle = false;
 	public Claimant isClaimant = null;
-	public bool isSafeZone;
+	public bool isExit;
 	public Obstacle obstacle;
 	public int checkSum = 0;
 	public int G, H;
@@ -31,6 +31,7 @@ public class GroundTile : MonoBehaviour
 	public GameObject firePrefab;
 	public bool cheakVision = false;
 	public bool obstacleVision = false;
+	public bool safeArea;
 	public bool CheakVision
     {
         get { return cheakVision; }
@@ -53,6 +54,7 @@ public class GroundTile : MonoBehaviour
 	public GameObject smokePrefab;
 	public Smoke smoke;
 	//data
+	public string name;//Ãß°¡µÊ
 	public bool tileIsWeat;	//¹°Á¥À½?
 	public bool tileIsFire; 
 	public bool tileIsSmoke;
@@ -82,6 +84,8 @@ public class GroundTile : MonoBehaviour
 		//AllTile.allTile.Add(index, this);
 		AllTile.allTile.Add(this);
 		AllTile.SaveTile.Add(this);
+		Turn.groundTiles.Add(this);
+		safeArea = true;
 	}
 	public void Start()
 	{
@@ -354,9 +358,9 @@ public class GroundTile : MonoBehaviour
 					isObstacle = true;
 					obstacle = elem.GetComponentInChildren<Obstacle>();
 				}
-				else if(elem.layer == LayerMask.NameToLayer("SafeZone"))
+				else if(elem.layer == LayerMask.NameToLayer("Exit"))
 				{
-					isSafeZone = true;
+					isExit = true;
 					gameManager.exitTiles.Add(this);
 				}
 			}
@@ -368,7 +372,7 @@ public class GroundTile : MonoBehaviour
 			isClaimant = null;
 			tileIsClaimant = false;
 			isObstacle = false;
-			isSafeZone = false;
+			isExit = false;
 		}
 	}
 

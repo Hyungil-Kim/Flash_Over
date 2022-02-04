@@ -5,6 +5,7 @@ using System.Linq;
 
 public static class Turn
 {
+	public static List<GroundTile> groundTiles = new List<GroundTile>();
 	public static List<Player> players = new List<Player>();
 	public static List<Fire> fires = new List<Fire>();
 	public static List<Smoke> smokes = new List<Smoke>();
@@ -53,9 +54,11 @@ public static class Turn
 		///
 		if (fires.Count != 0)
 		{
+		
 			for (int i = 0; i <= maxArea; i++)
 			{
-				var sortMonster = fires.Where((x) => x.fireArea == i);	
+				var sortMonster = fires.Where((x) => x.fireArea == i).ToList();
+				
 				foreach (var monster in sortMonster)
 				{
 					monster.FireAct();
@@ -200,15 +203,32 @@ public static class Turn
 			GameManager.instance.ChangeTargetPlayer(players[0].gameObject);
 		}
 	}
-	public static void EndGame()
-	{
-	}
-
 	public static void SortCameraArea()
 	{
 		var sortedAreaCamera = from elem in areaCamera
 							   orderby elem.areaNum
 							   select elem;
 		areaCamera = sortedAreaCamera.ToList();
+	}
+	public static void SafeAreaFalse(int i)
+	{
+		var sortTiles = groundTiles.Where((x) => x.tileArea == i).ToList();
+		foreach (var elem in sortTiles)
+		{
+			elem.safeArea = false;
+		}
+	}
+	public static bool CheckSafeArea(int i)
+	{
+		var sortMonster = fires.Where((x) => x.fireArea == i).ToList();
+		if (sortMonster.Count == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	
 	}
 }

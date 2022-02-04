@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
 		if (!isStart)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("SafeZone"));
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("Exit"));
 			layerMask = ~layerMask;
 
 			RaycastHit[] hits;
@@ -285,6 +285,9 @@ public class GameManager : MonoBehaviour
 		press = false;
 		if (!point && isStart)
 		{
+		uIManager.InfoUiScript.charaterInfo.SetActive(false);
+		uIManager.InfoUiScript.tileInfo.SetActive(false);
+		uIManager.InfoUiScript.claimantInfo.SetActive(false);
 			Debug.Log("Start");
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
@@ -334,26 +337,38 @@ public class GameManager : MonoBehaviour
 						pretargetPlayer = targetPlayer;
 						preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					}
+					if(targetPlayer != null)
+					{
+						uIManager.InfoUiScript.charaterInfo.SetActive(true);
+						uIManager.InfoUiScript.charaterInfo.GetComponent<CharInfo>().UpdateData();
+					}
 					uIManager.OnCharacterInfo();
 					uIManager.info.Init();
 				}
-				else if (target.tag == "Ground" && targetTile.movefloodFill && preTile.fillList.Contains(targetTile.gameObject))//땅클릭 + 이동범위인지
+				else if (target.tag == "Ground")//땅클릭 + 이동범위인지
 				{
-					switch (targetPlayer.curStateName)
+					if (targetTile.movefloodFill && preTile.fillList.Contains(targetTile.gameObject))
 					{
-						case PlayerState.Idle:
-							break;
-						case PlayerState.Move:
-							targetPlayer.moveHelper.SetActive(true);
-							targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
-							break;
-						case PlayerState.Action:
-							break;
-						case PlayerState.End:
-							break;
+						switch (targetPlayer.curStateName)
+						{
+							case PlayerState.Idle:
+								break;
+							case PlayerState.Move:
+								targetPlayer.moveHelper.SetActive(true);
+								targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
+								break;
+							case PlayerState.Action:
+								break;
+							case PlayerState.End:
+								break;
+						}
+						preTile = tilemapManager.ReturnTile(mousePos);
 					}
-
-					preTile = tilemapManager.ReturnTile(mousePos);
+					else
+					{
+						uIManager.InfoUiScript.tileInfo.SetActive(true);
+						//uIManager.InfoUiScript.tileInfo.GetComponent<TileInfo>().UpdateTileInfo();
+					}
 				}
 				else if (pickup)
 				{
@@ -371,9 +386,10 @@ public class GameManager : MonoBehaviour
 				{
 					UseItemthrowRange();
 				}
-				else
+				else if (target.tag == "Claimant")
 				{
-					uIManager.OffCharacterInfo();
+					uIManager.InfoUiScript.claimantInfo.SetActive(true);
+					uIManager.InfoUiScript.claimantInfo.GetComponent<ClaimantInfo2>().UpdateClaimantInfo();
 				}
 
 				if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Action)
@@ -416,7 +432,7 @@ public class GameManager : MonoBehaviour
 		if (!isStart)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("SafeZone"));
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("Exit"));
 			layerMask = ~layerMask;
 			RaycastHit[] hits;
 
@@ -583,7 +599,10 @@ public class GameManager : MonoBehaviour
 			hand.transform.position = new Vector3(target.transform.position.x, targetPlayer.handList[0].transform.position.y, target.transform.position.z);
 			//hand.SetActive(true);
 			if (hand.tag == "Claimant")
+			{
 				hand.GetComponent<Claimant>().SetState(ClaimantState.End);
+			}
+
 			targetPlayer.handList.RemoveAt(0);
 			playerMove.go = true;
 			targetPlayer.handFull = false;
@@ -593,10 +612,20 @@ public class GameManager : MonoBehaviour
 				targetPlayer.lung -= targetPlayer.ap;
 				targetPlayer.ap = 0;
 			}
-			if(target.GetComponent<GroundTile>().isSafeZone)
+			if(target.GetComponent<GroundTile>().safeArea)
+			{
+				hand.GetComponent<Claimant>().num = 3;
+			}
+			else
+			{
+				hand.GetComponent<Claimant>().num = 2;
+			}
+
+			if(target.GetComponent<GroundTile>().isExit)
 			{
 				tilemapManager.Escape(hand.GetComponent<Claimant>());
 			}
+			
 		}
 	}
 	public void UseItemMeleeRange()

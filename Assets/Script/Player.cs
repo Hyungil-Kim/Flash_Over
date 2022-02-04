@@ -27,7 +27,9 @@ public class Player : FSM<PlayerState>
     public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
     public int Maxap = 8; // √÷¥Î∆Û»∞∑Æ
     public int lung = 0; // ∆Û hp
-
+    public GameObject Fire_Hose;
+    public ParticleSystem waterStraight;
+    public ParticleSystem waterWide;
     public PlayerState playerState = PlayerState.Idle;
     public void SaveInit(PlayerSaveData sd)
     {

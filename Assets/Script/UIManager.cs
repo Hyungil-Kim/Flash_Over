@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public PlayCharacterInfo info;
     public UpperUIManager upperUIManager;
     public MenuManager menuManager;
+    public InfoUiScript InfoUiScript;
 
     public GameClearUI gameclearUI;
     // Start is called before the first frame update

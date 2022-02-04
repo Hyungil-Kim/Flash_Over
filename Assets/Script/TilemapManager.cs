@@ -77,7 +77,7 @@ public class TilemapManager : MonoBehaviour
 					if (listElem.tag == "Claimant")
 					{
 						saveClaimant = listElem.GetComponent<Claimant>();
-						if (saveClaimant.num == -1 && !saveClaimant.stun)
+						if (!saveClaimant.eventOn && !saveClaimant.stun)
 						{
 							yield return StartCoroutine(meetClaimant());
 						}
@@ -101,7 +101,7 @@ public class TilemapManager : MonoBehaviour
 		saveClaimant.SetState(ClaimantState.Meet);
 		gameManager.uIManager.meetEventManager.gameObject.SetActive(true);
 
-		while (saveClaimant.num == -1)
+		while (!saveClaimant.eventOn)
 			yield return 0;
 
 		gameManager.uIManager.meetEventManager.gameObject.SetActive(false);
@@ -170,6 +170,7 @@ public class TilemapManager : MonoBehaviour
 				else if (defender.tag == "Claimant")
 				{
 					defender.GetComponent<Claimant>().hp -= iDamage;
+					defender.GetComponent<Claimant>().num = Random.Range(0, 3);
 					defender.GetComponent<Claimant>().CheckClaimantHp();
 				}
 				else if (defender.tag == "Obstacle")
@@ -416,7 +417,7 @@ public class TilemapManager : MonoBehaviour
 		{
 
 		}
-			if (ReturnTile(claimant.gameObject).isSafeZone)
+			if (ReturnTile(claimant.gameObject).isExit)
 			{	
 			//ani
 			claimant.gameObject.SetActive(false);
