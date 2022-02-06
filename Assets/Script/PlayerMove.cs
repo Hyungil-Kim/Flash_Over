@@ -6,7 +6,6 @@ public class PlayerMove : MonoBehaviour
 {
 	private GameManager gameManager;
 	private TilemapManager tilemapManager;
-	private Animator animator;
 	public List<Vector3> moveList = new List<Vector3>();
 	private Player moveObject;
 	public float speed = 3f;
@@ -49,13 +48,12 @@ public class PlayerMove : MonoBehaviour
 	public void MovePlayer()
 	{
 		moveObject = gameManager.targetPlayer;
-		animator = moveObject.GetComponent<Animator>();
 		if (!tilemapManager.CheckPlayer(moveObject.moveHelper) || tilemapManager.ReturnTile(moveObject.gameObject) == tilemapManager.ReturnTile(moveObject.moveHelper))
 		{
 			if (tilemapManager.ReturnTile(moveObject.moveHelper).isClaimant && !moveObject.handFull) return;
 			moveObject.moveHelper.transform.localPosition = Vector3.zero;
 			moveObject.moveHelper.gameObject.SetActive(false);
-			animator.SetBool("walk", true);
+			moveObject.animator.SetBool("walk", true);
 			go = true;
 		}
 	}
@@ -160,7 +158,7 @@ public class PlayerMove : MonoBehaviour
 					hit = false;
 					breath = false;
 					go = false;
-					animator.SetBool("walk", false);
+					moveObject.animator.SetBool("walk", false);
 					StartCoroutine(gameManager.tilemapManager.MoveEnd(moveObject));
 				}
 			}

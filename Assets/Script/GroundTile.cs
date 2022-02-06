@@ -117,6 +117,7 @@ public class GroundTile : MonoBehaviour
 			firePrefab.SetActive(true);
         }
 		CheckParticle();
+		CheckFillToRayStart();
 		//TestFogOfWar();
 		//var materials = GetComponentsInChildren<Renderer>();
 		//foreach (var renderer in materials)
@@ -358,11 +359,6 @@ public class GroundTile : MonoBehaviour
 					isObstacle = true;
 					obstacle = elem.GetComponentInChildren<Obstacle>();
 				}
-				else if(elem.layer == LayerMask.NameToLayer("Exit"))
-				{
-					isExit = true;
-					gameManager.exitTiles.Add(this);
-				}
 			}
 		}
 		else
@@ -372,10 +368,36 @@ public class GroundTile : MonoBehaviour
 			isClaimant = null;
 			tileIsClaimant = false;
 			isObstacle = false;
+		}
+	}
+	public void CheckFillToRayStart()
+	{
+		fillList = new List<GameObject>();
+		RaycastHit[] hits;
+		int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | (1 << LayerMask.NameToLayer("UI")));
+		layerMask = ~layerMask;
+		hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
+		for (int i = 0; i < hits.Length; i++)
+		{
+			RaycastHit hit = hits[i];
+			fillList.Add(hit.collider.gameObject);
+		}
+		if (fillList.Count > 0)
+		{
+			foreach (var elem in fillList)
+			{
+				if (elem.layer == LayerMask.NameToLayer("Exit"))
+				{
+					isExit = true;
+					gameManager.exitTiles.Add(this);
+				}
+			}
+		}
+		else
+		{
 			isExit = false;
 		}
 	}
-
 	private bool test;
 	public void TestFogOfWar()
     {

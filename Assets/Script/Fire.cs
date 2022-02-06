@@ -83,6 +83,10 @@ public class Fire : FSM<FireState>
 		if (fire != null)
 		{
 			fire.SetActive(true);
+			if(gt.tileIsWeat)
+			{
+				gt.tileIsWeat = false;
+			}
 		}
 	}
 	public void OffFire()

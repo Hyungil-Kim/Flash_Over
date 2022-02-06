@@ -12,10 +12,10 @@ public class TileInfo : MonoBehaviour
 	public Slider fireHpSlider;
 	public TextMeshProUGUI fireMidDamage;
 	public TextMeshProUGUI fireAroundDamage;
-	public Button changeObj;
 	public TextMeshProUGUI tileName;
 	public TextMeshProUGUI isweat;
 	public TextMeshProUGUI tileHp;
+	public Slider tileHpSlider;
 	public TextMeshProUGUI tileSmokeLevel;
 	public TextMeshProUGUI tileSmokeValue;
 	public TextMeshProUGUI tileInterruptVision;
@@ -23,10 +23,6 @@ public class TileInfo : MonoBehaviour
 	public GameObject[] objectsPanel;
 	public TextMeshProUGUI[] obstacleName;
 	public TextMeshProUGUI[] obstacleHp;
-
-	public GameObject objPanel;
-	public GameObject tilePanel;
-
 	public void Start()
 	{
 		gameManager = GameManager.instance;
@@ -47,11 +43,16 @@ public class TileInfo : MonoBehaviour
 			{
 				isweat.text = "¡•¿Ω";
 			}
-			else
+			else if(gameManager.targetTile.tileIsFire)
+			{
+				isweat.text = "∫“≈Ω";
+			}
+			else 
 			{
 				isweat.text = "∫∏≈Î";
 			}
 			tileHp.text = gameManager.targetTile.tileHp.ToString();
+			tileHpSlider.value = (float)gameManager.targetTile.tileHp;
 			if (gameManager.targetTile.tileIsSmoke)
 			{
 				tileSmokeLevel.text = gameManager.targetTile.smokePrefab.GetComponent<Smoke>().level.ToString();
@@ -74,14 +75,5 @@ public class TileInfo : MonoBehaviour
 			}
 		}
 	}
-	public void ClickObjButton()
-	{
-		objPanel.SetActive(false);
-		tilePanel.SetActive(true);
-	}
-	public void ClickTileButton()
-	{
-		objPanel.SetActive(true);
-		tilePanel.SetActive(false);
-	}
+
 }

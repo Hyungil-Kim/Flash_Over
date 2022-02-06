@@ -4,91 +4,95 @@ using UnityEngine;
 
 public enum PlayerState
 {
-    Idle,
-    Move,
-    Action,
-    End,
+	Idle,
+	Move,
+	Action,
+	End,
 }
 public class Player : FSM<PlayerState>
 {
 
-    public GameManager gameManager;
-    public GameObject moveHelper;
+	public GameManager gameManager;
+	public GameObject moveHelper;
 
-    public int index;
-    public CharacterData cd;
+	public int index;
+	public CharacterData cd;
 
-    public bool handFull;
-    public List<GameObject> handList = new List<GameObject>();
-    
-    public int eventNum = 0;
-    /// 
-    public int oxygentank = 5;//ªÍº“≈ ≈©
-    public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
-    public int Maxap = 8; // √÷¥Î∆Û»∞∑Æ
-    public int lung = 0; // ∆Û hp
-    public GameObject Fire_Hose;
-    public ParticleSystem waterStraight;
-    public ParticleSystem waterWide;
-    public PlayerState playerState = PlayerState.Idle;
-    public void SaveInit(PlayerSaveData sd)
-    {
-        gameObject.transform.position = new Vector3(sd.posx,sd.posy,sd.posz);
-        playerState = StringToEnum.SToE<PlayerState>(sd.currentState);
-        cd = sd.cd;
-        
-        //handList = sd.handList;
-        foreach (var index in sd.handListIndex)
-        {
-            handList.Add(Turn.saveClaimants[index]);
-            //handList.Add(Turn.claimants[index].gameObject);
-        }
+	public bool handFull;
+	public List<GameObject> handList = new List<GameObject>();
 
-        eventNum = sd.eventNum;
-    }
-    public PlayerSaveData GetData()
-    {
-        var sd = new PlayerSaveData();
-        //sd.pos = gameObject.transform.position;
-        sd.posx = gameObject.transform.position.x;
-        sd.posy = gameObject.transform.position.y;
-        sd.posz = gameObject.transform.position.z;
-        Debug.Log(curStateName.ToString());
-        sd.currentState = curStateName.ToString();
-        sd.cd = cd;
-        //sd.handList = handList;
-        foreach (var item in handList)
-        {
-            sd.handListIndex.Add(item.GetComponent<Claimant>().index);
-        }
-        sd.eventNum = eventNum;
-        return sd;
-    }
+	public int eventNum = 0;
+	/// 
+	public int oxygentank = 5;//ªÍº“≈ ≈©
+	public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
+	public int Maxap = 8; // √÷¥Î∆Û»∞∑Æ
+	public int lung = 0; // ∆Û hp
+	public Animator animator;
+	public GameObject Fire_Hose;
+	public ParticleSystem waterStraight;
+	public ParticleSystem waterWide;
+	public PlayerState playerState = PlayerState.Idle;
+	private FireHose fireHose;
+	public void SaveInit(PlayerSaveData sd)
+	{
+		gameObject.transform.position = new Vector3(sd.posx, sd.posy, sd.posz);
+		playerState = StringToEnum.SToE<PlayerState>(sd.currentState);
+		cd = sd.cd;
+
+		//handList = sd.handList;
+		foreach (var index in sd.handListIndex)
+		{
+			handList.Add(Turn.saveClaimants[index]);
+			//handList.Add(Turn.claimants[index].gameObject);
+		}
+
+		eventNum = sd.eventNum;
+	}
+	public PlayerSaveData GetData()
+	{
+		var sd = new PlayerSaveData();
+		//sd.pos = gameObject.transform.position;
+		sd.posx = gameObject.transform.position.x;
+		sd.posy = gameObject.transform.position.y;
+		sd.posz = gameObject.transform.position.z;
+		Debug.Log(curStateName.ToString());
+		sd.currentState = curStateName.ToString();
+		sd.cd = cd;
+		//sd.handList = handList;
+		foreach (var item in handList)
+		{
+			sd.handListIndex.Add(item.GetComponent<Claimant>().index);
+		}
+		sd.eventNum = eventNum;
+		return sd;
+	}
 	private void Awake()
 	{
-        gameManager = GameManager.instance;
-        Turn.players.Add(this);
-        AddState(PlayerState.Idle, new PlayerIdleState(this));
-        AddState(PlayerState.Move, new PlayerMoveState(this));
-        AddState(PlayerState.Action, new PlayerAttackState(this));
-        AddState(PlayerState.End, new PlayerEndState(this));
-        SetState(playerState);
+		gameManager = GameManager.instance;
+		animator = GetComponent<Animator>();
+		Turn.players.Add(this);
+		AddState(PlayerState.Idle, new PlayerIdleState(this));
+		AddState(PlayerState.Move, new PlayerMoveState(this));
+		AddState(PlayerState.Action, new PlayerAttackState(this));
+		AddState(PlayerState.End, new PlayerEndState(this));
+		SetState(playerState);
 
-    }
-    void Start()
-    {
-        //AddState(PlayerState.Idle, new PlayerIdleState(this));                             
-        //AddState(PlayerState.Move, new PlayerMoveState(this));
-        //AddState(PlayerState.Action, new PlayerAttackState(this));
-        //AddState(PlayerState.End, new PlayerEndState(this));
-        //SetState(PlayerState.Idle);
-        SetState(playerState);
-        moveHelper.transform.localPosition = Vector3.zero;
-    }
+	}
+	void Start()
+	{
+		fireHose = GetComponentInChildren<FireHose>();
+		//AddState(PlayerState.Idle, new PlayerIdleState(this));                             
+		//AddState(PlayerState.Move, new PlayerMoveState(this));
+		//AddState(PlayerState.Action, new PlayerAttackState(this));
+		//AddState(PlayerState.End, new PlayerEndState(this));
+		//SetState(PlayerState.Idle);
+		SetState(playerState);
+		moveHelper.transform.localPosition = Vector3.zero;
+	}
 
-    public void CheckPlayerHp()
-    {
-        
+	public void CheckPlayerHp()
+	{
+
 		if (cd.hp <= 0)
 		{
 			if (handFull)
@@ -101,21 +105,21 @@ public class Player : FSM<PlayerState>
 					handList.RemoveAt(0);
 				}
 			}
-            SetState(PlayerState.End);
+			SetState(PlayerState.End);
 			gameObject.SetActive(false);
 			Turn.players.Remove(this);
-            if(Turn.players.Count != 0)
+			if (Turn.players.Count != 0)
 			{
-                gameManager.tilemapManager.SelectNextPlayer();
+				gameManager.tilemapManager.SelectNextPlayer();
 			}
-            else
+			else
 			{
-                //Ω«∆–√¢
+				//Ω«∆–√¢
 			}
 		}
 	}
-    public void CheckPlayerLung()
-    {
+	public void CheckPlayerLung()
+	{
 		if (lung >= 100)
 		{
 			if (handFull)
@@ -128,13 +132,26 @@ public class Player : FSM<PlayerState>
 					handList.RemoveAt(0);
 				}
 			}
-            SetState(PlayerState.End);
+			SetState(PlayerState.End);
 			gameObject.SetActive(false);
 			Turn.players.Remove(this);
 		}
 	}
-    private void OnDestroy()
-    {
-        Turn.players.Remove(this);
-    }
+	private void OnDestroy()
+	{
+		Turn.players.Remove(this);
+	}
+	public void PlayAttackParticle()
+	{
+		if (gameManager.num == 1)
+		{
+			waterStraight.Play();
+		}
+		else if (gameManager.num == 2)
+		{
+			waterWide.Play();
+		}
+
+		StartCoroutine(fireHose.CheckFireHoseStop(this));
+	}
 }

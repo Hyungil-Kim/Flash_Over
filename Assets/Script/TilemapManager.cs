@@ -218,11 +218,14 @@ public class TilemapManager : MonoBehaviour
 	}
 	public void DoAttack(Player attacker, int num)
 	{
+		ParticleSystem particle = null;
 		switch (num)
 		{
 			case 0:
 				break;
 			case 1:
+				attacker.animator.SetBool("shoot", true);
+				particle = attacker.waterStraight;
 				foreach (var elem in attackRange.LineResetQueue)
 				{
 					if (elem.tileIsFire)
@@ -233,13 +236,22 @@ public class TilemapManager : MonoBehaviour
 						damage = damage > 0 ? damage : 0;
 						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
 						elem.GetComponentInChildren<Fire>().CheckFireHp();
+						if (!elem.tileIsFire)
+						{
+							elem.tileIsWeat = true;
+						}
+						else
+						{
+							elem.tileIsWeat = false;
+						}
 					}
 				}
 				break;
 			case 2:
+				attacker.animator.SetBool("shoot", true);
+				particle = attacker.waterWide;
 				foreach (var elem in attackRange.TriResetQueue)
 				{
-
 					if (elem.tileIsFire)
 					{
 						var targetPos = tilemap.WorldToCell(elem.transform.position);
@@ -248,13 +260,23 @@ public class TilemapManager : MonoBehaviour
 						damage = damage > 0 ? damage : 0;
 						elem.GetComponentInChildren<Fire>().fireHp -= Mathf.RoundToInt((float)damage);
 						elem.GetComponentInChildren<Fire>().CheckFireHp();
-
+						if (!elem.tileIsFire)
+						{
+							elem.tileIsWeat = true;
+						}
+						else
+						{
+							elem.tileIsWeat = false;
+						}
 					}
-
 				}
 				break;
 		}
 		ResetAttackRange(num);
+		if (particle.isStopped)
+		{
+			//attacker.animator.SetBool("shoot", false);
+		}
 		if (!FuseBox.FuseOFF)
 		{
 			attacker.cd.hp -= (int)FuseBox.ShockDamage;
@@ -266,6 +288,7 @@ public class TilemapManager : MonoBehaviour
 			attacker.ap = 0;
 		}
 	}
+
 	//smoke
 	public int CheckDivideSmoke(Smoke smoke)//꺼져있어서 못찾을수도있음 실행부분 예외필요
 	{

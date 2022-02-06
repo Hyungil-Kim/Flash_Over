@@ -86,6 +86,7 @@ public class BattleUiManager : MonoBehaviour
 					gameManager.targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
 
 					//gameManager.cameraController.CameraForObjectsCenter(gameManager.pretargetPlayer.gameObject);
+					AllButtonOff();
 					gameManager.targetPlayer = null;
 					gameManager.playerMove.moveList.Clear();
 				}
@@ -96,6 +97,7 @@ public class BattleUiManager : MonoBehaviour
 					gameManager.targetPlayer.moveHelper.transform.localPosition = Vector3.zero;
 
 					//gameManager.cameraController.CameraForObjectsCenter(gameManager.pretargetPlayer.gameObject);
+					gameManager.playerMove.moveList.Clear();
 					gameManager.ChangeTargetPlayer(gameManager.targetPlayer.gameObject);
 					
 				}
