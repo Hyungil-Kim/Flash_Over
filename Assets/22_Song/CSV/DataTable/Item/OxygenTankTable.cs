@@ -15,6 +15,10 @@ public class OxygenTankTable : MyDataTableBase<OxygenTankTableData>
     public List<OxygenTankTableData> rareItem = new List<OxygenTankTableData>();
     public List<OxygenTankTableData> uniqueItem = new List<OxygenTankTableData>();
     public List<OxygenTankTableData> specialItem = new List<OxygenTankTableData>();
+
+    public List<OxygenTankTableData> regularItem = new List<OxygenTankTableData>();
+    public List<OxygenTankTableData> NonRegularItem = new List<OxygenTankTableData>();
+
     public OxygenTankTable() : base("OxygenTankDataTable")
     {
         foreach (var table in tableList)
@@ -36,6 +40,7 @@ public class OxygenTankTable : MyDataTableBase<OxygenTankTableData>
             tableData.vision = int.Parse(table["VISION"]);
             tableData.sta = int.Parse(table["STA"]);
             tableData.durability = int.Parse(table["Durability"]);
+            tableData.regular = bool.Parse(table["Regular"]);
 
             tables.Add(tableData);
         }
@@ -44,5 +49,8 @@ public class OxygenTankTable : MyDataTableBase<OxygenTankTableData>
         rareItem = tables.Where((x) => x.grade == ItemGrade.Rare.ToString()).ToList();
         uniqueItem = tables.Where((x) => x.grade == ItemGrade.Unique.ToString()).ToList();
         specialItem = tables.Where((x) => x.grade == ItemGrade.Special.ToString()).ToList();
+
+        regularItem = tables.Where((x) => x.regular).ToList();
+        NonRegularItem = tables.Where((x) => !x.regular).ToList();
     }
 }

@@ -13,8 +13,8 @@ public class CharacterInfoList : MonoBehaviour
     private int sortIndex;
     public CharacterInfoStat info;
     private bool isReverse;
-    private List<CharacterData> sortUserCharacter
-        = new List<CharacterData>();
+    List<CharacterData> sortUserCharacter = new List<CharacterData>();
+    //List<GameObject> uiCharacterList = new List<GameObject>();
     private void Awake()
     {
         for (int i = 0; i < maxChaCount; i++)
@@ -71,9 +71,14 @@ public class CharacterInfoList : MonoBehaviour
         {
             var index = i;
             var chaButton = chaList[index].GetComponent<ChaButton>();
-            chaButton.Init(sortUserCharacter[index],sortIndex);
+            chaButton.Init(sortUserCharacter[index],sortIndex,i);
             chaButton.button.onClick.AddListener(() =>OnChaButton(index));
             chaList[index].SetActive(true);
+
+            var uiChaList = UIOnOff.instance.uiCharacterList;
+            var model = uiChaList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            sortUserCharacter[index].setupModel.ApplyToCharacter(model);
+            uiChaList[i].GetComponent<UICharacter>().Init(i);
         }
     }
     public void DropDownInit()

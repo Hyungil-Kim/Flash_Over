@@ -16,10 +16,11 @@ public class HireInfo : MonoBehaviour
     public TextMeshProUGUI stat;
     public TextMeshProUGUI personality;
 
-    public void Init(CharacterData cd)
+    public void Init(CharacterData cd, int index = -1)
     {
         if (cd == null)
         {
+            icon.texture = null;
             chaName.text = "";
             chaGrade.text = "";
             chaClass.text = "";
@@ -31,7 +32,8 @@ public class HireInfo : MonoBehaviour
             personality.text = "";
             return;
         }
-        icon.texture = Resources.Load<RenderTexture>($"{cd.iconName}");
+        
+        icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
         
 
         chaName.text = cd.characterName;

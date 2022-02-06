@@ -152,6 +152,8 @@ public class VisionRange : MonoBehaviour
 	public void CheckBuff()
 	{
 		bool rangeClaimant = false;
+		bool rangeFireman = false;
+		bool rangeFire = false;
 		foreach (var tile in crossResetQueue)
 		{
 			if (tile.tileIsClaimant)
@@ -160,17 +162,38 @@ public class VisionRange : MonoBehaviour
 				break;
 			}
 		}
+		foreach (var tile in crossResetQueue)
+        {
+			if(tile.isPlayer)
+            {
+				rangeFireman = true;
+				break;
+            }
+        }
+        foreach (var tile in crossResetQueue)
+        {
+			if(tile.tileIsFire)
+            {
+				rangeFire = true;
+				break;
+            }
+        }
 		var cd = gameObject.GetComponent<Player>().cd;
 		if (cd != null)
 		{
-			foreach (var buff in cd.buff)
+			if (cd.buff.Count > 0)
 			{
-				if (buff.buffTiming.Check(BuffTiming.BuffTimingEnum.Move))
-				//if (buff.buffTiming.bufftiming == BuffTiming.BuffTimingEnum.Move)
+				foreach (var buff in cd.buff)
 				{
-					buff.Check(rangeClaimant);
+					if (buff.buffTiming.Check(BuffTiming.BuffTimingEnum.Move))
+					{
+						buff.checkingCondition.InRangeFireman = rangeFireman;
+						buff.checkingCondition.InRangeClaimant = rangeClaimant;
+						buff.checkingCondition.InRangeFire = rangeFire;
+						buff.Check();
 
-					Debug.Log(cd.totalStats.str.stat);
+						Debug.Log(cd.totalStats.str.stat);
+					}
 				}
 			}
 		}

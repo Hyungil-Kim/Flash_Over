@@ -49,7 +49,7 @@ public class FireEndState : State
 				break;
 			}
 		}
-		var weat = 0;
+		var weat = 0f;
 		if (ground.tileIsWeat)
 		{
 			weat = ground.tileWeatValue;

@@ -12,6 +12,10 @@ public class BuffTiming
         TurnStart = 1 << 0,
         TurnEnd = 1 << 1,
         Move = 1 << 2,
+        GameStart = 1 << 3,
+        GameEnd = 1 << 4,
+        Main = 1 << 5,
+
     }
     public bool Check(BuffTimingEnum timing)
     {

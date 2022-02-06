@@ -9,7 +9,7 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.InputSystem.EnhancedTouch;
-
+using AdvancedPeopleSystem;
 public class UIOnOff : MonoBehaviour
 {
     //터치아무데나해도 ui창 사라지는거 하고 싶어서
@@ -20,7 +20,7 @@ public class UIOnOff : MonoBehaviour
     private GameObject stage;
     private GameObject stageName;
 
-
+    public FireStation fireStation;
     public GameObject notEnoughMoney;
 
     private OffScreenIndicator offScreen;
@@ -37,8 +37,21 @@ public class UIOnOff : MonoBehaviour
     private Indicator Indicator;
     private string mapName;
     public Vector2 mousepos;
+
+    public GameObject character;
+    public List<GameObject> uiCharacterList = new List<GameObject>();
+
+    public GameObject mainCameraPos;
+    public GameObject selectCameraPos;
     private void Start()
     {
+        Camera.main.transform.position = mainCameraPos.transform.position;
+        Camera.main.transform.rotation = mainCameraPos.transform.rotation;
+        var uiCharacters = GameObject.FindGameObjectsWithTag("UICharacter");
+        foreach (var uicharacter in uiCharacters)
+        {
+            uiCharacterList.Add(uicharacter);
+        }
 
         instance = this;
         foreach (var ui in uiArray)
@@ -86,12 +99,18 @@ public class UIOnOff : MonoBehaviour
             ui.SetActive(false);
         }
         uiDict[uiName].SetActive(true);
+        if(uiName == "MainLobby")
+        {
+            fireStation.OnClick(5);
+        }
     }
 
     public void Closed()
     {
         uiArray[11].SetActive(false);
         uiArray[13].SetActive(true);
+        //uiArray[15].SetActive(false);
+        //character.SetActive(false);
     }
 
     public void OnStart()
@@ -101,7 +120,8 @@ public class UIOnOff : MonoBehaviour
 
     public void StageSelect()
     {
-
+        Camera.main.transform.position = selectCameraPos.transform.position;
+        Camera.main.transform.rotation = selectCameraPos.transform.rotation;
         for (int i = 0; i < uiArray.Length-1; i++)
         {
             uiArray[i].SetActive(false);
@@ -109,18 +129,21 @@ public class UIOnOff : MonoBehaviour
         stage.SetActive(true);
         returnButton.SetActive(true);
         uiArray[14].SetActive(true);
-
+        character.SetActive(false);
     }
 
     public void ReturnMainLobby(string uiName)
     {
-        
-            foreach (var ui in uiArray)
+        Camera.main.transform.position = mainCameraPos.transform.position;
+        Camera.main.transform.rotation = mainCameraPos.transform.rotation;
+        foreach (var ui in uiArray)
             {
                 ui.SetActive(false);
             }
             uiDict[uiName].SetActive(true);
             returnButton.SetActive(false);
+
+        character.SetActive(true);
 
     }
 
@@ -144,5 +167,16 @@ public class UIOnOff : MonoBehaviour
         notEnoughMoney.SetActive(false);
     }
     
+    public void SettingCharacter()
+    {
+        for (int i = 0; i < GameData.userData.characterList.Count; i++)
+        {
+            var custom = uiCharacterList[i].GetComponent<CharacterCustomization>();
+            var uicha = uiCharacterList[i].GetComponent<UICharacter>();
 
+            var customInfo = GameData.userData.characterList[i].setupModel;
+            customInfo.ApplyToCharacter(custom);
+            uicha.Init(i);
+        }
+    }
 }

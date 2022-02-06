@@ -5,29 +5,26 @@ using AdvancedPeopleSystem;
 public class EndCharacter : MonoBehaviour
 {
     private string prefabName;
+    public GameObject go;
+    public int index;
+
+    private CharacterData cd;
     private void Start()
     {
-        Init(new CharacterData());
+        //test
+        cd = new CharacterData();
+        cd.NewSetCharacter();
+        Init(cd, index);
     }
-    public void Init(CharacterData cd)
+    public void Init(CharacterData cd, int index)
     {
         prefabName = cd.prefabName;
-        var go = Resources.Load<GameObject>($"Prefabs/Character/{prefabName}");
+        //var go = Resources.Load<GameObject>($"Prefabs/Character/{prefabName}");
         var newGo = Instantiate(go, transform);
         var custom = newGo.GetComponent<CharacterCustomization>();
-        var testSettings = custom.GetSetup();
-        //var settings = new CharacterCustomizationSetup();
-        //settings.selectedElements.Accessory = 2;
-        //settings.selectedElements.Beard = 2;
-        //settings.selectedElements.Hair = 3;
-        //settings.HairColor = new float[4] { 1f,1f,1f,1f};
+        newGo.GetComponent<UICharacter>().Init(index);
 
-        testSettings.HairColor = new float[4] { 1f, 1f, 1f, 1f };
-        testSettings.selectedElements.Hair = Random.Range(0,15);
-        testSettings.ApplyToCharacter(custom);
-
-        //custom.SetCharacterSetup(settings);
-
+        cd.setupModel.ApplyToCharacter(custom);
 
     }
 }

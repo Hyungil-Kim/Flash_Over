@@ -6,7 +6,7 @@ public class TileSaveData
 {
 	public int index;
 
-	public int tileWeatValue;
+	public float tileWeatValue;
 
 	public int tileExp;
 	public float tileHp;

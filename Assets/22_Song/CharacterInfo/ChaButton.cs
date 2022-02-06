@@ -7,7 +7,7 @@ using TMPro;
 public class ChaButton : MonoBehaviour
 {
     public TextMeshProUGUI chaName;
-    public Image icon;
+    public RawImage icon;
     public Image selected;
     public Button button;
     //private int chaIndex;
@@ -15,8 +15,9 @@ public class ChaButton : MonoBehaviour
     {
         
     }
-    public void Init(CharacterData cd,int sortindex)//, int index)
+    public void Init(CharacterData cd,int sortindex, int index)//, int index)
     {
+        icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
         var orderType = (CharacterOrder)sortindex;
         switch (orderType)
         {

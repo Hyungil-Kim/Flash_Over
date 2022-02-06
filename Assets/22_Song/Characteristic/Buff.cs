@@ -3,20 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class CheckBuff
+{
+    public bool OnGoing;
+
+    public bool InRangeClaimant;
+    public bool InRangeFireman;
+    public bool InRangeFire;
+}
+
 public class Buff
 {
     public bool isBad;
+    
     public string id;
+    public string name;
+
     public string timing;
     public BuffTiming buffTiming = new BuffTiming();
 
     [NonSerialized]
     public CharacterData cd;
 
+    public bool isCharacteristic;
+    public bool isBadCharacteristic;
+    public bool isInnate;
+
     public bool ing;
     public bool check;
 
-    public virtual bool Check(bool checkCondision = false)
+    public CheckBuff checkingCondition = new CheckBuff();
+
+    public virtual bool Check()
     {
         if (check)
         {

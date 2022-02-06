@@ -14,6 +14,9 @@ public class HoseTable : MyDataTableBase<HoseTableData>
     public List<HoseTableData> rareItem = new List<HoseTableData>();
     public List<HoseTableData> uniqueItem = new List<HoseTableData>();
     public List<HoseTableData> specialItem = new List<HoseTableData>();
+
+    public List<HoseTableData> regularItem = new List<HoseTableData>();
+    public List<HoseTableData> NonRegularItem = new List<HoseTableData>();
     public HoseTable() : base("HoseDataTable")
     {
         foreach (var table in tableList)
@@ -34,7 +37,7 @@ public class HoseTable : MyDataTableBase<HoseTableData>
             tableData.move = int.Parse(table["MOVE"]);
             tableData.vision = int.Parse(table["VISION"]);
             tableData.durability = int.Parse(table["Durability"]);
-
+            tableData.regular = bool.Parse(table["Regular"]);
             tables.Add(tableData);
 
         }
@@ -42,5 +45,8 @@ public class HoseTable : MyDataTableBase<HoseTableData>
         rareItem = tables.Where((x) => x.grade == ItemGrade.Rare.ToString()).ToList();
         uniqueItem = tables.Where((x) => x.grade == ItemGrade.Unique.ToString()).ToList();
         specialItem = tables.Where((x) => x.grade == ItemGrade.Special.ToString()).ToList();
+
+        regularItem = tables.Where((x) => x.regular).ToList();
+        NonRegularItem = tables.Where((x) => !x.regular).ToList();
     }
 }

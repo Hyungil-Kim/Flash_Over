@@ -6,13 +6,15 @@ using TMPro;
 
 public class ShopChaPrefab : MonoBehaviour
 {
-    public Image icon;
+    //public Image icon;
+    public RawImage icon;
     public TextMeshProUGUI chaName;
     public TextMeshProUGUI chaGrade;
     public TextMeshProUGUI chaClass;
     public CharacterData character;
-    public void SetValue(CharacterData cd)
+    public void SetValue(CharacterData cd, int index)
     {
+        icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
         character = cd;
         chaName.text = cd.characterName;
         chaGrade.text = cd.characterGrade;

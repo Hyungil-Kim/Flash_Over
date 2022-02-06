@@ -194,7 +194,7 @@ public class ClaimantMove
 			}
 			else
 			{
-				if (num < path.Count - 1 && num <= claimant.speed)
+				if (num < path.Count - 1 && num <= claimant.data.move)
 				{
 					num++;
 					breath = false;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using AdvancedPeopleSystem;
 public enum CharacterStatType
 {
     Hp,
@@ -122,8 +123,27 @@ public class TrainingStat
     }
 }
 
+public class CharacteristicCheck
+{
+    //시야범위내에 동료가 계속 있으면
+    public bool friendShip;
+    //분사타입을 하나만 쓰면 이게 가능한가..
+    public bool stubborn;
+    //요구조자들고있을때요구조자가 죽으면..
+    public bool mute;
+
+    public float amoutOfDamage;
+    public float amoutOfTakeDamage;
+    public float amoutOfHeal;
+    public float amoutOfTakeHeal;
+
+
+}
+
 public class CharacterData
 {
+    public CharacterCustomizationSetup setupModel;
+
     public string iconName = "testicon";
 
     public bool isHire;
@@ -147,6 +167,8 @@ public class CharacterData
     public int grade;
 
     public string prefabName = "male";
+
+    public List<CharacteristicList> addCharacteristics = new List<CharacteristicList>();
 
     public int weight
     {
@@ -204,7 +226,16 @@ public class CharacterData
     public bool isTraining;
 
     public List<Buff> buff = new List<Buff>();
-    public List<Buff> BadBuff = new List<Buff>();
+    public List<Buff> badCharacteristics = new List<Buff>();
+    public List<Buff> characteristics = new List<Buff>();
+
+    public CharacteristicCheck check = new CharacteristicCheck();
+
+    public int saveClaimantCount;
+
+    public float benefit;
+    public float penalty;
+
     public string state
     {
         get
@@ -523,10 +554,13 @@ public class CharacterData
         buff.Add(new HeavyWeight(this));
         buff.Add(new SaveClaimant(this));
 
-        BadBuff = buff.Where((x) => x.isBad).ToList();
-
         //스텟 최신화
         StatInit();
+
+        //디포트모델
+        var go = Resources.Load<GameObject>($"Prefabs/Character/{prefabName}");
+        var custom = go.GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+        setupModel = custom.GetSetup();
     }
     //public void SetCharacter()
     //{
@@ -643,6 +677,11 @@ public class CharacterData
         GameData.userData.hoseList.Add(hoseItem);
         EquipItem(hoseItem, ItemType.Hose);
         isHire = true;
+
+        //디포트모델
+        var go = Resources.Load<GameObject>($"Prefabs/Character/{prefabName}");
+        var custom = go.GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+        setupModel = custom.GetSetup();
 
         GameData.userData.characterList.Add(this);
 
@@ -809,7 +848,7 @@ public class CharacterData
                 break;
         }
     }
-    public void GameStart()
+    public void StartStatInit()
     {
         maxhp = totalStats.hp.stat;
         hp = maxhp;
@@ -844,6 +883,99 @@ public class CharacterData
         StatInit();
         return istired;
     }
+    public void BuildCharacteristic(CharacteristicList type)
+    {
+        var characteristic = new Buff();
+        switch (type)
+        {
+            case CharacteristicList.HeavyWeight:
+                characteristic = new HeavyWeight(this);
+                break;
+            case CharacteristicList.SaveClamant:
+                characteristic = new HeavyWeight(this);
+                break;
+            case CharacteristicList.Haughtiness:
+                characteristic = new Haughtiness(this);
+                break;
+            case CharacteristicList.StrongMind:
+                characteristic = new StrongMind(this);
+                break;
+            case CharacteristicList.Boldness:
+                characteristic = new Boldness(this);
+                break;
+            case CharacteristicList.WidePersPective:
+                characteristic = new WidePersPective(this);
+                break;
+            case CharacteristicList.FriendShip:
+                characteristic = new FriendShip(this);
+                break;
+            case CharacteristicList.MasterOfWeapon:
+                characteristic = new MasterOfWeapon(this);
+                break;
+            case CharacteristicList.QuickHealing:
+                characteristic = new QuickHealing(this);
+                break;
+            case CharacteristicList.Hearing:
+                characteristic = new Hearing(this);
+                break;
+            case CharacteristicList.Resilience:
+                characteristic = new Resilience(this);
+                break;
+            case CharacteristicList.Coward:
+                characteristic = new Coward(this);
+                break;
+            case CharacteristicList.Exaggerating:
+                characteristic = new Exaggerating(this);
+                break;
+            case CharacteristicList.Laziness:
+                characteristic = new Laziness(this);
+                break;
+            case CharacteristicList.Stubborn:
+                characteristic = new Stubborn(this);
+                break;
+            case CharacteristicList.Mute:
+                characteristic = new Mute(this);
+                break;
+            case CharacteristicList.TooMuchStress:
+                characteristic = new TooMuchStress(this);
+                break;
+            case CharacteristicList.LowSelfEsteem:
+                characteristic = new LowSelfEsteem(this);
+                break;
+            case CharacteristicList.Heroism:
+                characteristic = new Heroism(this);
+                break;
+            case CharacteristicList.Intelligent:
+                characteristic = new Intelligent(this);
+                break;
+            case CharacteristicList.Nimble:
+                characteristic = new Nimble(this);
+                break;
+            case CharacteristicList.Inside:
+                characteristic = new Inside(this);
+                break;
+            case CharacteristicList.FireTolerance:
+                characteristic = new FireTolerance(this);
+                break;
+            case CharacteristicList.Stronger:
+                characteristic = new Stronger(this);
+                break;
+            case CharacteristicList.Berserker:
+                characteristic = new Berserker(this);
+                break;
+            default:
+                break;
+        }
+        buff.Add(characteristic);
+        if(characteristic.isCharacteristic)
+        {
+            characteristics.Add(characteristic);
+        }
+        if(characteristic.isBadCharacteristic)
+        {
+            badCharacteristics.Add(characteristic);
+        }
+    }
 
     public void LoadCd()
     {
@@ -857,10 +989,106 @@ public class CharacterData
         var random = Random.value;
         if(random <= probability)
         {
-            var index = Random.Range(0, BadBuff.Count);
-            var removeBuff = BadBuff[index];
+            var index = Random.Range(0, badCharacteristics.Count);
+            var removeBuff = badCharacteristics[index];
             buff.Remove(removeBuff);
-            BadBuff.Remove(removeBuff);
+            badCharacteristics.Remove(removeBuff);
+        }
+    }
+
+    public void AddCharacterisic(CharacteristicList type)
+    {
+        addCharacteristics.Add(type);
+    }
+    public void StartCheckingCharacteristic()
+    {
+        if (tiredScore >= 50)
+        {
+            if (0.3f + penalty >= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.FriendShip);
+            }
+        }
+    }
+
+    public void EndCheckingCharacteristic()
+    {
+        if(check.friendShip)
+        {
+            if (0.03f + benefit >= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.FriendShip);
+            }
+        }
+        if(check.mute)
+        {
+            if (0.4f + penalty >= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.Mute);
+            }
+        }
+        if(check.stubborn)
+        {
+            if(0.1f + penalty >= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.Stubborn);
+            }
+        }
+        if(check.amoutOfDamage >= 50)
+        {
+            if(0.01f + benefit >= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.MasterOfWeapon);
+            }
+        }
+        if(check.amoutOfTakeDamage >= 20)
+        {
+            if(0.2f + penalty >= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.Exaggerating);
+            }
+        }
+        if(check.amoutOfHeal >= 50)
+        {
+            if(0.05f + benefit>= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.Inside);
+            }
+        }
+        if(check.amoutOfTakeHeal>=50)
+        {
+            if(0.05f + benefit >= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.Resilience);
+            }
+        }
+        if(hp == 1)
+        {
+            if(0.03f + benefit >= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.Berserker);
+            }
+        }
+        if(saveClaimantCount >= 30)
+        {
+            if(0.5f + benefit>= Random.value)
+            {
+                AddCharacterisic(CharacteristicList.Heroism);
+            }
+        }
+    }
+
+    public void StartStage()
+    {
+        StartCheckingCharacteristic();
+        StartStatInit();
+    }
+    public void EndStage()
+    {
+        EndCheckingCharacteristic();
+        foreach (var characteristic in addCharacteristics)
+        {
+            BuildCharacteristic(characteristic);
         }
     }
 }

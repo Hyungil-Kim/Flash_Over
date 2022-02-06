@@ -25,10 +25,12 @@ public class Player : FSM<PlayerState>
     /// 
     public int oxygentank = 5;//ªÍº“≈ ≈©
     public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
-    public int Maxap = 8; // √÷¥Î∆Û»∞∑Æ
+    //public int cd.totalStats.lung.stat = 8; // √÷¥Î∆Û»∞∑Æ
     public int lung = 0; // ∆Û hp
 
     public PlayerState playerState = PlayerState.Idle;
+    public AdvancedPeopleSystem.CharacterCustomization custom;
+
     public void SaveInit(PlayerSaveData sd)
     {
         gameObject.transform.position = new Vector3(sd.posx,sd.posy,sd.posz);
@@ -71,6 +73,7 @@ public class Player : FSM<PlayerState>
         AddState(PlayerState.Action, new PlayerAttackState(this));
         AddState(PlayerState.End, new PlayerEndState(this));
         SetState(playerState);
+        
 
     }
     void Start()
@@ -82,6 +85,8 @@ public class Player : FSM<PlayerState>
         //SetState(PlayerState.Idle);
         SetState(playerState);
         moveHelper.transform.localPosition = Vector3.zero;
+        ap = cd.totalStats.lung.stat;
+        cd.setupModel.ApplyToCharacter(custom);
     }
 
     public void CheckPlayerHp()

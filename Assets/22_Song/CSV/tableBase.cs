@@ -34,6 +34,8 @@ public class ItemTableDataBase : TableDataBase
     public int vision;
     public int sta;
     public int durability;
+
+    public bool regular;
 }
 public class StatTableDataBase : TableDataBase
 {

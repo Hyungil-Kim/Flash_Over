@@ -1237,7 +1237,7 @@ MonoBehaviour:
     skinnedMesh:
     - {fileID: 2242403781861756694}
   prefabPath: Assets/21_Kim/male.prefab
-  instanceStatus: 1
+  instanceStatus: 5
   originHip: {fileID: 3608871290724125747}
   headHip: {fileID: 8814404119847959998}
   clothesAnchors:
@@ -1261,13 +1261,13 @@ MonoBehaviour:
     - {fileID: 2008650221690075020}
   animator: {fileID: 6362515657070399274}
   characterSelectedElements:
-    Hair: 6
+    Hair: 2
     Beard: 7
     Hat: -1
     Shirt: 11
     Pants: 11
     Shoes: 11
-    Accessory: 8
+    Accessory: -1
     Item1: 1
   heightValue: 0
   headSizeValue: 0
@@ -1527,9 +1527,9 @@ MonoBehaviour:
   eventNum: 0
   oxygentank: 5
   ap: 8
-  Maxap: 8
-  lung: 100
+  lung: 0
   playerState: 0
+  custom: {fileID: 5140385882388958066}
 --- !u!54 &2011663452
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2128,7 +2128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1936555354309759542
 Transform:
   m_ObjectHideFlags: 0
@@ -2190,7 +2190,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300010, guid: 9f708d8618ebd254389d50caf98f9cae, type: 3}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 2841436964631025943}
   - {fileID: 6450475537443568853}
@@ -3146,7 +3146,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300006, guid: a5495b0c4720e134a88fda0cccad5d03, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 22e96424c8244c94c9e181ff91150a70, type: 3}
   m_Bones:
   - {fileID: 2841436964631025943}
   - {fileID: 6450475537443568853}
@@ -5209,6 +5209,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9189279043111345106, guid: 40473e7bb13d4a346ad7603babc211c7, type: 3}
   m_PrefabInstance: {fileID: 5146167623480052928}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5140385882388958066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 17044120302192562, guid: 40473e7bb13d4a346ad7603babc211c7, type: 3}
+  m_PrefabInstance: {fileID: 5146167623480052928}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147501002475660529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4549fe22a66a4b46934ceadea79b736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8147501002475660529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3925837941076027441, guid: 40473e7bb13d4a346ad7603babc211c7, type: 3}

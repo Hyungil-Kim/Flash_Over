@@ -65,13 +65,18 @@ public class TrainingList : MonoBehaviour
         {
             var index = i;
             var chaButton = chaList[index].GetComponent<ChaButton>();
-            chaButton.Init(sortUserCharacter[index],sortIndex);
+            chaButton.Init(sortUserCharacter[index],sortIndex, index);
             chaButton.button.onClick.AddListener(() => OnChaButton(index));
             chaList[index].SetActive(true);
+
+            var uiChaList = UIOnOff.instance.uiCharacterList;
+            var model = uiChaList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            sortUserCharacter[index].setupModel.ApplyToCharacter(model);
+            uiChaList[i].GetComponent<UICharacter>().Init(i);
         }
     }
     public void DropDownInit()
-    {
+    {   
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
         var enumNames = System.Enum.GetNames(typeof(CharacterOrder));
         foreach (var enumName in enumNames)

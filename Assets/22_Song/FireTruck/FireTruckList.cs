@@ -68,7 +68,7 @@ public class FireTruckList : MonoBehaviour
         {
             var index = i;
             var chaButton = chaList[index].GetComponent<ChaButton>();
-            chaButton.Init(sortUserCharacter[index],sortIndex);
+            chaButton.Init(sortUserCharacter[index],sortIndex, i);
             chaButton.button.onClick.AddListener(() => OnChaButton(index));
             chaList[index].SetActive(true);
         }

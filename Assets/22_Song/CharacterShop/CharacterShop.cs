@@ -26,9 +26,18 @@ public class CharacterShop : MonoBehaviour
 
     private int currentPoint;
     List<GameObject> shopChaList = new List<GameObject>();
+    List<GameObject> uiCharacterList = new List<GameObject>();
+    public GameObject uiCharacter;
 
     private void Awake()
     {
+
+        var uiCharacters = GameObject.FindGameObjectsWithTag("UICharacter");
+        foreach (var uicharacter in uiCharacters)
+        {
+            uiCharacterList.Add(uicharacter);
+        }
+            
         for (int i = 0; i < maxChaList; i++)
         {
             var index = i;
@@ -70,9 +79,27 @@ public class CharacterShop : MonoBehaviour
             CharacterData cd = new CharacterData();
             cd.NewSetCharacter();
             var prefab = shopChaList[i].GetComponent<ShopChaPrefab>();
-            prefab.SetValue(cd);
+            prefab.SetValue(cd, i);
             GameData.userData.shopChaList.Add(cd);
             shopChaList[i].SetActive(true);
+            var prefabName = cd.prefabName;
+            var go = Resources.Load<GameObject>($"Prefabs/Character/{prefabName}");
+            var custom = go.GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            var testSettings = custom.GetSetup();
+
+            testSettings.HairColor = new float[4] { 1f, 1f, 1f, 1f };
+            testSettings.selectedElements.Hair = Random.Range(-1, 15);
+            testSettings.selectedElements.Hat = Random.Range(-1, 7);
+            testSettings.selectedElements.Beard = Random.Range(-1, 9);
+            testSettings.selectedElements.Item1 = Random.Range(-1, 3);
+            testSettings.selectedElements.Accessory = Random.Range(-1,5);
+            
+            //testSettings.ApplyToCharacter(custom);
+            cd.setupModel = testSettings;
+
+            var model = uiCharacterList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            cd.setupModel.ApplyToCharacter(model);
+            uiCharacterList[i].GetComponent<UICharacter>().Init(i);
         }
     }
 
@@ -80,13 +107,18 @@ public class CharacterShop : MonoBehaviour
     {
         var shopChaPrefab = shopChaList[index].GetComponent<ShopChaPrefab>();
         shopChaList[index].SetActive(true);
-        shopChaPrefab.SetValue(cd);
+        shopChaPrefab.SetValue(cd, index);
     }
 
     public void OnChaButton(int index)
     {
+        var cd = GameData.userData.shopChaList[currentPoint];
         currentPoint = index;
-        hireInfo.Init(GameData.userData.shopChaList[currentPoint]);
+        hireInfo.Init(cd, index);
+
+
+        //var custom = uiCharacter.GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+        //cd.setupModel.ApplyToCharacter(custom);
     }
     public void OnHireButton()
     {

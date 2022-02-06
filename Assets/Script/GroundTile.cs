@@ -58,8 +58,10 @@ public class GroundTile : MonoBehaviour
 	public bool tileIsSmoke;
 	public bool tileIsClaimant;
 
-	public int tileWeatValue;//물 묻으면 생기는 가중치
+	public float tileWeatValue;//물 묻으면 생기는 가중치
+	public int tileMaxExp;// 타일 max경험치 data
 	public int tileExp;// 타일 경험치
+	public float tileMaxHp;//타일 maxHp data
 	public float tileHp; //타일 hp
 
 	public int tileSaveSmokeValue;//연기 다음에 추가될 값
@@ -70,6 +72,9 @@ public class GroundTile : MonoBehaviour
 	//public TileSaveData data;
 
 	public int infoIndex;
+
+	public int id;
+	public TileData data;
 
 	public GroundTile(int x , int y)
 	{
@@ -82,6 +87,17 @@ public class GroundTile : MonoBehaviour
 		//AllTile.allTile.Add(index, this);
 		AllTile.allTile.Add(this);
 		AllTile.SaveTile.Add(this);
+
+		data = MyDataTableMgr.tileTable.GetTable(id);
+		tileMaxHp = data.hp;
+		tileMaxExp = data.exp;
+		tileWeatValue = data.waterWeight;
+		tileMesh = data.weight;
+		tileIsWeat = data.water;
+
+		tileHp = tileMaxHp;
+		tileExp = tileMaxExp;
+
 	}
 	public void Start()
 	{
@@ -119,6 +135,17 @@ public class GroundTile : MonoBehaviour
 		//{
 		//	renderer.material.renderQueue = 2450;
 		//}
+
+		//data = MyDataTableMgr.tileTable.GetTable(id);
+		//tileMaxHp = data.hp;
+		//tileMaxExp = data.exp;
+		//tileWeatValue = data.waterWeight;
+		//tileMesh = data.weight;
+		//tileIsWeat = data.water;
+
+		//tileHp = tileMaxHp;
+		//tileExp = tileMaxExp;
+
 	}
 	public TileSaveData GetData()
     {
@@ -147,6 +174,8 @@ public class GroundTile : MonoBehaviour
 			sd.firehp = fire.fireHp;
 		}
 		
+		
+
 		return sd;
     }
 	
@@ -435,7 +464,7 @@ public class GroundTile : MonoBehaviour
 			objectsMesh = 0;
 		}
 		var fire = tile.GetComponentInChildren<Fire>(true);
-		var weat = 0;
+		var weat = 0f;
 		if(tile.tileIsWeat)
 		{
 			weat = tileWeatValue;

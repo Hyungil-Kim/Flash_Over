@@ -25,7 +25,10 @@ public class CreateCharacter : MonoBehaviour
             character = Instantiate(characterPrefab, transform);
             character.GetComponent<Player>().cd = cd;
             character.GetComponent<Player>().index = characterIndex;
-            character.GetComponent<Player>().cd.GameStart();
+            character.GetComponent<Player>().cd.StartStage();
+            var model = character.GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            cd.setupModel.ApplyToCharacter(model);
+
         }
         else
         {
@@ -39,8 +42,11 @@ public class CreateCharacter : MonoBehaviour
             test.EquipItem(new OxygenTankData(MyDataTableMgr.oxygenTankTable.GetTable(1)), ItemType.OxygenTank);
 
             character.GetComponent<Player>().cd = test;
-            character.GetComponent<Player>().cd.GameStart();
+            character.GetComponent<Player>().cd.StartStage();
             character.GetComponent<Player>().index = characterIndex;
+
+            var model = character.GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            test.setupModel.ApplyToCharacter(model);
         }
     }
     public void ChangeCharacter(CharacterData cd)
