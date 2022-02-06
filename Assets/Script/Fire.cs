@@ -53,6 +53,13 @@ public class Fire : FSM<FireState>
         }
 		
 	}
+	public void OnEnable()
+	{
+		if (gameManager.tilemapManager.ReturnTile(this.gameObject).safeArea)
+		{
+			Turn.SafeAreaFalse(fireArea);
+		}
+	}
 	public void FireAct()
 	{
 		gameManager.tilemapManager.FireAttack(this, Color.grey);
@@ -67,6 +74,7 @@ public class Fire : FSM<FireState>
 		{
 			gameObject.SetActive(false);
 			gt.tileIsFire = false;
+			Turn.CheckSafeArea(fireArea);
 			Turn.fires.Remove(this);
 		}
 	}
@@ -75,6 +83,10 @@ public class Fire : FSM<FireState>
 		if (fire != null)
 		{
 			fire.SetActive(true);
+			if(gt.tileIsWeat)
+			{
+				gt.tileIsWeat = false;
+			}
 		}
 	}
 	public void OffFire()

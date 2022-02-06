@@ -21,7 +21,7 @@ public class PlayCharacterInfo : MonoBehaviour
     }
     private void Update()
     {
-        Init();
+        //Init();
     }
     public void Init()
     {

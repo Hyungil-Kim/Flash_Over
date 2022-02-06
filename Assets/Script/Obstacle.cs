@@ -14,6 +14,7 @@ public class Obstacle : MonoBehaviour
     public bool updateOn = true;
 
     /// //////////////////////////////////
+    public int objectID;
     public float obstacleMesh; //오브젝트 가중치
     public int exploseRange; // 터지는 범위
     public float exploseDamage;//터지는 데미지
@@ -23,14 +24,39 @@ public class Obstacle : MonoBehaviour
     public bool isBurn; //현재 타고있는지 
     public float def; //방어력
     public bool isSight;
-
+    public float count;
     void Start()
     {
         gameManager = GameManager.instance;
-
+        Shader.SetGlobalFloat("StartBurning", 0);
+        Shader.SetGlobalFloat("StopBurning", 0);
+        count = 0;
     }
+	public void Update()
+	{
+        Material[] material = this.GetComponent<MeshRenderer>().materials;
+		if(hp < 50)//최대치가 아니면
+		{
+            material[0] = material[1];
+            this.GetComponent<MeshRenderer>().materials = material;
+            isBurn = true;
+		}
+        if(isBurn)
+        {
+            if (count < 6)
+            {
+                count += 0.16f;
+            }
+            material = this.GetComponent<MeshRenderer>().materials;
+            material[0].SetFloat("StartBurning", count);
+            if(hp <= 5)//최대치의 5퍼센트?
+			{
+                material[0].SetFloat("StopBurning", count);
+            }
+		}
 
-   public void CheckObstacleHp()
+	}
+	public void CheckObstacleHp()
 	{
         if (hp <= 0 && updateOn)
         {
@@ -42,8 +68,7 @@ public class Obstacle : MonoBehaviour
                     break;
                 case EndBurn.NonDestroy:
                     //매쉬 바꿈
-                 
-                   
+
                     updateOn = false;
                     break;
                 case EndBurn.Explose:

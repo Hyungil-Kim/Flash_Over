@@ -7804,6 +7804,7 @@ MonoBehaviour:
   - {fileID: 2709041341356360401}
   notEnoughMoney: {fileID: 7805089767413742728}
   text: {fileID: 7719195561349593107}
+  mousepos: {x: 0, y: 0}
 --- !u!114 &1016728068530081859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22258,7 +22259,9 @@ MonoBehaviour:
   maxFireMan: 9
   fireTruckList: {fileID: 0}
   inventory: {fileID: 0}
+  firemanCharacter: {fileID: 0}
   consumShop: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &7805089766575873671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30464,6 +30467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSlot: 4
   baseSlot: 2
+  probability: 0
   restPrefab: {fileID: 5323695580665092769, guid: 6cb0b0c5c81bb3549bb8a5fb41ade51b, type: 3}
 --- !u!1 &1016728070105483187
 GameObject:
@@ -32548,6 +32552,9 @@ MonoBehaviour:
   shopItemPrefab: {fileID: 7090780857606047155, guid: 346920486f547b04da37c0ec037039da, type: 3}
   content: {fileID: 8470694956093032504}
   notEnoughGold: {fileID: 8470694955450500059}
+  hoseItemCount: 2
+  bunkerGearItemCount: 2
+  oxygenTankItemCount: 2
   gold: {fileID: 1016728069922670750}
 --- !u!1 &2534958924272893118
 GameObject:
@@ -44978,6 +44985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29977f52266e8e1428c0488718423fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icon: {fileID: 0}
   chaName: {fileID: 1016728069001966966}
   chaGrade: {fileID: 1016728069581942462}
   chaClass: {fileID: 1016728068727390232}
