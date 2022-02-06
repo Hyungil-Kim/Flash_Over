@@ -257,6 +257,37 @@ Transform:
   m_Father: {fileID: 7503001869989508323}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &573770139028089804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1805304498381420, guid: 1bbb8c37e80056641b68747d186f20fa, type: 3}
+  m_PrefabInstance: {fileID: 2878776492500474402}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2874074358805082122}
+  m_Layer: 0
+  m_Name: 'Oxygen (Missing Prefab with guid: 1bbb8c37e80056641b68747d186f20fa)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2874074358805082122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4983611373578792, guid: 1bbb8c37e80056641b68747d186f20fa, type: 3}
+  m_PrefabInstance: {fileID: 2878776492500474402}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573770139028089804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5774817665195585981}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &621192764713660379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,13 +1559,14 @@ MonoBehaviour:
   eventNum: 0
   oxygentank: 5
   ap: 8
-  Maxap: 8
   lung: 0
-  animator: {fileID: 0}
+  playerState: 0
+  custom: {fileID: 3431227254400282077}
+  moveHelperCustom: {fileID: 5140385882388958066}
+  animator: {fileID: 6362515657070399274}
   Fire_Hose: {fileID: 2449102090815466758}
   waterStraight: {fileID: 2449102090796516744}
   waterWide: {fileID: 5855709605715229363}
-  playerState: 0
 --- !u!54 &2011663452
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5243,11 +5275,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bbb8c37e80056641b68747d186f20fa, type: 3}
---- !u!4 &2874074358805082122 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4983611373578792, guid: 1bbb8c37e80056641b68747d186f20fa, type: 3}
-  m_PrefabInstance: {fileID: 2878776492500474402}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5146167623480052928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5398,6 +5425,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9189279043111345106, guid: 40473e7bb13d4a346ad7603babc211c7, type: 3}
   m_PrefabInstance: {fileID: 5146167623480052928}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5140385882388958066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 17044120302192562, guid: 40473e7bb13d4a346ad7603babc211c7, type: 3}
+  m_PrefabInstance: {fileID: 5146167623480052928}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147501002475660529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4549fe22a66a4b46934ceadea79b736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8147501002475660529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3925837941076027441, guid: 40473e7bb13d4a346ad7603babc211c7, type: 3}

@@ -30,12 +30,13 @@ public class Player : FSM<PlayerState>
 
     public PlayerState playerState = PlayerState.Idle;
     public AdvancedPeopleSystem.CharacterCustomization custom;
+    public AdvancedPeopleSystem.CharacterCustomization moveHelperCustom;
 
 	public Animator animator;
 	public GameObject Fire_Hose;
 	public ParticleSystem waterStraight;
 	public ParticleSystem waterWide;
-	public PlayerState playerState = PlayerState.Idle;
+
 	private FireHose fireHose;
 
 
@@ -93,7 +94,10 @@ public class Player : FSM<PlayerState>
 		SetState(playerState);
         moveHelper.transform.localPosition = Vector3.zero;
         ap = cd.totalStats.lung.stat;
-        cd.setupModel.ApplyToCharacter(custom);
+		animator = GetComponent<Animator>();
+		cd.setupModel.ApplyToCharacter(custom);
+		cd.setupModel.ApplyToCharacter(moveHelperCustom);
+		
     }
 
 
