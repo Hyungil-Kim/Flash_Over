@@ -10,7 +10,6 @@ public class UIManager : MonoBehaviour
     public MeetEventManager meetEventManager;
     public Button startButton;
     public Image icon;
-    public PlayCharacterInfo info;
     public UpperUIManager upperUIManager;
     public MenuManager menuManager;
     public InfoUiScript InfoUiScript;
@@ -31,7 +30,7 @@ public class UIManager : MonoBehaviour
     {
         startButton.gameObject.SetActive(false);
         icon.gameObject.SetActive(false);
-        info.gameObject.SetActive(false);
+        InfoUiScript.smallInfo.gameObject.SetActive(false);
     }
     public void OnCharacterIcon()
     {
@@ -43,10 +42,10 @@ public class UIManager : MonoBehaviour
     }
     public void OnCharacterInfo()
     {
-        info.gameObject.SetActive(true);
+        InfoUiScript.smallInfo.gameObject.SetActive(true);
     }
     public void OffCharacterInfo()
     {
-        info.gameObject.SetActive(false);
+        InfoUiScript.smallInfo.gameObject.SetActive(false);
     }
 }

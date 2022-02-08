@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
 					pretargetPlayer = targetPlayer;
 					preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					uIManager.OnCharacterInfo();
-					uIManager.info.Init();
+					uIManager.InfoUiScript.smallInfo.Init();
 				}
 				if (targetPlayer.playerState == PlayerState.Idle || targetPlayer.playerState == PlayerState.End)
 				{
@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
 					change = target.GetComponentInParent<CreateCharacter>();
 					uIManager.OnCharacterIcon();
 					uIManager.OnCharacterInfo();
-					uIManager.info.Init();
+					uIManager.InfoUiScript.smallInfo.Init();
 					break;
 				}
 				else if (target.tag == "CreateQuad")
@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
 					changePlayer = change.GetComponentInChildren<Player>();
 					uIManager.OnCharacterIcon();
 					uIManager.OnCharacterInfo();
-					uIManager.info.Init();
+					uIManager.InfoUiScript.smallInfo.Init();
 				}
 				else
 				{
@@ -275,19 +275,20 @@ public class GameManager : MonoBehaviour
 			pretargetPlayer = targetPlayer;
 			preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 		}
+		targetPlayer = target.GetComponent<Player>();
 		uIManager.OnCharacterInfo();
-		uIManager.info.Init();
+		uIManager.InfoUiScript.smallInfo.Init();
 	}
 
 
 	public void GetClickedEndMouse()
 	{
 		press = false;
-		if (!point && isStart)
+		if (!point && isStart && !uIManager.InfoUiScript.tileInfo.on )
 		{
-			uIManager.InfoUiScript.charaterInfo.SetActive(false);
-			uIManager.InfoUiScript.tileInfo.SetActive(false);
-			uIManager.InfoUiScript.claimantInfo.SetActive(false);
+			uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(false);
+			uIManager.InfoUiScript.tileInfo.gameObject.SetActive(false);
+			uIManager.InfoUiScript.claimantInfo.gameObject.SetActive(false);
 			Debug.Log("Start");
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
@@ -338,12 +339,28 @@ public class GameManager : MonoBehaviour
 						preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					}
 					if (targetPlayer != null)
-					{
-						uIManager.InfoUiScript.charaterInfo.SetActive(true);
-						uIManager.InfoUiScript.charaterInfo.GetComponent<CharInfo>().UpdateData();
+					{	
+						uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(true);
+						uIManager.InfoUiScript.charaterInfo.UpdateData(target.GetComponent<Player>());
 					}
 					uIManager.OnCharacterInfo();
-					uIManager.info.Init();
+					uIManager.InfoUiScript.smallInfo.Init();
+				}
+				else if (pickup)
+				{
+					PickUp();
+				}
+				else if (putdown)
+				{
+					PutDown();
+				}
+				else if (showMeleeRange)
+				{
+					UseItemMeleeRange();
+				}
+				else if (showthrowwRange)
+				{
+					UseItemthrowRange();
 				}
 				else if (target.tag == "Ground")//땅클릭 + 이동범위인지
 				{
@@ -366,42 +383,31 @@ public class GameManager : MonoBehaviour
 					}
 					else 
 					{
-						if (targetPlayer.moveHelper.activeSelf)
+						if (num == -1)
 						{
-							if (targetTile != tilemapManager.ReturnTile(targetPlayer.moveHelper))
-								{
-								uIManager.InfoUiScript.tileInfo.SetActive(true);
-							}
-						}
-						else
-						{
-							if (targetTile != tilemapManager.ReturnTile(targetPlayer.gameObject))
+							if (targetPlayer.moveHelper.activeSelf)
 							{
-								uIManager.InfoUiScript.tileInfo.SetActive(true);
+								if (targetTile != tilemapManager.ReturnTile(targetPlayer.moveHelper))
+								{
+									uIManager.InfoUiScript.tileInfo.gameObject.SetActive(true);
+									uIManager.InfoUiScript.tileInfo.UpdateTileInfo();
+								}
+							}
+							else
+							{
+								if (targetTile != tilemapManager.ReturnTile(targetPlayer.gameObject))
+								{
+									uIManager.InfoUiScript.tileInfo.gameObject.SetActive(true);
+									uIManager.InfoUiScript.tileInfo.UpdateTileInfo();
+								}
 							}
 						}
 						//uIManager.InfoUiScript.tileInfo.GetComponent<TileInfo>().UpdateTileInfo();
 					}
 				}
-				else if (pickup)
-				{
-					PickUp();
-				}
-				else if (putdown)
-				{
-					PutDown();
-				}
-				else if (showMeleeRange)
-				{
-					UseItemMeleeRange();
-				}
-				else if (showthrowwRange)
-				{
-					UseItemthrowRange();
-				}
 				else if (target.tag == "Claimant")
 				{
-					uIManager.InfoUiScript.claimantInfo.SetActive(true);
+					uIManager.InfoUiScript.claimantInfo.gameObject.SetActive(true);
 					uIManager.InfoUiScript.claimantInfo.GetComponent<ClaimantInfo2>().UpdateClaimantInfo();
 				}
 
@@ -439,6 +445,18 @@ public class GameManager : MonoBehaviour
 				Debug.Log("No Target");
 			}
 		}
+		else 
+		{
+			if (!point)
+			{
+				if (uIManager.InfoUiScript.tileInfo.on)
+				{
+					uIManager.InfoUiScript.tileInfo.on = false;
+					uIManager.InfoUiScript.tileInfo.gameObject.SetActive(false);
+				}
+			}
+		}
+		
 	}
 	public void CharacterChanageEnd()
 	{
@@ -520,7 +538,7 @@ public class GameManager : MonoBehaviour
 
 	public void Update()
 	{
-		tMPro.text = preTile.transform.position.ToString();
+		//tMPro.text = preTile.transform.position.ToString();
 		pressPro.text = press.ToString();
 		ready.text = playerMove.moveList.Count.ToString();
 		var t = turnCount + " turn";
@@ -592,18 +610,18 @@ public class GameManager : MonoBehaviour
 			//target.SetActive(false);
 			playerMove.go = true;
 			targetPlayer.handFull = true;
-			targetPlayer.ap -= 3;
-			if (targetPlayer.ap < 0)
+			targetPlayer.cd.oxygen -= 3;
+			if (targetPlayer.cd.oxygen < 0)
 			{
-				targetPlayer.lung -= targetPlayer.ap;
-				targetPlayer.ap = 0;
+				targetPlayer.lung -= targetPlayer.cd.oxygen;
+				targetPlayer.cd.oxygen = 0;
 			}
 		}
 	}
 	public void PutDown()
 	{
 		var playerTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
-		if (target.tag == "Ground" && targetTile.nextTileList.Contains(playerTile))
+		if (target.tag == "Ground" && playerTile.nextTileList.Contains(targetTile))
 		{
 			var hand = targetPlayer.handList[0];
 			playerMove.moveList.Add(target.transform.position);
@@ -619,11 +637,11 @@ public class GameManager : MonoBehaviour
 			targetPlayer.handList.RemoveAt(0);
 			playerMove.go = true;
 			targetPlayer.handFull = false;
-			targetPlayer.ap -= 3;
-			if (targetPlayer.ap < 0)
+			targetPlayer.cd.oxygen -= 3;
+			if (targetPlayer.cd.oxygen < 0)
 			{
-				targetPlayer.lung -= targetPlayer.ap;
-				targetPlayer.ap = 0;
+				targetPlayer.lung -= targetPlayer.cd.oxygen;
+				targetPlayer.cd.oxygen = 0;
 			}
 			if (target.GetComponent<GroundTile>().safeArea)
 			{
@@ -712,6 +730,7 @@ public class GameManager : MonoBehaviour
 			}
 			else if (useitem.preTile == targetTile)
 			{
+				StartCoroutine(targetPlayer.ThrowAnimation());
 				if (useitem.itemType == ConsumItemType.Heal)
 				{
 					foreach (var elem in useitem.throwListRange)

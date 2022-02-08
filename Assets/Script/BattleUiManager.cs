@@ -131,7 +131,6 @@ public class BattleUiManager : MonoBehaviour
 		if(gameManager.num != -1)
 		{ 
 			tilemapManager.DoAttack(gameManager.targetPlayer, gameManager.num);
-			gameManager.targetPlayer.SetState(PlayerState.End);
 		}
 	}
 	public void DoPickClaimant()
@@ -165,13 +164,14 @@ public class BattleUiManager : MonoBehaviour
 	public void DoorInteractionOpen()
 	{
 		Cancle();
+		gameManager.targetPlayer.animator.SetBool("openDoor", true);
 		StartCoroutine(findDoor.OpenDoor());
 
 	}
 	public void DoorInteractionClose()
 	{
 		Cancle();
-		StartCoroutine(findDoor.CloseDoor());
+		//StartCoroutine(findDoor.CloseDoor());
 	}
 	public void FuseBoxInteractionOff()
 	{
@@ -231,7 +231,7 @@ public class BattleUiManager : MonoBehaviour
 		putDownButton.gameObject.SetActive(false);
 		openDoorButton.gameObject.SetActive(false);
 		closeDoorButton.gameObject.SetActive(false);
-
+		gameManager.num = -1;
 		fuseOffButton.gameObject.SetActive(false);
 		selectNextPlayer.gameObject.SetActive(false);
 	}

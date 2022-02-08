@@ -96,6 +96,11 @@ public class TilemapManager : MonoBehaviour
 			targetPlayer.SetState(PlayerState.Action);
 		}
 	}
+	public void DeadEnd()
+	{
+		floodFill.ResetTile(tilemap);
+		gameManager.playerMove.moveList.Clear();
+	}
 	public IEnumerator meetClaimant()
 	{
 		saveClaimant.SetState(ClaimantState.Meet);
@@ -144,7 +149,7 @@ public class TilemapManager : MonoBehaviour
 	}
 	public void FireAttack(Fire target, Color attackSetColor)
 	{
-		var list = testAttackRange.CrossFloodFill(this, target.gameObject, attackSetColor, target.fireLevel);
+		var list = testAttackRange.CrossFloodFill(this, target.gameObject, attackSetColor, target.fireLevel + 1);
 		FireDamage(target, list);
 		for (int i = 0; i < list.Count; i++) //확인? 왜 있어야하는지
 		{
@@ -281,11 +286,11 @@ public class TilemapManager : MonoBehaviour
 		{
 			attacker.cd.hp -= (int)FuseBox.ShockDamage;
 		}
-		attacker.ap -= 5;
-		if (attacker.ap < 0)
+		attacker.cd.oxygen -= 5;
+		if (attacker.cd.oxygen < 0)
 		{
-			attacker.lung -= attacker.ap;
-			attacker.ap = 0;
+			attacker.lung -= attacker.cd.oxygen;
+			attacker.cd.oxygen = 0;
 		}
 	}
 
@@ -440,11 +445,11 @@ public class TilemapManager : MonoBehaviour
 		{
 
 		}
-			if (ReturnTile(claimant.gameObject).isExit)
-			{	
+		if (ReturnTile(claimant.gameObject).isExit)
+		{
 			//ani
 			claimant.gameObject.SetActive(false);
 			gameManager.escape++;
-			}
+		}
 	}
 }

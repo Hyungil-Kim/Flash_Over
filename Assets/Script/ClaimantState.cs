@@ -11,7 +11,7 @@ public class ClaimantIdleState : State
 	}
 	public override void Enter()
 	{
-		
+		fsm.CheckClaimantHp();
 	}
 	public override void Update()
 	{
@@ -71,7 +71,7 @@ public class ClaimantEndState : State
 	}
 	public override void Enter()
 	{
-		
+		fsm.CheckClaimantHp();
 	}
 	public override void Update()
 	{

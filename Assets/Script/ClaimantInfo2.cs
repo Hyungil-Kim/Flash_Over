@@ -9,18 +9,22 @@ public class ClaimantInfo2 : MonoBehaviour
     public TextMeshProUGUI claimantState;
     public Slider sliderHp;
     public Slider sliderBreath;
-
+	private void Awake()
+	{
+		gameManager = GameManager.instance;
+	}
 	public void UpdateClaimantInfo()
 	{
 		if(gameManager.target.tag == "Claimant")
 		{
-			if (gameManager.target.GetComponent<Claimant>().stun)
+			var claimant = gameManager.target.GetComponent<Claimant>();
+			if (claimant.stun)
 			{
 				claimantState.text = "±‚¿˝";
 			}
 			else
 			{
-				switch (gameManager.target.GetComponent<Claimant>().num)
+				switch (claimant.num)
 				{
 					case 0:
 						claimantState.text = "∏ÿ√„";
@@ -39,6 +43,8 @@ public class ClaimantInfo2 : MonoBehaviour
 						break;
 				}
 			}
+			sliderHp.value = (float)claimant.hp / (float)claimant.data.hp;
+			sliderBreath.value = (float)claimant.ap / (float)claimant.data.lung;
 		}
 	}
 }

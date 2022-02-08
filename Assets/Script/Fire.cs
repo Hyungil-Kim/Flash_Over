@@ -51,7 +51,6 @@ public class Fire : FSM<FireState>
         {
 			particle.Stop();
         }
-		
 	}
 	public void OnEnable()
 	{

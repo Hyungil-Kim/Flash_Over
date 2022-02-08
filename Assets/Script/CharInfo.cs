@@ -7,7 +7,6 @@ public class CharInfo : MonoBehaviour
 {
 	public GameManager gameManager;
 
-	public Button changeCharacterInfo;
 	public Button changeTileInfo;
 
 	public Image image;
@@ -36,30 +35,28 @@ public class CharInfo : MonoBehaviour
 		gameManager = GameManager.instance;
 	}
 
-	public void UpdateData()
+	public void UpdateData(Player targetPlayer)
 	{
-		if (gameManager.targetPlayer != null)
+		if (targetPlayer != null)
 		{
-			moveNum.text = gameManager.targetPlayer.cd.totalStats.move.ToString();
-			hpSlider.value = (float)gameManager.targetPlayer.cd.hp / (float)gameManager.targetPlayer.cd.maxhp;
-			breathSlider.value = (float)gameManager.targetPlayer.cd.oxygen / (float)gameManager.targetPlayer.cd.maxoxygen;
-			powerSlider.value = (float)gameManager.targetPlayer.cd.weight / (float)gameManager.targetPlayer.cd.totalStats.str.stat;
-			sightNum.text = gameManager.targetPlayer.cd.totalStats.vision.ToString();
-			straightDamage.text = gameManager.targetPlayer.cd.totalStats.dmg.ToString();
-			roundDamage.text = (gameManager.targetPlayer.cd.totalStats.dmg *0.6).ToString();
-			armorNum.text = gameManager.targetPlayer.cd.totalStats.def.ToString();
-			airgaugeNum.text = gameManager.targetPlayer.oxygentank.ToString();
+			name.text = targetPlayer.name;
+			moveNum.text = targetPlayer.cd.totalStats.move.ToString();
+			hpSlider.value = (float)targetPlayer.cd.hp / (float)targetPlayer.cd.maxhp;
+			breathSlider.value = (float)targetPlayer.cd.oxygen / (float)targetPlayer.cd.maxoxygen;
+			powerSlider.value = (float)targetPlayer.cd.weight / (float)targetPlayer.cd.totalStats.str.stat;
+			sightNum.text = targetPlayer.cd.totalStats.vision.ToString();
+			straightDamage.text = targetPlayer.cd.totalStats.dmg.ToString();
+			roundDamage.text = (targetPlayer.cd.totalStats.dmg *0.6).ToString();
+			armorNum.text = targetPlayer.cd.totalStats.def.ToString();
+			airgaugeNum.text = targetPlayer.oxygentank.ToString();
 			//특성수만큼
 		}
 	}
-	public void ClickChangeCharInfoButton()
-	{
-		gameManager.uIManager.InfoUiScript.tileInfo.SetActive(true);
-		gameObject.SetActive(false);
-	}
 	public void ClickChangeTileInfoButton()
 	{
-
+		gameManager.target = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject).gameObject;
+		gameManager.uIManager.InfoUiScript.tileInfo.gameObject.SetActive(true);
+		gameObject.SetActive(false);
 	}
 
 }

@@ -176,6 +176,7 @@ public static class Turn
 		{
 			foreach (var player in players)
 			{
+				//if(player.)
 				player.ChangeState(PlayerState.Idle);
 			}
 		}
@@ -186,7 +187,7 @@ public static class Turn
 				fire.ChangeState(FireState.Idle);
 			}
 		}
-		if (claimants.Count != 0)
+		if (claimants.Count != 0)	
 		{
 			foreach (var claimant in claimants)
 			{
