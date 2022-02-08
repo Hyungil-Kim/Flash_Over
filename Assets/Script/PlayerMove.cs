@@ -65,7 +65,7 @@ public class PlayerMove : MonoBehaviour
 		{
 			var moveHelper = player.moveHelper;
 			var helperTile = tilemapManager.ReturnTile(moveHelper);
-			Debug.Log(helperTile.transform.position);
+			//Debug.Log(helperTile.transform.position);
 			while (gameManager.press)
 			{
 				var mousePos = gameManager.mousePos;

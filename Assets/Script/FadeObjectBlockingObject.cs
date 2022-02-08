@@ -8,7 +8,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
     [SerializeField]
     private LayerMask LayerMask;
     [SerializeField]
-    private GameObject[] Player;
+    private GameObject[] player;
     private GameObject[] Players;
     private GameObject[] Fire;
 
@@ -33,14 +33,16 @@ public class FadeObjectBlockingObject : MonoBehaviour
     private Dictionary<FadingObject, Coroutine> RunningCoroutines = new Dictionary<FadingObject, Coroutine>();
 
     private RaycastHit[] Hits = new RaycastHit[1000];
-
+    
     private void Start()
     {
-        Player= GameObject.FindGameObjectsWithTag("CreateCharacter");
+       
         //Fire= GameObject.FindGameObjectsWithTag("Monster");
         //Player = Player.Concat(Fire).ToArray();
         StartCoroutine(CheckForObjects());
     }
+
+
 
     private IEnumerator CheckForObjects()
     {
@@ -48,9 +50,10 @@ public class FadeObjectBlockingObject : MonoBehaviour
 
         while (true)
         {
-            for (int i = 0; i < Player.Length; i++)
+           
+            for (int i = 0; i < Turn.players.Count; i++)
             {
-                int hits = Physics.RaycastNonAlloc(Camera.transform.position, (Player[i].transform.position - Camera.transform.position).normalized, Hits, Vector3.Distance(Camera.transform.position, Player[i].transform.position), LayerMask);
+                int hits = Physics.RaycastNonAlloc(Camera.transform.position, (Turn.players[i].transform.position - Camera.transform.position).normalized, Hits, Vector3.Distance(Camera.transform.position, Turn.players[i].transform.position), LayerMask);
                 if (hits > 0)// &&Player[i].GetComponentInChildren<VisualEffect>().enabled==true)
                 {
                     for (int j = 0; j < hits; j++)

@@ -36,7 +36,7 @@ public static class Turn
 	{
 		foreach (var player in players)
 		{
-			if(player.curStateName==PlayerState.Idle)
+			if (player.curStateName==PlayerState.Idle)
             {
 				GameManager.instance.ChangeTargetPlayer(player.gameObject);
 				GameManager.instance.move = player.cd.totalStats.move;
@@ -46,6 +46,11 @@ public static class Turn
 			{
 				yield break;
 			}
+			if(player.curStateName == PlayerState.End)
+            {
+				Debug.Log("들어옴");
+				GameManager.ChangeLayersRecursively(player.transform, "Player");
+            }
 		}
 		///
 		/// setActive UI( 적턴)

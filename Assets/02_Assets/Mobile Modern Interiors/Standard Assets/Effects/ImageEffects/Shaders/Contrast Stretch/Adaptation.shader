@@ -32,7 +32,8 @@ float4 frag (v2f_img i) : SV_Target  {
 	//
 	// Because we store adaptation levels in a simple 8 bit/channel
 	// texture, we might not have enough precision - the interpolation
-	// amount might be too small to change anything, and we'll never
+	// amount might be too small to 
+	//  anything, and we'll never
 	// arrive at the needed values.
 	//
 	// So we make sure the change we do is at least 1/255th of the
