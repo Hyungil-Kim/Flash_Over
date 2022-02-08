@@ -10,8 +10,8 @@ public class MeetEventManager : MonoBehaviour
     public TextMeshProUGUI mainText;
     public Button leftButton;
     public Button rightButton;
-    public int value1 = 0;
-    public int value2 = 1;
+    public int value1 = 1;
+    public int value2 = 2;
     public int returnValue;
     public GameManager gameManager;
 	public void Start()

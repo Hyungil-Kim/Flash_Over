@@ -14,22 +14,72 @@ public class CharacterInfoSmall : MonoBehaviour
 	public Slider powerSlider;
 	public TextMeshProUGUI airGauge;
 
-	private void Update()
+	public GameObject claimantPanel;
+	public Button claimantPanelButton;
+	public TextMeshProUGUI claimantHpGauge;
+	public Slider claimantHpSlider;
+	public TextMeshProUGUI claimantBreathGauge;
+	public Slider claimantBreathSlider;
+	private void Awake()
 	{
 		gameManager = GameManager.instance;
-		Init();
 	}
-	public void Init()
+	private void OnEnable()
 	{
+		if(gameManager.uIManager.InfoUiScript.smallInfo.gameObject.activeSelf)
+		{
+			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(false);
+		}
 		if (gameManager.targetPlayer != null)
 		{
-			airGauge.text = gameManager.targetPlayer.cd.totalStats.sta.ToString();
-			hpGauge.text = $"{gameManager.targetPlayer.cd.hp}/{gameManager.targetPlayer.cd.maxhp}";
-			hpSlider.value = (float)gameManager.targetPlayer.cd.hp / (float)gameManager.targetPlayer.cd.maxhp;
-			breathGauge.text = $"{gameManager.targetPlayer.cd.oxygen}/{gameManager.targetPlayer.cd.maxoxygen}";
-			breathSlider.value = (float)gameManager.targetPlayer.cd.oxygen / (float)gameManager.targetPlayer.cd.maxoxygen;
-			powerGauge.text = $"{gameManager.targetPlayer.cd.weight}/{gameManager.targetPlayer.cd.totalStats.str.stat}";
-			powerSlider.value = (float)gameManager.targetPlayer.cd.weight / (float)gameManager.targetPlayer.cd.totalStats.str.stat;
+			if (gameManager.targetPlayer.handFull)
+			{
+				claimantPanelButton.gameObject.SetActive(true);
+				claimantPanel.SetActive(true);
+			}
+			else
+			{
+				claimantPanelButton.gameObject.SetActive(false);
+				claimantPanel.SetActive(false);
+			}
+		}
+		
+	}
+	private void OnDisable()
+	{
+		if (!gameManager.uIManager.InfoUiScript.smallInfo.gameObject.activeSelf)
+		{
+		gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(true);
+		}
+
+	}
+	private void Update()
+	{
+		Init();
+	}
+	
+	public void Init()
+	{
+		var player = gameManager.targetPlayer;
+		if (player != null)
+		{
+			airGauge.text = player.oxygentank.ToString();
+			hpGauge.text = $"{player.cd.hp}/{player.cd.maxhp}";
+			hpSlider.value = (float)player.cd.hp / (float)player.cd.maxhp;
+			breathGauge.text = $"{player.cd.oxygen}/{player.cd.maxoxygen}";
+			breathSlider.value = (float)player.cd.oxygen / (float)player.cd.maxoxygen;
+			powerGauge.text = $"{player.cd.weight}/{player.cd.totalStats.str.stat}";
+			powerSlider.value = (float)player.cd.weight / (float)player.cd.totalStats.str.stat;
+			if(player.handFull)
+			{
+				
+				claimantPanelButton.gameObject.SetActive(true);
+				var claimant = player.handList[0].GetComponent<Claimant>();
+				claimantHpGauge.text = $"{claimant.hp}/{claimant.data.hp}";
+				claimantHpSlider.value = (float)claimant.hp / (float)claimant.data.hp;
+				claimantBreathGauge.text = $"{claimant.ap}/{claimant.data.lung}"; 
+				claimantBreathSlider.value = (float)claimant.ap / (float)claimant.data.lung;
+			}
 		}
 		else
 		{
@@ -40,5 +90,18 @@ public class CharacterInfoSmall : MonoBehaviour
 	{
 		gameObject.SetActive(true);
 	}
+	public void ClaimantInfoOnOff()
+	{
+		Debug.Log(claimantPanel.activeSelf);
+		if(claimantPanel.activeSelf)
+		{
+			claimantPanel.SetActive(false);
+		}
+		else
+		{
+			if(gameManager.targetPlayer != null && gameManager.targetPlayer.handFull)
+				claimantPanel.SetActive(true);
+		}
 
+	}
 }

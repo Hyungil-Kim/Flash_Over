@@ -54,6 +54,7 @@ public class PlayerMoveState : State
 	public override void Enter()
 	{
 		fsm.moveHelper.SetActive(true);
+		fsm.moveHelper.transform.localPosition = Vector3.zero;
 		fsm.gameManager.move = fsm.cd.totalStats.move;
 		fsm.gameManager.uIManager.battleUiManager.AllButtonOff();
 		fsm.gameManager.uIManager.battleUiManager.moveButton.gameObject.SetActive(true);
@@ -96,7 +97,7 @@ public class PlayerAttackState : State
 					fsm.gameManager.uIManager.battleUiManager.findDoor = door;
 					if (door.curDoorState == DoorState.Open)
 					{
-						fsm.gameManager.uIManager.battleUiManager.closeDoorButton.gameObject.SetActive(true);
+						//fsm.gameManager.uIManager.battleUiManager.closeDoorButton.gameObject.SetActive(true);
 					}
 					else if(door.curDoorState == DoorState.Close)
 					{
@@ -155,7 +156,7 @@ public class PlayerEndState : State
 			fsm.gameManager.targetPlayer = null;
 		}
 
-
+		fsm.moveHelper.transform.localPosition = Vector3.zero;
 
 		//var nextPlayer = Turn.players.Find((x) => x.index == fsm.index + 1);
 		//fsm.gameManager.GetClickedEndMouse(nextPlayer.gameObject);

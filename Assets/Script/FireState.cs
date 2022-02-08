@@ -19,6 +19,7 @@ public class FireIdleState : State
 		{
 			fsm.fireLevel--;
 		}
+		fsm.data = MyDataTableMgr.fireTable.GetTable(fsm.fireLevel);
 	}
 	public override void Update()
 	{
@@ -58,17 +59,7 @@ public class FireEndState : State
 		{
 			weat = 0;
 		}
-		fsm.fireHp = fsm.data.increaseExp * (ground.tileMesh - weat + objectsMesh);
-		if(fsm.fireHp > 0 && fsm.fireHp <= 10)
-		{
-			fsm.fireLevel = 1;
-		}
-		else if(fsm.fireHp > 10 && fsm.fireHp <= 20)
-		{
-			fsm.fireLevel = 2;
-		}
-
-
+		fsm.fireHp += fsm.data.increaseExp * (ground.tileMesh - weat + objectsMesh);
 	}
 	public override void Update()
 	{

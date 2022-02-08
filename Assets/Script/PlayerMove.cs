@@ -63,7 +63,6 @@ public class PlayerMove : MonoBehaviour
 		{
 			var moveHelper = player.moveHelper;
 			var helperTile = tilemapManager.ReturnTile(moveHelper);
-			Debug.Log(helperTile.transform.position);
 			while (gameManager.press)
 			{
 				var mousePos = gameManager.mousePos;
@@ -170,14 +169,14 @@ public class PlayerMove : MonoBehaviour
 		{
 			if (tilemapManager.ReturnTile(newPos).GetComponentInChildren<Smoke>())
 			{
-				moveObject.ap -= 1;
+				moveObject.cd.oxygen -= 1;
 			}
-			moveObject.ap -= 1;
+			moveObject.cd.oxygen -= 1;
 
-			if (moveObject.ap < 0)
+			if (moveObject.cd.oxygen < 0)
 			{
-				moveObject.lung -= moveObject.ap;
-				moveObject.ap = 0;
+				moveObject.lung -= moveObject.cd.oxygen;
+				moveObject.cd.oxygen = 0;
 			}
 			moveObject.CheckPlayerLung();
 			breath = true;
@@ -197,6 +196,16 @@ public class PlayerMove : MonoBehaviour
 				}
 				moveObject.CheckPlayerHp();
 				hit = true;
+				if(moveObject.cd.hp <= 0)
+				{
+					num = 0;
+					hit = false;
+					breath = false;
+					go = false;
+					moveObject.animator.SetBool("walk", false);
+					tilemapManager.DeadEnd();
+					moveObject.SetState(PlayerState.End);
+				}
 			}
 		}
 	}

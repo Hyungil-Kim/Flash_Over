@@ -32,7 +32,6 @@ public class Door : MonoBehaviour
 		parentTile.isDoor = true;
 		parentTile.isWall = true;
 		this.curDoorState = DoorState.Open;
-		gameManager.targetPlayer.SetState(PlayerState.End);
 		yield break;
 	}
 	public IEnumerator CloseDoor()

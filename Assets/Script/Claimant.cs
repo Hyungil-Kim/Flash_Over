@@ -42,10 +42,10 @@ public class Claimant : FSM<ClaimantState>
 	private ClaimantMove claimantMove = new ClaimantMove();
 	public ClaimantInjure claimantCurInjure = ClaimantInjure.Idle;
 	public int ap = 8; // «ˆ¿Á∆Û»∞∑Æ
-
+	public bool dead;
 	//public int data.lung = 8; // √÷¥Î∆Û»∞∑Æ
 	public int lung = 0; // ∆Û hp
-
+	public Animator animator;
 
 	public int index;
 
@@ -131,7 +131,7 @@ public class Claimant : FSM<ClaimantState>
 		data = MyDataTableMgr.claimantTable.GetTable(id);
 		ap = data.lung;
 		hp = data.hp;
-
+		animator = GetComponent<Animator>();
 		AddState(ClaimantState.Idle, new ClaimantIdleState(this));
 		AddState(ClaimantState.Meet, new ClaimantMeetState(this));
 		AddState(ClaimantState.Resuce, new ClaimantResuceState(this));
@@ -152,6 +152,7 @@ public class Claimant : FSM<ClaimantState>
 				}
 				else
 				{
+					animator.SetBool("terrified", false);
 					StartCoroutine(claimantMove.MoveToPlayer(this, targetPlayer, targetPlayerIndex));
 				}
 				break;
@@ -162,6 +163,7 @@ public class Claimant : FSM<ClaimantState>
 				}
 				else
 				{
+					animator.SetBool("terrified", true);
 					StartCoroutine(claimantMove.MoveConfuse(this));
 				}
 				break;
@@ -172,6 +174,7 @@ public class Claimant : FSM<ClaimantState>
 				}
 				else
 				{
+					animator.SetBool("terrified", false);
 					StartCoroutine(claimantMove.MoveToExit(this));
 				}
 				break;
@@ -182,6 +185,7 @@ public class Claimant : FSM<ClaimantState>
 				}
 				else
 				{
+					animator.SetBool("terrified", true);
 					StartCoroutine(claimantMove.MoveConfuse(this));
 				}
 				break;
@@ -192,24 +196,41 @@ public class Claimant : FSM<ClaimantState>
 	{
 		if (data.hp / 2 >= hp)
 		{
-			this.stun = true;
+			stun = true;
+			animator.SetBool("stun", stun);
 		}
 		else
 		{
-			this.stun = false;
+			stun = false;
+			animator.SetBool("stun", stun);
+			animator.SetBool("stunMove", stun);
 		}
-		if (hp <= 0)
+		if (hp <= 0 && !dead)
 		{
-			gameObject.SetActive(false);
-			Turn.claimants.Remove(this);
+			StartCoroutine(DeathAnimation());
 		}
 	}
 	public void CheckClaimantLung()
 	{
-		if (lung >= 100)
+		if (lung >= 100 && !dead)
 		{
-			gameObject.SetActive(false);
-			Turn.claimants.Remove(this);
+			StartCoroutine(DeathAnimation());
 		}
 	}
+	public IEnumerator DeathAnimation()
+	{
+		dead = true;
+		animator.SetBool("death", true);
+		yield return 0;
+	}
+	public void Death()
+	{
+		gameObject.SetActive(false);
+		Turn.claimants.Remove(this);
+	}
+	public void CheckStunMove()
+	{
+		animator.SetBool("stunMove", true);
+	}
+	
 }

@@ -17,7 +17,6 @@ public class Player : FSM<PlayerState>
 
 	public int index;
 	public CharacterData cd;
-
     public bool handFull;
     public List<GameObject> handList = new List<GameObject>();
     
@@ -27,7 +26,7 @@ public class Player : FSM<PlayerState>
     public int ap = 8; // 현재폐활량
     //public int cd.totalStats.lung.stat = 8; // 최대폐활량
     public int lung = 0; // 폐 hp
-
+	public bool dead;
     public PlayerState playerState = PlayerState.Idle;
     public AdvancedPeopleSystem.CharacterCustomization custom;
     public AdvancedPeopleSystem.CharacterCustomization moveHelperCustom;
@@ -103,8 +102,9 @@ public class Player : FSM<PlayerState>
 
 	public void CheckPlayerHp()
 	{
-		if (cd.hp <= 0)
+		if (cd.hp <= 0 && !dead)
 		{
+			moveHelper.SetActive(false);
 			if (handFull)
 			{
 				handList[0].SetActive(false);
@@ -115,23 +115,14 @@ public class Player : FSM<PlayerState>
 					handList.RemoveAt(0);
 				}
 			}
-			SetState(PlayerState.End);
-			gameObject.SetActive(false);
-			Turn.players.Remove(this);
-			if (Turn.players.Count != 0)
-			{
-				gameManager.tilemapManager.SelectNextPlayer();
-			}
-			else
-			{
-				//실패창
-			}
+			StartCoroutine(DeathAnimation());
 		}
 	}
 	public void CheckPlayerLung()
 	{
-		if (lung >= 100)
+		if (lung >= 100 && !dead)
 		{
+			moveHelper.SetActive(false);
 			if (handFull)
 			{
 				handList[0].SetActive(false);
@@ -142,9 +133,7 @@ public class Player : FSM<PlayerState>
 					handList.RemoveAt(0);
 				}
 			}
-			SetState(PlayerState.End);
-			gameObject.SetActive(false);
-			Turn.players.Remove(this);
+			StartCoroutine(DeathAnimation());
 		}
 	}
 	private void OnDestroy()
@@ -163,5 +152,45 @@ public class Player : FSM<PlayerState>
 		}
 
 		StartCoroutine(fireHose.CheckFireHoseStop(this));
+		SetState(PlayerState.End);
+	}
+	public IEnumerator DeathAnimation()
+	{
+		dead = true;
+		animator.SetBool("death", true);
+		yield return 0;
+	}
+	public IEnumerator ThrowAnimation()
+	{
+		animator.SetBool("throw", true);
+		yield return new WaitForSeconds(1f);
+	}
+	public void ThrowEnd()
+	{
+		animator.SetBool("throw", false);
+	}
+	public void OpenDoor()
+	{
+		StartCoroutine(gameManager.uIManager.battleUiManager.findDoor.OpenDoor());
+	}
+	public void OpenDoorEnd()
+	{
+		gameManager.targetPlayer.SetState(PlayerState.End);
+		animator.SetBool("openDoor", false);
+	}
+	public void Death()
+	{
+		SetState(PlayerState.End);
+		gameObject.SetActive(false);
+		Turn.players.Remove(this);
+
+		if (Turn.players.Count != 0)
+		{
+			gameManager.tilemapManager.SelectNextPlayer();
+		}
+		else
+		{
+			//실패창
+		}
 	}
 }

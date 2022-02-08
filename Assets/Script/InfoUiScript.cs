@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class InfoUiScript : MonoBehaviour
 {
-    public GameObject charaterInfo;
-    public GameObject tileInfo;
-    public GameObject claimantInfo;
-    public GameObject smallInfo;
+    public CharInfo charaterInfo;
+    public TileInfo tileInfo;
+    public ClaimantInfo2 claimantInfo;
+    public CharacterInfoSmall smallInfo;
   
    
 }

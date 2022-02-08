@@ -121,6 +121,7 @@ MonoBehaviour:
   isDoor: 0
   isObstacle: 0
   isClaimant: {fileID: 0}
+  isExit: 0
   obstacle: {fileID: 0}
   checkSum: 0
   G: 0
@@ -134,23 +135,29 @@ MonoBehaviour:
   tilemap: {fileID: 0}
   firePrefab: {fileID: 790996446283228917, guid: ded054cebad3132479aad2f656f73cdc, type: 3}
   cheakVision: 0
+  obstacleVision: 0
+  safeArea: 0
   cheakSumVision: 0
   tileArea: 1
   tileMesh: 1
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578, guid: ded054cebad3132479aad2f656f73cdc, type: 3}
   smoke: {fileID: 0}
+  name: 
   tileIsWeat: 0
   tileIsFire: 1
   tileIsSmoke: 0
   tileIsClaimant: 0
   tileWeatValue: 0
+  tileMaxExp: 0
   tileExp: 100
+  tileMaxHp: 0
   tileHp: 150
   tileSaveSmokeValue: 0
   tileSmokeValue: 1
   index: 0
   infoIndex: 0
+  id: 0
 --- !u!1 &3661782056196732435
 GameObject:
   m_ObjectHideFlags: 0
