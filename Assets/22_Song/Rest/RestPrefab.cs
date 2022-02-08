@@ -12,7 +12,6 @@ public class RestPrefab : MonoBehaviour
     public void init(CharacterData cd, bool isActive, int index)
     {
         var button = icon.GetComponent<Button>();
-        button.onClick.AddListener(() => OnClick(index));
         if (!isActive)
         {
             button.interactable = false;
@@ -21,7 +20,8 @@ public class RestPrefab : MonoBehaviour
         }
         else
         {
-            if(cd != null)
+            button.onClick.AddListener(() => OnClick(index));
+            if (cd != null)
             {
                 button.interactable = false;
                 //icon.sprite

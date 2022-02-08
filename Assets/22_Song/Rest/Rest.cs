@@ -12,7 +12,10 @@ public enum RestUpgrade
 public class RestUpgradeData
 {
     public int count;
-    public int remove;
+    public int tired;
+    public int psychological;
+    public int physical;
+
 }
 public class Rest : MonoBehaviour
 {

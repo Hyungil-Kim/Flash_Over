@@ -162,6 +162,8 @@ public class CharacterData
     public int maxoxygen;
     public int oxygen;
 
+    public int oxygenCount;
+
     public int addWeight;
 
     public int grade;
@@ -235,6 +237,9 @@ public class CharacterData
 
     public float benefit;
     public float penalty;
+
+    public int area;
+
 
     public string state
     {
@@ -855,6 +860,7 @@ public class CharacterData
         maxoxygen = totalStats.lung.stat;
         oxygen = maxoxygen;
         addWeight = 0;
+        oxygenCount = totalStats.sta;
     }
     public void SetStat()
     {
@@ -934,7 +940,7 @@ public class CharacterData
                 characteristic = new Stubborn(this);
                 break;
             case CharacteristicList.Mute:
-                characteristic = new Mute(this);
+                //characteristic = new Mute(this);
                 break;
             case CharacteristicList.TooMuchStress:
                 characteristic = new TooMuchStress(this);

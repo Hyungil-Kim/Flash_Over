@@ -15,7 +15,6 @@ public class BuffTiming
         GameStart = 1 << 3,
         GameEnd = 1 << 4,
         Main = 1 << 5,
-
     }
     public bool Check(BuffTimingEnum timing)
     {

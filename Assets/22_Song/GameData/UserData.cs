@@ -6,19 +6,32 @@ using System;
 public class UserData : MySaveData
 {
     //상점레벨, 캐릭터 상점 레벨에 따른 데이터 테이블도 존재할테고 그에 따라 바꿔줘야하는데 일단 ! 그냥 박자
-    public int maxCharacter = 30;
-    public int maxItem = 30;
+    public int maxCharacter = 9;
+    public int maxItem = 20;
+    //출전할 수 있는 소방관 수
     public int gofireman = 5;
 
+    //
     public int gold;
-    public int slot;
-    public string userName;
 
+    //세이브슬롯 ?이걸 어떻게 쓰려했을까ㅏ
+    public int slot;
+    //유저 이름
+    public string userName;
+    //유저 레벨
+    public int userLevel;
+    //유저 경험치
+    public int userExp;
+    //유저 맥스 경험치
+    public int usermaxExp;
+    //몇주차인가요
     public int inGameTime;
 
     public CharacterShopUpgradeData chaShopData = new CharacterShopUpgradeData();
     public TrainingRoomUpgradeData traingShopData = new TrainingRoomUpgradeData();
     public RestUpgradeData restShopData = new RestUpgradeData();
+    public ShopUpgradeData itemShopData = new ShopUpgradeData();
+
     //public List<WeaponData> weaponItemList
     //    = new List<WeaponData>();
 

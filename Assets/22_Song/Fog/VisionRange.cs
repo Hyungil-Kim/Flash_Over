@@ -154,6 +154,15 @@ public class VisionRange : MonoBehaviour
 		bool rangeClaimant = false;
 		bool rangeFireman = false;
 		bool rangeFire = false;
+		List<Player> playerList = new List<Player>();
+
+		foreach (var tile in crossResetQueue)
+		{
+			if (tile.isPlayer)
+			{
+				playerList.Add(tile.OnPlayer);
+			}
+		}
 		foreach (var tile in crossResetQueue)
 		{
 			if (tile.tileIsClaimant)
@@ -178,6 +187,7 @@ public class VisionRange : MonoBehaviour
 				break;
             }
         }
+		var player = gameObject.GetComponent<Player>();
 		var cd = gameObject.GetComponent<Player>().cd;
 		if (cd != null)
 		{
@@ -190,9 +200,8 @@ public class VisionRange : MonoBehaviour
 						buff.checkingCondition.InRangeFireman = rangeFireman;
 						buff.checkingCondition.InRangeClaimant = rangeClaimant;
 						buff.checkingCondition.InRangeFire = rangeFire;
-						buff.Check();
-
-						Debug.Log(cd.totalStats.str.stat);
+						buff.checkingCondition.playerList = playerList;
+						buff.Check(player);
 					}
 				}
 			}

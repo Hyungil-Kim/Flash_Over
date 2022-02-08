@@ -5,6 +5,8 @@ using System.Linq;
 
 public static class Turn
 {
+	public static int turnCount;
+
 	public static List<GroundTile> groundTiles = new List<GroundTile>();
 	public static List<Player> players = new List<Player>();
 	public static List<Fire> fires = new List<Fire>();
@@ -166,6 +168,7 @@ public static class Turn
 			}
 		}
 		ChangeStateIdle();
+		turnCount++;
 	}
 	public static void ChangeStateIdle()
 	{

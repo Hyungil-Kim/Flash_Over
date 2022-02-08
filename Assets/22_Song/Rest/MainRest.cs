@@ -85,28 +85,16 @@ public class MainRest : MonoBehaviour
     }
 
 
-    public void Upgrade(int index)
+    public void Upgrade()
     {
-        var upgradeIndex = (RestUpgrade)index;
-        switch (upgradeIndex)
+        if (GameData.userData.gold >= 1000)
         {
-            case RestUpgrade.Count:
-                if (GameData.userData.gold >= 1000)
-                {
-                    GameData.userData.restShopData.count = Mathf.Clamp(GameData.userData.restShopData.count + 1, 0, maxSlot - baseSlot);
-                    Init();
-                }
-                else
-                {
-                    rest.ui.OnNotEnoughMoney();
-                }
-                break;
-            case RestUpgrade.Remove:
-                GameData.userData.restShopData.remove = Mathf.Clamp(GameData.userData.restShopData.remove + 1, 0, maxSlot - baseSlot);
-                Init();
-                break;
-            default:
-                break;
+            GameData.userData.restShopData.count = Mathf.Clamp(GameData.userData.restShopData.count + 1, 0, maxSlot - baseSlot);
+            Init();
+        }
+        else
+        {
+            rest.ui.OnNotEnoughMoney();
         }
         foreach (var prefab in restUpgradePrefab)
         {

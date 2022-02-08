@@ -121,6 +121,7 @@ MonoBehaviour:
   isDoor: 0
   isObstacle: 0
   isClaimant: {fileID: 0}
+  isExit: 0
   obstacle: {fileID: 0}
   checkSum: 0
   G: 0
@@ -134,22 +135,29 @@ MonoBehaviour:
   tilemap: {fileID: 0}
   firePrefab: {fileID: 3410417458010452800}
   cheakVision: 0
+  obstacleVision: 0
+  safeArea: 0
   cheakSumVision: 0
   tileArea: 2
   tileMesh: 1
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
+  smoke: {fileID: 0}
+  name: 
   tileIsWeat: 0
   tileIsFire: 1
   tileIsSmoke: 0
   tileIsClaimant: 0
   tileWeatValue: 0
+  tileMaxExp: 0
   tileExp: 100
+  tileMaxHp: 0
   tileHp: 150
   tileSaveSmokeValue: 0
   tileSmokeValue: 1
   index: 0
   infoIndex: 0
+  id: 0
 --- !u!1 &3096985226070265613
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: fireHp
-      value: 1
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 8551787635178890052, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: fireDamage

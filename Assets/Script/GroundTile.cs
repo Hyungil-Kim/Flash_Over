@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class GroundTile : MonoBehaviour
 {
+	public Player OnPlayer;
 	private GameManager gameManager;
 	public bool isWall;
 	public GroundTile ParentTile;
@@ -371,6 +372,8 @@ public class GroundTile : MonoBehaviour
 				if (elem.tag == "Player")
 				{
 					isPlayer = true;
+					elem.GetComponent<Player>().cd.area = tileArea;
+					OnPlayer = elem.GetComponent<Player>();
 				}
 				else if(elem.tag == "Wall")
 				{
@@ -400,6 +403,7 @@ public class GroundTile : MonoBehaviour
 			isClaimant = null;
 			tileIsClaimant = false;
 			isObstacle = false;
+			OnPlayer = null;
 		}
 	}
 	public void CheckFillToRayStart()
@@ -444,9 +448,11 @@ public class GroundTile : MonoBehaviour
 				
 				test = true;
 				var materials = elem.collider.gameObject.GetComponentsInChildren<Renderer>();
+				var renderers = elem.collider.gameObject.GetComponentsInChildren<MeshRenderer>();
 				foreach (var renderer in materials)
 				{
 					renderer.material.renderQueue = 3030;
+					
 					if (elem.collider.gameObject.tag == "Wall")
 					{
 						if (cheakVision)

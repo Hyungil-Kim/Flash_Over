@@ -15,19 +15,19 @@ public class TrainingUpgradePrefab : MonoBehaviour
         var upgradeIndex = (TrainingRoomUpgrade)index;
         switch (upgradeIndex)
         {
-            case TrainingRoomUpgrade.Basic:
+            case TrainingRoomUpgrade.Str:
                 trainingUpgrade.text = $"업그레이드\n비용 : 1000";
-                if (GameData.userData.traingShopData.balence >= 2)
+                if (GameData.userData.traingShopData.str >= 2)
                 {
                     button.interactable = false;
                     trainingUpgrade.text = $"완료";
                 }
 
                 break;
-            case TrainingRoomUpgrade.Balence:
+            case TrainingRoomUpgrade.Lung:
                 trainingUpgrade.text = $"업그레이드\n비용 : 600";
                 break;
-            case TrainingRoomUpgrade.Random:
+            case TrainingRoomUpgrade.Hp:
                 trainingUpgrade.text = $"업그레이드\n비용 : 500";
                 break;
             default:

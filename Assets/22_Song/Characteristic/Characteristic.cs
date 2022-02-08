@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Characteristic
@@ -14,11 +15,11 @@ public class HeavyWeight : Buff
         buffTiming.AddType(BuffTiming.BuffTimingEnum.Move);
         
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
         check = cd.weight < 20;
 
-        base.Check();
+        base.Check(player);
         return ing;
 
     }
@@ -58,10 +59,10 @@ public class SaveClaimant : Buff
         buffTiming.AddType(BuffTiming.BuffTimingEnum.Move);
     }
 
-    public override bool Check()
+    public override bool Check(Player player)
     {
         check = checkingCondition.InRangeClaimant;
-        base.Check();
+        base.Check(player);
         return ing;
     }
 
@@ -98,9 +99,9 @@ public class Haughtiness : Buff
         isCharacteristic = true;
         isBadCharacteristic = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -130,10 +131,10 @@ public class StrongMind : Buff
         isBadCharacteristic = false;
         isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
         check = checkingCondition.OnGoing;
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -162,9 +163,9 @@ public class Boldness : Buff
         isCharacteristic = true;
         isBadCharacteristic = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -196,15 +197,15 @@ public class WidePersPective : Buff
         isBadCharacteristic = false;
         isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
         check = checkingCondition.OnGoing;
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
     {
-        base.EndBuff();
+        cd.totalStats.vision -= increaseValue;
     }
 
     public override void StartBuff()
@@ -232,10 +233,10 @@ public class FriendShip : Buff
         isBadCharacteristic = false;
         isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
         check = checkingCondition.InRangeFireman;
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -265,10 +266,10 @@ public class MasterOfWeapon : Buff
         isBadCharacteristic = false;
         isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
         check = checkingCondition.OnGoing;
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -299,9 +300,9 @@ public class QuickHealing : Buff
         isBadCharacteristic = false;
         isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -325,14 +326,15 @@ public class Hearing : Buff
     public Hearing(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.GameStart);
         name = "청각";
         isCharacteristic = true;
         isBadCharacteristic = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        //check = checkingCondition.OnGoing;
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -359,20 +361,22 @@ public class Resilience : Buff
         name = "회복력";
         isCharacteristic = true;
         isBadCharacteristic = false;
+        isInnate = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        check = checkingCondition.OnGoing;
+        return base.Check(player);
     }
 
     public override void EndBuff()
     {
-        base.EndBuff();
+        Debug.Log("회복력 종료");
     }
 
     public override void StartBuff()
     {
-        base.StartBuff();
+        Debug.Log("회복력 시작");
     }
 
     public override void WhileBuff()
@@ -385,14 +389,16 @@ public class Coward : Buff
     public Coward(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnEnd);
         name = "겁쟁이";
         isCharacteristic = true;
-        isBadCharacteristic = false;
+        isBadCharacteristic = true;
+        isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        check = checkingCondition.InRangeFireman;
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -412,17 +418,28 @@ public class Coward : Buff
 }
 public class Exaggerating : Buff
 {
+    int checkHp;
     public Exaggerating(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnEnd);
         name = "고통에 약함";
         isCharacteristic = true;
-        isBadCharacteristic = false;
+        isBadCharacteristic = true;
+        isInnate = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        if (checkHp != 0 && checkHp > cd.hp)
+        {
+            check = true;
+        }
+        else
+        {
+            check = false;
+        }
+        checkHp = cd.hp;
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -445,14 +462,16 @@ public class Laziness : Buff
     public Laziness(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.Main);
         name = "게으름";
         isCharacteristic = true;
-        isBadCharacteristic = false;
+        isBadCharacteristic = true;
+        isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -479,11 +498,12 @@ public class Stubborn : Buff
         buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
         name = "고집";
         isCharacteristic = true;
-        isBadCharacteristic = false;
+        isBadCharacteristic = true;
+        isInnate = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -502,60 +522,65 @@ public class Stubborn : Buff
     }
 }
 
-public class Mute : Buff
-{
-    public Mute(CharacterData characterData)
-    {
-        cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
-        name = "벙어리";
-        isCharacteristic = true;
-        isBadCharacteristic = false;
-    }
-    public override bool Check()
-    {
-        return base.Check();
-    }
+//public class Mute : Buff
+//{
+//    public Mute(CharacterData characterData)
+//    {
+//        cd = characterData;
+//        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+//        name = "벙어리";
+//        isCharacteristic = true;
+//        isBadCharacteristic = false;
+//    }
+//    public override bool Check()
+//    {
+//        return base.Check();
+//    }
 
-    public override void EndBuff()
-    {
-        base.EndBuff();
-    }
+//    public override void EndBuff()
+//    {
+//        base.EndBuff();
+//    }
 
-    public override void StartBuff()
-    {
-        base.StartBuff();
-    }
+//    public override void StartBuff()
+//    {
+//        base.StartBuff();
+//    }
 
-    public override void WhileBuff()
-    {
-        base.WhileBuff();
-    }
-}
+//    public override void WhileBuff()
+//    {
+//        base.WhileBuff();
+//    }
+//}
 
 public class TooMuchStress : Buff
 {
+    int prevStat;
+    int decreseStat;
     public TooMuchStress(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.GameStart);
         name = "스트레스성 퇴행";
         isCharacteristic = true;
-        isBadCharacteristic = false;
+        isBadCharacteristic = true;
+        isInnate = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        check = checkingCondition.OnGoing;
+        return base.Check(player);
     }
 
     public override void EndBuff()
     {
-        base.EndBuff();
+        cd.totalStats.str.stat += decreseStat;
     }
 
     public override void StartBuff()
     {
-        base.StartBuff();
+        prevStat = cd.totalStats.str.stat;
+        cd.totalStats.str.stat -= decreseStat;
     }
 
     public override void WhileBuff()
@@ -566,27 +591,52 @@ public class TooMuchStress : Buff
 
 public class LowSelfEsteem : Buff
 {
+    bool isOnce;
+    List<Claimant> prevClaimantList = new List<Claimant>();
+    int prevArea;
+    float penalty;
     public LowSelfEsteem(CharacterData characterData)
     {
         cd = characterData;
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnEnd);
         buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
         name = "자기책망";
         isCharacteristic = true;
-        isBadCharacteristic = false;
+        isBadCharacteristic = true;
+        isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        if (isOnce)
+        {
+            var areaClaimants = Turn.claimants.Where((x) => x.claimantArea == cd.area).ToList();
+            if (areaClaimants.Count < prevClaimantList.Count && prevArea == cd.area)
+            {
+                check = true;
+            }
+            else
+            {
+                check = false;
+            }
+            prevClaimantList = areaClaimants;
+            prevArea = cd.area;
+        }
+        else
+        {
+            check = false;
+        }
+        return base.Check(player);
+
     }
 
     public override void EndBuff()
     {
-        base.EndBuff();
     }
 
     public override void StartBuff()
     {
-        base.StartBuff();
+        isOnce = true;
+        cd.penalty += penalty;
     }
 
     public override void WhileBuff()
@@ -604,10 +654,13 @@ public class Heroism : Buff
         name = "영웅심";
         isCharacteristic = true;
         isBadCharacteristic = false;
+        isInnate = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        var checkHand = player.handList.Where((x) => x.GetComponent<Claimant>() != null).ToList();
+        check = checkHand.Count > 0;
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -631,14 +684,15 @@ public class Intelligent : Buff
     public Intelligent(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.Main);
         name = "대기만성";
         isCharacteristic = true;
         isBadCharacteristic = false;
+        isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -658,27 +712,32 @@ public class Intelligent : Buff
 }
 public class Nimble : Buff
 {
+    int prevMove;
+    int increseMove;
     public Nimble(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.GameStart);
         name = "날쌘돌이";
         isCharacteristic = true;
         isBadCharacteristic = false;
+        isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        check = checkingCondition.OnGoing;
+        return base.Check(player);
     }
 
     public override void EndBuff()
     {
-        base.EndBuff();
+        cd.totalStats.move -= increseMove;
     }
 
     public override void StartBuff()
     {
-        base.StartBuff();
+        prevMove = cd.totalStats.move;
+        cd.totalStats.move += increseMove;
     }
 
     public override void WhileBuff()
@@ -689,57 +748,90 @@ public class Nimble : Buff
 
 public class Inside : Buff
 {
+    int opportunityValue;
+    int increaseStat;
+    int prevTurn;
+    List<Player> prevPlayer = new List<Player>();
     public Inside(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        //buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
         name = "분위기 메이커";
         isCharacteristic = true;
         isBadCharacteristic = false;
+        isInnate = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        check = prevTurn != Turn.turnCount;
+        return base.Check(player);
     }
 
     public override void EndBuff()
     {
-        base.EndBuff();
+        foreach (var player in prevPlayer)
+        {
+            player.cd.totalStats.hp.stat -= increaseStat;
+        }
     }
 
     public override void StartBuff()
     {
-        base.StartBuff();
+        foreach (var player in checkingCondition.playerList)
+        {
+            prevPlayer.Add(player);
+            player.cd.totalStats.hp.stat += increaseStat;
+        }
     }
 
     public override void WhileBuff()
     {
-        base.WhileBuff();
+        if(prevTurn != Turn.turnCount)
+        {
+            prevTurn = Turn.turnCount;
+
+            foreach (var player in prevPlayer)
+            {
+                player.cd.totalStats.hp.stat -= increaseStat;
+            }
+            prevPlayer.Clear();
+
+            foreach (var player in checkingCondition.playerList)
+            {
+                prevPlayer.Add(player);
+                player.cd.totalStats.hp.stat += increaseStat;
+            }
+
+        }
     }
 }
 public class FireTolerance : Buff
 {
+    int prevStat;
+    int increseStat;
     public FireTolerance(CharacterData characterData)
     {
         cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnStart);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.GameStart);
         name = "수족냉증";
         isCharacteristic = true;
         isBadCharacteristic = false;
+        isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        check = checkingCondition.OnGoing;
+        return base.Check(player);
     }
 
     public override void EndBuff()
     {
-        base.EndBuff();
+        cd.totalStats.def -= increseStat;
     }
 
     public override void StartBuff()
     {
-        base.StartBuff();
+        cd.totalStats.def += increseStat;
     }
 
     public override void WhileBuff()
@@ -750,6 +842,8 @@ public class FireTolerance : Buff
 
 public class Stronger : Buff
 {
+    int prevStat;
+    int increseStat;
     public Stronger(CharacterData characterData)
     {
         cd = characterData;
@@ -757,20 +851,23 @@ public class Stronger : Buff
         name = "뻠형";
         isCharacteristic = true;
         isBadCharacteristic = false;
+        isInnate = true;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        check = checkingCondition.OnGoing;
+        return base.Check(player);
     }
 
     public override void EndBuff()
     {
-        base.EndBuff();
+        cd.totalStats.str.stat -= increseStat;
     }
 
     public override void StartBuff()
     {
-        base.StartBuff();
+        prevStat = cd.totalStats.str.stat;
+        cd.totalStats.str.stat += increseStat;
     }
 
     public override void WhileBuff()
@@ -781,6 +878,8 @@ public class Stronger : Buff
 
 public class Berserker : Buff
 {
+    int prevStat;
+    int increseStat;
     public Berserker(CharacterData characterData)
     {
         cd = characterData;
@@ -789,9 +888,9 @@ public class Berserker : Buff
         isCharacteristic = true;
         isBadCharacteristic = false;
     }
-    public override bool Check()
+    public override bool Check(Player player)
     {
-        return base.Check();
+        return base.Check(player);
     }
 
     public override void EndBuff()
@@ -806,7 +905,16 @@ public class Berserker : Buff
 
     public override void WhileBuff()
     {
-        base.WhileBuff();
+        if(cd.hp <= cd.totalStats.hp.stat /2 && prevStat == 0)
+        {
+            prevStat = cd.totalStats.str.stat;
+            cd.totalStats.str.stat += increseStat;
+        }
+        else if(cd.hp > cd.totalStats.hp.stat/2 && prevStat != 0)
+        {
+            cd.totalStats.str.stat = prevStat;
+            prevStat = 0;
+        }
     }
 }
 

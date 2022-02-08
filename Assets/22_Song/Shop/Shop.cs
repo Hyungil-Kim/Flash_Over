@@ -5,7 +5,9 @@ using TMPro;
 using System.Linq;
 public class ShopUpgradeData
 {
-
+    public int maxItem;
+    public int sale;
+    public int durability;
 }
 public class Shop : MonoBehaviour
 {

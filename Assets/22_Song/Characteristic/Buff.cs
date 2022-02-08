@@ -10,6 +10,8 @@ public class CheckBuff
     public bool InRangeClaimant;
     public bool InRangeFireman;
     public bool InRangeFire;
+
+    public List<Player> playerList = new List<Player>();
 }
 
 public class Buff
@@ -34,7 +36,7 @@ public class Buff
 
     public CheckBuff checkingCondition = new CheckBuff();
 
-    public virtual bool Check()
+    public virtual bool Check(Player player)
     {
         if (check)
         {

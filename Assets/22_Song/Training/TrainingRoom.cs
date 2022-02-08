@@ -5,15 +5,15 @@ using UnityEngine.UI;
 using TMPro;
 public enum TrainingRoomUpgrade
 {
-    Basic,
-    Balence,
-    Random
+    Str,
+    Hp,
+    Lung
 }
 public class TrainingRoomUpgradeData
 {
-    public int basic;
-    public int balence;
-    public int random;
+    public int hp;
+    public int lung;
+    public int str;
 }
 public class TrainingRoom : MonoBehaviour
 {
@@ -76,22 +76,18 @@ public class TrainingRoom : MonoBehaviour
         switch (trainingType)
         {
             case TrainingType.Str:
-                trainingExp = 20 * GameData.userData.traingShopData.basic;
+                trainingExp = 20 * GameData.userData.traingShopData.str;
                 sliders[index].Init(TrainingStatType.Str, trainingExp);
                 break;
             case TrainingType.Lung:
-                trainingExp = 20 * GameData.userData.traingShopData.basic;
+                trainingExp = 20 * GameData.userData.traingShopData.lung;
                 sliders[index].Init(TrainingStatType.Lung, trainingExp);
                 break;
             case TrainingType.Hp:
-                trainingExp = 20 * GameData.userData.traingShopData.basic;
+                trainingExp = 20 * GameData.userData.traingShopData.hp;
                 sliders[index].Init(TrainingStatType.Hp, trainingExp);
                 break;
             case TrainingType.Balence:
-                trainingExp = 20 * GameData.userData.traingShopData.balence / 3;
-                sliders[0].Init(TrainingStatType.Str, Mathf.RoundToInt(trainingExp /3f));
-                sliders[1].Init(TrainingStatType.Lung, Mathf.RoundToInt(trainingExp / 3f));
-                sliders[2].Init(TrainingStatType.Hp, Mathf.RoundToInt(trainingExp / 3f));
                 break;
             case TrainingType.Random:
                 break;
@@ -163,13 +159,13 @@ public class TrainingRoom : MonoBehaviour
         var upgradeIndex = (TrainingRoomUpgrade)index;
         switch (upgradeIndex)
         {
-            case TrainingRoomUpgrade.Basic:
-                GameData.userData.traingShopData.basic++;
+            case TrainingRoomUpgrade.Str:
+                GameData.userData.traingShopData.str++;
                 break;
-            case TrainingRoomUpgrade.Balence:
+            case TrainingRoomUpgrade.Hp:
                 if (GameData.userData.gold >= 1000)
                 {
-                    GameData.userData.traingShopData.balence = Mathf.Clamp(GameData.userData.traingShopData.balence + 1, 0, 5);
+                    GameData.userData.traingShopData.hp = Mathf.Clamp(GameData.userData.traingShopData.hp + 1, 0, 5);
                     Init();
                 }
                 else
@@ -178,8 +174,8 @@ public class TrainingRoom : MonoBehaviour
                 }
                 //GameData.userData.traingShopData.balence++;
                 break;
-            case TrainingRoomUpgrade.Random:
-                GameData.userData.traingShopData.random++;
+            case TrainingRoomUpgrade.Lung:
+                GameData.userData.traingShopData.lung++;
                 break;
             default:
                 break;
