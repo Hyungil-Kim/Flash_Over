@@ -255,13 +255,12 @@ public class GameManager : MonoBehaviour
 	}
 	public void ChangeTargetPlayer(GameObject go)
 	{
-		
 		target = go;// 레이 맞은 오브젝트s
-		ChangeLayersRecursively(go.transform, "Green");
 		targetTile = tilemapManager.ReturnTile(target);
 		var player = target.GetComponent<Player>();
+		ChangeLayersRecursively(player.transform, "Green");
 		cameraController.CameraMoving(player);
-		if ((player.curStateName == PlayerState.Idle || player.curStateName == PlayerState.Action))
+		if ((player.curStateName == PlayerState.Idle || player.curStateName == PlayerState.Action|| player.curStateName == PlayerState.End))
 		{
 			switch (player.curStateName)
 			{
@@ -279,6 +278,9 @@ public class GameManager : MonoBehaviour
 					//버튼 띄우기
 					break;
 				case PlayerState.End:
+					Debug.Log("들어옴?");
+					targetPlayer = target.GetComponent<Player>();
+					ChangeLayersRecursively(targetPlayer.transform, "Player");
 					break;
 			}
 			pretargetPlayer = targetPlayer;

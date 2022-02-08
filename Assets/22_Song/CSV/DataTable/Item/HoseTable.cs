@@ -37,7 +37,7 @@ public class HoseTable : MyDataTableBase<HoseTableData>
             tableData.move = int.Parse(table["MOVE"]);
             tableData.vision = int.Parse(table["VISION"]);
             tableData.durability = int.Parse(table["Durability"]);
-            tableData.regular = bool.Parse(table["Regular"]);
+            //tableData.regular = bool.Parse(table["Regular"]);
             tables.Add(tableData);
 
         }

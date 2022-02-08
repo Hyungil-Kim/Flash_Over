@@ -398,10 +398,14 @@ public class TilemapManager : MonoBehaviour
 					//버튼제거
 					break;
 				case PlayerState.Action:
-					Debug.Log("1");
 					//버튼제거
+
+					break;
+				case PlayerState.End:
+
 					break;
 			}
+			GameManager.ChangeLayersRecursively(targetPlayer.transform, "Player");
 			targetPlayer = FindNextPlayer(targetPlayer);
 			gameManager.ChangeTargetPlayer(targetPlayer.gameObject);
 
@@ -420,6 +424,7 @@ public class TilemapManager : MonoBehaviour
 					{
 						if (Turn.players[i + 1].curStateName != PlayerState.End)
 						{
+							
 							targetPlayer = Turn.players[i + 1];
 							search = false;
 							return targetPlayer;
@@ -437,6 +442,8 @@ public class TilemapManager : MonoBehaviour
 				break;
 			}
 		}
+		
+
 		return targetPlayer;
 	}
 	public void Escape(Claimant claimant)

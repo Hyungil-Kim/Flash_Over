@@ -40,7 +40,7 @@ public class OxygenTankTable : MyDataTableBase<OxygenTankTableData>
             tableData.vision = int.Parse(table["VISION"]);
             tableData.sta = int.Parse(table["STA"]);
             tableData.durability = int.Parse(table["Durability"]);
-            tableData.regular = bool.Parse(table["Regular"]);
+            //tableData.regular = bool.Parse(table["Regular"]);
 
             tables.Add(tableData);
         }
