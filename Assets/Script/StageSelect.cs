@@ -17,7 +17,10 @@ public class StageSelect : MonoBehaviour
     public List<GameObject> level1;
     public List<GameObject> level2;
     public List<GameObject> level3;
-    public int random;
+    public int randomLevel1;
+    public int randomLevel2;
+    public int randomLevel3;
+
     private bool mapDrag;
 
     // Start is called before the first frame updatez
@@ -121,11 +124,16 @@ public class StageSelect : MonoBehaviour
     public void RandomSelect()
     
     {
-        random = Random.Range(0, 6);
-        level1[random].GetComponentInChildren<VisualEffect>().enabled = true;
-        level2[random].GetComponentInChildren<VisualEffect>().enabled = true;
-        level3[random].GetComponentInChildren<VisualEffect>().enabled = true;
+        randomLevel1 = Random.Range(0, 6);
+        randomLevel2 = Random.Range(0, 6);
+        randomLevel3 = Random.Range(0, 6);
 
+        level1[randomLevel1].GetComponentInChildren<VisualEffect>().enabled = true;
+        level1[randomLevel1].layer = 21;
+        level2[randomLevel2].GetComponentInChildren<VisualEffect>().enabled = true;
+        level2[randomLevel2].layer = 22;
+        level3[randomLevel3].GetComponentInChildren<VisualEffect>().enabled = true;
+        level3[randomLevel3].layer = 23;
     }
 
     public void GetMousePosition(Vector2 mousePosition)

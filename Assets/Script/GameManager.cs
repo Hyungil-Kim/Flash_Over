@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
 				}
 			}
 			targetPlayer = Turn.players.Find((x) => x.index == PlaySaveSystem.ps.gsd.targetIndex);
-
 			if (targetPlayer != null)
 			{
 				if (targetPlayer.playerState == PlayerState.Move)
@@ -246,9 +245,19 @@ public class GameManager : MonoBehaviour
 			//}
 		}
 	}
+	public static void ChangeLayersRecursively(Transform trans, string name)
+	{
+		trans.gameObject.layer = LayerMask.NameToLayer(name);
+		foreach (Transform child in trans)
+		{
+			ChangeLayersRecursively(child, name);
+		}
+	}
 	public void ChangeTargetPlayer(GameObject go)
 	{
+		
 		target = go;// 레이 맞은 오브젝트s
+		ChangeLayersRecursively(go.transform, "Green");
 		targetTile = tilemapManager.ReturnTile(target);
 		var player = target.GetComponent<Player>();
 		cameraController.CameraMoving(player);
@@ -281,15 +290,20 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	public void GetClickedEndMouse()
+    }
+
+
+    public void GetClickedEndMouse()
 	{
 		press = false;
 		if (!point && isStart && !uIManager.InfoUiScript.tileInfo.on )
 		{
+
 			uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(false);
 			uIManager.InfoUiScript.tileInfo.gameObject.SetActive(false);
 			uIManager.InfoUiScript.claimantInfo.gameObject.SetActive(false);
 			Debug.Log("Start");
+
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
 			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
@@ -311,6 +325,7 @@ public class GameManager : MonoBehaviour
 			{
 				target = null;
 				targetTile = null;
+
 			}
 			/////////////////////////////////////////////////////////////////////////////////////////////// 
 			if (target != null)

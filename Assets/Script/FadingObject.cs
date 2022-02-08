@@ -45,4 +45,5 @@ public class FadingObject : MonoBehaviour, IEquatable<FadingObject>
     {
         return Position.GetHashCode();
     }
+   
 }
