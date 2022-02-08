@@ -28,7 +28,7 @@ public class CharacterInfoSmall : MonoBehaviour
 	{
 		if(gameManager.uIManager.InfoUiScript.smallInfo.gameObject.activeSelf)
 		{
-			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(false);
+			gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(false);
 		}
 		if (gameManager.targetPlayer != null)
 		{
@@ -47,11 +47,10 @@ public class CharacterInfoSmall : MonoBehaviour
 	}
 	private void OnDisable()
 	{
-		if (!gameManager.uIManager.InfoUiScript.smallInfo.gameObject.activeSelf)
+		if (!gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.activeSelf)
 		{
-		gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(true);
+			gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(true);
 		}
-
 	}
 	private void Update()
 	{
