@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -7666821908421882743}
   m_Layer: 15
   m_Name: CornerWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,6 +69,10 @@ PrefabInstance:
     - target: {fileID: 2781563749108139835, guid: b32ff401fc4f92442b8ef9218184b1d2, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781563749108139835, guid: b32ff401fc4f92442b8ef9218184b1d2, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2781563749108507639, guid: b32ff401fc4f92442b8ef9218184b1d2, type: 3}
       propertyPath: m_RootOrder
@@ -159,6 +163,10 @@ PrefabInstance:
     - target: {fileID: 2781563749108139835, guid: b32ff401fc4f92442b8ef9218184b1d2, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781563749108139835, guid: b32ff401fc4f92442b8ef9218184b1d2, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2781563749108507639, guid: b32ff401fc4f92442b8ef9218184b1d2, type: 3}
       propertyPath: m_RootOrder

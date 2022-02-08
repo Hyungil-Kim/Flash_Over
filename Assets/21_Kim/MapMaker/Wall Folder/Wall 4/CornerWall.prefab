@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -3567965501255199234}
   m_Layer: 15
   m_Name: CornerWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,6 +106,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall4_1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6440628688916444939, guid: 3611484d732cc9a4ea83bd989b6ce696, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6440628688919464535, guid: 3611484d732cc9a4ea83bd989b6ce696, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -191,6 +195,10 @@ PrefabInstance:
     - target: {fileID: 6440628688916444939, guid: 3611484d732cc9a4ea83bd989b6ce696, type: 3}
       propertyPath: m_Name
       value: wall4_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6440628688916444939, guid: 3611484d732cc9a4ea83bd989b6ce696, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6440628688919464535, guid: 3611484d732cc9a4ea83bd989b6ce696, type: 3}
       propertyPath: m_Mesh
