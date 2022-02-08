@@ -5,7 +5,7 @@ using TMPro;
 using System.Linq;
 public class ShopUpgradeData
 {
-    public int maxItem;
+    public int maxItem = 6;
     public int sale;
     public int durability;
 }
@@ -16,6 +16,11 @@ public class Shop : MonoBehaviour
     public ShopItemInfo info;
     public GameObject shopItemPrefab;
     public GameObject content;
+
+    public GameObject hossContent;
+    public GameObject bunkerGearContent;
+    public GameObject oxygenContent;
+
     public GameObject notEnoughGold;
     List<GameObject> shopItemList = new List<GameObject>();
 
@@ -42,10 +47,34 @@ public class Shop : MonoBehaviour
         if (shopItemList.Count == 0)
         {
             //우선실행하면 빈 아이템프리펩을 맥스아이템갯수만큼 만들어줄거예요
-            for (int i = 0; i < hoseItemCount + bunkerGearItemCount + oxygenTankItemCount; i++)
+            //for (int i = 0; i < hoseItemCount + bunkerGearItemCount + oxygenTankItemCount; i++)
+            //{
+            //    var index = i;
+            //    var shopItem = Instantiate(shopItemPrefab, content.transform);
+            //    var shopItemScript = shopItem.GetComponent<ShopItem>();
+            //    shopItemScript.buyButton.onClick.AddListener(() => OnBuyButton(index));
+            //    shopItemScript.backGroundButton.onClick.AddListener(() => OnItemInfo(index));
+            //    shopItemList.Add(shopItem);
+            //}
+            //아이템을 종류에 따라 나눠줄겁니다
+            for (int i = 0; i < GameData.userData.itemShopData.maxItem; i++)
             {
                 var index = i;
-                var shopItem = Instantiate(shopItemPrefab, content.transform);
+                GameObject shopItem = null;
+                switch (index % 3)
+                {
+                    case 0:
+                        shopItem = Instantiate(shopItemPrefab, hossContent.transform);
+                        break;
+                    case 1:
+                        shopItem = Instantiate(shopItemPrefab, bunkerGearContent.transform);
+                        break;
+                    case 2:
+                        shopItem = Instantiate(shopItemPrefab, oxygenContent.transform);
+                        break;
+                    default:
+                        break;
+                }
                 var shopItemScript = shopItem.GetComponent<ShopItem>();
                 shopItemScript.buyButton.onClick.AddListener(() => OnBuyButton(index));
                 shopItemScript.backGroundButton.onClick.AddListener(() => OnItemInfo(index));
@@ -162,15 +191,32 @@ public class Shop : MonoBehaviour
         GameData.userData.shopItemList.Clear();
 
 
-        RandomItem(ItemType.Hose, 
-            0, hoseItemCount);
-        RandomItem(ItemType.BunkerGear, 
-            hoseItemCount, bunkerGearItemCount);
-        RandomItem(ItemType.OxygenTank, 
-            hoseItemCount + bunkerGearItemCount, oxygenTankItemCount);
-        
+        //RandomItem(ItemType.Hose, 
+        //    0, hoseItemCount);
+        //RandomItem(ItemType.BunkerGear, 
+        //    hoseItemCount, bunkerGearItemCount);
+        //RandomItem(ItemType.OxygenTank, 
+        //    hoseItemCount + bunkerGearItemCount, oxygenTankItemCount);
+        for (int i = 0; i < GameData.userData.itemShopData.maxItem; i++)
+        {
+            var index = i;
+            switch (index % 3 )
+            {
+                case 0:
+                    RandomItem(ItemType.Hose, index);
+                    break;
+                case 1:
+                    RandomItem(ItemType.BunkerGear, index);
+                    break;
+                case 2:
+                    RandomItem(ItemType.OxygenTank, index);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
-    public void RandomItem(ItemType type, int startIndex, int endIndex)
+    public void RandomItem(ItemType type, int startIndex = 0, int endIndex = 1)
     {
         for (int i = startIndex; i < startIndex+endIndex; i++)
         {
@@ -201,6 +247,34 @@ public class Shop : MonoBehaviour
             GameData.userData.shopItemList.Add(item);
             SetList(item, index);
         }
+    }
+    public void RandomItem(ItemType type, int index)
+    {
+        var random = 0;
+        ItemDataBase item = null;
+        ItemTableDataBase itemTable = null;
+        switch (type)
+        {
+            case ItemType.Hose:
+                random = Random.Range(0, MyDataTableMgr.hoseTable.tables.Count);
+                itemTable = MyDataTableMgr.hoseTable.tables[random];
+                item = new HoseData(itemTable);
+                break;
+            case ItemType.BunkerGear:
+                random = Random.Range(0, MyDataTableMgr.bunkerGearTable.tables.Count);
+                itemTable = MyDataTableMgr.bunkerGearTable.tables[random];
+                item = new BunkerGearData(itemTable);
+                break;
+            case ItemType.OxygenTank:
+                random = Random.Range(0, MyDataTableMgr.oxygenTankTable.tables.Count);
+                itemTable = MyDataTableMgr.oxygenTankTable.tables[random];
+                item = new OxygenTankData(itemTable);
+                break;
+            default:
+                break;
+        }
+        GameData.userData.shopItemList.Add(item);
+        SetList(item, index);
     }
     //public ItemDataBase GetRandomConsumItem(ItemGrade grade)
     //{

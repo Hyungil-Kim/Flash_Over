@@ -13,18 +13,18 @@ public class StageInfoData : TableDataBase
 }
 public class StageInfoTable : MyDataTableBase<StageInfoData>
 {
-    public StageInfoTable() : base("StageInfoDataTableTest")
+    public StageInfoTable() : base("StageInfoDataTable")
     {
         foreach (var table in tableList)
         {
             var tableData = new StageInfoData();
             tableData.id = table["ID"];
-            tableData.sceneOfFire = table["SCENEOFFIRE"];
+            //tableData.sceneOfFire = table["SCENEOFFIRE"];
             tableData.level = int.Parse(table["LEVEL"]);
             tableData.survivor = int.Parse(table["SURVIVOR"]);
             tableData.rescuer = int.Parse(table["RESCUER"]);
             tableData.descreption = table["DESCREPTION"];
-            tableData.map = table["MAP"];
+            //tableData.map = table["MAP"];
 
             tables.Add(tableData);
         }

@@ -18,7 +18,7 @@ public class CharacterInfo : MonoBehaviour
     }
     public void OnChaIcon()
     {
-        chaListPanal.gameObject.SetActive(false);
+        //chaListPanal.gameObject.SetActive(false);
         chaStatPanal.gameObject.SetActive(true);
     }
     public void OnExitStat()
@@ -29,12 +29,14 @@ public class CharacterInfo : MonoBehaviour
     }
     public void OnInventory()
     {
+        chaListPanal.gameObject.SetActive(false);
         chaStatPanal.gameObject.SetActive(false);
         inventory.gameObject.SetActive(true);
         inventory.Init(/*currentItemType*/);
     }
     public void OnExitInventory()
     {
+        chaListPanal.gameObject.SetActive(true);
         chaStatPanal.gameObject.SetActive(true);
         inventory.gameObject.SetActive(false);
     }

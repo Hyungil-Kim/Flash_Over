@@ -259,9 +259,9 @@ public class CharacterInfoInventory : MonoBehaviour
         CurrentItemType = (ItemType)index;
         GetComponentInParent<CharacterInfo>().currentItemType = CurrentItemType;
     }
-    public void SortReverse()
+    public void SortReverse(bool check)
     {
-        isReverse = !isReverse;
+        isReverse = check;
         Init();
     }
 }

@@ -7,9 +7,9 @@ using System.Text;
 public class CharacterInfoStat : MonoBehaviour
 {
     public Image icon;
-    public Image hose;
-    public Image bunkerGear;
-    public Image oxygenTank;
+    public ItemButtonPrefab hose;
+    public ItemButtonPrefab bunkerGear;
+    public ItemButtonPrefab oxygenTank;
     public TextMeshProUGUI info;
     public TMP_InputField chaname;
     public TextMeshProUGUI hpstat;
@@ -25,6 +25,9 @@ public class CharacterInfoStat : MonoBehaviour
     //public TextMeshProUGUI move;
     //public TextMeshProUGUI str;
     //public TextMeshProUGUI def;
+    public GameObject characteristicPrefab;
+    public GameObject characteristicContent;
+
 
     private void OnEnable()
     {
@@ -60,39 +63,40 @@ public class CharacterInfoStat : MonoBehaviour
         if (curCharacter.hose != null)
         {
             var hoseData = curCharacter.hose.dataTable;
-            hose.sprite = hoseData.iconSprite;
-            var grade = GetGrade(hoseData);
+            hose.Init(hoseData);
+            //var grade = GetGrade(hoseData);
 
-            hosestat.text = $"{hoseData.itemName}   {grade}\n己瓷 : {hoseData.dmg}\n公霸 : {hoseData.weight}";
+            //hosestat.text = $"{hoseData.itemName}   {grade}\n己瓷 : {hoseData.dmg}\n公霸 : {hoseData.weight}";
         }
         else
         {
-            hose.sprite = null;
-            hosestat.text = "";
+            hose.icon.sprite = null;
+            //hosestat.text = "";
         }
         if (curCharacter.bunkerGear != null)
         {
             var bunkerGearData = curCharacter.bunkerGear.dataTable;
-            bunkerGear.sprite = bunkerGearData.iconSprite;
-            var grade = GetGrade(bunkerGearData);
-            bunkergearstat.text = $"{bunkerGearData.itemName}  {grade}\n己瓷 : {bunkerGearData.def}\n公霸 : {bunkerGearData.weight}";
+            bunkerGear.Init(bunkerGearData);
+            //var grade = GetGrade(bunkerGearData);
+            //bunkergearstat.text = $"{bunkerGearData.itemName}  {grade}\n己瓷 : {bunkerGearData.def}\n公霸 : {bunkerGearData.weight}";
         }
         else
         {
-            bunkerGear.sprite = null;
-            bunkergearstat.text = "";
+            bunkerGear.icon.sprite = null;
+            //bunkergearstat.text = "";
         }
         if (curCharacter.oxygenTank != null)
         {
             var oxygenTankData = curCharacter.oxygenTank.dataTable;
-            oxygenTank.sprite = oxygenTankData.iconSprite;
-            var grade = GetGrade(oxygenTankData);
-            oxygenstat.text = $"{oxygenTankData.itemName}   {grade}\n己瓷 : {oxygenTankData.sta}\n公霸 : {oxygenTankData.weight}";
+            oxygenTank.Init(oxygenTankData);
+            //oxygenTank.sprite = oxygenTankData.iconSprite;
+            //var grade = GetGrade(oxygenTankData);
+            //oxygenstat.text = $"{oxygenTankData.itemName}   {grade}\n己瓷 : {oxygenTankData.sta}\n公霸 : {oxygenTankData.weight}";
         }
         else
         {
-            oxygenTank.sprite = null;
-            oxygenstat.text = "";
+            oxygenTank.icon.sprite = null;
+            //oxygenstat.text = "";
         }
 
         //info.text = $"{curCharacter.characterClass}\n{curCharacter.characterGrade}  {curCharacter.characterName}";
@@ -129,6 +133,17 @@ public class CharacterInfoStat : MonoBehaviour
         //move.text = $"Move : {curCharacter.totalStats.move}";
         //str.text = $"Str : {curCharacter.totalStats.str}";
         //def.text = $"Lung : {curCharacter.totalStats.lung}";
+
+        if(curCharacter.characteristics.Count >0)
+        {
+            foreach (var characteristic in curCharacter.characteristics)
+            {
+                var newGo = Instantiate(characteristicPrefab, characteristicContent.transform);
+                var prefab = newGo.GetComponent<CharacteristicPrefab>();
+                prefab.Init(characteristic);
+
+            }
+        }
     }
     public void test()
     {

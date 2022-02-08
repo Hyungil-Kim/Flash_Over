@@ -8,17 +8,25 @@ public class ShopChaPrefab : MonoBehaviour
 {
     //public Image icon;
     public RawImage icon;
+
     public TextMeshProUGUI chaName;
-    public TextMeshProUGUI chaGrade;
-    public TextMeshProUGUI chaClass;
+    public TextMeshProUGUI chaHp;
+    public TextMeshProUGUI chaStr;
+    public TextMeshProUGUI chaLung;
+    public TextMeshProUGUI chaMove;
+    public TextMeshProUGUI chaVision;
+
     public CharacterData character;
     public void SetValue(CharacterData cd, int index)
     {
         icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
         character = cd;
-        chaName.text = cd.characterName;
-        chaGrade.text = cd.characterGrade;
-        chaClass.text = cd.characterClass;
+        chaName.text = $"이름 : {cd.characterName}";
+        chaHp.text = $"체력 : {cd.totalStats.hp.stat}";
+        chaStr.text = $"힘 : {cd.totalStats.str.stat}";
+        chaLung.text = $"폐활량 : {cd.totalStats.lung.stat}";
+        chaMove.text = $"이동력 : {cd.totalStats.move}";
+        chaVision.text = $"시야 : {cd.totalStats.vision}";
     }
     public void Hire()
     {
