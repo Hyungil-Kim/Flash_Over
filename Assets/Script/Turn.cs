@@ -25,7 +25,7 @@ public static class Turn
 
 
 	public static void OnDestroy()
-    {
+	{
 		players.Clear();
 		fires.Clear();
 		smokes.Clear();
@@ -34,48 +34,52 @@ public static class Turn
 		areaCamera.Clear();
 		copylist.Clear();
 		saveClaimants.Clear();
-    }
+	}
 	public static IEnumerator CoTurnSystem()
 	{
+		if (!GameManager.instance.uIManager.betweenPlaying.playerTurn)
+		{
+			GameManager.instance.uIManager.betweenPlaying.ShowStartPlayerTurn();
+		}
 		foreach (var player in players)
 		{
-			
-			if (player.curStateName==PlayerState.Idle)
-            {
+
+			if (player.curStateName == PlayerState.Idle)
+			{
 				GameManager.instance.ChangeTargetPlayer(player.gameObject);
 				GameManager.instance.move = player.cd.totalStats.move;
 			}
-            if (player.curStateName == PlayerState.End)
-            {
-                Debug.Log("畔 场");
-                GameManager.ChangeLayersRecursively(player.transform, "Player");
-            }
-            if (player.curStateName != PlayerState.End)
-            {
-                yield break;
-            }
+			if (player.curStateName == PlayerState.End)
+			{
+				Debug.Log("畔 场");
+				GameManager.ChangeLayersRecursively(player.transform, "Player");
+			}
+			if (player.curStateName != PlayerState.End)
+			{
+				yield break;
+			}
 
 
 
-        }
+		}
 		///
 		/// setActive UI( 利畔)
 		/// yield return secind
 		///
 		if (fires.Count != 0)
 		{
-		
+
 			for (int i = 0; i <= maxArea; i++)
 			{
 				var sortMonster = fires.Where((x) => x.fireArea == i).ToList();
-				
+
 				foreach (var monster in sortMonster)
 				{
 					monster.FireAct();
 					monster.ChangeState(FireState.End);
 				}
 
-				foreach(var all in AllTile.visionTile)
+				foreach (var all in AllTile.visionTile)
 				{
 					if (all.tileIsFire && all.tileArea == i)
 					{
@@ -112,10 +116,10 @@ public static class Turn
 
 			//老窜 林籍!
 			//test
-			var gameClearUI = GameManager.instance.uIManager.gameclearUI;
-			gameClearUI.gameObject.SetActive(true);
+			GameManager.instance.uIManager.betweenPlaying.ShowWinPanel();
+			
 		}
-		
+
 		if (smokes.Count != 0)
 		{
 			foreach (var smoke in smokes)
@@ -195,7 +199,7 @@ public static class Turn
 				fire.ChangeState(FireState.Idle);
 			}
 		}
-		if (claimants.Count != 0)	
+		if (claimants.Count != 0)
 		{
 			foreach (var claimant in claimants)
 			{
@@ -203,9 +207,14 @@ public static class Turn
 					claimant.ChangeState(ClaimantState.Idle);
 			}
 		}
-		GameManager.instance.targetPlayer = null;
-		GameManager.instance.turnCount++;
-		GameManager.instance.TurnSystem();
+		if (fires.Count != 0)
+		{
+			GameManager.instance.targetPlayer = null;
+			GameManager.instance.turnCount++;
+			GameManager.instance.uIManager.betweenPlaying.playerTurn = false;
+			GameManager.instance.TurnSystem();
+		}
+		
 	}
 	public static void OutOfSight(List<Fire> fireList, float sec)
 	{
@@ -241,6 +250,6 @@ public static class Turn
 		{
 			return false;
 		}
-	
+
 	}
 }

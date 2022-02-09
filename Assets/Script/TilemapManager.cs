@@ -278,10 +278,6 @@ public class TilemapManager : MonoBehaviour
 				break;
 		}
 		ResetAttackRange(num);
-		if (particle.isStopped)
-		{
-			//attacker.animator.SetBool("shoot", false);
-		}
 		if (!FuseBox.FuseOFF)
 		{
 			attacker.cd.hp -= (int)FuseBox.ShockDamage;

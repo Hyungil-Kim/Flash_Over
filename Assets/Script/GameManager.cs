@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 	public int move;
 	private Vector3 mouse3DPos;
 	private bool point;
-
+	public bool tutorial;
 	public MouseInput multiTouch;
 	private float maxZoom = 60f;
 	private float minZoom = 100f;
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
 
 			turnCount = PlaySaveSystem.ps.gsd.turnCount;
 
-			StartGame();
+			uIManager.StartGame();
 			PlaySaveSystem.ps = null;
 		}
 		else
@@ -147,8 +147,6 @@ public class GameManager : MonoBehaviour
 	}
 	public void StartGame()
 	{
-		isStart = true;
-		Init();
 		uIManager.StartGame();
 	}
 	public void Init()
@@ -289,6 +287,7 @@ public class GameManager : MonoBehaviour
 		targetPlayer = target.GetComponent<Player>();
 		uIManager.OnCharacterInfo();
 		uIManager.InfoUiScript.smallInfo.Init();
+		//StartCoroutine(Turn.CoTurnSystem());
 	}
 
 
@@ -556,8 +555,8 @@ public class GameManager : MonoBehaviour
 	public void Update()
 	{
 		//tMPro.text = preTile.transform.position.ToString();
-		pressPro.text = press.ToString();
-		ready.text = playerMove.moveList.Count.ToString();
+		//pressPro.text = press.ToString();
+		//ready.text = playerMove.moveList.Count.ToString();
 		var t = turnCount + " turn";
 		uIManager.upperUIManager.turn.text = t;
 		//mousePos = multiTouch.mousePoint.Mouse.Move.ReadValue<Vector2>();

@@ -150,8 +150,11 @@ public class Player : FSM<PlayerState>
 		{
 			waterWide.Play();
 		}
-
-		StartCoroutine(fireHose.CheckFireHoseStop(this));
+		StartCoroutine(AttackParticleStop());
+	}
+	public IEnumerator AttackParticleStop()
+	{
+		yield return StartCoroutine(fireHose.CheckFireHoseStop(this));
 		SetState(PlayerState.End);
 	}
 	public IEnumerator DeathAnimation()

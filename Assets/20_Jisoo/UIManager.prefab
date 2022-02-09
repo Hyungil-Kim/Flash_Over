@@ -7802,9 +7802,14 @@ MonoBehaviour:
   - {fileID: 7719195562854161804}
   - {fileID: 7431480974192341145}
   - {fileID: 2709041341356360401}
+  fireStation: {fileID: 0}
   notEnoughMoney: {fileID: 7805089767413742728}
   text: {fileID: 7719195561349593107}
   mousepos: {x: 0, y: 0}
+  character: {fileID: 0}
+  uiCharacterList: []
+  mainCameraPos: {fileID: 0}
+  selectCameraPos: {fileID: 0}
 --- !u!114 &1016728068530081859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32551,6 +32556,9 @@ MonoBehaviour:
   info: {fileID: 1016728068124815644}
   shopItemPrefab: {fileID: 7090780857606047155, guid: 346920486f547b04da37c0ec037039da, type: 3}
   content: {fileID: 8470694956093032504}
+  hossContent: {fileID: 0}
+  bunkerGearContent: {fileID: 0}
+  oxygenContent: {fileID: 0}
   notEnoughGold: {fileID: 8470694955450500059}
   hoseItemCount: 2
   bunkerGearItemCount: 2
@@ -33153,6 +33161,7 @@ MonoBehaviour:
   content: {fileID: 1016728069303251414}
   needGold: {fileID: 1016728068855554189}
   gold: {fileID: 1016728070011332402}
+  uiCharacter: {fileID: 0}
 --- !u!1 &6433394615200443485
 GameObject:
   m_ObjectHideFlags: 0
@@ -42742,9 +42751,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 7854323254980519769}
-  hose: {fileID: 1016728068813975151}
-  bunkerGear: {fileID: 1016728069588715667}
-  oxygenTank: {fileID: 1016728070093616206}
+  hose: {fileID: 0}
+  bunkerGear: {fileID: 0}
+  oxygenTank: {fileID: 0}
   info: {fileID: 1016728069200430214}
   chaname: {fileID: 1016728068643053534}
   hpstat: {fileID: 7854323254418790120}
@@ -42756,6 +42765,8 @@ MonoBehaviour:
   bunkergearstat: {fileID: 1016728068773569010}
   oxygenstat: {fileID: 1016728068088177603}
   personality: {fileID: 1016728069737852472}
+  characteristicPrefab: {fileID: 0}
+  characteristicContent: {fileID: 0}
 --- !u!1 &7854323254140713540
 GameObject:
   m_ObjectHideFlags: 0

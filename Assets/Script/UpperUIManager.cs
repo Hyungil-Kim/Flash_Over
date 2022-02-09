@@ -14,7 +14,7 @@ public class UpperUIManager : MonoBehaviour
 
 	public void OnclickMenuButton()
 	{
-		menuButton.gameObject.SetActive(true);
+		menuManager.gameObject.SetActive(true);
 	}
 	
 }
