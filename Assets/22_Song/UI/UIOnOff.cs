@@ -140,7 +140,7 @@ public class UIOnOff : MonoBehaviour
         stage.SetActive(true);
         returnButton.SetActive(true);
         uiArray[10].SetActive(true);
-        character.SetActive(false);
+        //character.SetActive(false);
 
     }
 
@@ -156,7 +156,7 @@ public class UIOnOff : MonoBehaviour
         uiDict[uiName].SetActive(true);
         returnButton.SetActive(false);
 
-        character.SetActive(true);
+        //character.SetActive(true);
 
     }
 
