@@ -78,15 +78,15 @@ public class TrainingRoom : MonoBehaviour
         switch (trainingType)
         {
             case TrainingType.Str:
-                trainingExp = 20 * GameData.userData.traingShopData.str;
+                trainingExp = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.str).TS1Str;
                 sliders[index].Init(TrainingStatType.Str, trainingExp);
                 break;
             case TrainingType.Lung:
-                trainingExp = 20 * GameData.userData.traingShopData.lung;
+                trainingExp = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.lung).TS3Lung;
                 sliders[index].Init(TrainingStatType.Lung, trainingExp);
                 break;
             case TrainingType.Hp:
-                trainingExp = 20 * GameData.userData.traingShopData.hp;
+                trainingExp = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.hp).TS2Hp;
                 sliders[index].Init(TrainingStatType.Hp, trainingExp);
                 break;
             case TrainingType.Balence:
@@ -106,11 +106,11 @@ public class TrainingRoom : MonoBehaviour
         switch (trainingType)
         {
             case TrainingType.Str:
-                return 100;
+                return MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.str).TS1Price;
             case TrainingType.Lung:
-                return 100;
+                return MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.lung).TS3Lung;
             case TrainingType.Hp:
-                return 100;
+                return MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.hp).TS2Hp;
             case TrainingType.Balence:
                 return 100;
             case TrainingType.Random:

@@ -20,7 +20,7 @@ public class VisionRange : MonoBehaviour
     public List<GroundTile> CheackVision()
 	{
 		crossQueue = new Queue<GroundTile>();
-		Debug.Log(tilemapManager);
+		//Debug.Log(tilemapManager);
 		var tileObject = tilemapManager.ReturnTile(transform.position);
 		crossQueue.Enqueue(tileObject);
 		crossResetQueue.Add(tileObject);
@@ -62,15 +62,16 @@ public class VisionRange : MonoBehaviour
 
 			curQueue = crossQueue.Peek();
 			curTile = tilemapManager.tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
-
+			bool isWall = false;
 			if (curTile.isWall)
 			{
 				curTile.CheakVision = true;
-				crossQueue.Dequeue();
-				continue;
+				isWall = true;
+				//crossQueue.Dequeue();
+				//continue;
 			}
 			crossQueue.Dequeue();
-			nextVisionList = curQueue.SetNextVision(tileObject);
+			nextVisionList = curQueue.SetNextVision(tileObject, isWall);
 			listCount = nextVisionList.Count;
 			for (int dir = 0; dir < listCount; dir++)
 			{
@@ -96,11 +97,19 @@ public class VisionRange : MonoBehaviour
                 {
 					nextQueue.CheakVisionSum = curTile.CheakVisionSum + 1;
 				}
-				if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue)/*&& !nextQueue.isWall*/)
+				if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue) && !isWall/*&& !nextQueue.isWall*/)
 				{
 					crossResetQueue.Add(nextQueue);
 					//visiableTileIndexList.Add(nextQueue.index);
 					crossQueue.Enqueue(nextQueue);
+				}
+				else if(nextQueue.CheakVisionSum <= vision && !crossResetQueue.Contains(nextQueue) && isWall && nextQueue.isWall)
+                {
+					
+					crossResetQueue.Add(nextQueue);
+					//visiableTileIndexList.Add(nextQueue.index);
+					crossQueue.Enqueue(nextQueue);
+					
 				}
 			}
 			curTile.CheakVision = true;

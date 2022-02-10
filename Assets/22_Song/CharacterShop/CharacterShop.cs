@@ -31,7 +31,7 @@ public class CharacterShop : MonoBehaviour
 
     private void Awake()
     {
-        maxChaList = GameData.userData.chaShopData.countUpgrade + 5;
+        maxChaList = MyDataTableMgr.menuTable.GetTable(GameData.userData.chaShopData.countUpgrade).CS1Count;
         var uiCharacters = GameObject.FindGameObjectsWithTag("UICharacter");
         foreach (var uicharacter in uiCharacters)
         {

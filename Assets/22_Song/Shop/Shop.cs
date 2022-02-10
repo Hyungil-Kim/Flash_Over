@@ -5,7 +5,7 @@ using TMPro;
 using System.Linq;
 public class ShopUpgradeData
 {
-    public int maxItem = 6;
+    public int maxItem;
     public int sale;
     public int durability;
 }
@@ -57,7 +57,7 @@ public class Shop : MonoBehaviour
             //    shopItemList.Add(shopItem);
             //}
             //아이템을 종류에 따라 나눠줄겁니다
-            for (int i = 0; i < GameData.userData.itemShopData.maxItem; i++)
+            for (int i = 0; i < MyDataTableMgr.menuTable.GetTable(GameData.userData.itemShopData.maxItem).IS1Count; i++)
             {
                 var index = i;
                 GameObject shopItem = null;
@@ -197,7 +197,7 @@ public class Shop : MonoBehaviour
         //    hoseItemCount, bunkerGearItemCount);
         //RandomItem(ItemType.OxygenTank, 
         //    hoseItemCount + bunkerGearItemCount, oxygenTankItemCount);
-        for (int i = 0; i < GameData.userData.itemShopData.maxItem; i++)
+        for (int i = 0; i < MyDataTableMgr.menuTable.GetTable(GameData.userData.itemShopData.maxItem).IS1Count; i++)
         {
             var index = i;
             switch (index % 3 )
@@ -234,6 +234,7 @@ public class Shop : MonoBehaviour
                 case ItemType.BunkerGear:
                     random = Random.Range(0, MyDataTableMgr.bunkerGearTable.tables.Count);
                     itemTable = MyDataTableMgr.bunkerGearTable.tables[random];
+                    
                     item = new BunkerGearData(itemTable);
                     break;
                 case ItemType.OxygenTank:
@@ -244,6 +245,9 @@ public class Shop : MonoBehaviour
                 default:
                     break;
             }
+            item.dataTable.durability += MyDataTableMgr.menuTable.GetTable(GameData.userData.itemShopData.durability).IS3Durability;
+            var price = item.dataTable.price * MyDataTableMgr.menuTable.GetTable(GameData.userData.itemShopData.sale).IS2Sale;
+            item.dataTable.price = Mathf.RoundToInt(price);
             GameData.userData.shopItemList.Add(item);
             SetList(item, index);
         }
@@ -273,6 +277,9 @@ public class Shop : MonoBehaviour
             default:
                 break;
         }
+        item.dataTable.durability += MyDataTableMgr.menuTable.GetTable(GameData.userData.itemShopData.durability).IS3Durability;
+        var price = item.dataTable.price * MyDataTableMgr.menuTable.GetTable(GameData.userData.itemShopData.sale).IS2Sale;
+        item.dataTable.price = Mathf.RoundToInt(price);
         GameData.userData.shopItemList.Add(item);
         SetList(item, index);
     }

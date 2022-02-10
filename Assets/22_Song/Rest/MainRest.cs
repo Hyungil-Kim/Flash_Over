@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class MainRest : MonoBehaviour
 {
@@ -13,8 +14,6 @@ public class MainRest : MonoBehaviour
 
     Rest rest;
     List<RestUpgradePrefab> restUpgradePrefab = new List<RestUpgradePrefab>();
-
-
 
     private void Start()
     {
@@ -43,7 +42,7 @@ public class MainRest : MonoBehaviour
     }
     public void Init()
     {
-        for (int i = 0; i < baseSlot + GameData.userData.restShopData.count; i++)
+        for (int i = 0; i < MyDataTableMgr.menuTable.GetTable(GameData.userData.restShopData.count).RS4Count; i++)
         {
             var index = i;
             GameData.userData.restList.TryGetValue(i, out var cd);
@@ -65,9 +64,31 @@ public class MainRest : MonoBehaviour
             cd.Value.restCount++;
             if(cd.Value.restCount == 3)
             {
+                switch (cd.Value.admission)
+                {
+                    case Admission.None:
+                        break;
+                    case Admission.Rest:
+                        cd.Value.tiredScore -= MyDataTableMgr.menuTable.GetTable(GameData.userData.restShopData.tired).RS1Tired;
+                        break;
+                    case Admission.Hospital:
+                        var list = cd.Value.buff.Where((x) => x.isBadCharacteristic && x.isPhysical).ToList();
+                        var random = Random.Range(0, list.Count);
+                        cd.Value.buff.Remove(list[random]);
+                        cd.Value.badCharacteristics.Remove(list[random]);
+                        break;
+                    case Admission.Phycho:
+                        var psycho = cd.Value.buff.Where((x) => x.isBadCharacteristic && x.isPsychological).ToList();
+                        var psychorandom = Random.Range(0, psycho.Count);
+                        cd.Value.buff.Remove(psycho[psychorandom]);
+                        cd.Value.badCharacteristics.Remove(psycho[psychorandom]);
+                        break;
+                    default:
+                        break;
+                }
+                //cd.Value.tiredScore -= 15 + 5 * GameData.userData.restShopData.tired;
                 cd.Value.admission = Admission.None;
-                cd.Value.tiredScore = 0;
-                cd.Value.RemoveBad(probability);
+                //cd.Value.RemoveBad(probability);
                 keyList.Add(cd.Key);
                 GameData.userData.restEndList.Add(cd.Value);
             }

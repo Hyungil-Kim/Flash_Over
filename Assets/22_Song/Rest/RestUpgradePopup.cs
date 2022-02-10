@@ -14,6 +14,7 @@ public class RestUpgradePopup : MonoBehaviour
     public void Upgrade()
     {
         mainRest.Upgrade();
+        gameObject.SetActive(false);
     }
     public void OnExit()
     {

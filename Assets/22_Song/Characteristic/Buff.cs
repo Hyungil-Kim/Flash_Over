@@ -33,6 +33,10 @@ public class Buff
     public bool isBadCharacteristic;
     public bool isInnate;
 
+    public bool isPhysical;
+    public bool isPsychological;
+
+
     public bool ing;
     public bool check;
 

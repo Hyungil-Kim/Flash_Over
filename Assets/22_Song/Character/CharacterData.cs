@@ -571,7 +571,7 @@ public class CharacterData
         //buff.Add(new testBuff(this));
         //buff.Add(new HeavyWeight(this));
         //buff.Add(new SaveClaimant(this));
-        AddInnateCharacteristic(gradeIndex);
+        AddInnateCharacteristic();
 
 
         //Ω∫≈› √÷Ω≈»≠
@@ -1017,17 +1017,15 @@ public class CharacterData
         }
     }
 
-    public void AddInnateCharacteristic(int count)
+    public void AddInnateCharacteristic()
     {
-        for (int i = 0; i < count+2; i++)
+        
+        var random = Random.value;
+        if (random <= MyDataTableMgr.menuTable.GetTable(GameData.userData.chaShopData.characteristicUpgrade).CS3Characteristic)
         {
-            var random = Random.value;
-            if(random <= 0.3f + GameData.userData.chaShopData.characteristicUpgrade*0.05f)
-            {
-                var max = TotalCharacteristic.innateList.Count;
-                var randomInnate = Random.Range(0, max);
-                BuildCharacteristic(TotalCharacteristic.innateList[randomInnate]);
-            }
+            var max = TotalCharacteristic.innateList.Count;
+            var randomInnate = Random.Range(0, max);
+            BuildCharacteristic(TotalCharacteristic.innateList[randomInnate]);
         }
     }
 

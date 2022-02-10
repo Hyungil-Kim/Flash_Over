@@ -12,7 +12,7 @@ public class UserData : MySaveData
     public int gofireman = 5;
 
     //
-    public int gold;
+    public int gold = 3000;
 
     //세이브슬롯 ?이걸 어떻게 쓰려했을까ㅏ
     public int slot;

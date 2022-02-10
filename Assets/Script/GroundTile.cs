@@ -240,7 +240,7 @@ public class GroundTile : MonoBehaviour
         }
 		CheckParticle();
 	}
-	public List<GroundTile> SetNextVision(GroundTile playerTile)
+	public List<GroundTile> SetNextVision(GroundTile playerTile, bool isWall = false)
     {
 		nextVisionList.Clear();
 		cellpos = tilemap.WorldToCell(transform.position);
@@ -314,12 +314,13 @@ public class GroundTile : MonoBehaviour
 		checkX = cellpos.x - playerTile.cellpos.x == 0 ? 0 : checkX;
 		checkY = cellpos.y - playerTile.cellpos.y == 0 ? 0 : checkY;
 
-        for (int i = 0; i < 2; i++)
-        {
+		
+		for (int i = 0; i < 2; i++)
+		{
 			int nextX = 0;
 			int nextY = 0;
 			switch (i)
-            {
+			{
 				case 0:
 					nextX = Mathf.FloorToInt(cellpos.x);
 					nextY = Mathf.FloorToInt(cellpos.y) + checkY;
@@ -333,8 +334,8 @@ public class GroundTile : MonoBehaviour
 					nextY = Mathf.FloorToInt(cellpos.y) + checkY;
 					break;
 				default:
-                    break;
-            }
+					break;
+			}
 			var nextTileOb = tilemap.GetInstantiatedObject(new Vector3Int(nextX, nextY, 0));
 			if (nextTileOb != null)
 			{
