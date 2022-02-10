@@ -135,7 +135,7 @@ public class UIOnOff : MonoBehaviour
         {
             uiArray[i].SetActive(false);
         }
-        //offscreanIndicatorPanel.SetActive(true);
+        offscreanIndicatorPanel.SetActive(true);
         stage.SetActive(true);
         returnButton.SetActive(true);
 

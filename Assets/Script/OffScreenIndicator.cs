@@ -16,7 +16,6 @@ public class OffScreenIndicator : MonoBehaviour
     private Vector3 screenBounds;
 
     public GameObject isTarget;
-    private Buildings buildings;
 
     public List<Buildings> targets ;
 
@@ -29,7 +28,6 @@ public class OffScreenIndicator : MonoBehaviour
         screenBounds = screenCentre * screenBoundOffset;
         TargetStateChanged += HandleTargetStateChanged;
         targets = new List<Buildings>();
-        buildings = GetComponent<Buildings>();
     }
 
     private void Update()
@@ -39,6 +37,7 @@ public class OffScreenIndicator : MonoBehaviour
     }
     void LateUpdate()
     {
+
     }
 
     /// <summary>
@@ -47,7 +46,7 @@ public class OffScreenIndicator : MonoBehaviour
     void DrawIndicators()
     {
 
-        foreach (Buildings target in targets)
+        foreach (var target in targets)
         {
             Vector3 screenPosition = OffScreenIndicatorCore.GetScreenPosition(mainCamera, target.transform.position);
             bool isTargetVisible = OffScreenIndicatorCore.IsTargetVisible(screenPosition);
@@ -103,7 +102,7 @@ public class OffScreenIndicator : MonoBehaviour
         {
             target.indicator?.Activate(false);
             target.indicator = null;
-            //targets.Remove(target);
+            targets.Remove(target);
         }
     }
 
