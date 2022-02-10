@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 	public int num = -1;
 	public int move;
 	private Vector3 mouse3DPos;
-	private bool point;
+	public bool point;
 	public bool tutorial;
 	public MouseInput multiTouch;
 	private float maxZoom = 60f;
@@ -287,7 +287,10 @@ public class GameManager : MonoBehaviour
 		targetPlayer = target.GetComponent<Player>();
 		uIManager.OnCharacterInfo();
 		uIManager.InfoUiScript.smallInfo.Init();
-		//StartCoroutine(Turn.CoTurnSystem());
+		if (tutorial)
+		{
+			StartCoroutine(Turn.CoTurnSystem());
+		}
 	}
 
 

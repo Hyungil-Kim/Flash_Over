@@ -163,6 +163,7 @@ public class PlayerEndState : State
 		//fsm.gameManager.ChangeTargetPlayer(nextPlayer.gameObject);
 		//Debug.Log($"다음 플레이어 인덱스 {nextPlayer.index}");
 		//fsm.gameManager.GetClickedEndMouse(Turn.players[fsm.index + 1].gameObject);
+		if(!fsm.gameManager.tutorial)
 		fsm.StartCoroutine(Turn.CoTurnSystem());
 	}
 
