@@ -26,4 +26,8 @@ public class TutorialUiManager : MonoBehaviour
     public GameObject tuto6_image1;
     public GameObject tuto6_image2;
     public GameObject tuto6_Text_3;
+    public GameObject turto7_Text;
+    public GameObject turto7_Text2;
+    public GameObject turto7_Text3;
+    
 }

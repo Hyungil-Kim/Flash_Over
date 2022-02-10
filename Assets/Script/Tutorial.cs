@@ -18,7 +18,7 @@ public class Tutorial : MonoBehaviour
 	public GameObject marker;
 	public TutorialUiManager tutorialUiManager;
 
-	private bool one;
+	private bool once;
 	private int number = 1;
 	private bool tuto2finish;
 	private bool tuto5finish_1;
@@ -29,6 +29,7 @@ public class Tutorial : MonoBehaviour
 	private bool tuto6finish2;
 	private bool tuto6finish3;
 	private bool check;
+	private bool check2;
 	public Button button;
 	public void Awake()
 	{
@@ -54,20 +55,24 @@ public class Tutorial : MonoBehaviour
 	}
 	public void StartTutorial()
 	{
-		gameManager.mousePos = new Vector3(17.5f, 6f, -19.5f);
+		var offset = new Vector3(0, 6, -3);
+		var pos = Turn.players[0].transform.position + offset;
+		gameManager.mousePos = pos;
 		StartCoroutine(TutorialTurn());
 	}
 
 	public IEnumerator TutorialTurn()
 	{
 		var player = Turn.players[0];
+		var offset = new Vector3(0, 6, -3);
+		gameManager.mousePos = player.transform.position + offset;
 		foreach (var elem in m_3f.GetComponentsInChildren<MeshRenderer>())
 		{
 			elem.material.color = new Color(0.5f, 0.5f, 0.5f);
 		}
 		for (int i = number; i < 8;)
 		{
-			if (!one)
+			if (!once)
 			{
 				foreach (var elem in groundTiles)
 				{
@@ -76,7 +81,7 @@ public class Tutorial : MonoBehaviour
 					else
 						elem.GetComponent<MeshRenderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
 				}
-				one = true;
+				once = true;
 			}
 			var sortTiles = groundTiles.Where((x) => x.tileArea == i).ToList();
 			foreach (var elem in sortTiles)
@@ -115,7 +120,7 @@ public class Tutorial : MonoBehaviour
 									gameManager.uIManager.battleUiManager.moveButton.interactable = true;
 									i++;
 									number++;
-									one = false;
+									once = false;
 									tuto2finish = true;
 								}
 								yield return 0;
@@ -302,8 +307,9 @@ public class Tutorial : MonoBehaviour
 								tutorialUiManager.tuto6_Text_3.SetActive(false);
 								i++;
 								number++;
-								one = false;
+								once = false;
 								tuto6finish3 = true;
+								Turn.ChangeStateIdle();
 								yield return 0;
 							}
 						}
@@ -314,6 +320,18 @@ public class Tutorial : MonoBehaviour
 			}
 			while (i == 3)
 			{
+				if (!check2)
+				{
+					ChangeTile(new Vector3(15.5f, 0, -14.5f));
+					marker.SetActive(true);
+					marker.transform.position = new Vector3(17.5f, 0, -14.5f);
+					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
+					check2 = true;
+				}
+				if (player.curStateName == PlayerState.Idle)
+				{
+					gameManager.ChangeTargetPlayer(player.gameObject);
+				}
 				yield return 0;
 			}
 			yield return 0;
