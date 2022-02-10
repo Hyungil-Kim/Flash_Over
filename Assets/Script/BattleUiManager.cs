@@ -129,7 +129,11 @@ public class BattleUiManager : MonoBehaviour
 	public void DoAttack()
 	{
 		if(gameManager.num != -1)
-		{ 
+		{
+			shootButton.gameObject.SetActive(false);
+			weapon1Button.gameObject.SetActive(false);
+			weapon2Button.gameObject.SetActive(false);
+			cancleButton.gameObject.SetActive(false);
 			tilemapManager.DoAttack(gameManager.targetPlayer, gameManager.num);
 		}
 	}

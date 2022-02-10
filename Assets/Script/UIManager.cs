@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     public UpperUIManager upperUIManager;
     public MenuManager menuManager;
     public InfoUiScript InfoUiScript;
+    public BetweenPlaying betweenPlaying;
+    public GameObject option;
+    public CheckUi checkUI;
 
     public GameClearUI gameclearUI;
     // Start is called before the first frame update
@@ -28,9 +31,12 @@ public class UIManager : MonoBehaviour
     }
     public void StartGame()
     {
+        gameManager.isStart = true;
+        gameManager.Init();
         startButton.gameObject.SetActive(false);
         icon.gameObject.SetActive(false);
         InfoUiScript.smallInfo.gameObject.SetActive(false);
+        betweenPlaying.ShowStartPanel();
     }
     public void OnCharacterIcon()
     {

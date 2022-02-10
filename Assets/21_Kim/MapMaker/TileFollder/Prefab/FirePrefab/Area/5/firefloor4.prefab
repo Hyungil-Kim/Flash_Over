@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2305264}
   - component: {fileID: 6571604}
   - component: {fileID: 91128356458977504}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: firefloor4
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   nextVisionList: []
   fillList: []
   tilemap: {fileID: 0}
-  firePrefab: {fileID: 790996446283228917, guid: ded054cebad3132479aad2f656f73cdc, type: 3}
+  firePrefab: {fileID: 2786097390824125054}
   cheakVision: 0
   obstacleVision: 0
   safeArea: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   tileArea: 5
   tileMesh: 1
   tileGrowthExp: 1
-  smokePrefab: {fileID: 7381384820131983578, guid: ded054cebad3132479aad2f656f73cdc, type: 3}
+  smokePrefab: {fileID: 3970656376215976202}
   smoke: {fileID: 0}
   name: 
   tileIsWeat: 0
@@ -360,6 +360,11 @@ PrefabInstance:
 --- !u!4 &2786097390824125053 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2420379088188289460, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
+  m_PrefabInstance: {fileID: 521534804438139849}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2786097390824125054 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
   m_PrefabInstance: {fileID: 521534804438139849}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1425108893266984953

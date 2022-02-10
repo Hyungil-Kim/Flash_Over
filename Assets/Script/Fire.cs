@@ -34,7 +34,7 @@ public class Fire : FSM<FireState>
 
 	public void Awake()
 	{
-		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+		gameManager = GameManager.instance;
 		gt = GetComponentInParent<GroundTile>();
 		//Turn.fires.Add(this);
 	}
