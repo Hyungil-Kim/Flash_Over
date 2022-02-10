@@ -38,13 +38,13 @@ public class TransparencyOfTheArea : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other == null) return;
-        if (other.tag == "Wall" || other.tag == "DoorCollider")
+        if (other.tag == "Wall" || other.tag == "DoorColider")
             color = other.gameObject.GetComponent<MeshRenderer>().material.color;
     }
     private void OnTriggerStay(Collider other)
     {
         if (other == null) return;
-        if (other.tag == "Wall" || other.tag == "DoorCollider")
+        if (other.tag == "Wall" || other.tag == "DoorColider")
         {
             other.gameObject.GetComponent<MeshRenderer>().material.color = new Color(color.r, color.g, color.b, 0.33f);
         }
