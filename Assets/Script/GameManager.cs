@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
 	{
 		instance = this;
 		tilemapManager = GetComponent<TilemapManager>();
+		audioController = Camera.main.GetComponent<AudioController>();
 	}
 	public void Start()
 	{
