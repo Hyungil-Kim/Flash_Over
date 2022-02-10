@@ -59,6 +59,10 @@ public class FireStation : MonoBehaviour
         //    menuPanel.SetActive(true);
         //}
     }
+    public void StopCoroutine()
+    {
+        StopAllCoroutines();
+    }
     //IEnumerator CoZoomCamera(int index)
     //{
     //    while (Mathf.Abs(Camera.main.orthographicSize - cameraSize[index]) >= 0.07f)

@@ -43,6 +43,8 @@ public class UIOnOff : MonoBehaviour
 
     public GameObject mainCameraPos;
     public GameObject selectCameraPos;
+
+    public GameObject offscreanIndicatorPanel;
     private void Start()
     {
         Camera.main.transform.position = mainCameraPos.transform.position;
@@ -64,8 +66,8 @@ public class UIOnOff : MonoBehaviour
             var cd = new CharacterData();
             cd.SettingFixCharacter(20, 10, 50, 5, 5);
         }
-        returnButton = uiArray[11].transform.gameObject;
-        stage= uiArray[13].transform.gameObject;
+        returnButton = uiArray[8].transform.gameObject;
+        stage= uiArray[10].transform.gameObject;
 
         //stageSelsction = uiArray[11].transform.gameObject;
 
@@ -80,7 +82,7 @@ public class UIOnOff : MonoBehaviour
         }
 
         //임시로 주석처리
-        offScreen = uiArray[14].GetComponent<OffScreenIndicator>();
+        offScreen = offscreanIndicatorPanel.GetComponent<OffScreenIndicator>(); 
         
         //stageSelsction = uiArray[11].transform.gameObject;
     }
@@ -98,17 +100,22 @@ public class UIOnOff : MonoBehaviour
         {
             ui.SetActive(false);
         }
-        uiDict[uiName].SetActive(true);
-        if(uiName == "MainLobby")
+        if (uiName == "MainLobby" || uiName == "FacilityManagement")
         {
             fireStation.OnClick(5);
         }
-    }
 
+        uiDict[uiName].SetActive(true);
+        
+    }
+    IEnumerator CoMain()
+    {
+        yield return new WaitForSeconds(1.5f);
+    }
     public void Closed()
     {
-        uiArray[11].SetActive(false);
-        uiArray[13].SetActive(true);
+        uiArray[8].SetActive(false);
+        uiArray[10].SetActive(true);
         //uiArray[15].SetActive(false);
         //character.SetActive(false);
     }
@@ -120,28 +127,34 @@ public class UIOnOff : MonoBehaviour
 
     public void StageSelect()
     {
+        StopAllCoroutines();
+        offscreanIndicatorPanel.SetActive(true);
         Camera.main.transform.position = selectCameraPos.transform.position;
         Camera.main.transform.rotation = selectCameraPos.transform.rotation;
+
+        
         for (int i = 0; i < uiArray.Length-1; i++)
         {
             uiArray[i].SetActive(false);
         }
         stage.SetActive(true);
         returnButton.SetActive(true);
-        uiArray[14].SetActive(true);
+        uiArray[10].SetActive(true);
         character.SetActive(false);
+
     }
 
     public void ReturnMainLobby(string uiName)
     {
+        offscreanIndicatorPanel.SetActive(false);
         Camera.main.transform.position = mainCameraPos.transform.position;
         Camera.main.transform.rotation = mainCameraPos.transform.rotation;
         foreach (var ui in uiArray)
-            {
-                ui.SetActive(false);
-            }
-            uiDict[uiName].SetActive(true);
-            returnButton.SetActive(false);
+        {
+            ui.SetActive(false);
+        }
+        uiDict[uiName].SetActive(true);
+        returnButton.SetActive(false);
 
         character.SetActive(true);
 

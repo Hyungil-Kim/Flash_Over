@@ -65,7 +65,7 @@ public class MainRest : MonoBehaviour
             cd.Value.restCount++;
             if(cd.Value.restCount == 3)
             {
-                cd.Value.isRest = false;
+                cd.Value.admission = Admission.None;
                 cd.Value.tiredScore = 0;
                 cd.Value.RemoveBad(probability);
                 keyList.Add(cd.Key);

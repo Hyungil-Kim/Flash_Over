@@ -31,7 +31,7 @@ public class CharacterShop : MonoBehaviour
 
     private void Awake()
     {
-
+        maxChaList = GameData.userData.chaShopData.countUpgrade + 5;
         var uiCharacters = GameObject.FindGameObjectsWithTag("UICharacter");
         foreach (var uicharacter in uiCharacters)
         {
@@ -77,7 +77,20 @@ public class CharacterShop : MonoBehaviour
         for (int i = 0; i < maxChaList; i++)
         {
             CharacterData cd = new CharacterData();
-            cd.NewSetCharacter();
+            //가중치 등급 뽑기
+            var gradeWeight = MyDataTableMgr.itemGradeTable.GetTable(GameData.userData.chaShopData.gradeUpgrade);
+            var grade = new WeightList<ItemGrade>();
+            grade.AddGrade(ItemGrade.Normal, gradeWeight.normal);
+            grade.AddGrade(ItemGrade.Rare, gradeWeight.rare);
+            grade.AddGrade(ItemGrade.Unique, gradeWeight.unique);
+            grade.AddGrade(ItemGrade.Special, gradeWeight.special);
+
+            //등급별 아이템 뽑기 !
+            var characterGrade = grade.GetRandomGrade();
+
+            cd.NewSetCharacter((int)characterGrade);
+            
+
             var prefab = shopChaList[i].GetComponent<ShopChaPrefab>();
             prefab.SetValue(cd, i);
             GameData.userData.shopChaList.Add(cd);

@@ -72,6 +72,16 @@ public class UserData : MySaveData
     = new Dictionary<int, CharacterData>();
     public List<CharacterData> restEndList
         = new List<CharacterData>();
+
+    public List<Buff> totalCharacteristic = new List<Buff>();
+    public UserData ()
+    {
+        Init();
+    }
+    public void Init()
+    {
+        TotalCharacteristic.Init();
+    }
     public void SaveUserData(int slot)
     {
         MySaveLoadSystem<UserData>.Save(GameData.userData, SaveDataType.PlayerData,slot);

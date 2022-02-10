@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Characteristic
 {
+    
 }
 public class HeavyWeight : Buff
 {

@@ -14,6 +14,8 @@ public class CharacterInfoList : MonoBehaviour
     public CharacterInfoStat info;
     private bool isReverse;
     List<CharacterData> sortUserCharacter = new List<CharacterData>();
+
+    public InfoType type;
     //List<GameObject> uiCharacterList = new List<GameObject>();
     private void Awake()
     {
@@ -93,9 +95,39 @@ public class CharacterInfoList : MonoBehaviour
     }
     public void OnChaButton(int index)
     {
-        var parent = GetComponentInParent<CharacterInfo>();
-        parent.curCharacter = sortUserCharacter[index];
-        parent.OnChaIcon();
+        switch (type)
+        {
+            case InfoType.Character:
+                var characterInfo = GetComponentInParent<CharacterInfo>();
+                characterInfo.curCharacter = sortUserCharacter[index];
+                characterInfo.currentIndex = index;
+                characterInfo.OnChaIcon();
+                break;
+            case InfoType.Training:
+                var trainingInfo = GetComponentInParent<TrainingCharacter>();
+                trainingInfo.curCharacter = sortUserCharacter[index];
+                trainingInfo.curIndex = index;
+                trainingInfo.OnChaIcon();
+                break;
+            case InfoType.Rest:
+                var restInfo = GetComponentInParent<Rest>();
+                restInfo.curCd = sortUserCharacter[index];
+                restInfo.curCharacterIndex = index;
+                restInfo.OnChaIcon();
+                break;
+            case InfoType.Truck:
+                var truckInfo = GetComponentInParent<FireTruck>();
+                truckInfo.curcharacter = sortUserCharacter[index];
+                truckInfo.curCharacterIndex = index;
+                truckInfo.OnChaIcon();
+                break;
+            default:
+                break;
+        }
+
+        //var parent = GetComponentInParent<CharacterInfo>();
+        //parent.curCharacter = sortUserCharacter[index];
+        //parent.OnChaIcon();
     }
     public void OptionSort(int index)
     {

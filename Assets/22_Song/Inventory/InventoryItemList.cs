@@ -23,6 +23,8 @@ public class InventoryItemList : MonoBehaviour
         }
     }
 
+    public ItemDataBase curItem;
+
     List<GameObject> itemObjects = new List<GameObject>();
 
     //List<WeaponData> weaponItems

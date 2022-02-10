@@ -70,8 +70,8 @@ public class Indicator : MonoBehaviour
 
     public void MarkerClick()
     {
-        uiOnOff.uiArray[12].SetActive(true);
-        uiOnOff.uiArray[13].SetActive(false);
+        uiOnOff.uiArray[9].SetActive(true);
+        uiOnOff.uiArray[10].SetActive(false);
      
         uiOnOff.OverviewOftheSite(targetLevel);
 

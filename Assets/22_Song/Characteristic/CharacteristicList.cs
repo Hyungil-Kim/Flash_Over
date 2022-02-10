@@ -32,7 +32,27 @@ public enum CharacteristicList
     Berserker,
 
 }
+
 public static class TotalCharacteristic
 {
     public static List<Buff> list = new List<Buff>();
+    public static List<CharacteristicList> innateList = new List<CharacteristicList>();
+    public static void Init()
+    {
+        innateList.Add(CharacteristicList.StrongMind);
+        innateList.Add(CharacteristicList.WidePersPective);
+        innateList.Add(CharacteristicList.FriendShip);
+        innateList.Add(CharacteristicList.MasterOfWeapon);
+        innateList.Add(CharacteristicList.QuickHealing);
+        innateList.Add(CharacteristicList.Coward);
+        innateList.Add(CharacteristicList.Laziness);
+        innateList.Add(CharacteristicList.LowSelfEsteem);
+        innateList.Add(CharacteristicList.Intelligent);
+        innateList.Add(CharacteristicList.Nimble);
+        innateList.Add(CharacteristicList.FireTolerance);
+        innateList.Add(CharacteristicList.Stronger);
+        innateList.Add(CharacteristicList.Stronger);
+
+
+    }
 }

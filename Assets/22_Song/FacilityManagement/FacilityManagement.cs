@@ -6,6 +6,7 @@ public class FacilityManagement : MonoBehaviour
 {
     public List<GameObject> uiArray = new List<GameObject>();
     private Dictionary<string, GameObject> uiDict = new Dictionary<string, GameObject>();
+    public GameObject panel;
     public void ShopUpgrade(int index)
     {
         switch (index)
@@ -88,6 +89,7 @@ public class FacilityManagement : MonoBehaviour
     }
     public void Open(string uiName)
     {
+        panel.SetActive(false);
         foreach (var ui in uiArray)
         {
             ui.SetActive(false);
@@ -95,6 +97,15 @@ public class FacilityManagement : MonoBehaviour
             {
                 ui.SetActive(true);
             }
+        }
+    }
+    public void Close()
+    {
+        panel.SetActive(true);
+        foreach (var ui in uiArray)
+        {
+            ui.SetActive(false);
+            
         }
     }
 }

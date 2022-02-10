@@ -21,10 +21,14 @@ public class FireTruck : MonoBehaviour
     private Dictionary<int, CharacterData> outFireMan = new Dictionary<int, CharacterData>();
 
     public CharacterData curcharacter;
+    public int curCharacterIndex;
+    public int curIndex;
 
     public Image icon;
     public CharacterData iconCharacter;
 
+    public CharacterInfoList characterInfoList;
+    public CharacterInfoStat characterInfoStat;
     private void OnEnable()
     {
         outFireMan.Clear();
@@ -66,7 +70,17 @@ public class FireTruck : MonoBehaviour
     {
         inventory.gameObject.SetActive(false);
         consumShop.gameObject.SetActive(false);
-    }    
+    }
+
+    public void OnChaIcon()
+    {
+        characterInfoStat.gameObject.SetActive(true);
+    }
+    public void OnInfoList()
+    {
+        firemanCharacter.gameObject.SetActive(false);
+        characterInfoList.gameObject.SetActive(true);
+    }
     //public void OnChaIcon(CharacterData cd)
     //{
     //    for (int i = 0; i < GameData.userData.maxFireMan; i++)
@@ -92,6 +106,30 @@ public class FireTruck : MonoBehaviour
 
     //    characterList.SetActive(false);
     //}
+    public void SetCharacter()
+    {
+        
+        if(outFireMan.ContainsKey(curIndex))
+        {
+            outFireMan.Remove(curIndex);
+        }
+        if (outFireMan.ContainsValue(curcharacter))
+        {
+            var keyNumber = outFireMan.FirstOrDefault((x) => x.Value == curcharacter).Key;
+            outFireMan.Remove(keyNumber);
+        }
+        outFireMan.Add(curIndex, curcharacter);
+
+        var fireman = fireManList[curIndex].GetComponent<FireManInfoPrefab>();
+        curcharacter.isSelected = true;
+        fireman.Init(curcharacter);
+        //fireTruckList.Init();
+
+
+        firemanCharacter.gameObject.SetActive(true);
+        characterInfoList.gameObject.SetActive(false);
+        characterInfoStat.gameObject.SetActive(false);
+    }
     public void OnChaIcon(CharacterData cd)
     {
         //for (int i = 0; i < GameData.userData.maxFireMan; i++)
@@ -121,6 +159,7 @@ public class FireTruck : MonoBehaviour
         //characterList.SetActive(false);
     }
 
+
     public void OnCharacter(int index)
     {
         if (iconCharacter != null)
@@ -141,7 +180,7 @@ public class FireTruck : MonoBehaviour
         {
             outFireMan[index].isSelected = false;
             outFireMan.Remove(index);
-            fireTruckList.Init();
+            //fireTruckList.Init();
         }
 
         //characterList.SetActive(false);

@@ -24,6 +24,8 @@ public class Buff
     public string timing;
     public BuffTiming buffTiming = new BuffTiming();
 
+    public string desc;
+
     [NonSerialized]
     public CharacterData cd;
 

@@ -93,7 +93,7 @@ public class Shop : MonoBehaviour
         else
         {
             //아니라면 저장된 상점아이템 리스트를 불러와서 세팅해줄겁니다
-            for (int i = 0; i < maxItemCount; i++)
+            for (int i = 0; i < GameData.userData.shopItemList.Count; i++)
             {
                 SetList(GameData.userData.shopItemList[i], i);
             }

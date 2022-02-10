@@ -11,7 +11,7 @@ public class ItemPrefab : MonoBehaviour
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI number;
     public ItemDataBase itemData;
-
+    public InventoryItemList inventoryItemList;
     public void Init(ItemDataBase data, ItemType type)
     {
         itemData = data;
@@ -20,5 +20,10 @@ public class ItemPrefab : MonoBehaviour
         image.sprite = itemData.dataTable.iconSprite;
         itemName.text = itemData.dataTable.itemName;
         gameObject.SetActive(true);
+    }
+    public void Sell()
+    {
+        GetComponentInParent<InventoryItemList>().curItem = itemData;
+        GetComponentInParent<ShopUI>().ItemSell();
     }
 }

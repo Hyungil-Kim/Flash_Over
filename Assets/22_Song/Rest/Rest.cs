@@ -32,13 +32,17 @@ public class Rest : MonoBehaviour
         get { return curCd; }
         set { curCd = value; }
     }
+    public int curCharacterIndex;
 
     public MainRest mainRest;
     public RestCharacter restCharacter;
     public GameObject popUp;
     public GameObject restOver;
     public GameObject restUpgrade;
+    public GameObject upgradePopup;
 
+    public CharacterInfoList characterInfoList;
+    public CharacterInfoStat characterInfoStat;
     private void OnEnable()
     {
         
@@ -49,11 +53,16 @@ public class Rest : MonoBehaviour
         }
     }
 
-
+    public void OnChaIcon()
+    {
+        //trainingRoom.gameObject.SetActive(true);
+        characterInfoStat.gameObject.SetActive(true);
+    }
     public void OnClickRestRoom()
     {
         mainRest.gameObject.SetActive(false);
-        restCharacter.gameObject.SetActive(true);
+        //restCharacter.gameObject.SetActive(true);
+        characterInfoList.gameObject.SetActive(true);
     }
     public void ExitRestRoom()
     {
@@ -66,13 +75,21 @@ public class Rest : MonoBehaviour
     public void OnClickExitCharacter()
     {
         restCharacter.gameObject.SetActive(false);
+
+        characterInfoList.gameObject.SetActive(false);
+        characterInfoStat.gameObject.SetActive(false);
+
         mainRest.gameObject.SetActive(true);
+    }
+    public void OnUpgradePopup()
+    {
+        upgradePopup.SetActive(true);
     }
     public void OnClickRest()
     {
-        curCd.restCount = 1;
+        //curCd.restCount = 1;
         GameData.userData.restList.Add(curIndex, curCd);
-        curCd.isRest = true;
+        //curCd.isRest = true;
         OnClickunRest();
     }
     public void OnClickunRest()

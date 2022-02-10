@@ -4,9 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
+public enum InfoType
+{
+    Character,
+    Training,
+    Rest,
+    Truck,
+}
 public class CharacterInfoStat : MonoBehaviour
 {
-    public Image icon;
+    public RawImage icon;
     public ItemButtonPrefab hose;
     public ItemButtonPrefab bunkerGear;
     public ItemButtonPrefab oxygenTank;
@@ -28,7 +35,7 @@ public class CharacterInfoStat : MonoBehaviour
     public GameObject characteristicPrefab;
     public GameObject characteristicContent;
 
-
+    public InfoType type;
     private void OnEnable()
     {
         Init();
@@ -57,8 +64,30 @@ public class CharacterInfoStat : MonoBehaviour
     }
     public void Init()
     {
-        var characterInfo = GetComponentInParent<CharacterInfo>();
-        var curCharacter = characterInfo.curCharacter;
+        //var characterInfo = GetComponentInParent<CharacterInfo>();
+        CharacterData curCharacter = null;
+        int curIndex = 0;
+        switch (type)
+        {
+            case InfoType.Character:
+                curCharacter = GetComponentInParent<CharacterInfo>().curCharacter;
+                curIndex = GetComponentInParent<CharacterInfo>().currentIndex;
+                break;
+            case InfoType.Training:
+                curCharacter = GetComponentInParent<TrainingCharacter>().curCharacter;
+                curIndex = GetComponentInParent<TrainingCharacter>().curIndex;
+                break;
+            case InfoType.Rest:
+                curCharacter = GetComponentInParent<Rest>().curCd;
+                curIndex = GetComponentInParent<Rest>().curCharacterIndex;
+                break;
+            case InfoType.Truck:
+                curCharacter = GetComponentInParent<FireTruck>().curcharacter;
+                curIndex = GetComponentInParent<FireTruck>().curCharacterIndex;
+                break;
+            default:
+                break;
+        }
 
         if (curCharacter.hose != null)
         {
@@ -100,7 +129,10 @@ public class CharacterInfoStat : MonoBehaviour
         }
 
         //info.text = $"{curCharacter.characterClass}\n{curCharacter.characterGrade}  {curCharacter.characterName}";
+
         chaname.text = $"{curCharacter.characterName}";
+        icon.texture = Resources.Load<RenderTexture>($"Icon/icon {curIndex}");
+
         //var statSB = new StringBuilder();
         //statSB.Append(string.Format($"Hp : {curCharacter.totalStats.hp.stat}\n"));
         //statSB.Append(string.Format($"ÇÇ·Îµµ : {curCharacter.tiredScore}"));

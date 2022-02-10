@@ -23,6 +23,9 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
 
     public int index;
     private FireTruck fireTruck;
+
+    public GameObject selectButton;
+    public GameObject infoUI;
     private void Start()
     {
         fireTruck = GetComponentInParent<FireTruck>();
@@ -32,6 +35,9 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
     {
         if (cd != null)
         {
+            infoUI.SetActive(true);
+            selectButton.SetActive(false);
+
             hose.Init(cd.hose, ItemType.Hose);
             bunkerGear.Init(cd.bunkerGear, ItemType.BunkerGear);
             oxygenTank.Init(cd.oxygenTank, ItemType.OxygenTank);
@@ -59,9 +65,14 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
             oxygenTank.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd));
             consum1.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd, 1));
             consum2.GetComponent<Button>().onClick.AddListener(() => firemanInfo.SetCharacter(cd, 2));
+
+
         }
         else
         {
+            infoUI.SetActive(false);
+            selectButton.SetActive(true);
+
             hose.Init(null, ItemType.Hose);
             bunkerGear.Init(null, ItemType.BunkerGear);
             oxygenTank.Init(null, ItemType.OxygenTank);
@@ -80,5 +91,11 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         fireTruck.OnCharacter(index);
+    }
+
+    public void OnClickIcon()
+    {
+        GetComponentInParent<FireTruck>().OnInfoList();
+        GetComponentInParent<FireTruck>().curIndex = index;
     }
 }

@@ -11,6 +11,7 @@ public class CharacterInfo : MonoBehaviour
     public int currentCharacterIndex;
     public ItemType currentItemType;
     public CharacterData curCharacter;
+    public int currentIndex;
 
     private void OnEnable()
     {

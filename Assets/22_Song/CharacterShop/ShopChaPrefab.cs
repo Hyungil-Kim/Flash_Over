@@ -17,6 +17,9 @@ public class ShopChaPrefab : MonoBehaviour
     public TextMeshProUGUI chaVision;
 
     public CharacterData character;
+
+    public GameObject characteristicPrefab;
+    public GameObject characteristicContent;
     public void SetValue(CharacterData cd, int index)
     {
         icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
@@ -27,6 +30,17 @@ public class ShopChaPrefab : MonoBehaviour
         chaLung.text = $"폐활량 : {cd.totalStats.lung.stat}";
         chaMove.text = $"이동력 : {cd.totalStats.move}";
         chaVision.text = $"시야 : {cd.totalStats.vision}";
+        
+        if (cd.characteristics.Count > 0)
+        {
+            foreach (var characteristic in cd.characteristics)
+            {
+                var newGo = Instantiate(characteristicPrefab, characteristicContent.transform);
+                var prefab = newGo.GetComponent<CharacteristicPrefab>();
+                prefab.Init(characteristic);
+
+            }
+        }
     }
     public void Hire()
     {

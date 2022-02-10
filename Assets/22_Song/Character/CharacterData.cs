@@ -140,6 +140,14 @@ public class CharacteristicCheck
 
 }
 
+public enum Admission
+{
+    None,
+    Rest,
+    Hospital,
+    Phycho
+}
+
 public class CharacterData
 {
     public CharacterCustomizationSetup setupModel;
@@ -222,7 +230,11 @@ public class CharacterData
     public int tiredScore;
     public TiredType tiredType;
 
-    public bool isRest;
+    //public bool isRest;
+    //public bool admission;
+    //public bool psycho;
+    public Admission admission;
+
     public int restCount;
 
     public bool isTraining;
@@ -241,11 +253,12 @@ public class CharacterData
     public int area;
 
 
+
     public string state
     {
         get
         {
-            if(isRest)
+            if(admission != Admission.None)
             {
                 return "휴식중";
             }
@@ -393,7 +406,7 @@ public class CharacterData
     //}
 
     //처음 세팅 init이라고 봐야할듯 ?
-    public void NewSetCharacter(int gradeIndex = 0)
+    public void NewSetCharacter(int gradeIndex = 0, int characteristicGrade = 0)
     {
         grade = gradeIndex;
 
@@ -552,12 +565,14 @@ public class CharacterData
         //baseStats.str.stat *= 5;
         //baseStats.hp.stat *= 2;
 
-        
+
 
         //버프 디버프.. 일케 넣어주는게 맞을까..
         //buff.Add(new testBuff(this));
-        buff.Add(new HeavyWeight(this));
-        buff.Add(new SaveClaimant(this));
+        //buff.Add(new HeavyWeight(this));
+        //buff.Add(new SaveClaimant(this));
+        AddInnateCharacteristic(gradeIndex);
+
 
         //스텟 최신화
         StatInit();
@@ -898,7 +913,7 @@ public class CharacterData
                 characteristic = new HeavyWeight(this);
                 break;
             case CharacteristicList.SaveClamant:
-                characteristic = new HeavyWeight(this);
+                characteristic = new SaveClaimant(this);
                 break;
             case CharacteristicList.Haughtiness:
                 characteristic = new Haughtiness(this);
@@ -999,6 +1014,20 @@ public class CharacterData
             var removeBuff = badCharacteristics[index];
             buff.Remove(removeBuff);
             badCharacteristics.Remove(removeBuff);
+        }
+    }
+
+    public void AddInnateCharacteristic(int count)
+    {
+        for (int i = 0; i < count+2; i++)
+        {
+            var random = Random.value;
+            if(random <= 0.3f + GameData.userData.chaShopData.characteristicUpgrade*0.05f)
+            {
+                var max = TotalCharacteristic.innateList.Count;
+                var randomInnate = Random.Range(0, max);
+                BuildCharacteristic(TotalCharacteristic.innateList[randomInnate]);
+            }
         }
     }
 
