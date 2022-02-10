@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     private Fire fire;
     public List<Player> playerList = new List<Player>();
     private GroundTile groundTile;
-
+  
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +25,13 @@ public class CameraController : MonoBehaviour
         gameManager = GameManager.instance;
         target = gameManager.targetPlayer;
         transform.position = playerList[0].transform.position + offset;
+      
         //클릭 판단
     }
     // Update is called once per frame
-    void LateUpdate()
+    private void Update()
     {
-        
+       
     }
 
     public void CameraMoving(Player player)
@@ -88,7 +89,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-
+   
     
 }
 

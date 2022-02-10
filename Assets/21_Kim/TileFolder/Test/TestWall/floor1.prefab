@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0dbd16ef6c8f244dadcdfc58305e3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlayer: {fileID: 0}
   isWall: 0
   ParentTile: {fileID: 0}
   attackfloodFill: 0
@@ -121,6 +122,7 @@ MonoBehaviour:
   isDoor: 0
   isObstacle: 0
   isClaimant: {fileID: 0}
+  isExit: 0
   obstacle: {fileID: 0}
   checkSum: 0
   G: 0
@@ -134,22 +136,29 @@ MonoBehaviour:
   tilemap: {fileID: 0}
   firePrefab: {fileID: 790996446283228917}
   cheakVision: 0
+  obstacleVision: 0
+  safeArea: 0
   cheakSumVision: 0
   tileArea: 1
   tileMesh: 1
   tileGrowthExp: 1
   smokePrefab: {fileID: 7381384820131983578}
+  smoke: {fileID: 0}
+  name: 
   tileIsWeat: 0
   tileIsFire: 0
   tileIsSmoke: 0
   tileIsClaimant: 0
   tileWeatValue: 0
+  tileMaxExp: 0
   tileExp: 100
+  tileMaxHp: 0
   tileHp: 150
   tileSaveSmokeValue: 0
   tileSmokeValue: 1
   index: 0
   infoIndex: 0
+  id: 0
 --- !u!1 &3096985226070265613
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2420379088188289463, guid: e4bc1b1bb32333546aa088eb68ad7eaf, type: 3}
       propertyPath: m_TagString

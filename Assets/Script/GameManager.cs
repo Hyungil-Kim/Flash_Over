@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
 	public bool press;
 	public GroundTile groundTile;
 	public CameraController cameraController;
+	public AudioController audioController;
 	public bool readyPlayerAction = true;
 	public int num = -1;
 	public int move;
@@ -148,6 +149,7 @@ public class GameManager : MonoBehaviour
 	public void StartGame()
 	{
 		uIManager.StartGame();
+		audioController.ChangeAudioClip(1);
 	}
 	public void Init()
 	{
