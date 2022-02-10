@@ -83,6 +83,13 @@ public class CharacterInfoList : MonoBehaviour
             uiChaList[i].GetComponent<UICharacter>().Init(i);
         }
     }
+    //public void UIChaInit()
+    //{
+    //    var uiChaList = UIOnOff.instance.uiCharacterList;
+    //    var model = uiChaList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+    //    sortUserCharacter[index].setupModel.ApplyToCharacter(model);
+    //    uiChaList[i].GetComponent<UICharacter>().Init(i);
+    //}
     public void DropDownInit()
     {
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
