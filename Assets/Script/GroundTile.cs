@@ -100,7 +100,15 @@ public class GroundTile : MonoBehaviour
 		tileIsWeat = data.water;
 
 		tileHp = tileMaxHp;
-		tileExp = tileMaxExp;
+
+		if(firePrefab.activeSelf)
+		{
+			tileExp = 100;
+		}
+		else
+		{
+			tileExp = 0;
+		}
 
 
 		Turn.groundTiles.Add(this);
@@ -512,7 +520,7 @@ public class GroundTile : MonoBehaviour
 		{
 			if (tile.tileHp > 0)
 			{ 
-				tile.tileHp -= fire.data.dmg;
+				tile.tileHp -=damage;
 			}
 			
 			tile.tileHp = tile.tileHp < 0 ? 0 : tileHp;
@@ -523,7 +531,15 @@ public class GroundTile : MonoBehaviour
 			}
 
 		}
-		tile.tileExp = damage * (int)(tile.tileMesh - weat + objectsMesh);
+		tile.tileExp += damage * (int)(tile.tileMesh - weat + objectsMesh);
+		if(tile.tileExp >= 100)
+		{
+			tile.tileExp = 100;
+		}
+		else if (tile.tileExp <= 0)
+		{
+			tile.tileExp = 0;
+		}
 
 		if (tile.tileIsFire)
 		{
