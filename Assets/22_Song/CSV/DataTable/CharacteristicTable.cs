@@ -19,7 +19,7 @@ public class CharacteristicData : TableDataBase
 }
 public class CharacteristicTable : MyDataTableBase<CharacteristicData>
 {
-    public CharacteristicTable() : base("CharacteristicDataTable")
+    public CharacteristicTable() : base("ChracteristicDataTable")
     {
         foreach (var table in tableList)
         {
