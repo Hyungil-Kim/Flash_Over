@@ -37,6 +37,9 @@ public class MenuTableData : TableDataBase
    public int IS2Cost;
    public int IS3Durability;
    public int IS3Cost;
+    
+    public int MC1Count;
+    public int MC1Cost;
 }
 [System.Serializable]
 public class MenuTable : MyDataTableBase<MenuTableData>
@@ -80,6 +83,10 @@ public class MenuTable : MyDataTableBase<MenuTableData>
             tableData.IS2Cost = int.Parse(table["IS2Cost"]);
             tableData.IS3Durability = int.Parse(table["IS3Durability"]);
             tableData.IS3Cost = int.Parse(table["IS3Cost"]);
+
+
+            tableData.MC1Count = int.Parse(table["MC1Count"]);
+            tableData.MC1Cost = int.Parse(table["MC1Cost"]);
 
             tables.Add(tableData);
         }

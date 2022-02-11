@@ -18,7 +18,7 @@ public class TrainingList : MonoBehaviour
 
     private void Awake()
     {
-        maxChaCount = GameData.userData.maxCharacter;
+        maxChaCount = MyDataTableMgr.menuTable.GetTable(GameData.userData.maxCharacter).MC1Count;
         for (int i = 0; i < maxChaCount; i++)
         {
             var character = Instantiate(chaPrefab, content.transform);

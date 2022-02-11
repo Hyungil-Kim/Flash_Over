@@ -31,9 +31,11 @@ public class FireStation : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(CoMoveCamera(index));
         //StartCoroutine(CoZoomCamera(index));
-        prevIndex = index;
+
+        //prevIndex = index;
 
     }
+    
     public void MainMenu()
     {
 
@@ -43,9 +45,10 @@ public class FireStation : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(CoMoveCamera(wayPoints.Length-1));
         //StartCoroutine(CoZoomCamera(wayPoints.Length - 1));
-        prevIndex = wayPoints.Length - 1;
+
+        //prevIndex = wayPoints.Length - 1;
     }
-    IEnumerator CoMoveCamera(int index)
+    public IEnumerator CoMoveCamera(int index)
     {
         var wayPos = wayPoints[index].transform.position;
         while (Vector3.Distance(wayPos, Camera.main.transform.position) > 0.08f)
@@ -54,6 +57,9 @@ public class FireStation : MonoBehaviour
             Camera.main.transform.position = Vector3.Lerp(cameraPos, wayPos, Time.deltaTime * CameraMoveSpeed);
             yield return 0;
         }
+
+        prevIndex = index;
+
         //if (prevIndex == wayPoints.Length - 1)
         //{
         //    menuPanel.SetActive(true);

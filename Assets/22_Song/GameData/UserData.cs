@@ -6,7 +6,7 @@ using System;
 public class UserData : MySaveData
 {
     //상점레벨, 캐릭터 상점 레벨에 따른 데이터 테이블도 존재할테고 그에 따라 바꿔줘야하는데 일단 ! 그냥 박자
-    public int maxCharacter = 9;
+    public int maxCharacter;
     public int maxItem = 20;
     //출전할 수 있는 소방관 수
     public int gofireman = 5;
@@ -26,6 +26,12 @@ public class UserData : MySaveData
     public int usermaxExp;
     //몇주차인가요
     public int inGameTime;
+
+    public bool DaewonTuto;
+    public bool HireTuto;
+    public bool RestTuto;
+    public bool ShopTuto;
+    public bool TrainingTuto;
 
     public CharacterShopUpgradeData chaShopData = new CharacterShopUpgradeData();
     public TrainingRoomUpgradeData traingShopData = new TrainingRoomUpgradeData();

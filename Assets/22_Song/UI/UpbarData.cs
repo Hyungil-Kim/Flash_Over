@@ -10,7 +10,7 @@ public class UpbarData : MonoBehaviour
 
     private void Update()
     {
-        maxFireman.text = $"{GameData.userData.characterList.Count} / {GameData.userData.maxCharacter}";
+        maxFireman.text = $"{GameData.userData.characterList.Count} / {MyDataTableMgr.menuTable.GetTable(GameData.userData.maxCharacter).MC1Count}";
         gold.text = $"{GameData.userData.gold}";
     }
 }

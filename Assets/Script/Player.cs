@@ -180,6 +180,7 @@ public class Player : FSM<PlayerState>
 	{
 		gameManager.targetPlayer.SetState(PlayerState.End);
 		animator.SetBool("openDoor", false);
+		AllTileMesh.instance.UpdateFog();
 	}
 	public void Death()
 	{

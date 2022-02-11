@@ -12,6 +12,7 @@ using UnityEngine.InputSystem.EnhancedTouch;
 using AdvancedPeopleSystem;
 public class UIOnOff : MonoBehaviour
 {
+    public TutorialPlay[] tutorialPlays;
     //터치아무데나해도 ui창 사라지는거 하고 싶어서
     public MoveControlor mousePoint;
 
@@ -45,6 +46,8 @@ public class UIOnOff : MonoBehaviour
     public GameObject selectCameraPos;
 
     public GameObject offscreanIndicatorPanel;
+
+    public bool ontouch;
     private void Start()
     {
         Camera.main.transform.position = mainCameraPos.transform.position;
@@ -72,7 +75,8 @@ public class UIOnOff : MonoBehaviour
         //stageSelsction = uiArray[11].transform.gameObject;
 
         mousePoint = new MoveControlor();
-        //mousePoint.Mouse.TestTouch.started += val => OffNotEnoughMoney();
+        mousePoint.Mouse.TestTouch.started += val => OnTouch();
+        mousePoint.Mouse.TestTouch.canceled += val => OffTouch();
         mousePoint.Mouse.Move.performed += val => GetMousePos(val.ReadValue<Vector2>());
         mousePoint.Enable();
         EnhancedTouchSupport.Enable();
@@ -96,22 +100,64 @@ public class UIOnOff : MonoBehaviour
     }
     public void Open(string uiName)
     {
+        switch (uiName)
+        {
+            case "DaewonList":
+                if(!GameData.userData.DaewonTuto)
+                {
+                    tutorialPlays[0].gameObject.SetActive(true);
+                }
+                break;
+            case "HireFireMan":
+                if (!GameData.userData.HireTuto)
+                {
+                    tutorialPlays[1].gameObject.SetActive(true);
+                }
+                break;
+            case "Training":
+                if (!GameData.userData.TrainingTuto)
+                {
+                    tutorialPlays[2].gameObject.SetActive(true);
+                }
+                break;
+            case "Rest":
+                if (!GameData.userData.RestTuto)
+                {
+                    tutorialPlays[3].gameObject.SetActive(true);
+                }
+                break;
+            case "Shop":
+                if (!GameData.userData.ShopTuto)
+                {
+                    tutorialPlays[4].gameObject.SetActive(true);
+                }
+                break;
+            default:
+                break;
+        }
         foreach (var ui in uiArray)
         {
             ui.SetActive(false);
         }
         if (uiName == "MainLobby" || uiName == "FacilityManagement")
         {
-            fireStation.OnClick(5);
+            //fireStation.OnClick(5);
+            StartCoroutine(BackMainMenu());
         }
-
-        uiDict[uiName].SetActive(true);
+        else
+        {
+            uiDict[uiName].SetActive(true);
+        }
         
     }
-    IEnumerator CoMain()
+    IEnumerator BackMainMenu()
     {
-        yield return new WaitForSeconds(1.5f);
+        fireStation.StopAllCoroutines();
+        yield return StartCoroutine(fireStation.CoMoveCamera(5));
+
+        uiDict["MainLobby"].SetActive(true);
     }
+    
     public void Closed()
     {
         uiArray[8].SetActive(false);
@@ -178,6 +224,16 @@ public class UIOnOff : MonoBehaviour
     public void OffNotEnoughMoney()
     {
         notEnoughMoney.SetActive(false);
+    }
+    public void OnTouch()
+    {
+        ontouch = true;
+        //notEnoughMoney.SetActive(true);
+    }
+    public void OffTouch()
+    {
+        ontouch = false;
+        //notEnoughMoney.SetActive(false);
     }
     
     public void SettingCharacter()

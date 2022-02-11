@@ -135,7 +135,7 @@ public class CharacterShop : MonoBehaviour
     }
     public void OnHireButton()
     {
-        var cheak = GameData.userData.characterList.Count < GameData.userData.maxCharacter;
+        var cheak = GameData.userData.characterList.Count < MyDataTableMgr.menuTable.GetTable(GameData.userData.maxCharacter).MC1Count;
         if (!cheak)
         {
             return;

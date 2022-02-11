@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterSelect : MonoBehaviour
 {
-    private int maxCharacter = GameData.userData.maxCharacter;
+    //private int maxCharacter = MyDataTableMgr.menuTable.GetTable(GameData.userData.maxCharacter).MC1Count;
 
     public AlreadyEquip alreadyEquip;
     public InventoryItemList currentInventory;
@@ -16,10 +16,10 @@ public class CharacterSelect : MonoBehaviour
 
     private void OnEnable()
     {
-        if (characterIcons.Count < GameData.userData.maxCharacter)
+        if (characterIcons.Count < MyDataTableMgr.menuTable.GetTable(GameData.userData.maxCharacter).MC1Count)
         {
             var count = characterIcons.Count;
-            for (int i = 0; i < GameData.userData.maxCharacter - count; i++)
+            for (int i = 0; i < MyDataTableMgr.menuTable.GetTable(GameData.userData.maxCharacter).MC1Count - count; i++)
             {
                 var go = Instantiate(characterIconPrepab, content.transform);
                 go.SetActive(false);
@@ -31,7 +31,7 @@ public class CharacterSelect : MonoBehaviour
     {
         if(characterIcons.Count == 0)
         {
-            for (int i = 0; i < GameData.userData.maxCharacter; i++)
+            for (int i = 0; i < MyDataTableMgr.menuTable.GetTable(GameData.userData.maxCharacter).MC1Count; i++)
             {
                 var go = Instantiate(characterIconPrepab, content.transform);
                 go.SetActive(false);
