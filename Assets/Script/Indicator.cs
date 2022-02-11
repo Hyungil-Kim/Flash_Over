@@ -14,6 +14,7 @@ public enum IndicatorType
 public class Indicator : MonoBehaviour
 {
     [SerializeField] private IndicatorType indicatorType;
+    [SerializeField] private Sprite[] image;
     private Image indicatorImage;
     private Text distanceText;
     private UIOnOff uiOnOff;
@@ -44,11 +45,23 @@ public class Indicator : MonoBehaviour
        
     }
 
-    public void SetImageColor(Color color)
+    public void SetImageColor(Color color, IndicatorType type)
     {
-        indicatorImage.color = color;
+        if (type == IndicatorType.MARKER)
+        {
+            indicatorImage.color = Color.white;
+        }
+        else if (type == IndicatorType.ARROW)
+        {
+            indicatorImage.color = color;
+
+        }
     }
 
+    public void SetIndicatorSprite(int level)
+    {
+        indicatorImage.sprite = image[level-1];
+    }
 
     public void SetDistanceText(float value)
     {

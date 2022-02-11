@@ -105,7 +105,8 @@ namespace UnityStandardAssets.ImageEffects
                 return;
             }
 
-            // screen blend is not supported when HDR is enabled (will cap values)
+            // screen blend is not supported when HDR is
+            // (will cap values)
 
             doHdr = false;
             if (hdr == HDRBloomMode.Auto)

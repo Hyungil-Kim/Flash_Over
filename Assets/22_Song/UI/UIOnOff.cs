@@ -76,7 +76,6 @@ public class UIOnOff : MonoBehaviour
         }
         returnButton = uiArray[8].transform.gameObject;
         stage= uiArray[10].transform.gameObject;
-
         //stageSelsction = uiArray[11].transform.gameObject;
 
         mousePoint = new MoveControlor();
@@ -206,18 +205,17 @@ public class UIOnOff : MonoBehaviour
     public void StageSelect()
     {
         StopAllCoroutines();
-        offscreanIndicatorPanel.SetActive(true);
         Camera.main.transform.position = selectCameraPos.transform.position;
         Camera.main.transform.rotation = selectCameraPos.transform.rotation;
 
-        
         for (int i = 0; i < uiArray.Length-1; i++)
         {
             uiArray[i].SetActive(false);
         }
+        offscreanIndicatorPanel.SetActive(true);
         stage.SetActive(true);
         returnButton.SetActive(true);
-        uiArray[10].SetActive(true);
+
         //character.SetActive(false);
 
     }

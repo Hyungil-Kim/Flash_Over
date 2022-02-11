@@ -26,6 +26,7 @@ public class AudioController : MonoBehaviour
     {
         audio.clip = clips[number];
         audio.Play();
+        audio.loop = true;
         soundPlay = false;
     }
 }

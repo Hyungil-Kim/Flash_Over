@@ -16,9 +16,8 @@ public class OffScreenIndicator : MonoBehaviour
     private Vector3 screenBounds;
 
     public GameObject isTarget;
-    private Buildings buildings;
 
-    public List<Buildings> targets ;
+    public List<Buildings> targets;
 
     public static Action<Buildings, bool> TargetStateChanged;
 
@@ -29,7 +28,6 @@ public class OffScreenIndicator : MonoBehaviour
         screenBounds = screenCentre * screenBoundOffset;
         TargetStateChanged += HandleTargetStateChanged;
         targets = new List<Buildings>();
-        buildings = GetComponent<Buildings>();
     }
 
     private void Update()
@@ -39,6 +37,7 @@ public class OffScreenIndicator : MonoBehaviour
     }
     void LateUpdate()
     {
+
     }
 
     /// <summary>
@@ -47,29 +46,42 @@ public class OffScreenIndicator : MonoBehaviour
     void DrawIndicators()
     {
 
-        foreach (Buildings target in targets)
+        foreach (var target in targets)
         {
             Vector3 screenPosition = OffScreenIndicatorCore.GetScreenPosition(mainCamera, target.transform.position);
             bool isTargetVisible = OffScreenIndicatorCore.IsTargetVisible(screenPosition);
             float distanceFromCamera = target.NeedDistanceText ? target.GetDistanceFromCamera(mainCamera.transform.position) : float.MinValue;// Gets the target distance from the camera.
             Indicator indicator = null;
 
-            if (target.NeedBoxIndicator && isTargetVisible&&target.gameObject.GetComponentInChildren<VisualEffect>().enabled == true)
+            if (target.NeedBoxIndicator && isTargetVisible)
             {   
-                //Debug.Log(target.name);
-                screenPosition.z = 0;
-                indicator = GetIndicator(ref target.indicator, IndicatorType.MARKER); // Gets the box indicator from the pool.
-                indicator.targetLevel=target.level;
+                
+                if(target.gameObject.GetComponentInChildren<VisualEffect>()!=null)
+                {
+                    if (target.gameObject.GetComponentInChildren<VisualEffect>().enabled==true)
+                    {
+                        screenPosition.z = 0;
+                        indicator = GetIndicator(ref target.indicator, IndicatorType.MARKER); // Gets the box indicator from the pool.
+                        indicator.targetLevel = target.level;
+                        indicator.SetIndicatorSprite(target.level);
+                    }
+                   
+                }
                 
             }
 
-            else if (target.NeedArrowIndicator && !isTargetVisible&&target.gameObject.GetComponentInChildren<VisualEffect>().enabled==true)
+            else if (target.NeedArrowIndicator && !isTargetVisible)
             {
-                float angle = float.MinValue;
-                OffScreenIndicatorCore.GetArrowIndicatorPositionAndAngle(ref screenPosition, ref angle, screenCentre, screenBounds);
-                indicator = GetIndicator(ref target.indicator, IndicatorType.ARROW); // Gets the arrow indicator from the pool.
-                indicator.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg); // Sets the rotation for the arrow indicator.
-                
+                if (target.gameObject.GetComponentInChildren<VisualEffect>() != null)
+                {
+                    if (target.gameObject.GetComponentInChildren<VisualEffect>().enabled == true)
+                    {
+                        float angle = float.MinValue;
+                        OffScreenIndicatorCore.GetArrowIndicatorPositionAndAngle(ref screenPosition, ref angle, screenCentre, screenBounds);
+                        indicator = GetIndicator(ref target.indicator, IndicatorType.ARROW); // Gets the arrow indicator from the pool.
+                        indicator.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg); // Sets the rotation for the arrow indicator.
+                    }
+                }
             }
             else
             {
@@ -78,7 +90,7 @@ public class OffScreenIndicator : MonoBehaviour
             }
             if (indicator)
             {
-                indicator.SetImageColor(target.TargetColor);// Sets the image color of the indicator.
+                indicator.SetImageColor(target.TargetColor,target.indicator.Type);// Sets the image color of the indicator.
                 indicator.SetDistanceText(distanceFromCamera); //Set the distance text for the indicator.
                 indicator.transform.position = screenPosition; //Sets the position of the indicator on the screen.
                 indicator.SetTextRotation(Quaternion.identity); // Sets the rotation of the distance text of the indicator.
@@ -103,7 +115,7 @@ public class OffScreenIndicator : MonoBehaviour
         {
             target.indicator?.Activate(false);
             target.indicator = null;
-            //targets.Remove(target);
+            targets.Remove(target);
         }
     }
 

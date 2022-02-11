@@ -68,7 +68,7 @@ namespace UnityFx.Outline
 				_enabled = value;
 			}
 		}
-
+		
 		/// <summary>
 		/// Gets or sets a value indicating whether layer game objects should be trated as one.
 		/// </summary>
