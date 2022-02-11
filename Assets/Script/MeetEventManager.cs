@@ -6,7 +6,7 @@ using TMPro;
 public class MeetEventManager : MonoBehaviour
 {
     public UIManager uIManager;
-    public TextMeshProUGUI titleText;
+    public Image charImage;
     public TextMeshProUGUI mainText;
     public Button leftButton;
     public Button rightButton;
