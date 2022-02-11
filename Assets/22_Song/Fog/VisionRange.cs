@@ -63,13 +63,13 @@ public class VisionRange : MonoBehaviour
 			curQueue = crossQueue.Peek();
 			curTile = tilemapManager.tilemap.GetInstantiatedObject(new Vector3Int(curQueue.cellpos.x, curQueue.cellpos.y, 0)).GetComponent<GroundTile>();
 			bool isWall = false;
-			if (curTile.isWall)
-			{
-				curTile.CheakVision = true;
-				isWall = true;
-				//crossQueue.Dequeue();
-				//continue;
-			}
+			//if (curTile.isWall)
+			//{
+			//	curTile.CheakVision = true;
+			//	//isWall = true;
+			//	crossQueue.Dequeue();
+			//	continue;
+			//}
 			crossQueue.Dequeue();
 			nextVisionList = curQueue.SetNextVision(tileObject, isWall);
 			listCount = nextVisionList.Count;
@@ -97,7 +97,7 @@ public class VisionRange : MonoBehaviour
                 {
 					nextQueue.CheakVisionSum = curTile.CheakVisionSum + 1;
 				}
-				if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue) && !isWall/*&& !nextQueue.isWall*/)
+				if (nextQueue.CheakVisionSum <= vision && /*!nextQueue.CheakVision &&*/ !crossResetQueue.Contains(nextQueue)/* && !isWall*//*&& !nextQueue.isWall*/)
 				{
 					crossResetQueue.Add(nextQueue);
 					//visiableTileIndexList.Add(nextQueue.index);

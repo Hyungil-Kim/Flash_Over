@@ -286,19 +286,43 @@ public class GroundTile : MonoBehaviour
                         {
 							var cheakTileSide = cheakTileSideOb.GetComponent<GroundTile>();
 							var cheakTileDown = cheakTileDownOb.GetComponent<GroundTile>();
-							nextTile.cheakSumVision += Mathf.Min(cheakTileSide.tileSmokeValue, cheakTileDown.tileSmokeValue) / 10;
+							var checkTileSideSmokeValue = 0;
+							var checkTileDownSmokeValue = 0;
+							if (cheakTileSide.smoke != null)
+							{
+								checkTileSideSmokeValue = cheakTileSide.smoke.data.decreasevision;
+							}
+							if (cheakTileDown.smoke != null)
+							{
+								checkTileDownSmokeValue = cheakTileDown.smoke.data.decreasevision;
+							}
+							nextTile.cheakSumVision += Mathf.Min(checkTileSideSmokeValue, checkTileDownSmokeValue);
 						}
 						else if(nextTile.cheakSumVision == 2 && cheakTileSideOb != null)
                         {
 							var cheakTileSide = cheakTileSideOb.GetComponent<GroundTile>();
-							nextTile.cheakSumVision += cheakTileSide.tileSmokeValue / 10;
+							var checkTileSideSmokeValue = 0;
+							if (cheakTileSide.smoke != null)
+							{
+								checkTileSideSmokeValue = cheakTileSide.smoke.data.decreasevision;
+							}
+							nextTile.cheakSumVision += checkTileSideSmokeValue;
 						}
 						else if (nextTile.cheakSumVision == 2 && cheakTileDownOb != null)
 						{
 							var cheakTileDown = cheakTileDownOb.GetComponent<GroundTile>();
-							nextTile.cheakSumVision += cheakTileDown.tileSmokeValue / 10;
+							var checkTileDownSmokeValue = 0;
+							if (cheakTileDown.smoke != null)
+							{
+								checkTileDownSmokeValue = cheakTileDown.smoke.data.decreasevision;
+							}
+							nextTile.cheakSumVision += checkTileDownSmokeValue;
 						}
-						nextVisionList.Add(nextTile);
+						if (!nextTile.isWall)
+						{
+							nextVisionList.Add(nextTile);
+						}
+						//nextVisionList.Add(nextTile);
 					}
 				}
 			}
@@ -343,7 +367,11 @@ public class GroundTile : MonoBehaviour
 				if (!nextVisionList.Contains(nextTile))
 				{
 					//nextTile.sumVision = Mathf.Abs(checkX) + Mathf.Abs(checkY);
-					nextVisionList.Add(nextTile);
+					if (!nextTile.isWall)
+					{
+						nextVisionList.Add(nextTile);
+					}
+					//nextVisionList.Add(nextTile);
 				}
 			}
 		}
@@ -464,6 +492,7 @@ public class GroundTile : MonoBehaviour
 					
 					if (elem.collider.gameObject.tag == "Wall")
 					{
+						renderer.material.renderQueue = 3030;
 						if (cheakVision)
 						{
 							renderer.material.color = new Color(1f, 1f, 1f);

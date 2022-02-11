@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 public class EndUI : MonoBehaviour
 {
     public GameObject content;
     public GameObject endInfoPrefab;
-
+    public TextMeshProUGUI stageName;
     private void Start()
     {
         //if (GameData.userData.fireManList != null)
@@ -30,6 +30,8 @@ public class EndUI : MonoBehaviour
             cd.NewSetCharacter();
             newGo.GetComponent<EndInfo>().Init(cd, index);
         }
+
+        stageName.text = $"{ GameData.userData.stageName}";
     }
     public void Init()
     {

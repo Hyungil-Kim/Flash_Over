@@ -6,6 +6,7 @@ public class ClaimantSaveData
 {
 	public int targetPlayerIndex;
 	public int id;
+	public int eventid;
 
 	public float posx;
 	public float posy;

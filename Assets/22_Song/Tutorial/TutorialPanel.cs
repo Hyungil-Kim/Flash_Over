@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TutorialPanel : MonoBehaviour
+public class TutorialPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public bool isPoint;
-    private void Update()
+
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        isPoint = EventSystem.current.IsPointerOverGameObject();
+        isPoint = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isPoint = false;
     }
 }

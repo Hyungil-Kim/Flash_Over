@@ -24,5 +24,21 @@ public class ObstacleSight : MonoBehaviour
                 renderer.material.color = new Color(0.5f, 0.5f, 0.5f);
             }
         }
+        if(gameObject.tag == "Obstacle")
+        {
+            var meshrenderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (var mesh in meshrenderers)
+            {
+                if (tile.obstacleVision)
+                {
+                    mesh.enabled = true;
+                }
+                else
+                {
+                    mesh.enabled = false;
+                }
+                //mesh.enabled = false;
+            }
+        }
     }    
 }

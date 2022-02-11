@@ -26,6 +26,7 @@ public class Claimant : FSM<ClaimantState>
 
 
 	public int id;
+	public int eventid;
 
 	public bool stun;
 	public bool confuse;
@@ -51,7 +52,9 @@ public class Claimant : FSM<ClaimantState>
 
 	private Vector3 prevPos;
 
+
 	public ClaimantData data;
+	public EventData eventdata;
 	public ClaimantSaveData GetData()
     {
 		
@@ -89,6 +92,7 @@ public class Claimant : FSM<ClaimantState>
 	public void SaveInit(ClaimantSaveData sd)
     {
 		id = sd.id;
+		eventid = sd.eventid;
 
 		targetPlayerIndex = sd.targetPlayerIndex;
 		stun = sd.stun;

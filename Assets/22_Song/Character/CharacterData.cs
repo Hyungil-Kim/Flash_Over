@@ -1116,12 +1116,27 @@ public class CharacterData
         StartCheckingCharacteristic();
         StartStatInit();
     }
-    public void EndStage()
+    public void EndStage(int turn )
     {
         EndCheckingCharacteristic();
         foreach (var characteristic in addCharacteristics)
         {
             BuildCharacteristic(characteristic);
+        }
+
+        tiredScore += turn;
+
+        if(hose!=null)
+        {
+            hose.dataTable.durability--;
+        }
+        if(bunkerGear !=null)
+        {
+            bunkerGear.dataTable.durability--;
+        }
+        if(oxygenTank != null)
+        {
+            oxygenTank.dataTable.durability--;
         }
     }
 }

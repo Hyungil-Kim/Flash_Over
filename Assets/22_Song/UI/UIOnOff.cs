@@ -47,6 +47,11 @@ public class UIOnOff : MonoBehaviour
 
     public GameObject offscreanIndicatorPanel;
 
+    public GameObject timeSpend;
+    public TextMeshProUGUI timetext;
+    private float totalTime;
+    public float delayTime= 3f;
+
     public bool ontouch;
     private void Start()
     {
@@ -86,13 +91,29 @@ public class UIOnOff : MonoBehaviour
         }
 
         //임시로 주석처리
-        offScreen = offscreanIndicatorPanel.GetComponent<OffScreenIndicator>(); 
-        
+        offScreen = offscreanIndicatorPanel.GetComponent<OffScreenIndicator>();
+
         //stageSelsction = uiArray[11].transform.gameObject;
+
+        //timeSpend.SetActive(true);
+        timetext.text = $"{ GameData.userData.weekend} 주 차";
+        StartCoroutine(CoFadeIn());
+        
+    }
+    public IEnumerator CoFadeIn()
+    {
+        while (totalTime < 2.5f)
+        {
+            totalTime += Time.deltaTime;
+            timetext.alpha = Mathf.Clamp(totalTime/1.5f, 0, 1f);
+            yield return 0;
+        }
+        timeSpend.SetActive(false);
+
     }
     private void Update()
     {
-       
+        
     }
     public void GetMousePos(Vector2 pos)
     {
@@ -139,10 +160,14 @@ public class UIOnOff : MonoBehaviour
         {
             ui.SetActive(false);
         }
-        if (uiName == "MainLobby" || uiName == "FacilityManagement")
+        if (uiName == "MainLobby")
         {
             //fireStation.OnClick(5);
             StartCoroutine(BackMainMenu());
+        }
+        else if( uiName == "FacilityManagement")
+        {
+            StartCoroutine(BackFacilityManagement());
         }
         else
         {
@@ -157,7 +182,14 @@ public class UIOnOff : MonoBehaviour
 
         uiDict["MainLobby"].SetActive(true);
     }
-    
+    IEnumerator BackFacilityManagement()
+    {
+        fireStation.StopAllCoroutines();
+        yield return StartCoroutine(fireStation.CoMoveCamera(5));
+
+        uiDict["FacilityManagement"].SetActive(true);
+    }
+
     public void Closed()
     {
         uiArray[8].SetActive(false);

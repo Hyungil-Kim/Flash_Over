@@ -15,39 +15,58 @@ public class TutorialPlay : MonoBehaviour
     public bool next;
     public bool moveNext;
 
-    public bool isEmpty;
-    public TutorialPanel[] panals;
+    //public bool isEmpty;
+    //public TutorialPanel[] panals;
     public void CheckNext()
     {
-        if (next == true)
-        {
-            moveNext = !UIOnOff.instance.ontouch;
-        }
         if (totalTime>delay)
         {
-            if (!isEmpty)
-            {
-                next = UIOnOff.instance.ontouch;
-            }
-            else
-            {
-                foreach (var item in panals)
-                {
-                    if(UIOnOff.instance.ontouch && item.isPoint)
-                    {
-                        return;
-                    }
-                }
-                next = UIOnOff.instance.ontouch;
-            }
+            //if (!isEmpty)
+            //{
+            //    next = UIOnOff.instance.ontouch;
+            //}
+            //else
+            //{
+            //    foreach (var item in panals)
+            //    {
+            //        if(UIOnOff.instance.ontouch && item.isPoint)
+            //        {
+            //            return;
+            //        }
+            //    }
+            //    next = UIOnOff.instance.ontouch;
+            //}
+            var tutoObject = tuto[index].GetComponent<TutorialObject>();
+            next = tutoObject.CheckNext();
         }
     }
     private void Update()
     {
-        CheckNext();
+        if (UIOnOff.instance.ontouch)
+        {
+            CheckNext();
+        }
+        if (totalTime > delay)
+        {
+            var tutoObject = tuto[index].GetComponent<TutorialObject>();
+            if (tutoObject.hidepanals != null)
+            {
+                tutoObject.Open();
+            }
+        }
+        if (next == true)
+        {
+            if(!UIOnOff.instance.ontouch)
+            {
+                moveNext = true;
+                next = false;
+            }
+        }
         totalTime += Time.deltaTime;
         if(totalTime > delay && moveNext)
         {
+            
+            moveNext = false;
             tuto[index].SetActive(false);
             index = Mathf.Clamp(index + 1, 0, tuto.Length);
             if (index >= tuto.Length)
@@ -77,6 +96,12 @@ public class TutorialPlay : MonoBehaviour
             else
             {
                 tuto[index].SetActive(true);
+                var tutoObject = tuto[index].GetComponent<TutorialObject>();
+                if (tutoObject.hidepanals != null)
+                {
+                    tutoObject.Hide();
+                }
+                //tuto[index].GetComponent<TutorialObject>().Hide();
                 totalTime = 0f;
             }
         }

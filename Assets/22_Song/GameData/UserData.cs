@@ -11,6 +11,7 @@ public class UserData : MySaveData
     //출전할 수 있는 소방관 수
     public int gofireman = 5;
 
+    public int weekend;
     //
     public int gold = 3000;
 
@@ -26,6 +27,8 @@ public class UserData : MySaveData
     public int usermaxExp;
     //몇주차인가요
     public int inGameTime;
+    //스테이지 이름 일단 여기 넣어놓고 임시로..
+    public string stageName;
 
     public bool DaewonTuto;
     public bool HireTuto;
@@ -108,6 +111,15 @@ public class UserData : MySaveData
             }
         }
 
+    }
+    public void AddExp(int exp)
+    {
+        userExp += exp;
+        if(userExp >= MyDataTableMgr.levelUpTable.GetTable(userLevel).exp)
+        {
+            userExp -=  (int)MyDataTableMgr.levelUpTable.GetTable(userLevel).exp;
+            userLevel++;
+        }
     }
     public void AddItem(string id, ItemType type, int count = 1)
     {
