@@ -31,6 +31,13 @@ public class UIManager : MonoBehaviour
     }
     public void StartGame()
     {
+		if (!gameManager.isStart)
+		{
+            var offset = new Vector3(0, 6, -3);
+            var pos = Turn.players[0].transform.position + offset;
+            gameManager.mousePos = pos;
+            gameManager.prevPos = pos;
+        }
         gameManager.isStart = true;
         gameManager.Init();
         startButton.gameObject.SetActive(false);

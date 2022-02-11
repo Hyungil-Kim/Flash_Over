@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 	public Vector3 mouseMove;
 	public bool drag;
 
-	private Vector3 prevPos;
+	public Vector3 prevPos;
 	public bool isStart;
 
 	public bool pickup;
@@ -560,9 +560,6 @@ public class GameManager : MonoBehaviour
 
 	public void Update()
 	{
-		//tMPro.text = preTile.transform.position.ToString();
-		//pressPro.text = press.ToString();
-		//ready.text = playerMove.moveList.Count.ToString();
 		var t = turnCount + " turn";
 		uIManager.upperUIManager.turn.text = t;
 		//mousePos = multiTouch.mousePoint.Mouse.Move.ReadValue<Vector2>();

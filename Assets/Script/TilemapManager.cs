@@ -106,7 +106,7 @@ public class TilemapManager : MonoBehaviour
 		saveClaimant.SetState(ClaimantState.Meet);
 		gameManager.uIManager.meetEventManager.gameObject.SetActive(true);
 
-		while (!saveClaimant.eventOn)
+		while (!saveClaimant.eventOn || gameManager.tutorial)
 			yield return 0;
 
 		gameManager.uIManager.meetEventManager.gameObject.SetActive(false);
