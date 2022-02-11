@@ -29,5 +29,10 @@ public class TutorialUiManager : MonoBehaviour
     public GameObject turto7_Text;
     public GameObject turto7_Text2;
     public GameObject turto7_Text3;
+    public GameObject turto8_Text;
+    public GameObject turto8_Text2;
+    public GameObject turto9_Text;
+    public GameObject turto9_Text2;
+    public GameObject turto9_Text3;
     
 }
