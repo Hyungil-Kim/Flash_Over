@@ -30,4 +30,6 @@ public static class MyDataTableMgr
     public static EventTable eventTable = new EventTable();
 
     public static MenuTable menuTable = new MenuTable();
+
+    public static CharacteristicTable characteristicTable = new CharacteristicTable();
 }
