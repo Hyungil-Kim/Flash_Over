@@ -6,7 +6,7 @@ using UnityEngine;
     
         public static Vector3 GetScreenPosition(Camera mainCamera, Vector3 targetPosition)
         {
-            Vector3 screenPosition = mainCamera.WorldToScreenPoint(targetPosition+new Vector3(0,20,0));
+            Vector3 screenPosition = mainCamera.WorldToScreenPoint(targetPosition+new Vector3(5,30,0));
             return screenPosition;
         }
 
