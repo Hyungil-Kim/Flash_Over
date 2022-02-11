@@ -17,7 +17,7 @@ public class OffScreenIndicator : MonoBehaviour
 
     public GameObject isTarget;
 
-    public List<Buildings> targets ;
+    public List<Buildings> targets;
 
     public static Action<Buildings, bool> TargetStateChanged;
 
@@ -53,22 +53,35 @@ public class OffScreenIndicator : MonoBehaviour
             float distanceFromCamera = target.NeedDistanceText ? target.GetDistanceFromCamera(mainCamera.transform.position) : float.MinValue;// Gets the target distance from the camera.
             Indicator indicator = null;
 
-            if (target.NeedBoxIndicator && isTargetVisible&&target.gameObject.GetComponentInChildren<VisualEffect>().enabled == true)
+            if (target.NeedBoxIndicator && isTargetVisible)
             {   
-                //Debug.Log(target.name);
-                screenPosition.z = 0;
-                indicator = GetIndicator(ref target.indicator, IndicatorType.MARKER); // Gets the box indicator from the pool.
-                indicator.targetLevel=target.level;
+                
+                if(target.gameObject.GetComponentInChildren<VisualEffect>()!=null)
+                {
+                    if (target.gameObject.GetComponentInChildren<VisualEffect>().enabled==true)
+                    {
+                        screenPosition.z = 0;
+                        indicator = GetIndicator(ref target.indicator, IndicatorType.MARKER); // Gets the box indicator from the pool.
+                        indicator.targetLevel = target.level;
+                        indicator.SetIndicatorSprite(target.level);
+                    }
+                   
+                }
                 
             }
 
-            else if (target.NeedArrowIndicator && !isTargetVisible&&target.gameObject.GetComponentInChildren<VisualEffect>().enabled==true)
+            else if (target.NeedArrowIndicator && !isTargetVisible)
             {
-                float angle = float.MinValue;
-                OffScreenIndicatorCore.GetArrowIndicatorPositionAndAngle(ref screenPosition, ref angle, screenCentre, screenBounds);
-                indicator = GetIndicator(ref target.indicator, IndicatorType.ARROW); // Gets the arrow indicator from the pool.
-                indicator.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg); // Sets the rotation for the arrow indicator.
-                
+                if (target.gameObject.GetComponentInChildren<VisualEffect>() != null)
+                {
+                    if (target.gameObject.GetComponentInChildren<VisualEffect>().enabled == true)
+                    {
+                        float angle = float.MinValue;
+                        OffScreenIndicatorCore.GetArrowIndicatorPositionAndAngle(ref screenPosition, ref angle, screenCentre, screenBounds);
+                        indicator = GetIndicator(ref target.indicator, IndicatorType.ARROW); // Gets the arrow indicator from the pool.
+                        indicator.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg); // Sets the rotation for the arrow indicator.
+                    }
+                }
             }
             else
             {
@@ -77,7 +90,7 @@ public class OffScreenIndicator : MonoBehaviour
             }
             if (indicator)
             {
-                indicator.SetImageColor(target.TargetColor);// Sets the image color of the indicator.
+                indicator.SetImageColor(target.TargetColor,target.indicator.Type);// Sets the image color of the indicator.
                 indicator.SetDistanceText(distanceFromCamera); //Set the distance text for the indicator.
                 indicator.transform.position = screenPosition; //Sets the position of the indicator on the screen.
                 indicator.SetTextRotation(Quaternion.identity); // Sets the rotation of the distance text of the indicator.

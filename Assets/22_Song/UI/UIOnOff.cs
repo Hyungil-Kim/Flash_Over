@@ -130,7 +130,6 @@ public class UIOnOff : MonoBehaviour
         Camera.main.transform.position = selectCameraPos.transform.position;
         Camera.main.transform.rotation = selectCameraPos.transform.rotation;
 
-        
         for (int i = 0; i < uiArray.Length-1; i++)
         {
             uiArray[i].SetActive(false);
