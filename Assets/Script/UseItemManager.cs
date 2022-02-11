@@ -47,11 +47,10 @@ public class UseItemManager : MonoBehaviour
 
 	public void ClickFirstItem()
 	{
-		itemRange = 1;
-		throwRange = 0;
+		itemRange = 3;
+		throwRange = 2;
 		damage = 50;
-		itemType = ConsumItemType.Heal;
-		healItemType = HealItemType.HpHeal;
+		itemType = ConsumItemType.Damage;
 
 		gameObject.SetActive(false);
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
@@ -70,10 +69,13 @@ public class UseItemManager : MonoBehaviour
 	}
 	public void ClickSecondItem()
 	{
-		itemRange = 3;
-		throwRange = 2;
+	
+		itemRange = 1;
+		throwRange = 0;
 		damage = 50;
-		itemType = ConsumItemType.Damage;
+		itemType = ConsumItemType.Heal;
+		healItemType = HealItemType.HpHeal;
+
 		gameObject.SetActive(false);
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
 		listRange = gameManager.tilemapManager.ReturnFloodFillRange(playerTile, gameManager.setMoveColor, itemRange);

@@ -24,12 +24,19 @@ public class Tutorial : MonoBehaviour
 	private bool tuto5finish_1;
 	private bool tuto5finish_2;
 	private bool finishWeaponTuto;
+	private bool finishWeaponTuto2;
 	private bool tuto5_5finish;
 	private bool tuto6finish;
 	private bool tuto6finish2;
 	private bool tuto6finish3;
+	private bool tuto7finish3;
+	private bool tuto7finish4;
+	private bool tuto8finish;
 	private bool check;
 	private bool check2;
+	private bool check3;
+	private bool check4;
+	private bool check5;
 	public Button button;
 	public void Awake()
 	{
@@ -68,7 +75,7 @@ public class Tutorial : MonoBehaviour
 		gameManager.mousePos = player.transform.position + offset;
 		foreach (var elem in m_3f.GetComponentsInChildren<MeshRenderer>())
 		{
-			elem.material.color = new Color(0.5f, 0.5f, 0.5f);
+			//elem.material.color = new Color(0.5f, 0.5f, 0.5f);
 		}
 		for (int i = number; i < 8;)
 		{
@@ -78,8 +85,8 @@ public class Tutorial : MonoBehaviour
 				{
 					if (elem.tileArea != 8)
 						elem.gameObject.SetActive(false);
-					else
-						elem.GetComponent<MeshRenderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
+					else { }
+						//elem.GetComponent<MeshRenderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
 				}
 				once = true;
 			}
@@ -118,8 +125,8 @@ public class Tutorial : MonoBehaviour
 								{
 									tutorialUiManager.tuto2.SetActive(false);
 									gameManager.uIManager.battleUiManager.moveButton.interactable = true;
-									i++;
-									number++;
+									i = 2;
+									number = 2;
 									once = false;
 									tuto2finish = true;
 								}
@@ -225,7 +232,7 @@ public class Tutorial : MonoBehaviour
 				yield return 0;
 				//gameManager.uIManager.battleUiManager.cancleButton.interactable = true;
 			}
-			while (finishWeaponTuto && i == 2)
+			else if (i == 2 && !finishWeaponTuto2)
 			{
 				if (!check)
 				{
@@ -302,13 +309,21 @@ public class Tutorial : MonoBehaviour
 						{
 							while (gameManager.point)
 							{
+								var tiles = groundTiles.Where((x) => x.tileArea == 2).ToList();
+								foreach (var elem in tiles)
+								{
+									var newPos = tilemap.WorldToCell(elem.transform.position);
+									var m_3ftile = m_3f.GetInstantiatedObject(newPos);
+									m_3ftile.SetActive(true);
+								}
 								tutorialUiManager.tuto6.SetActive(false);
 								tutorialUiManager.tuto6_image2.SetActive(false);
 								tutorialUiManager.tuto6_Text_3.SetActive(false);
-								i++;
-								number++;
+								i = 3;
+								number = 3;
 								once = false;
 								tuto6finish3 = true;
+								finishWeaponTuto2 = true;
 								Turn.ChangeStateIdle();
 								yield return 0;
 							}
@@ -316,21 +331,147 @@ public class Tutorial : MonoBehaviour
 						yield return 0;
 					}
 				}
-				yield return 0;
 			}
-			while (i == 3)
+			while (i == 3 && !tuto7finish3)
 			{
-				if (!check2)
+				if (!check4)
 				{
-					ChangeTile(new Vector3(15.5f, 0, -14.5f));
+					ChangeTile(new Vector3(16.5f, 0, -12.5f));
 					marker.SetActive(true);
-					marker.transform.position = new Vector3(17.5f, 0, -14.5f);
+					marker.transform.position = new Vector3(16.5f, 0, -12.5f);
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
-					check2 = true;
+					gameManager.uIManager.battleUiManager.rescueButton.interactable = false;
+
+					check4 = true;
+					tutorialUiManager.turto7_Text.SetActive(true);
 				}
 				if (player.curStateName == PlayerState.Idle)
 				{
 					gameManager.ChangeTargetPlayer(player.gameObject);
+				}
+				else if (player.curStateName == PlayerState.Move)
+				{
+					if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(16.5f, 0, -12.5f)))
+					{
+						gameManager.uIManager.battleUiManager.moveButton.interactable = true;
+					}
+					else
+					{
+						gameManager.uIManager.battleUiManager.moveButton.interactable = false;
+					}
+				}
+				else if (player.curStateName == PlayerState.Action)
+				{
+					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
+					gameManager.uIManager.battleUiManager.attackButton.interactable = true;
+					gameManager.uIManager.battleUiManager.weapon2Button.interactable = false;
+					gameManager.uIManager.battleUiManager.attackButton.interactable = true;
+					
+				}
+				else if(player.curStateName == PlayerState.End)
+				{
+					tutorialUiManager.turto7_Text.SetActive(false);
+					tutorialUiManager.turto7_Text2.SetActive(true);
+					while (tutorialUiManager.turto7_Text2.activeSelf )
+					{
+						while(!check3 && gameManager.uIManager.InfoUiScript.claimantInfo.gameObject.activeSelf)
+						{
+							tutorialUiManager.turto7_Text2.SetActive(false);
+							tutorialUiManager.turto7_Text3.SetActive(true);
+							yield return new WaitForSeconds(1f);
+							check3 = true;
+							tuto7finish3 = true;
+							check2 = false;
+							Turn.ChangeStateIdle();
+							yield return 0;
+						}
+						yield return 0;
+					}
+				}
+				yield return 0;
+			}
+			while (i ==3 && !tuto7finish4)
+			{
+				if (!check5)
+				{
+					ChangeTile(new Vector3(17.5f, 0, -12.5f));
+					marker.SetActive(true);
+					marker.transform.position = new Vector3(17.5f, 0, -12.5f);
+					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
+					gameManager.uIManager.battleUiManager.rescueButton.interactable = false;
+
+					check5 = true;
+					tutorialUiManager.turto7_Text3.SetActive(false);
+				}
+				if (player.curStateName == PlayerState.Idle)
+				{
+					gameManager.ChangeTargetPlayer(player.gameObject);
+				}
+				else if (player.curStateName == PlayerState.Move)
+				{
+					if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(17.5f, 0, -12.5f)))
+					{
+						gameManager.uIManager.battleUiManager.moveButton.interactable = true;
+					}
+					else
+					{
+						gameManager.uIManager.battleUiManager.moveButton.interactable = false;
+					}
+				}
+				else if (player.curStateName == PlayerState.Action)
+				{
+					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
+					gameManager.uIManager.battleUiManager.itemButton.interactable = true;
+					gameManager.uIManager.battleUiManager.attackButton.interactable = false;
+					gameManager.uIManager.battleUiManager.useItemManager.useitemButton1.interactable = false;
+					//gameManager.uIManager.battleUiManager.useItemManager.cancleItemButton.interactable = false;
+					while (gameManager.uIManager.battleUiManager.useItemManager.gameObject.activeSelf)
+					{
+						tutorialUiManager.turto8_Text.SetActive(true);
+						while(tutorialUiManager.turto8_Text.activeSelf && !gameManager.showMeleeRange)
+						{
+							tutorialUiManager.turto8_Text.SetActive(false);
+							tutorialUiManager.turto8_Text2.SetActive(true);
+						}
+						yield return 0;
+					}
+				}
+				else if (player.curStateName == PlayerState.End)
+				{
+					tutorialUiManager.turto8_Text2.SetActive(false);
+					i++;
+					number++;
+					Turn.ChangeStateIdle();
+					tuto7finish4 = true;
+				}
+				yield return 0;
+			}
+			while (i == 4 && !tuto8finish)
+			{
+				if (player.curStateName == PlayerState.Idle)
+				{
+					gameManager.ChangeTargetPlayer(player.gameObject);
+				}
+				else if (player.curStateName == PlayerState.Move)
+				{
+					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
+					tutorialUiManager.turto9_Text.SetActive(true);
+					if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(player.gameObject))
+					{
+						gameManager.uIManager.battleUiManager.moveButton.interactable = true;
+					}
+				}
+				else if (player.curStateName == PlayerState.Action)
+				{
+					tutorialUiManager.turto9_Text.SetActive(false);
+					tutorialUiManager.turto9_Text2.SetActive(true);
+					gameManager.uIManager.battleUiManager.rescueButton.interactable = true;
+				}
+				else if (player.curStateName == PlayerState.End)
+				{
+					tutorialUiManager.turto9_Text2.SetActive(false);
+					tutorialUiManager.turto9_Text3.SetActive(true);
+					tuto8finish = true;
 				}
 				yield return 0;
 			}

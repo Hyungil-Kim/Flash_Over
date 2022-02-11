@@ -111,6 +111,7 @@ public class BattleUiManager : MonoBehaviour
 					shootButton.gameObject.SetActive(false);
 					weapon1Button.gameObject.SetActive(false);
 					weapon2Button.gameObject.SetActive(false);
+
 				if(useItemManager.gameObject.activeSelf)
 				{
 					useItemManager.gameObject.SetActive(false);
@@ -170,7 +171,7 @@ public class BattleUiManager : MonoBehaviour
 		Cancle();
 		gameManager.targetPlayer.animator.SetBool("openDoor", true);
 		StartCoroutine(findDoor.OpenDoor());
-
+		uIManager.battleUiManager.openDoorButton.gameObject.SetActive(false);
 	}
 	public void DoorInteractionClose()
 	{
