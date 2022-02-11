@@ -33,8 +33,8 @@ public class BattleUiManager : MonoBehaviour
 
 	public void Start()
 	{
-       gameManager = uIManager.gameManager;
-		tilemapManager = gameManager.tilemapManager;
+		gameManager = GameManager.instance;
+	   tilemapManager = gameManager.tilemapManager;
 	}
 	public void OnClickWeapon1()
 	{
