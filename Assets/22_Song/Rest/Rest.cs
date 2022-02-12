@@ -41,6 +41,7 @@ public class Rest : MonoBehaviour
     public GameObject restUpgrade;
     public GameObject upgradePopup;
 
+    public GameObject daewonList;
     public CharacterInfoList characterInfoList;
     public CharacterInfoStat characterInfoStat;
     private void OnEnable()
@@ -62,7 +63,8 @@ public class Rest : MonoBehaviour
     {
         mainRest.gameObject.SetActive(false);
         //restCharacter.gameObject.SetActive(true);
-        characterInfoList.gameObject.SetActive(true);
+        daewonList.SetActive(true);
+        //characterInfoList.gameObject.SetActive(true);
     }
     public void ExitRestRoom()
     {
@@ -76,8 +78,10 @@ public class Rest : MonoBehaviour
     {
         restCharacter.gameObject.SetActive(false);
 
-        characterInfoList.gameObject.SetActive(false);
+        //characterInfoList.gameObject.SetActive(false);
+        
         characterInfoStat.gameObject.SetActive(false);
+        daewonList.SetActive(false);
 
         mainRest.gameObject.SetActive(true);
     }

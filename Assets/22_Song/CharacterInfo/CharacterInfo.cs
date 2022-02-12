@@ -26,7 +26,7 @@ public class CharacterInfo : MonoBehaviour
     public void OnExitStat()
     {
         chaStatPanal.gameObject.SetActive(false);
-        chaListPanal.gameObject.SetActive(true);
+        gameObject.SetActive(false);
         //chaListPanal.Init();
     }
     public void OnInventory()

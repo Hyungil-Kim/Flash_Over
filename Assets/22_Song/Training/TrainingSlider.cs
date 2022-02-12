@@ -64,8 +64,7 @@ public class TrainingSlider : MonoBehaviour
 
         var increaseNomalize = normalExp / statMaxExp;
         increaseNomalize = Mathf.Clamp(increaseNomalize, 0, 1 - (slider.value/* + oldIncreaseNomalize*/));
-        increase.rectTransform.sizeDelta = new Vector2(/*oldIncrease +*/ sliderWidth * increaseNomalize, increase.rectTransform.sizeDelta.y);
-
+        increase.rectTransform.sizeDelta = new Vector2(/*oldIncrease +*/ -sliderWidth * increaseNomalize, increase.rectTransform.sizeDelta.y);
         if(normalExp + statExp >= statMaxExp)
         {
             levelUp.SetActive(true);

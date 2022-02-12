@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+public enum ItemRangeType
+{
+    Milli,
+    Throw,
+}
+public enum UseItemType
+{ 
+    Heal,
+    Damage
+}
 [System.Serializable]
 public class ConsumableItemTableData : ItemTableDataBase
 {
@@ -11,6 +21,11 @@ public class ConsumableItemTableData : ItemTableDataBase
     public string description;
     public int cost;
     public int duration;
+    public int range;
+    public ItemRangeType rangeType;
+    public int throwRange;
+    public UseItemType useItemType;
+
 }
 [System.Serializable]
 public class ConsumableItemTable : MyDataTableBase<ConsumableItemTableData>
@@ -37,6 +52,11 @@ public class ConsumableItemTable : MyDataTableBase<ConsumableItemTableData>
             tableData.duration = int.Parse(table["DURATION"]);
             tableData.grade = table["GRADE"];
             tableData.weight = int.Parse(table["WEIGHT"]);
+            tableData.range = int.Parse(table["RANGE"]);
+            tableData.throwRange = int.Parse(table["THROWRANGE"]);
+            tableData.useItemType = StringToEnum.SToE<UseItemType>(table["TYPE"]);
+            tableData.rangeType = StringToEnum.SToE<ItemRangeType>(table["RANGETYPE"]);
+            
             //tableData.count = 1;
 
             //tableData.iconSprite = Resources.Load<Sprite>($"Sprites/Icons/{tableData.iconID}");

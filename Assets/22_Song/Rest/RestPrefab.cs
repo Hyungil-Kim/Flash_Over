@@ -83,7 +83,10 @@ public class RestPrefab : MonoBehaviour
     }
     public void Release()
     {
+        GameData.userData.restList.Remove(restIndex);
         init(null, true, restIndex);
+        CharacterData cd;
+        
     }
     public void UpgradePopUp()
     {
