@@ -23,6 +23,7 @@ public class TileInfo : MonoBehaviour
 	public GameObject[] objectsPanel;
 	public TextMeshProUGUI[] obstacleName;
 	public TextMeshProUGUI[] obstacleHp;
+	public Slider[] obstacleHpSlider;
 
 	public Image fireHpSliderImage;
 	public Image fireHpSliderbackGroundImage;
@@ -100,7 +101,7 @@ public class TileInfo : MonoBehaviour
 			{
 				firePanel.SetActive(false);
 			}
-			tileName.text = gameManager.targetTile.name.ToString();
+			tileName.text = gameManager.targetTile.GetComponent<GroundTile>().name.ToString();
 			if(gameManager.targetTile.tileIsWeat)
 			{
 				isweat.text = "Á¥À½";
@@ -154,7 +155,8 @@ public class TileInfo : MonoBehaviour
 
 			for (int i =0; i<obstacles.Count;i++)
 			{
-				obstacleName[i].text = obstacles[i].name;
+				obstacleName[i].text = obstacles[i].GetComponent<Obstacle>().obName;
+				obstacleHpSlider[i].value = (float)obstacles[i].hp / (float)obstacles[i].maxhp;
 				obstacleHp[i].text = obstacles[i].hp.ToString();
 			}
 			

@@ -22,6 +22,7 @@ public class Obstacle : MonoBehaviour
 
     /// //////////////////////////////////
     public int objectID;
+    public string obName;
     public float obstacleMesh; //오브젝트 가중치
     public int exploseRange; // 터지는 범위
     public float exploseDamage;//터지는 데미지
@@ -50,6 +51,7 @@ public class Obstacle : MonoBehaviour
     public void Init()
     {
         data = MyDataTableMgr.objTable.GetTable(objectID);
+        obName = data.id;
         exploseDamage = data.dmg;
         exploseRange = data.range;
         endState = data.endtype;
@@ -73,25 +75,18 @@ public class Obstacle : MonoBehaviour
     }
     public void Update()
 	{
-        Material[] material = this.GetComponent<MeshRenderer>().materials;
+        
 		if(hp < maxhp)//최대치가 아니면
 		{
-            material[0] = material[1];
-            this.GetComponent<MeshRenderer>().materials = material;
+            var hpValue = hp / maxhp;
+            var color =Mathf.Lerp(110, 255, hpValue);
+
+            GetComponent<MeshRenderer>().material.color = new Color(color/255f, color / 255f, color / 255f);
             isBurn = true;
 		}
         if(isBurn)
         {
-            if (count < 6)
-            {
-                count += 0.16f;
-            }
-            material = this.GetComponent<MeshRenderer>().materials;
-            material[0].SetFloat("StartBurning", count);
-            if(hp <= 5)//최대치의 5퍼센트?
-			{
-                material[0].SetFloat("StopBurning", count);
-            }
+            
 		}
 
 	}

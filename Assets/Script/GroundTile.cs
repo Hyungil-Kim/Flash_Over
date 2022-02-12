@@ -93,6 +93,7 @@ public class GroundTile : MonoBehaviour
 
 
 		data = MyDataTableMgr.tileTable.GetTable(id);
+		name = data.id;
 		tileMaxHp = data.hp;
 		tileMaxExp = data.exp;
 		tileWeatValue = data.waterWeight;

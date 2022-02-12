@@ -93,6 +93,7 @@ public class Player : FSM<PlayerState>
 		SetState(playerState);
         moveHelper.transform.localPosition = Vector3.zero;
         ap = cd.totalStats.lung.stat;
+		//oxygentank = cd.oxygenCount;
 		animator = GetComponent<Animator>();
 		cd.setupModel.ApplyToCharacter(custom);
 		cd.setupModel.ApplyToCharacter(moveHelperCustom);
