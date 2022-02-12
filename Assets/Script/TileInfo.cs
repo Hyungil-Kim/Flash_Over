@@ -33,6 +33,10 @@ public class TileInfo : MonoBehaviour
 	public bool on;
 
 	public Button changePlayerInfo;
+	public Sprite red;
+	public Sprite orange;
+	public Sprite yellow;
+	public Sprite backGroundDefault;
 	private void Awake()
 	{
 		gameManager = GameManager.instance;
@@ -78,18 +82,18 @@ public class TileInfo : MonoBehaviour
 				fireHpSlider.value = ((float)fire.fireHp - (float)fire.data.minhp) / ((float)fire.data.maxhp - (float)fire.data.minhp);
 				if(fire.fireLevel == 0)
 				{
-					fireHpSliderImage.color = Color.red;
-					fireHpSliderbackGroundImage.color = Color.black;
+					fireHpSliderImage.sprite = red;
+					fireHpSliderbackGroundImage.sprite = backGroundDefault;
 				}
 				else if (fire.fireLevel == 1)
 				{
-					fireHpSliderImage.color = Color.yellow;
-					fireHpSliderbackGroundImage.color = Color.red;
+					fireHpSliderImage.sprite = orange;
+					fireHpSliderbackGroundImage.sprite = red;
 				}
 				else if (fire.fireLevel == 2)
 				{
-					fireHpSliderImage.color = Color.green;
-					fireHpSliderbackGroundImage.color = Color.yellow;
+					fireHpSliderImage.sprite = yellow;
+					fireHpSliderbackGroundImage.sprite = orange;
 				}
 			}
 			else
