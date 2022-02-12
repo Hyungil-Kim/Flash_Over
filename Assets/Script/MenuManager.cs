@@ -19,10 +19,15 @@ public class MenuManager : MonoBehaviour
 	}
 	public void  OnclickRestartButton()
 	{
-		Turn.OnDestroy();
-		AllTile.OnDestroy();
 
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		//Turn.OnDestroy();
+		//AllTile.OnDestroy();
+
+		//SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+		var checkUi = gameManager.uIManager.checkUI;
+		checkUi.gameObject.SetActive(true);
+		gameManager.uIManager.restart = true;
 	}
 	public void OnClickOptionButton()
 	{
@@ -34,17 +39,7 @@ public class MenuManager : MonoBehaviour
 	{
 		var checkUi = gameManager.uIManager.checkUI;
 		checkUi.gameObject.SetActive(true);
-		if(checkUi.select)
-		{
-			if(checkUi.result)
-			{
-				//SceneManager.LoadScene("SaveLoadTest");
-			}
-			else
-			{
-				checkUi.gameObject.SetActive(false);
-			}
-		}
+		gameManager.uIManager.title = true;
 	}
 
 	public void OnClickEndMenu()

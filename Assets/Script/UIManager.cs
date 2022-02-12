@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     public BetweenPlaying betweenPlaying;
     public GameObject option;
     public CheckUi checkUI;
+    public bool restart;
+    public bool title;
 
     public GameClearUI gameclearUI;
     // Start is called before the first frame update
