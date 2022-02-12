@@ -281,9 +281,9 @@ public class GameManager : MonoBehaviour
 					//¹öÆ° ¶ç¿ì±â
 					break;
 				case PlayerState.End:
-					Debug.Log("µé¾î¿È?");
-					targetPlayer = target.GetComponent<Player>();
-					ChangeLayersRecursively(targetPlayer.transform, "Player");
+					//Debug.Log("µé¾î¿È?");
+					//targetPlayer = target.GetComponent<Player>();
+					//ChangeLayersRecursively(targetPlayer.transform, "Player");
 					break;
 			}
 			pretargetPlayer = targetPlayer;
