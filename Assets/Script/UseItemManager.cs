@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public enum ConsumItemType
 {
 	Heal,
@@ -18,8 +18,8 @@ public class UseItemManager : MonoBehaviour
 {
 	public Button useitemButton1;
 	public Button useitemButton2;
-
-	public Button cancleItemButton;
+	public TextMeshProUGUI count1;
+	public TextMeshProUGUI count2;
 	private GameManager gameManager;
 
 	public int Id;
@@ -40,6 +40,7 @@ public class UseItemManager : MonoBehaviour
 	public List<GroundTile> listRange = new List<GroundTile>();
 	public List<GroundTile> throwListRange = new List<GroundTile>();
 	public GroundTile preTile;
+	public ConsumableItemTableData consumableItemTableData;
 	public void Start()
 	{
 		gameManager = GameManager.instance;
@@ -47,6 +48,7 @@ public class UseItemManager : MonoBehaviour
 
 	public void ClickFirstItem()
 	{
+		var player = gameManager.targetPlayer.GetComponent<Player>();
 		itemRange = 3;
 		throwRange = 2;
 		damage = 50;

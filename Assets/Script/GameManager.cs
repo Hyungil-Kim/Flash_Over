@@ -562,8 +562,8 @@ public class GameManager : MonoBehaviour
 
 	public void Update()
 	{
-		var t = turnCount + " turn";
-		uIManager.upperUIManager.turn.text = t;
+		var t = turnCount;
+		uIManager.upperUIManager.turn.text = t.ToString();
 		//mousePos = multiTouch.mousePoint.Mouse.Move.ReadValue<Vector2>();
 		var pointer = IsPointerOverUI();
 		if (pointer)
