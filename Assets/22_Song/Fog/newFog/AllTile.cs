@@ -18,4 +18,13 @@ public static class AllTile
 
     public static List<ObstacleSight> obstacleSight = new List<ObstacleSight>();
 
+    public static void OnDestroy()
+    {
+        SaveTile.Clear();
+        allTile.Clear();
+        visionTile.Clear();
+        prevVisionTile.Clear();
+        wallTile.Clear();
+        obstacleSight.Clear();
+    }
 }

@@ -10,5 +10,6 @@ public class BunkerGearData : ItemDataBase
         dataTable = itemDataTable;
         count = itemCount;
         bunkerGearData = dataTable as BunkerGearTableData;
+        type = ItemType.BunkerGear;
     }
 }

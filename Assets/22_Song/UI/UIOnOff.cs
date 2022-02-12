@@ -52,6 +52,8 @@ public class UIOnOff : MonoBehaviour
     private float totalTime;
     public float delayTime= 3f;
 
+    public Shop shop;
+
     public bool ontouch;
     private void Start()
     {
@@ -98,6 +100,11 @@ public class UIOnOff : MonoBehaviour
         timetext.text = $"{ GameData.userData.weekend} ÁÖ Â÷";
         StartCoroutine(CoFadeIn());
         
+        if(GameData.userData.stageClear)
+        {
+            shop.ShopUpdate();
+            GameData.userData.stageClear = false;
+        }
     }
     public IEnumerator CoFadeIn()
     {

@@ -22,6 +22,11 @@ public class CharacterInfoStat : MonoBehaviour
     public TextMeshProUGUI hpstat;
     public TextMeshProUGUI lungstat;
     public TextMeshProUGUI strstat;
+    public TextMeshProUGUI movestat;
+    public TextMeshProUGUI visionstat;
+    public TextMeshProUGUI tiredscore;
+    public TextMeshProUGUI saveClaimantCount;
+    public TextMeshProUGUI clearStageCount;
     public Slider weightslider;
     public TextMeshProUGUI weight;
     public TextMeshProUGUI hosestat;
@@ -35,9 +40,19 @@ public class CharacterInfoStat : MonoBehaviour
     public GameObject characteristicPrefab;
     public GameObject characteristicContent;
 
+    private List<GameObject> characteristicObject = new List<GameObject>();
+
     public InfoType type;
     private void OnEnable()
     {
+        if(characteristicObject.Count ==0)
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                var newGo = Instantiate(characteristicPrefab, characteristicContent.transform);
+                characteristicObject.Add(newGo);
+            }
+        }
         Init();
     }
     private string GetGrade(ItemTableDataBase id)
@@ -137,8 +152,8 @@ public class CharacterInfoStat : MonoBehaviour
         //statSB.Append(string.Format($"Hp : {curCharacter.totalStats.hp.stat}\n"));
         //statSB.Append(string.Format($"피로도 : {curCharacter.tiredScore}"));
         //stat.text = statSB.ToString();
-        hpstat.text = $"체력 : {curCharacter.totalStats.hp.stat}";
-        lungstat.text = $"폐활량 : {curCharacter.totalStats.lung.stat}";
+        hpstat.text = $"체력 {curCharacter.totalStats.hp.stat}";
+        lungstat.text = $"폐활량 {curCharacter.totalStats.lung.stat}";
         switch (curCharacter.tiredScore /33)
         {
             case 0:
@@ -150,8 +165,14 @@ public class CharacterInfoStat : MonoBehaviour
             default:
                 break;
         }
-        strstat.text = $"힘 : {curCharacter.totalStats.str.stat}";
+        strstat.text = $"힘 {curCharacter.totalStats.str.stat}";
 
+        movestat.text = $"이동력 {curCharacter.totalStats.move}";
+        visionstat.text = $"시야 {curCharacter.totalStats.vision}";
+        tiredscore.text = $"피로도 {curCharacter.tiredScore}";
+
+        saveClaimantCount.text = $"{curCharacter.saveClaimantCount}";
+        clearStageCount.text = $"{curCharacter.clearStageCount}";
         //personality.text = "";
         //foreach (var type in curCharacter.personality.CheakAllPersonality())
         //{
@@ -166,15 +187,16 @@ public class CharacterInfoStat : MonoBehaviour
         //str.text = $"Str : {curCharacter.totalStats.str}";
         //def.text = $"Lung : {curCharacter.totalStats.lung}";
 
-        if(curCharacter.characteristics.Count >0)
+        foreach (var item in characteristicObject)
         {
-            foreach (var characteristic in curCharacter.characteristics)
-            {
-                var newGo = Instantiate(characteristicPrefab, characteristicContent.transform);
-                var prefab = newGo.GetComponent<CharacteristicPrefab>();
-                prefab.Init(characteristic);
-
-            }
+            item.SetActive(false);
+        }
+        for (int i = 0; i < curCharacter.characteristics.Count; i++)
+        {
+            var newGo = characteristicObject[i];
+            var prefab = newGo.GetComponent<CharacteristicPrefab>();
+            prefab.Init(curCharacter.characteristics[i]);
+            newGo.SetActive(true);
         }
     }
     public void test()

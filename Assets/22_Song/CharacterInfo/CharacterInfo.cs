@@ -8,7 +8,7 @@ public class CharacterInfo : MonoBehaviour
     public CharacterInfoStat chaStatPanal;
     public CharacterInfoList chaListPanal;
     public ItemInfo info;
-    public int currentCharacterIndex;
+    //public int currentCharacterIndex;
     public ItemType currentItemType;
     public CharacterData curCharacter;
     public int currentIndex;
@@ -21,6 +21,7 @@ public class CharacterInfo : MonoBehaviour
     {
         //chaListPanal.gameObject.SetActive(false);
         chaStatPanal.gameObject.SetActive(true);
+        chaStatPanal.Init();
     }
     public void OnExitStat()
     {

@@ -41,7 +41,7 @@ public class Buff
     public bool check;
 
     public CheckBuff checkingCondition = new CheckBuff();
-
+    public CharacteristicData data;
     public virtual bool Check(Player player)
     {
         if (check)

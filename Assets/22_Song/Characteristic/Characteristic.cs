@@ -3,10 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Characteristic
+public class CharacteristicTest : Buff
 {
+    private int prevStat = 0;
+    public CharacteristicTest(CharacterData characterData)
+    {
+        data = MyDataTableMgr.characteristicTable.GetTable(0);
+        cd = characterData;
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.GameStart);
+    }
+    public override bool Check(Player player)
+    {
+        return true;
+    }
     
+    public override void EndBuff()
+    {
+    }
+    
+    public override void StartBuff()
+    {
+    }
+    
+    public override void WhileBuff()
+    {
+        if (cd.hp <= data.checkValue && prevStat == 0)
+        {
+            prevStat = cd.totalStats.str.stat;
+            cd.totalStats.str.stat += Mathf.RoundToInt(data.increaseStat);
+        }
+        else if (cd.hp > data.checkValue && prevStat != 0)
+        {
+            cd.totalStats.str.stat = prevStat;
+            prevStat = 0;
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public class HeavyWeight : Buff
 {
     public int prevValue;

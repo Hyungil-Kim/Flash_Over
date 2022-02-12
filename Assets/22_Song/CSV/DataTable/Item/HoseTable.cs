@@ -5,7 +5,7 @@ using System.Linq;
 [System.Serializable]
 public class HoseTableData : ItemTableDataBase
 {
-
+    public int burnDmg;
 }
 [System.Serializable]
 public class HoseTable : MyDataTableBase<HoseTableData>
@@ -22,6 +22,7 @@ public class HoseTable : MyDataTableBase<HoseTableData>
         foreach (var table in tableList)
         {
             var tableData = new HoseTableData();
+            tableData.type = ItemType.Hose;
             tableData.id = table["ID"];
             tableData.iconID = table["ICON_ID"];
             tableData.itemName = table["NAME"];
@@ -33,6 +34,7 @@ public class HoseTable : MyDataTableBase<HoseTableData>
             tableData.str = int.Parse(table["STR"]);
             tableData.lung = int.Parse(table["LUNG"]);
             tableData.dmg = int.Parse(table["DMG"]);
+            tableData.burnDmg = int.Parse(table["BUNDMG"]);
             tableData.def = int.Parse(table["DEF"]);
             tableData.move = int.Parse(table["MOVE"]);
             tableData.vision = int.Parse(table["VISION"]);

@@ -54,8 +54,14 @@ public class FireTruckConsum : MonoBehaviour
             {
                 return;
             }
+
             GameData.userData.gold -= itemData.itemData.cost;
-            fireTruck.fireTruckList.Init();
+            //fireTruck.fireTruckList.Init();
+            fireTruck.characterInfoList.Init();
+
+            var fireman = fireTruck.fireManList[fireTruck.curIndex].GetComponent<FireManInfoPrefab>();
+            fireman.Init(fireTruck.curcharacter);
+
         }
     }
 }

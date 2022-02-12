@@ -10,5 +10,6 @@ public class HoseData : ItemDataBase
         dataTable = itemDataTable;
         count = itemCount;
         hoseData = dataTable as HoseTableData;
+        type = ItemType.Hose;
     }
 }

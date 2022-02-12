@@ -8,10 +8,16 @@ public enum EndBurn
     NonDestroy,
     Explose
 }
+public class ObstacleSaveData
+{
+    public ObjData data;
+}
 public class Obstacle : MonoBehaviour
 {
     public GameManager gameManager;
     public bool updateOn = true;
+
+    public int index;
 
     /// //////////////////////////////////
     public int objectID;
@@ -20,19 +26,49 @@ public class Obstacle : MonoBehaviour
     public float exploseDamage;//터지는 데미지
     public EndBurn endState; // 죽었을때 발생하는 상태
     ///////////////////////////////////// 
+    public float maxhp;
     public float hp; // 체력
     public bool isBurn; //현재 타고있는지 
     public float def; //방어력
     public bool isSight;
     public float count;
+
+    public ObjData data;
     void Start()
     {
         gameManager = GameManager.instance;
         Shader.SetGlobalFloat("StartBurning", 0);
         Shader.SetGlobalFloat("StopBurning", 0);
+
         count = 0;
+        Turn.obstacles.Add(this);
+        index = Turn.obstacles.Count;
+        Init();
     }
-	public void Update()
+    public void Init()
+    {
+        data = MyDataTableMgr.objTable.GetTable(objectID);
+        exploseDamage = data.dmg;
+        exploseRange = data.range;
+        endState = data.endtype;
+        obstacleMesh = data.weight;
+
+        maxhp = data.hp;
+        hp = maxhp;
+        def = data.def;
+    }
+    public ObstacleSaveData GetData()
+    {
+        var osd = new ObstacleSaveData();
+        osd.data = data;
+        return osd;
+    }
+    public void SetData(ObstacleSaveData obstacleSaveData)
+    {
+        data = obstacleSaveData.data;
+        Init();
+    }
+    public void Update()
 	{
         Material[] material = this.GetComponent<MeshRenderer>().materials;
 		if(hp < 50)//최대치가 아니면

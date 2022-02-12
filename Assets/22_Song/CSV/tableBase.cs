@@ -13,6 +13,7 @@ public class ItemTableDataBase : TableDataBase
 {
     public string iconID;
     public string itemName;
+    public ItemType type;
     [JsonIgnore]
     public Sprite iconSprite
     {

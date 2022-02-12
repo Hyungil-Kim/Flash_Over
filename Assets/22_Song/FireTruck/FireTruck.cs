@@ -17,7 +17,7 @@ public class FireTruck : MonoBehaviour
     public ConsumShop consumShop;
 
 
-    private List<GameObject> fireManList = new List<GameObject>();
+    public List<GameObject> fireManList = new List<GameObject>();
     private Dictionary<int, CharacterData> outFireMan = new Dictionary<int, CharacterData>();
 
     public CharacterData curcharacter;
@@ -63,8 +63,13 @@ public class FireTruck : MonoBehaviour
     }
     public void SetCharacter(CharacterData cd,int index = 0)
     {
-        fireTruckList.SetCharacter(cd, index);
+        //fireTruckList.SetCharacter(cd, index);
+        characterInfoList.SetCharacter(cd, index);
+        
         curcharacter = cd;
+
+        var fireman = fireManList[curIndex].GetComponent<FireManInfoPrefab>();
+        fireman.Init(curcharacter);
     }
     public void OnBack()
     {

@@ -24,6 +24,7 @@ public class OxygenTankTable : MyDataTableBase<OxygenTankTableData>
         foreach (var table in tableList)
         {
             var tableData = new OxygenTankTableData();
+            tableData.type = ItemType.OxygenTank;
             tableData.id = table["ID"];
             tableData.iconID = table["ICON_ID"];
             tableData.itemName = table["NAME"];

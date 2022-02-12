@@ -146,4 +146,28 @@ public class CharacterInfoList : MonoBehaviour
         isReverse = istrue;
         Init();
     }
+
+    public void SetCharacter(CharacterData cd, int index = 0)
+    {
+        switch (index)
+        {
+            case 1:
+                if (cd.consum1 != null)
+                {
+                    GameData.userData.gold += cd.consum1.itemData.cost;
+                    cd.UseConsumItem(1);
+                }
+                break;
+            case 2:
+                if (cd.consum2 != null)
+                {
+                    GameData.userData.gold += cd.consum2.itemData.cost;
+                    cd.UseConsumItem(2);
+                }
+                break;
+            default:
+                break;
+        }
+        Init();
+    }
 }

@@ -81,6 +81,10 @@ public class RestPrefab : MonoBehaviour
             }
         }
     }
+    public void Release()
+    {
+        init(null, true, restIndex);
+    }
     public void UpgradePopUp()
     {
         GetComponentInParent<Rest>().OnUpgradePopup();

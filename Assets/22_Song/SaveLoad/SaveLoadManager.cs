@@ -30,6 +30,10 @@ public class SaveLoadManager : MonoBehaviour
         {
             playdata.csd.Add(claimant.index, claimant.GetData());
         }
+        foreach (var obstacle in Turn.obstacles)
+        {
+            playdata.osd.Add(obstacle.index , obstacle.GetData());
+        }
         playdata.gsd = new GMSaveData();
         if (GameManager.instance.targetPlayer != null)
         {
@@ -50,11 +54,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         PlaySaveSystem.LoadInPlay(slot);
         Turn.OnDestroy();
-        AllTile.SaveTile.Clear();
-        AllTile.allTile.Clear();
-        AllTile.visionTile.Clear();
-        AllTile.prevVisionTile.Clear();
-        AllTile.wallTile.Clear();
+        AllTile.OnDestroy();
         if (PlaySaveSystem.ps != null)
         {
             SceneManager.LoadScene(PlaySaveSystem.ps.sceanName);

@@ -20,11 +20,7 @@ public class MenuManager : MonoBehaviour
 	public void  OnclickRestartButton()
 	{
 		Turn.OnDestroy();
-		AllTile.SaveTile.Clear();
-		AllTile.allTile.Clear();
-		AllTile.visionTile.Clear();
-		AllTile.prevVisionTile.Clear();
-		AllTile.wallTile.Clear();
+		AllTile.OnDestroy();
 
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}

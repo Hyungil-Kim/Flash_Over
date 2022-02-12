@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacteristicData : TableDataBase
 {
     public string name;
+    public string desc;
 
     public int turn;
     public float checkValue;
@@ -28,6 +29,7 @@ public class CharacteristicTable : MyDataTableBase<CharacteristicData>
             tableData.id = table["ID"];
 
             tableData.name = table["NAME"];
+            tableData.desc = table["DESC"];
 
             tableData.turn = int.Parse(table["TURN"]);
             tableData.checkValue = float.Parse(table["CHECKVALUE"]);

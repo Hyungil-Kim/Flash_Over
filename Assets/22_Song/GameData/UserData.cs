@@ -29,6 +29,8 @@ public class UserData : MySaveData
     public int inGameTime;
     //스테이지 이름 일단 여기 넣어놓고 임시로..
     public string stageName;
+    //테스트 임시..스테이지 클리어 불변수
+    public bool stageClear;
 
     public bool DaewonTuto;
     public bool HireTuto;

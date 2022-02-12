@@ -10,6 +10,7 @@ public class OxygenTankData : ItemDataBase
     {
         dataTable = itemDataTable;
         count = itemCount;
+        type = ItemType.OxygenTank;
         oxygenTankData = dataTable as OxygenTankTableData;
     }
 }

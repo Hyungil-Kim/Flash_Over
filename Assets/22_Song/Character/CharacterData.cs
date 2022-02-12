@@ -176,6 +176,9 @@ public class CharacterData
 
     public int grade;
 
+    public int clearStageCount;
+    public int saveClaimantCount;
+
     public string prefabName = "male";
 
     public List<CharacteristicList> addCharacteristics = new List<CharacteristicList>();
@@ -244,8 +247,6 @@ public class CharacterData
     public List<Buff> characteristics = new List<Buff>();
 
     public CharacteristicCheck check = new CharacteristicCheck();
-
-    public int saveClaimantCount;
 
     public float benefit;
     public float penalty;
@@ -703,6 +704,9 @@ public class CharacterData
         var custom = go.GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
         setupModel = custom.GetSetup();
 
+        //특성테스트
+        characteristics.Add(new CharacteristicTest(this));
+
         GameData.userData.characterList.Add(this);
 
     }
@@ -1025,7 +1029,7 @@ public class CharacterData
         {
             var max = TotalCharacteristic.innateList.Count;
             var randomInnate = Random.Range(0, max);
-            BuildCharacteristic(TotalCharacteristic.innateList[randomInnate]);
+            //BuildCharacteristic(TotalCharacteristic.innateList[randomInnate]);
         }
     }
 

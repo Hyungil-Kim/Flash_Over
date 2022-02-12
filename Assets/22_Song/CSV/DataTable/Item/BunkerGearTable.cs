@@ -23,6 +23,7 @@ public class BunkerGearTable : MyDataTableBase<BunkerGearTableData>
         foreach (var table in tableList)
         {
             var tableData = new BunkerGearTableData();
+            tableData.type = ItemType.BunkerGear;
             tableData.id = table["ID"];
             tableData.iconID = table["ICON_ID"];
             tableData.itemName = table["NAME"];

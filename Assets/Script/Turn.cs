@@ -12,6 +12,9 @@ public static class Turn
 	public static List<Fire> fires = new List<Fire>();
 	public static List<Smoke> smokes = new List<Smoke>();
 	public static List<Claimant> claimants = new List<Claimant>();
+
+	public static List<Obstacle> obstacles = new List<Obstacle>();
+
 	public static Dictionary<int, GameObject> saveClaimants = new Dictionary<int, GameObject>();
 
 	public static List<Window> windows = new List<Window>();
@@ -30,6 +33,7 @@ public static class Turn
 		fires.Clear();
 		smokes.Clear();
 		claimants.Clear();
+		obstacles.Clear();
 		windows.Clear();
 		areaCamera.Clear();
 		copylist.Clear();

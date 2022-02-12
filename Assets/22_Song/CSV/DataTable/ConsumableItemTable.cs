@@ -24,7 +24,7 @@ public class ConsumableItemTable : MyDataTableBase<ConsumableItemTableData>
         foreach (var table in tableList)
         {
             var tableData = new ConsumableItemTableData();
-
+            tableData.type = ItemType.Consumable;
             tableData.id = table["ID"];
             tableData.iconID = table["ICON_ID"];
             tableData.prefabsID = table["PREFAB_ID"];

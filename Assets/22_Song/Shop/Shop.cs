@@ -85,6 +85,11 @@ public class Shop : MonoBehaviour
     private void OnEnable()
     {
         Init();
+        
+    }
+
+    private void Start()
+    {
         //로드 된 상점아이템이 없으면 상점목록을 업데이트해줄거예요
         if (GameData.userData.shopItemList.Count == 0)
         {
@@ -98,10 +103,7 @@ public class Shop : MonoBehaviour
                 SetList(GameData.userData.shopItemList[i], i);
             }
         }
-    }
 
-    private void Start()
-    {
         //실제시간으로 할때 필요
 
         //GameData.shopData.LoadShop();

@@ -9,7 +9,7 @@ public class ItemDataBase
     [System.NonSerialized]
     public CharacterData owner;
     public bool isSold;
-
+    public ItemType type;
     public int GetStat(CharacterStatType statType)
     {
         switch (statType)

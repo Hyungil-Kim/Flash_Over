@@ -6,9 +6,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
+using AdvancedPeopleSystem;
+
 public class FireManInfoPrefab : MonoBehaviour, IDropHandler
 {
-    public Image icon;
+    public RawImage icon;
     public FireManItem hose;
     public FireManItem bunkerGear;
     public FireManItem oxygenTank;
@@ -35,6 +37,15 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
     {
         if (cd != null)
         {
+            var model = cd.setupModel;
+            var custom = UIOnOff.instance.uiCharacterList[index].GetComponent<CharacterCustomization>();
+            var uicha = UIOnOff.instance.uiCharacterList[index].GetComponent<UICharacter>();
+
+            var customInfo = GameData.userData.characterList[index].setupModel;
+            customInfo.ApplyToCharacter(custom);
+            uicha.Init(index);
+            icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
+
             infoUI.SetActive(true);
             selectButton.SetActive(false);
 
@@ -47,15 +58,16 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
 
             info.text = $"{cd.characterClass}\n{cd.characterGrade}  {cd.characterName}";
 
+
             var statSB = new StringBuilder();
-            statSB.Append(string.Format($"Hp : {cd.totalStats.hp.stat}\n"));
-            statSB.Append(string.Format($"Lung : {cd.totalStats.lung.stat}\n"));
-            statSB.Append(string.Format($"Str : {cd.totalStats.str.stat}\n"));
-            statSB.Append(string.Format($"Move : {cd.totalStats.move}\n"));
-            statSB.Append(string.Format($"Vision : {cd.totalStats.vision}\n"));
-            statSB.Append(string.Format($"Dmg : {cd.totalStats.dmg}\n"));
-            statSB.Append(string.Format($"Def : {cd.totalStats.def}\n"));
-            statSB.Append(string.Format($"Sta : {cd.totalStats.sta}"));
+            statSB.Append(string.Format($"체력 : {cd.totalStats.hp.stat}\n"));
+            statSB.Append(string.Format($"폐활량 : {cd.totalStats.lung.stat}\n"));
+            statSB.Append(string.Format($"힘 : {cd.totalStats.str.stat}\n"));
+            statSB.Append(string.Format($"이동력 : {cd.totalStats.move}\n"));
+            statSB.Append(string.Format($"시야 : {cd.totalStats.vision}\n"));
+            statSB.Append(string.Format($"데미지 : {cd.totalStats.dmg}\n"));
+            statSB.Append(string.Format($"방어력 : {cd.totalStats.def}\n"));
+            statSB.Append(string.Format($"산소통 : {cd.totalStats.sta}"));
             stat.text = statSB.ToString();
             var firemanInfo = GetComponentInParent<FireTruck>();
             weight.text = $"남은 무게 : {cd.weight}";
