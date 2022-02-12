@@ -11,6 +11,7 @@ public enum EndBurn
 public class ObstacleSaveData
 {
     public ObjData data;
+    public float hp;
 }
 public class Obstacle : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class Obstacle : MonoBehaviour
         Turn.obstacles.Add(this);
         index = Turn.obstacles.Count;
         Init();
+        hp = maxhp;
     }
     public void Init()
     {
@@ -54,24 +56,25 @@ public class Obstacle : MonoBehaviour
         obstacleMesh = data.weight;
 
         maxhp = data.hp;
-        hp = maxhp;
         def = data.def;
     }
     public ObstacleSaveData GetData()
     {
         var osd = new ObstacleSaveData();
         osd.data = data;
+        osd.hp = hp;
         return osd;
     }
     public void SetData(ObstacleSaveData obstacleSaveData)
     {
         data = obstacleSaveData.data;
+        hp = obstacleSaveData.hp;
         Init();
     }
     public void Update()
 	{
         Material[] material = this.GetComponent<MeshRenderer>().materials;
-		if(hp < 50)//최대치가 아니면
+		if(hp < maxhp)//최대치가 아니면
 		{
             material[0] = material[1];
             this.GetComponent<MeshRenderer>().materials = material;

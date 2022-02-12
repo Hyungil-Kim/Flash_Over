@@ -36,14 +36,9 @@ public class CheckUi : MonoBehaviour
 	}
 	public void Restart()
 	{
-			Turn.OnDestroy();
-			AllTile.SaveTile.Clear();
-			AllTile.allTile.Clear();
-			AllTile.visionTile.Clear();
-			AllTile.prevVisionTile.Clear();
-			AllTile.wallTile.Clear();
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-	
+		Turn.OnDestroy();
+		AllTile.OnDestroy();
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 	public void Tiltle() 
 	{
