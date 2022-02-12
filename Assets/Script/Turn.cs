@@ -45,13 +45,14 @@ public static class Turn
 			}
 			foreach (var player in players)
 			{
-
+				
 				if (player.curStateName == PlayerState.Idle)
 				{
 					GameManager.instance.ChangeTargetPlayer(player.gameObject);
 					GameManager.instance.move = player.cd.totalStats.move;
 				}
-				if (player.curStateName == PlayerState.End)
+               
+                if (player.curStateName == PlayerState.End)
 				{
 					Debug.Log("≈œ ≥°");
 					GameManager.ChangeLayersRecursively(player.transform, "Player");
@@ -60,6 +61,7 @@ public static class Turn
 				{
 					yield break;
 				}
+
 
 
 
