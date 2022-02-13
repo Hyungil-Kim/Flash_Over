@@ -99,7 +99,10 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
             weight.text = $"";
         }
     }
-
+    public void SetCurIndex ()
+    {
+        fireTruck.curIndex = index;
+    }
 
     public void OnDrop(PointerEventData eventData)
     {

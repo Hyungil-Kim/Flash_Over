@@ -19,7 +19,7 @@ public class FireTruck : MonoBehaviour
 
 
     public List<GameObject> fireManList = new List<GameObject>();
-    private Dictionary<int, CharacterData> outFireMan = new Dictionary<int, CharacterData>();
+    public Dictionary<int, CharacterData> outFireMan = new Dictionary<int, CharacterData>();
 
     public CharacterData curcharacter;
     public int curCharacterIndex;
