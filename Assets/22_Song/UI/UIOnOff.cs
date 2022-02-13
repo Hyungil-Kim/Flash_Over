@@ -258,6 +258,9 @@ public class UIOnOff : MonoBehaviour
            $"구조자: {MyDataTableMgr.stageInfoTable.GetTable(level-1).rescuer}명\n"+
            $"현장설명: {MyDataTableMgr.stageInfoTable.GetTable(level-1).descreption}";
            mapName = MyDataTableMgr.stageInfoTable.GetTable(level - 1).map;
+
+        GameData.userData.gofireman = MyDataTableMgr.stageInfoTable.GetTable(level - 1).rescuer;
+        GameData.userData.stageName = MyDataTableMgr.stageInfoTable.GetTable(level - 1).sceneOfFire;
     }
 
     public void OnNotEnoughMoney()
