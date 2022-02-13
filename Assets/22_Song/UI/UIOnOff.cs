@@ -41,6 +41,8 @@ public class UIOnOff : MonoBehaviour
 
     public GameObject character;
     public List<GameObject> uiCharacterList = new List<GameObject>();
+    public GameObject MainCharacterUi;
+    public List<GameObject> fireTruckCharacterList = new List<GameObject>();
 
     public GameObject mainCameraPos;
     public GameObject selectCameraPos;
@@ -64,7 +66,11 @@ public class UIOnOff : MonoBehaviour
         {
             uiCharacterList.Add(uicharacter);
         }
-
+        var fireTruckCharacters = GameObject.FindGameObjectsWithTag("FireTruckCharacter");
+        foreach (var uicharacter in fireTruckCharacters)
+        {
+            fireTruckCharacterList.Add(uicharacter);
+        }
         instance = this;
         foreach (var ui in uiArray)
         {
@@ -284,5 +290,17 @@ public class UIOnOff : MonoBehaviour
             customInfo.ApplyToCharacter(custom);
             uicha.Init(i);
         }
+    }
+    public void MainCharacterSetting(CharacterData cd)
+    {
+        var custom = MainCharacterUi.GetComponent<CharacterCustomization>();
+        var customInfo = cd.setupModel;
+        customInfo.ApplyToCharacter(custom);
+    }
+    public void MainCharacterSetting(CharacterData cd, int index)
+    {
+        var custom = fireTruckCharacterList[index].GetComponent<CharacterCustomization>();
+        var customInfo = cd.setupModel;
+        customInfo.ApplyToCharacter(custom);
     }
 }

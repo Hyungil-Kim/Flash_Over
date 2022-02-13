@@ -26,8 +26,12 @@ public class CharacterInfoInventory : MonoBehaviour
     public TMP_Dropdown optionDropdown;
 
     public ItemType type;
+    public InfoType infoType;
     public bool isReverse;
 
+    public ItemButtonPrefab hose;
+    public ItemButtonPrefab bunkerGear;
+    public ItemButtonPrefab oxygenTank;
     //private ItemType curType;
     //private ItemDataBase curData;
     private void Awake()
@@ -62,6 +66,69 @@ public class CharacterInfoInventory : MonoBehaviour
     }
     public void Init()
     {
+        CharacterData curCharacter = null;
+        int curIndex = 0;
+        switch (infoType)
+        {
+            case InfoType.Character:
+                curCharacter = GetComponentInParent<CharacterInfo>().curCharacter;
+                curIndex = GetComponentInParent<CharacterInfo>().currentIndex;
+                break;
+            case InfoType.Training:
+                curCharacter = GetComponentInParent<TrainingCharacter>().curCharacter;
+                curIndex = GetComponentInParent<TrainingCharacter>().curIndex;
+                break;
+            case InfoType.Rest:
+                curCharacter = GetComponentInParent<Rest>().curCd;
+                curIndex = GetComponentInParent<Rest>().curCharacterIndex;
+                break;
+            case InfoType.Truck:
+                curCharacter = GetComponentInParent<FireTruck>().curcharacter;
+                curIndex = GetComponentInParent<FireTruck>().curCharacterIndex;
+                break;
+            default:
+                break;
+        }
+
+        if (curCharacter.hose != null)
+        {
+            var hoseData = curCharacter.hose.dataTable;
+            hose.Init(hoseData);
+            //var grade = GetGrade(hoseData);
+
+            //hosestat.text = $"{hoseData.itemName}   {grade}\n己瓷 : {hoseData.dmg}\n公霸 : {hoseData.weight}";
+        }
+        else
+        {
+            hose.icon.sprite = null;
+            //hosestat.text = "";
+        }
+        if (curCharacter.bunkerGear != null)
+        {
+            var bunkerGearData = curCharacter.bunkerGear.dataTable;
+            bunkerGear.Init(bunkerGearData);
+            //var grade = GetGrade(bunkerGearData);
+            //bunkergearstat.text = $"{bunkerGearData.itemName}  {grade}\n己瓷 : {bunkerGearData.def}\n公霸 : {bunkerGearData.weight}";
+        }
+        else
+        {
+            bunkerGear.icon.sprite = null;
+            //bunkergearstat.text = "";
+        }
+        if (curCharacter.oxygenTank != null)
+        {
+            var oxygenTankData = curCharacter.oxygenTank.dataTable;
+            oxygenTank.Init(oxygenTankData);
+            //oxygenTank.sprite = oxygenTankData.iconSprite;
+            //var grade = GetGrade(oxygenTankData);
+            //oxygenstat.text = $"{oxygenTankData.itemName}   {grade}\n己瓷 : {oxygenTankData.sta}\n公霸 : {oxygenTankData.weight}";
+        }
+        else
+        {
+            oxygenTank.icon.sprite = null;
+            //oxygenstat.text = "";
+        }
+
         itemInfo.None(currentItemType);
         if(itemObjects.Count == 0)
         {

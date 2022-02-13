@@ -15,6 +15,10 @@ public class SaveLoadManager : MonoBehaviour
     }
     public void OnSave(int slot)
     {
+        if(slot == 0)
+        {
+            GameData.userData.SaveUserData(0);
+        }
         var playdata = new PlaySave();
         playdata.sceanName = SceneManager.GetActiveScene().name;
         
@@ -52,9 +56,16 @@ public class SaveLoadManager : MonoBehaviour
     }
     public void OnLoad(int slot)
     {
-        PlaySaveSystem.LoadInPlay(slot);
         Turn.OnDestroy();
         AllTile.OnDestroy();
+
+        if (slot == 0)
+        {
+            GameData.userData.LoadUserData(slot);
+            SceneManager.LoadScene("MainScene");
+            return;
+        }
+        PlaySaveSystem.LoadInPlay(slot);
         if (PlaySaveSystem.ps != null)
         {
             SceneManager.LoadScene(PlaySaveSystem.ps.sceanName);

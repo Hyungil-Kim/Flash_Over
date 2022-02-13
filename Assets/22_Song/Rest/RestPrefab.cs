@@ -12,11 +12,17 @@ public class RestPrefab : MonoBehaviour
     public Texture baseSprite;
 
     public GameObject restbutton;
+    public GameObject canclebutton;
     public GameObject backbutton;
     public GameObject upgradebutton;
 
     private CharacterData restcd;
     private int restIndex;
+
+    public TextMeshProUGUI tired;
+    public TextMeshProUGUI physical;
+    public TextMeshProUGUI psycholosical;
+
     private void Start()
     {
         if (icon != null)
@@ -25,8 +31,12 @@ public class RestPrefab : MonoBehaviour
         }
     }
 
+
     public void init(CharacterData cd, bool isActive, int index)
     {
+        physical.text = $"외상치료 {MyDataTableMgr.menuTable.GetTable(GameData.userData.restShopData.physical).RS3Physical}골드";
+        psycholosical.text = $"심리치료 {MyDataTableMgr.menuTable.GetTable(GameData.userData.restShopData.psychological).RS2Psychological}골드";
+
         var button = icon.GetComponent<Button>();
         if (!isActive)
         {
@@ -83,10 +93,12 @@ public class RestPrefab : MonoBehaviour
     }
     public void Release()
     {
+        GameData.userData.restList[restIndex].isFireAble = true;
         GameData.userData.restList.Remove(restIndex);
-        init(null, true, restIndex);
-        CharacterData cd;
         
+        canclebutton.SetActive(false);
+        init(null, true, restIndex);
+
     }
     public void UpgradePopUp()
     {
@@ -95,11 +107,13 @@ public class RestPrefab : MonoBehaviour
     public void CanRest()
     {
         restbutton.SetActive(true);
+        canclebutton.SetActive(true);
         backbutton.SetActive(false);
     }
     public void CharacterRest()
     {
         restbutton.SetActive(false);
+        canclebutton.SetActive(false);
         backbutton.SetActive(true);
 
     }
@@ -115,6 +129,33 @@ public class RestPrefab : MonoBehaviour
         restcd.admission = Admission.Rest;
         init(restcd, true, restIndex);
     }
+    public void OnRest(int index)
+    {
+        var rest = GetComponentInParent<Rest>();
+        var type = (RestType)index;
+        switch (type)
+        {
+            case RestType.Physical:
+                if (GameData.userData.gold < MyDataTableMgr.menuTable.GetTable(GameData.userData.restShopData.physical).RS3Physical)
+                {
+                    UIOnOff.instance.OnNotEnoughMoney();
+                    return;
+                }
+                break;
+            case RestType.Psycholosical:
+                if (GameData.userData.gold < MyDataTableMgr.menuTable.GetTable(GameData.userData.restShopData.psychological).RS2Psychological)
+                {
+                    UIOnOff.instance.OnNotEnoughMoney();
+                    return;
+                }
+                break;
+            default:
+                break;
+        }
+        rest.restType = type;
+        rest.OnPopUp();
+    }
+
     public void GoHospital()
     {
         restcd.admission = Admission.Hospital;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class BetweenPlaying : MonoBehaviour
 {
@@ -76,6 +77,8 @@ public class BetweenPlaying : MonoBehaviour
 		winPanel.SetActive(false);
 
 		yield return new WaitForSeconds(1f);
+
+		SceneManager.LoadScene("EndScene");
 		gameManager.uIManager.gameclearUI.gameObject.SetActive(true);
 	}
 
@@ -86,6 +89,8 @@ public class BetweenPlaying : MonoBehaviour
 		falsePanel.SetActive(false);
 
 		yield return new WaitForSeconds(1f);
+
+		SceneManager.LoadScene("EndScene");
 		gameManager.uIManager.gameclearUI.gameObject.SetActive(true);
 	}
 	public void StopTurn()

@@ -63,6 +63,7 @@ public class UserData : MySaveData
         = new List<ItemDataBase>();
 
     public int shopLevel = 0;
+    [NonSerialized]
     public DateTime shopTime;
     
 
@@ -84,7 +85,6 @@ public class UserData : MySaveData
     public List<CharacterData> restEndList
         = new List<CharacterData>();
 
-    public List<Buff> totalCharacteristic = new List<Buff>();
     public UserData ()
     {
         Init();
@@ -92,6 +92,14 @@ public class UserData : MySaveData
     public void Init()
     {
         TotalCharacteristic.Init();
+    }
+    public void StageClear()
+    {
+        fireManList.Clear();
+        shopChaList.Clear();
+        shopItemList.Clear();
+
+        SaveUserData(0);
     }
     public void SaveUserData(int slot)
     {

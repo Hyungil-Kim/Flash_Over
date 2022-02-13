@@ -253,7 +253,21 @@ public class CharacterData
 
     public int area;
 
-
+    public bool Ready
+    {
+        get
+        {
+            switch (state)
+            {
+                case "휴식중":
+                case "못나감":
+                    return false;
+                default:
+                    return true;
+            }
+            
+        }
+    }
 
     public string state
     {
@@ -267,7 +281,7 @@ public class CharacterData
             {
                 return "피곤함";
             }
-            else if(tiredType == TiredType.Tired)
+            else if(tiredType == TiredType.BigTired)
             {
                 return "못나감";
             }
@@ -572,6 +586,9 @@ public class CharacterData
         //buff.Add(new testBuff(this));
         //buff.Add(new HeavyWeight(this));
         //buff.Add(new SaveClaimant(this));
+
+        buff.Add(new HeavyWeight(this));
+
         AddInnateCharacteristic();
 
 
@@ -913,83 +930,96 @@ public class CharacterData
         var characteristic = new Buff();
         switch (type)
         {
-            case CharacteristicList.HeavyWeight:
-                characteristic = new HeavyWeight(this);
-                break;
+
             case CharacteristicList.SaveClamant:
                 characteristic = new SaveClaimant(this);
                 break;
-            case CharacteristicList.Haughtiness:
-                characteristic = new Haughtiness(this);
+            case CharacteristicList.Friendship:
+                characteristic = new Friendship(this);
                 break;
-            case CharacteristicList.StrongMind:
-                characteristic = new StrongMind(this);
+            case CharacteristicList.Excited:
+                characteristic = new Excited(this);
                 break;
-            case CharacteristicList.Boldness:
-                characteristic = new Boldness(this);
+            case CharacteristicList.Movefaster:
+                characteristic = new Movefaster(this);
                 break;
-            case CharacteristicList.WidePersPective:
-                characteristic = new WidePersPective(this);
+            case CharacteristicList.Stressfull:
+                characteristic = new Stressfull(this);
                 break;
-            case CharacteristicList.FriendShip:
-                characteristic = new FriendShip(this);
+            case CharacteristicList.Ptsd:
+                characteristic = new Ptsd(this);
                 break;
-            case CharacteristicList.MasterOfWeapon:
-                characteristic = new MasterOfWeapon(this);
-                break;
-            case CharacteristicList.QuickHealing:
-                characteristic = new QuickHealing(this);
-                break;
-            case CharacteristicList.Hearing:
-                characteristic = new Hearing(this);
-                break;
-            case CharacteristicList.Resilience:
-                characteristic = new Resilience(this);
-                break;
-            case CharacteristicList.Coward:
-                characteristic = new Coward(this);
-                break;
-            case CharacteristicList.Exaggerating:
-                characteristic = new Exaggerating(this);
-                break;
-            case CharacteristicList.Laziness:
-                characteristic = new Laziness(this);
-                break;
-            case CharacteristicList.Stubborn:
-                characteristic = new Stubborn(this);
-                break;
-            case CharacteristicList.Mute:
-                //characteristic = new Mute(this);
-                break;
-            case CharacteristicList.TooMuchStress:
-                characteristic = new TooMuchStress(this);
-                break;
-            case CharacteristicList.LowSelfEsteem:
-                characteristic = new LowSelfEsteem(this);
-                break;
-            case CharacteristicList.Heroism:
-                characteristic = new Heroism(this);
-                break;
-            case CharacteristicList.Intelligent:
-                characteristic = new Intelligent(this);
-                break;
-            case CharacteristicList.Nimble:
-                characteristic = new Nimble(this);
-                break;
-            case CharacteristicList.Inside:
-                characteristic = new Inside(this);
-                break;
-            case CharacteristicList.FireTolerance:
-                characteristic = new FireTolerance(this);
-                break;
-            case CharacteristicList.Stronger:
-                characteristic = new Stronger(this);
-                break;
-            case CharacteristicList.Berserker:
-                characteristic = new Berserker(this);
-                break;
-            default:
-                break;
+                //case CharacteristicList.Haughtiness:
+                //    characteristic = new Haughtiness(this);
+                //    break;
+                //case CharacteristicList.StrongMind:
+                //    characteristic = new StrongMind(this);
+                //    break;
+                //case CharacteristicList.Boldness:
+                //    characteristic = new Boldness(this);
+                //    break;
+                //case CharacteristicList.WidePersPective:
+                //    characteristic = new WidePersPective(this);
+                //    break;
+                //case CharacteristicList.FriendShip:
+                //    characteristic = new FriendShip(this);
+                //    break;
+                //case CharacteristicList.MasterOfWeapon:
+                //    characteristic = new MasterOfWeapon(this);
+                //    break;
+                //case CharacteristicList.QuickHealing:
+                //    characteristic = new QuickHealing(this);
+                //    break;
+                //case CharacteristicList.Hearing:
+                //    characteristic = new Hearing(this);
+                //    break;
+                //case CharacteristicList.Resilience:
+                //    characteristic = new Resilience(this);
+                //    break;
+                //case CharacteristicList.Coward:
+                //    characteristic = new Coward(this);
+                //    break;
+                //case CharacteristicList.Exaggerating:
+                //    characteristic = new Exaggerating(this);
+                //    break;
+                //case CharacteristicList.Laziness:
+                //    characteristic = new Laziness(this);
+                //    break;
+                //case CharacteristicList.Stubborn:
+                //    characteristic = new Stubborn(this);
+                //    break;
+                //case CharacteristicList.Mute:
+                //    //characteristic = new Mute(this);
+                //    break;
+                //case CharacteristicList.TooMuchStress:
+                //    characteristic = new TooMuchStress(this);
+                //    break;
+                //case CharacteristicList.LowSelfEsteem:
+                //    characteristic = new LowSelfEsteem(this);
+                //    break;
+                //case CharacteristicList.Heroism:
+                //    characteristic = new Heroism(this);
+                //    break;
+                //case CharacteristicList.Intelligent:
+                //    characteristic = new Intelligent(this);
+                //    break;
+                //case CharacteristicList.Nimble:
+                //    characteristic = new Nimble(this);
+                //    break;
+                //case CharacteristicList.Inside:
+                //    characteristic = new Inside(this);
+                //    break;
+                //case CharacteristicList.FireTolerance:
+                //    characteristic = new FireTolerance(this);
+                //    break;
+                //case CharacteristicList.Stronger:
+                //    characteristic = new Stronger(this);
+                //    break;
+                //case CharacteristicList.Berserker:
+                //    characteristic = new Berserker(this);
+                //    break;
+                //default:
+                //    break;
         }
         buff.Add(characteristic);
         if(characteristic.isCharacteristic)
@@ -1004,9 +1034,10 @@ public class CharacterData
 
     public void LoadCd()
     {
-        foreach (var buf in buff)
+
+        foreach (var characteristic in buff)
         {
-            buf.SetCharacter(this);
+            characteristic.SetCharacter(this);
         }
     }
     public void RemoveBad(float probability)
@@ -1039,80 +1070,92 @@ public class CharacterData
     }
     public void StartCheckingCharacteristic()
     {
-        if (tiredScore >= 50)
+        if (tiredScore >= MyDataTableMgr.characteristicTable.GetTable("Stressfull").checkValue)
         {
-            if (0.3f + penalty >= Random.value)
+            if (MyDataTableMgr.characteristicTable.GetTable("Stressfull").acquisitionChance + penalty >= Random.value)
             {
-                AddCharacterisic(CharacteristicList.FriendShip);
+                AddCharacterisic(CharacteristicList.Stressfull);
             }
         }
     }
 
     public void EndCheckingCharacteristic()
     {
+        if(MyDataTableMgr.characteristicTable.GetTable("Friendship").acquisitionChance >= Random.value)
+        {
+            AddCharacterisic(CharacteristicList.Friendship);
+        }
         if(check.friendShip)
         {
-            if (0.03f + benefit >= Random.value)
+            if (MyDataTableMgr.characteristicTable.GetTable("Ptsd").acquisitionChance >= Random.value)
             {
-                AddCharacterisic(CharacteristicList.FriendShip);
+                AddCharacterisic(CharacteristicList.Ptsd);
             }
         }
-        if(check.mute)
-        {
-            if (0.4f + penalty >= Random.value)
-            {
-                AddCharacterisic(CharacteristicList.Mute);
-            }
-        }
-        if(check.stubborn)
-        {
-            if(0.1f + penalty >= Random.value)
-            {
-                AddCharacterisic(CharacteristicList.Stubborn);
-            }
-        }
-        if(check.amoutOfDamage >= 50)
-        {
-            if(0.01f + benefit >= Random.value)
-            {
-                AddCharacterisic(CharacteristicList.MasterOfWeapon);
-            }
-        }
-        if(check.amoutOfTakeDamage >= 20)
-        {
-            if(0.2f + penalty >= Random.value)
-            {
-                AddCharacterisic(CharacteristicList.Exaggerating);
-            }
-        }
-        if(check.amoutOfHeal >= 50)
-        {
-            if(0.05f + benefit>= Random.value)
-            {
-                AddCharacterisic(CharacteristicList.Inside);
-            }
-        }
-        if(check.amoutOfTakeHeal>=50)
-        {
-            if(0.05f + benefit >= Random.value)
-            {
-                AddCharacterisic(CharacteristicList.Resilience);
-            }
-        }
-        if(hp == 1)
-        {
-            if(0.03f + benefit >= Random.value)
-            {
-                AddCharacterisic(CharacteristicList.Berserker);
-            }
-        }
-        if(saveClaimantCount >= 30)
-        {
-            if(0.5f + benefit>= Random.value)
-            {
-                AddCharacterisic(CharacteristicList.Heroism);
-            }
-        }
+        
+        //if(check.friendShip)
+        //{
+        //    if (0.03f + benefit >= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.FriendShip);
+        //    }
+        //}
+        //if(check.mute)
+        //{
+        //    if (0.4f + penalty >= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.Mute);
+        //    }
+        //}
+        //if(check.stubborn)
+        //{
+        //    if(0.1f + penalty >= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.Stubborn);
+        //    }
+        //}
+        //if(check.amoutOfDamage >= 50)
+        //{
+        //    if(0.01f + benefit >= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.MasterOfWeapon);
+        //    }
+        //}
+        //if(check.amoutOfTakeDamage >= 20)
+        //{
+        //    if(0.2f + penalty >= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.Exaggerating);
+        //    }
+        //}
+        //if(check.amoutOfHeal >= 50)
+        //{
+        //    if(0.05f + benefit>= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.Inside);
+        //    }
+        //}
+        //if(check.amoutOfTakeHeal>=50)
+        //{
+        //    if(0.05f + benefit >= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.Resilience);
+        //    }
+        //}
+        //if(hp == 1)
+        //{
+        //    if(0.03f + benefit >= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.Berserker);
+        //    }
+        //}
+        //if(saveClaimantCount >= 30)
+        //{
+        //    if(0.5f + benefit>= Random.value)
+        //    {
+        //        AddCharacterisic(CharacteristicList.Heroism);
+        //    }
+        //}
     }
 
     public void StartStage()
@@ -1122,6 +1165,10 @@ public class CharacterData
     }
     public void EndStage(int turn )
     {
+        isSelected = false;
+        tiredScore += turn;
+        saveClaimantCount += 1;
+        clearStageCount += 1;
         EndCheckingCharacteristic();
         foreach (var characteristic in addCharacteristics)
         {

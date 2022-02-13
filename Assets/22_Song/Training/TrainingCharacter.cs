@@ -13,6 +13,7 @@ public class TrainingCharacter : MonoBehaviour
     public void OnChaIcon()
     {
         //trainingRoom.gameObject.SetActive(true);
+        characterInfoStat.Init();
         characterInfoStat.gameObject.SetActive(true);
     }
     public void OnTraining()

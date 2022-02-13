@@ -22,9 +22,9 @@ public class FireManInfo : MonoBehaviour
     
     public void InventoryInit(ItemType type)
     {
-        consumShop.gameObject.SetActive(false);
-        fireTruckInventory.gameObject.SetActive(true);
-        fireTruckInventory.Init(type);
+        //consumShop.gameObject.SetActive(false);
+        //fireTruckInventory.gameObject.SetActive(true);
+        //fireTruckInventory.Init(type);
     }
     public void ConsumShopInit()
     {

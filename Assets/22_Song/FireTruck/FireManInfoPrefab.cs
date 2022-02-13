@@ -44,7 +44,8 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
             var customInfo = GameData.userData.characterList[index].setupModel;
             customInfo.ApplyToCharacter(custom);
             uicha.Init(index);
-            icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
+            UIOnOff.instance.MainCharacterSetting(cd, index);
+            icon.texture = Resources.Load<RenderTexture>($"Icon/MainIcon {index+1}");
 
             infoUI.SetActive(true);
             selectButton.SetActive(false);

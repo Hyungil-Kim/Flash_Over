@@ -146,7 +146,8 @@ public class CharacterInfoStat : MonoBehaviour
         //info.text = $"{curCharacter.characterClass}\n{curCharacter.characterGrade}  {curCharacter.characterName}";
 
         chaname.text = $"{curCharacter.characterName}";
-        icon.texture = Resources.Load<RenderTexture>($"Icon/icon {curIndex}");
+        UIOnOff.instance.MainCharacterSetting(curCharacter);
+        icon.texture = Resources.Load<RenderTexture>($"Icon/MainIcon");
 
         //var statSB = new StringBuilder();
         //statSB.Append(string.Format($"Hp : {curCharacter.totalStats.hp.stat}\n"));
@@ -187,6 +188,14 @@ public class CharacterInfoStat : MonoBehaviour
         //str.text = $"Str : {curCharacter.totalStats.str}";
         //def.text = $"Lung : {curCharacter.totalStats.lung}";
 
+        if (characteristicObject.Count == 0)
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                var newGo = Instantiate(characteristicPrefab, characteristicContent.transform);
+                characteristicObject.Add(newGo);
+            }
+        }
         foreach (var item in characteristicObject)
         {
             item.SetActive(false);

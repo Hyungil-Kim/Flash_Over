@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+public enum RestType
+{
+    Tired,
+    Physical,
+    Psycholosical
+}
 public enum RestUpgrade
 {
     Count,
@@ -44,6 +49,8 @@ public class Rest : MonoBehaviour
     public GameObject daewonList;
     public CharacterInfoList characterInfoList;
     public CharacterInfoStat characterInfoStat;
+
+    public RestType restType;
     private void OnEnable()
     {
         
@@ -57,6 +64,7 @@ public class Rest : MonoBehaviour
     public void OnChaIcon()
     {
         //trainingRoom.gameObject.SetActive(true);
+        characterInfoStat.Init();
         characterInfoStat.gameObject.SetActive(true);
     }
     public void OnClickRestRoom()
@@ -70,7 +78,7 @@ public class Rest : MonoBehaviour
     {
         mainRest.gameObject.SetActive(false);
     }
-    public void OnClickCharacter()
+    public void OnPopUp()
     {
         popUp.SetActive(true);
     }
@@ -89,13 +97,39 @@ public class Rest : MonoBehaviour
     {
         upgradePopup.SetActive(true);
     }
+    public void OnClickCharacter()
+    {
+        GameData.userData.restList.Add(curIndex, curCd);
+        curCd.isFireAble = false;
+        OnClickunRest();
+    }
     public void OnClickRest()
     {
         //curCd.restCount = 1;
-        GameData.userData.restList.Add(curIndex, curCd);
+        switch (restType)
+        {
+            case RestType.Tired:
+                curCd.admission = Admission.Rest;
+                break;
+            case RestType.Physical:
+                curCd.admission = Admission.Hospital;
+                GameData.userData.gold -= MyDataTableMgr.menuTable.GetTable(GameData.userData.restShopData.physical).RS3Physical;
+                break;
+            case RestType.Psycholosical:
+                curCd.admission = Admission.Phycho;
+                GameData.userData.gold -= MyDataTableMgr.menuTable.GetTable(GameData.userData.restShopData.psychological).RS2Psychological;
+                break;
+            default:
+                break;
+        }
         //curCd.isRest = true;
-        OnClickunRest();
+        mainRest.Init();
+        popUp.SetActive(false);
+        
+        
+        //OnClickunRest();
     }
+    
     public void OnClickunRest()
     {
         popUp.SetActive(false);

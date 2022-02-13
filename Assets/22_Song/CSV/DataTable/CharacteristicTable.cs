@@ -11,12 +11,12 @@ public class CharacteristicData : TableDataBase
     public float checkValue;
     public float increaseStat;
     public float decreaseStat;
-
+    public float acquisitionChance;
 
     public bool bad;
     public bool physical;
     public bool psychological;
-    
+    public bool innate;
 }
 public class CharacteristicTable : MyDataTableBase<CharacteristicData>
 {
@@ -35,10 +35,13 @@ public class CharacteristicTable : MyDataTableBase<CharacteristicData>
             tableData.checkValue = float.Parse(table["CHECKVALUE"]);
             tableData.increaseStat = float.Parse(table["UPSTAT"]);
             tableData.decreaseStat = float.Parse(table["DOWNSTAT"]);
+            tableData.acquisitionChance = float.Parse(table["AcquisitionChance"]);
 
             tableData.bad = bool.Parse(table["BAD"]);
             tableData.physical = bool.Parse(table["PHYSICAL"]);
             tableData.psychological = bool.Parse(table["PSYCHOLOGICAL"]);   
+            tableData.innate = bool.Parse(table["INNATE"]);   
+            
 
 
             tables.Add(tableData);

@@ -8,6 +8,8 @@ public class InfoInventoryItem : MonoBehaviour
 {
     public Text itemName;
     public Text itemValue;
+    public Text itemWeight;
+    public Text itemDurability;
     public Image icon;
     public ItemDataBase itemData;
     public GameObject equipImage;
@@ -20,16 +22,19 @@ public class InfoInventoryItem : MonoBehaviour
         
         icon.sprite = itemData.dataTable.iconSprite;
         itemName.text = itemData.dataTable.itemName;
+        itemWeight.text = $"무게 {itemData.dataTable.weight}";
+        itemDurability.text = $"내구도 {itemData.dataTable.durability}";
         switch (itemType)
         {
             case ItemType.Hose:
-                itemValue.text = $"공격력 : {itemData.dataTable.dmg}";
+                var hose = (HoseData)data;
+                itemValue.text = $"직사 {itemData.dataTable.dmg}\n분사 {hose.hoseData.burnDmg}";
                 break;
             case ItemType.BunkerGear:
-                itemValue.text = $"방어력 : {itemData.dataTable.def}";
+                itemValue.text = $"방어력 {itemData.dataTable.def}";
                 break;
             case ItemType.OxygenTank:
-                itemValue.text = $"스태미너 : {itemData.dataTable.sta}";
+                itemValue.text = $"충전량 {itemData.dataTable.sta}";
                 break;
             case ItemType.Max:
                 break;

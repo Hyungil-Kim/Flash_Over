@@ -7,13 +7,18 @@ public class FireTruckConsum : MonoBehaviour
 {
     public int index;
     public Image icon;
-    public TextMeshProUGUI stat;
+    public TextMeshProUGUI itemName;
+    public TextMeshProUGUI desc;
+    public TextMeshProUGUI price;
     private ConsumableItemTableData consumData;
     private void OnEnable()
     {
         consumData = MyDataTableMgr.consumItemTable.GetTable(index);
         icon.sprite = consumData.iconSprite;
-        stat.text = consumData.price.ToString();
+
+        itemName.text = consumData.itemName;
+        desc.text = consumData.description;
+        price.text = consumData.price.ToString();
     }
     
     public void OnClick()
@@ -30,13 +35,13 @@ public class FireTruckConsum : MonoBehaviour
                 return;
             }
 
-            if (consum1 != null && consum1.dataTable.itemName == itemData.dataTable.itemName)
+            if (consum1 != null && consum1.dataTable.itemName == itemData.dataTable.itemName && consum1.count <6)
             {
 
                 consum1.count++;
 
             }
-            else if (consum2 != null && consum2.dataTable.itemName == itemData.dataTable.itemName)
+            else if (consum2 != null && consum2.dataTable.itemName == itemData.dataTable.itemName && consum2.count < 6)
             {
 
                 consum2.count++;

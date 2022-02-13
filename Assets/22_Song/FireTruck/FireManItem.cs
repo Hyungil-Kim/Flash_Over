@@ -7,13 +7,16 @@ using TMPro;
 public class FireManItem : MonoBehaviour
 {
     public Image icon;
-    public TextMeshProUGUI stat;
+    public TextMeshProUGUI itemName;
+    public TextMeshProUGUI itemDesc;
+    public Sprite sprite;
     public void Init(ItemDataBase itemData, ItemType type)
     {
         if(itemData == null)
         {
-            icon.sprite = null;
-            stat.text = "";
+            icon.sprite = sprite;
+            itemName.text = "";
+            itemDesc.text = "";
             return;
         }
         icon.sprite = itemData.dataTable.iconSprite;
@@ -21,21 +24,25 @@ public class FireManItem : MonoBehaviour
         {
             case ItemType.Hose:
                 var hose = itemData as HoseData;
-                stat.text = $"{hose.hoseData.itemName}";
+                itemName.text = $"{hose.hoseData.itemName}";
+                itemDesc.text = $"내구도 {hose.hoseData.durability}";
                 break;
             case ItemType.BunkerGear:
                 var bunkerGear = itemData as BunkerGearData;
-                stat.text = $"{bunkerGear.bunkerGearData.itemName}";
+                itemName.text = $"{bunkerGear.bunkerGearData.itemName}";
+                itemDesc.text = $"내구도 {bunkerGear.bunkerGearData.durability}";
                 break;
             case ItemType.OxygenTank:
                 var oxygenTank = itemData as OxygenTankData;
-                stat.text = $"{oxygenTank.oxygenTankData.itemName}";
+                itemName.text = $"{oxygenTank.oxygenTankData.itemName}";
+                itemDesc.text = $"내구도 {oxygenTank.oxygenTankData.durability}";
                 break;
             case ItemType.Max:
                 break;
             case ItemType.Consumable:
                 var consum = itemData as ConsumableItemData;
-                stat.text = $"{consum.itemData.itemName}";
+                itemName.text = $"{consum.itemData.itemName}";
+                itemDesc.text = $"수량 {consum.count}";
                 break;
             default:
                 break;

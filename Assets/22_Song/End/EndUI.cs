@@ -6,9 +6,11 @@ using TMPro;
 
 public class EndUI : MonoBehaviour
 {
+    public EndScene manager;
     public GameObject content;
     public GameObject endInfoPrefab;
     public TextMeshProUGUI stageName;
+    
     private void Start()
     {
         //if (GameData.userData.fireManList != null)
@@ -22,16 +24,18 @@ public class EndUI : MonoBehaviour
         //    }
         //}
 
-        for (int i = 0; i < 3; i++)
-        {
-            int index = i;
-            var newGo = Instantiate(endInfoPrefab, content.transform);
-            var cd = new CharacterData();
-            cd.NewSetCharacter();
-            newGo.GetComponent<EndInfo>().Init(cd, index);
-        }
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    int index = i;
+        //    var newGo = Instantiate(endInfoPrefab, content.transform);
+        //    var cd = new CharacterData();
+        //    cd.NewSetCharacter();
+        //    newGo.GetComponent<EndInfo>().Init(cd, index);
+        //}
 
         stageName.text = $"{ GameData.userData.stageName}";
+
+        //Turn.turnCount = 0;
     }
     public void Init()
     {
