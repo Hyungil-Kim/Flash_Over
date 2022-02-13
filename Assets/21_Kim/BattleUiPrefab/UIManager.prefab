@@ -4127,6 +4127,7 @@ MonoBehaviour:
   obstacleHp:
   - {fileID: 860913190811430841}
   - {fileID: 860913190543009462}
+  obstacleHpSlider: []
   fireHpSliderImage: {fileID: 860913191401563798}
   fireHpSliderbackGroundImage: {fileID: 860913189713629248}
   objPanel: {fileID: 860913190380219208}
@@ -4134,6 +4135,10 @@ MonoBehaviour:
   smokePanel: {fileID: 860913190087748303}
   on: 0
   changePlayerInfo: {fileID: 860913190310715547}
+  red: {fileID: 0}
+  orange: {fileID: 0}
+  yellow: {fileID: 0}
+  backGroundDefault: {fileID: 0}
 --- !u!1 &860913189561057594
 GameObject:
   m_ObjectHideFlags: 0
@@ -26145,6 +26150,9 @@ MonoBehaviour:
   betweenPlaying: {fileID: 1504142863}
   option: {fileID: 860913190939146480}
   checkUI: {fileID: 1868608659}
+  audio: {fileID: 0}
+  restart: 0
+  title: 0
   gameclearUI: {fileID: 4133675099112821498}
 --- !u!1 &860913191070317646
 GameObject:
@@ -29252,15 +29260,7 @@ MonoBehaviour:
   roundDamage: {fileID: 860913189623651343}
   armorNum: {fileID: 860913189561057588}
   airgaugeNum: {fileID: 860913190922203317}
-  talentNum1: {fileID: 860913190039933361}
-  talentNum2: {fileID: 860913190101098638}
-  talentNum3: {fileID: 860913191021858265}
-  talentNum4: {fileID: 860913190763647437}
-  talentNum5: {fileID: 860913191386424338}
-  talentNum6: {fileID: 860913190872619820}
-  talentNum7: {fileID: 860913189431965128}
-  talentNum8: {fileID: 860913191182382642}
-  talentNum9: {fileID: 860913190409353120}
+  talentNum: []
 --- !u!1 &860913191289113205
 GameObject:
   m_ObjectHideFlags: 0
@@ -31749,12 +31749,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uIManager: {fileID: 860913191050175702}
-  titleText: {fileID: 860913191251369447}
+  charImage: {fileID: 0}
   mainText: {fileID: 860913191422938712}
   leftButton: {fileID: 860913190460061477}
   rightButton: {fileID: 860913190024353963}
-  value1: 0
-  value2: 1
   returnValue: 0
   gameManager: {fileID: 0}
 --- !u!1 &1255308090405013813
@@ -33266,6 +33264,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3105815390738982147, guid: 7b1120e1b7d6fa9428de94b18af3406e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3574353899722217380, guid: 7b1120e1b7d6fa9428de94b18af3406e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3574353899722217380, guid: 7b1120e1b7d6fa9428de94b18af3406e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3574353899722217380, guid: 7b1120e1b7d6fa9428de94b18af3406e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3574353899722217380, guid: 7b1120e1b7d6fa9428de94b18af3406e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3574353899722217380, guid: 7b1120e1b7d6fa9428de94b18af3406e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3574353899722217380, guid: 7b1120e1b7d6fa9428de94b18af3406e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
