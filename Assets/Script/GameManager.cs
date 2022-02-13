@@ -362,13 +362,16 @@ public class GameManager : MonoBehaviour
 						pretargetPlayer = targetPlayer;
 						preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					}
-					if (targetPlayer != null)
+					if (targetPlayer != target)
 					{	
 						uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(true);
 						uIManager.InfoUiScript.charaterInfo.UpdateData(target.GetComponent<Player>());
 					}
-					uIManager.OnCharacterInfo();
+					else
+					{
 					uIManager.InfoUiScript.smallInfo.Init();
+					uIManager.OnCharacterInfo();
+					}
 				}
 				else if (pickup)
 				{
@@ -685,17 +688,17 @@ public class GameManager : MonoBehaviour
 		var useitem = uIManager.battleUiManager.useItemManager;
 		if (useitem.listRange.Contains(targetTile))
 		{
-			if (useitem.itemType == ConsumItemType.Heal)
+			if (useitem.itemType == UseItemType.Heal)
 			{
 				if (target.tag == "Claimant")
 				{
 					var claimant = target.GetComponent<Claimant>();
 					switch (useitem.healItemType)
 					{
-						case HealItemType.HpHeal:
+						case HealItemType.HP:
 							claimant.hp += useitem.damage;
 							break;
-						case HealItemType.StaminaHeal:
+						case HealItemType.MP:
 							break;
 					}
 					StartCoroutine(useitem.UseItemEnd(targetPlayer));
@@ -708,17 +711,17 @@ public class GameManager : MonoBehaviour
 						return;
 					switch (useitem.healItemType)
 					{
-						case HealItemType.HpHeal:
+						case HealItemType.HP:
 							player.cd.hp += useitem.damage;
 							break;
-						case HealItemType.StaminaHeal:
+						case HealItemType.MP:
 							break;
 					}
 					StartCoroutine(useitem.UseItemEnd(targetPlayer));
 					showMeleeRange = false;
 				}
 			}
-			else if (useitem.itemType == ConsumItemType.Damage)
+			else if (useitem.itemType == UseItemType.Damage)
 			{
 				var fire = GetComponentInChildren<Fire>();
 				fire.fireHp -= useitem.damage;
@@ -752,7 +755,7 @@ public class GameManager : MonoBehaviour
 			else if (useitem.preTile == targetTile)
 			{
 				StartCoroutine(targetPlayer.ThrowAnimation());
-				if (useitem.itemType == ConsumItemType.Heal)
+				if (useitem.itemType == UseItemType.Heal)
 				{
 					foreach (var elem in useitem.throwListRange)
 					{
@@ -763,10 +766,10 @@ public class GameManager : MonoBehaviour
 								var player = target.GetComponent<Player>();
 								switch (useitem.healItemType)
 								{
-									case HealItemType.HpHeal:
+									case HealItemType.HP:
 										player.cd.hp += useitem.damage;
 										break;
-									case HealItemType.StaminaHeal:
+									case HealItemType.MP:
 										break;
 								}
 								break;
@@ -776,10 +779,10 @@ public class GameManager : MonoBehaviour
 								var claimant = target.GetComponent<Claimant>();
 								switch (useitem.healItemType)
 								{
-									case HealItemType.HpHeal:
+									case HealItemType.HP:
 										claimant.hp += useitem.damage;
 										break;
-									case HealItemType.StaminaHeal:
+									case HealItemType.MP:
 										break;
 								}
 								break;
@@ -787,7 +790,7 @@ public class GameManager : MonoBehaviour
 						}
 					}
 				}
-				else if (useitem.itemType == ConsumItemType.Damage)
+				else if (useitem.itemType == UseItemType.Damage)
 				{
 					foreach (var elem in useitem.throwListRange)
 					{

@@ -22,6 +22,7 @@ public class Door : MonoBehaviour
 	{
 		parentTile.isWall = false;
 		parentTile.isDoor = false;
+		yield return new WaitForSeconds(0.5f);
 		while (Count <= 90)
 		{
 			transform.Rotate(0, 2, 0);

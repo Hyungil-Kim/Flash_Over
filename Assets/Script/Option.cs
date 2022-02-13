@@ -18,21 +18,17 @@ public class Option : MonoBehaviour
 	private float backGroundVolume;
 	private float effectVolume;
 
-	public void Start()
+	
+	public void BGMControl()
 	{
-		backGroundVolume = backGroundSlider.value;
-		effectVolume = effectSlider.value;
+		if (backGroundSlider.value == -50f) audioMixer.SetFloat("BGM", -80);
+		else audioMixer.SetFloat("BGM", backGroundSlider.value);
 	}
-
-	public void Update()
+	public void EffectControl()
 	{
-		if (backGroundVolume == -50f) audioMixer.SetFloat("BGM", -80);
-		else audioMixer.SetFloat("BGM", backGroundVolume);
-
-		if (effectVolume == -50f) audioMixer.SetFloat("Effect", -80);
-		else audioMixer.SetFloat("Effect", effectVolume);
+		if (effectSlider.value == -50f) audioMixer.SetFloat("Effect", -80);
+		else audioMixer.SetFloat("Effect", effectSlider.value);
 	}
-
 	public void OnClickEndOption()
 	{
 		gameObject.SetActive(false);

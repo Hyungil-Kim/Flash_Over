@@ -47,7 +47,7 @@ public class CharacterInfoSmall : MonoBehaviour
 	}
 	private void OnDisable()
 	{
-		if (!gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.activeSelf)
+		if (!gameManager.uIManager.InfoUiScript.smallInfo.gameObject.activeSelf)
 		{
 			gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(true);
 		}
@@ -60,7 +60,7 @@ public class CharacterInfoSmall : MonoBehaviour
 	public void Init()
 	{
 		var player = gameManager.targetPlayer;
-		if (player != null)
+		if (gameManager.targetPlayer != null)
 		{
 			airGauge.text = player.oxygentank.ToString();
 			hpGauge.text = $"{player.cd.hp}/{player.cd.maxhp}";

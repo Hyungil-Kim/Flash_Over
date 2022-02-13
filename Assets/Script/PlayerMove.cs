@@ -137,7 +137,12 @@ public class PlayerMove : MonoBehaviour
 					if (moveObject.handList.Count != 0 && moveObject.handList[0].tag == "Claimant")
 					{
 						moveObject.handList[0].transform.position = new Vector3(moveObject.transform.position.x, moveObject.handList[0].transform.position.y, moveObject.transform.position.z);
-						moveObject.handList[0].transform.LookAt(newPos);
+						var handObPos = new Vector3(moveObject.handList[0].transform.position.x, moveObject.handList[0].transform.position.y, moveObject.handList[0].transform.position.z);
+						moveObject.handList[0].transform.LookAt(handObPos);
+
+						var angles = moveObject.handList[0].transform.rotation.eulerAngles;
+						angles.y = -90;
+						moveObject.handList[0].transform.rotation = Quaternion.Euler(angles);
 					}
 					hitCheck(newPos);
 					BreathCheck(newPos);

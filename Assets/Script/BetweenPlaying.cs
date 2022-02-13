@@ -15,6 +15,7 @@ public class BetweenPlaying : MonoBehaviour
 	public TextMeshProUGUI startPanelWorldName;
 	public TextMeshProUGUI startPanelQuset1Text;
 	public TextMeshProUGUI startPanelQuset2Text;
+	
 
 	public bool playerTurn;
 	public void Awake()
@@ -78,8 +79,9 @@ public class BetweenPlaying : MonoBehaviour
 
 		yield return new WaitForSeconds(1f);
 
+		Turn.win = true;
 		SceneManager.LoadScene("EndScene");
-		gameManager.uIManager.gameclearUI.gameObject.SetActive(true);
+
 	}
 
 	public IEnumerator FalsePanel()
@@ -90,8 +92,8 @@ public class BetweenPlaying : MonoBehaviour
 
 		yield return new WaitForSeconds(1f);
 
+		Turn.lose = true;
 		SceneManager.LoadScene("EndScene");
-		gameManager.uIManager.gameclearUI.gameObject.SetActive(true);
 	}
 	public void StopTurn()
 	{

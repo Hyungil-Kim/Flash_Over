@@ -25,7 +25,8 @@ public static class Turn
 	public delegate void turnOff();
 	public static turnOff TurnOff;
 	public static CameraController cameraController;
-
+	public static bool win;
+	public static bool lose;
 
 	public static void OnDestroy()
 	{
@@ -201,7 +202,11 @@ public static class Turn
 		{
 			foreach (var player in players)
 			{
-				//if(player.)
+				if(player.oxygentank > 0)
+				{
+					player.oxygentank -= 1;
+					player.cd.oxygen = player.cd.maxoxygen;
+				}
 				player.ChangeState(PlayerState.Idle);
 			}
 		}

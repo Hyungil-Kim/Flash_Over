@@ -44,7 +44,6 @@ public class UIManager : MonoBehaviour
         gameManager.Init();
         startButton.gameObject.SetActive(false);
         icon.gameObject.SetActive(false);
-        InfoUiScript.smallInfo.gameObject.SetActive(false);
         betweenPlaying.ShowStartPanel();
     }
     public void OnCharacterIcon()
