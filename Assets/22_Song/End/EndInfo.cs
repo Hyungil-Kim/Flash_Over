@@ -21,7 +21,5 @@ public class EndInfo : MonoBehaviour
         tired.text = $"피로도 : {cd.tiredScore}";
 
         characteristic.text = $"특성 : ";
-
-
     }
 }

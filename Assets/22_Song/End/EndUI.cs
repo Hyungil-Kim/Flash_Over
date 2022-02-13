@@ -39,6 +39,7 @@ public class EndUI : MonoBehaviour
     }
     public void Init()
     {
+        stageName.text = $"{ GameData.userData.stageName}";
         if (GameData.userData.fireManList != null)
         {
             int count = 0;

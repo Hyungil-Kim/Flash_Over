@@ -95,6 +95,7 @@ public class UserData : MySaveData
     }
     public void StageClear()
     {
+
         fireManList.Clear();
         shopChaList.Clear();
         shopItemList.Clear();

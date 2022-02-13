@@ -69,13 +69,16 @@ public class Fire : FSM<FireState>
 	}
 	public void CheckFireHp()
 	{
+
 		if(fireHp <= 0)
 		{
+			GameManager.instance.tilemapManager.ReturnTile(this.gameObject).tileExp = 0;
 			gameObject.SetActive(false);
 			gt.tileIsFire = false;
 			Turn.CheckSafeArea(fireArea);
 			Turn.fires.Remove(this);
 		}
+		
 	}
 	public void OnFire()
     {
@@ -92,7 +95,7 @@ public class Fire : FSM<FireState>
     {
 		if (fire != null)
 		{
-			gameManager.tilemapManager.ReturnTile(this.gameObject).tileExp = 0;
+			
 			fire.SetActive(false);
 
 		}

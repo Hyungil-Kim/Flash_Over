@@ -7,11 +7,12 @@ public class EndScene : MonoBehaviour
     public UICharacter[] endCharacters;
     public EndUI endUI;
     public int turnCount;
+    public string stageName;
     public void EndGame()
     {
         foreach (var fireman in GameData.userData.fireManList)
         {
-            fireman.Value.EndStage(Turn.turnCount);
+            //fireman.Value.EndStage(Turn.turnCount);
             GameData.userData.AddExp(50);
             GameData.userData.gold += 900;
         }
@@ -24,6 +25,7 @@ public class EndScene : MonoBehaviour
         {
             foreach (var character in GameData.userData.fireManList)
             {
+                character.Value.EndStage(Turn.turnCount);
                 endCharacters[count].Init(character.Value, count);
                 count++;
             }
