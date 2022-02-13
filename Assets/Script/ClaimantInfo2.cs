@@ -13,6 +13,20 @@ public class ClaimantInfo2 : MonoBehaviour
 	{
 		gameManager = GameManager.instance;
 	}
+	private void OnEnable()
+	{
+		if (gameManager.uIManager.InfoUiScript.claimantInfo.gameObject.activeSelf)
+		{
+			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(false);
+		}
+	}
+	private void OnDisable()
+	{
+		if (!gameManager.uIManager.InfoUiScript.claimantInfo.gameObject.activeSelf)
+		{
+			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(true);
+		}
+	}
 	public void UpdateClaimantInfo()
 	{
 		if(gameManager.target.tag == "Claimant")
