@@ -7,6 +7,8 @@ public class PlaySave : MySaveData
 {
     public bool isPlay;
 
+
+    public int weekend;
     public string sceanName;
 
     
