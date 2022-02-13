@@ -11,7 +11,7 @@ public class UserData : MySaveData
     //출전할 수 있는 소방관 수
     public int gofireman = 5;
 
-    public int weekend;
+    public int weekend = 1;
     //
     public int gold = 3000;
 
@@ -95,7 +95,7 @@ public class UserData : MySaveData
     }
     public void StageClear()
     {
-
+        weekend++;
         fireManList.Clear();
         shopChaList.Clear();
         shopItemList.Clear();
