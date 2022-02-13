@@ -17,6 +17,7 @@ public class GroundTile : MonoBehaviour
 	public bool isPlayer = false;
 	public bool isDoor = false;
 	public bool isObstacle = false;
+	public bool isMoveObstacle = false;
 	public Claimant isClaimant = null;
 	public bool isExit;
 	public Obstacle obstacle;
@@ -413,25 +414,34 @@ public class GroundTile : MonoBehaviour
 					elem.GetComponent<Player>().cd.area = tileArea;
 					OnPlayer = elem.GetComponent<Player>();
 				}
-				else if(elem.tag == "Wall")
+				else if (elem.tag == "Wall")
 				{
 					isWall = true;
 
 				}
-				else if(elem.tag == "Claimant")
+				else if (elem.tag == "Claimant")
 				{
 					isClaimant = elem.GetComponent<Claimant>();
 					tileIsClaimant = true;
 				}
-				else if(elem.tag == "DoorColider")
+				else if (elem.tag == "DoorColider")
 				{
 					isDoor = true;
 				}
-				else if(elem.layer == LayerMask.NameToLayer("Obstacle"))
+				else if (elem.layer == LayerMask.NameToLayer("Obstacle"))
 				{
-					isObstacle = true;
-					obstacle = elem.GetComponentInChildren<Obstacle>();
+					if (elem.tag == "MoveObstacle")
+					{
+						isMoveObstacle = true;
+						obstacle = elem.GetComponentInChildren<Obstacle>();
+					}
+					else
+					{
+						isObstacle = true;
+						obstacle = elem.GetComponentInChildren<Obstacle>();
+					}
 				}
+
 			}
 		}
 		else

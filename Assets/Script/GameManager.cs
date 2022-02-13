@@ -321,7 +321,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (targetPlayer.curStateName == PlayerState.Move)
 				{
-					layerMask += 1 << LayerMask.NameToLayer("Door");
+					layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Obstacle") | 1 << LayerMask.NameToLayer("Door"));
 				}
 			}
 			layerMask = ~layerMask;
@@ -586,6 +586,15 @@ public class GameManager : MonoBehaviour
 			Camera.main.fieldOfView = (change > minZoom) ? minZoom : change;
 			Camera.main.fieldOfView = (change < maxZoom) ? maxZoom : change;
 		}
+
+		if(targetPlayer != null && targetPlayer.handFull)
+		{
+			var angles = targetPlayer.handList[0].transform.rotation.eulerAngles;
+			var playerAngle = targetPlayer.transform.rotation.eulerAngles;
+			angles.y = playerAngle.y + 90;
+			angles.z = playerAngle.z + 1;
+			targetPlayer.handList[0].transform.rotation = Quaternion.Euler(angles);
+		}
 	}
 	public void LateUpdate()
 	{
@@ -668,14 +677,14 @@ public class GameManager : MonoBehaviour
 				targetPlayer.lung -= targetPlayer.cd.oxygen;
 				targetPlayer.cd.oxygen = 0;
 			}
-			if (target.GetComponent<GroundTile>().safeArea)
-			{
-				hand.GetComponent<Claimant>().num = 3;
-			}
-			else
-			{
-				hand.GetComponent<Claimant>().num = 2;
-			}
+			//if (target.GetComponent<GroundTile>().safeArea)
+			//{
+			//	hand.GetComponent<Claimant>().num =4;
+			//}
+			//else
+			//{
+			//	hand.GetComponent<Claimant>().num = 3;
+			//}
 
 			if (target.GetComponent<GroundTile>().isExit)
 			{

@@ -130,7 +130,7 @@ public class TileInfo : MonoBehaviour
 			obstacles.Clear();
 			for(int i =0; i < gameManager.targetTile.fillList.Count;i++)
 			{
-				if(gameManager.targetTile.fillList[i].tag == "Obstacle")
+				if (gameManager.targetTile.fillList[i].layer == LayerMask.NameToLayer("Obstacle"))
 				{
 					obstacles.Add(gameManager.targetTile.fillList[i].GetComponent<Obstacle>());
 				}

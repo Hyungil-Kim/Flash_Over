@@ -68,7 +68,7 @@ public class PlayerMove : MonoBehaviour
 			{
 				var mousePos = gameManager.mousePos;
 				Ray ray = Camera.main.ScreenPointToRay(mousePos);
-				int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+				int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Obstacle"));
 				layerMask = ~layerMask;
 				if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))
 				{
@@ -139,10 +139,6 @@ public class PlayerMove : MonoBehaviour
 						moveObject.handList[0].transform.position = new Vector3(moveObject.transform.position.x, moveObject.handList[0].transform.position.y, moveObject.transform.position.z);
 						var handObPos = new Vector3(moveObject.handList[0].transform.position.x, moveObject.handList[0].transform.position.y, moveObject.handList[0].transform.position.z);
 						moveObject.handList[0].transform.LookAt(handObPos);
-
-						var angles = moveObject.handList[0].transform.rotation.eulerAngles;
-						angles.y = -90;
-						moveObject.handList[0].transform.rotation = Quaternion.Euler(angles);
 					}
 					hitCheck(newPos);
 					BreathCheck(newPos);
