@@ -699,7 +699,8 @@ public class CharacterData
         AddStat(CharacterStatType.Vision, vision, baseStats);
 
         buff.Add(new HeavyWeight(this));
-        buff.Add(new SaveClaimant(this));
+        //buff.Add(new SaveClaimant(this));
+        BuildCharacteristic(CharacteristicList.SaveClamant);
 
         //스텟 최신화
         StatInit();
@@ -722,7 +723,8 @@ public class CharacterData
         setupModel = custom.GetSetup();
 
         //특성테스트
-        characteristics.Add(new CharacteristicTest(this));
+        //characteristics.Add(new CharacteristicTest(this));
+
 
         GameData.userData.characterList.Add(this);
 

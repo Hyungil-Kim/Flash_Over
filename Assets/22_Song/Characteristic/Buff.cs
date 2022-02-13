@@ -58,6 +58,7 @@ public class Buff
         increaseValue = data.increaseStat;
         decreaseValue = data.decreaseStat;
 
+        isCharacteristic = true;
         isBadCharacteristic = data.bad;
         isInnate = data.innate;
         isPhysical = data.physical;

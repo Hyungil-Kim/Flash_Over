@@ -96,6 +96,17 @@ public class UserData : MySaveData
     public void StageClear()
     {
         weekend++;
+        foreach (var fireman in fireManList)
+        {
+            foreach (var buf in fireman.Value.buff)
+            {
+                if(buf.ing)
+                {
+                    buf.EndBuff();
+                }
+            }
+            
+        }
         fireManList.Clear();
         shopChaList.Clear();
         shopItemList.Clear();

@@ -134,6 +134,7 @@ public class Claimant : FSM<ClaimantState>
 	public void Start()
 	{
 		data = MyDataTableMgr.claimantTable.GetTable(id);
+		eventdata = MyDataTableMgr.eventTable.GetTable(eventid);
 		ap = data.lung;
 		hp = data.hp;
 		animator = GetComponent<Animator>();
