@@ -92,7 +92,9 @@ public class Fire : FSM<FireState>
     {
 		if (fire != null)
 		{
+			gameManager.tilemapManager.ReturnTile(this.gameObject).tileExp = 0;
 			fire.SetActive(false);
+
 		}
     }
 }
