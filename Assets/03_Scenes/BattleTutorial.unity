@@ -1145,6 +1145,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
+--- !u!114 &172817269 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4171228478739956691, guid: 77942f8c7b9647e4eaedc5ac30a9a53b, type: 3}
+  m_PrefabInstance: {fileID: 1058635677}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a5febcdb8d64144b6225ecdaa21214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &202068340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,7 +2563,7 @@ MonoBehaviour:
   dummyTile: {fileID: 316605190130237288, guid: c2d0be8aa35a22a439879933dcfe8a2d, type: 3}
   groundTiles: []
   marker: {fileID: 1405058723}
-  tutorialUiManager: {fileID: 0}
+  tutorialUiManager: {fileID: 172817269}
   button: {fileID: 0}
 --- !u!1001 &1058635677
 PrefabInstance:

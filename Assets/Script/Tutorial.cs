@@ -116,6 +116,7 @@ public class Tutorial : MonoBehaviour
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
 					if (!tuto2finish)
 					{
+						yield return new WaitForSeconds(2f);
 						tutorialUiManager.tuto1.SetActive(true);
 						if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(16.5f, 0f, -16.5f)))
 						{

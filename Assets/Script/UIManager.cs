@@ -45,8 +45,6 @@ public class UIManager : MonoBehaviour
         gameManager.Init();
         startButton.gameObject.SetActive(false);
         icon.gameObject.SetActive(false);
-
-        InfoUiScript.smallInfo.gameObject.SetActive(false);
         audio.ChangeAudioClip(1);
 
         betweenPlaying.ShowStartPanel();

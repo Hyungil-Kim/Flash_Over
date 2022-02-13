@@ -80,10 +80,6 @@ public class CharacterInfoSmall : MonoBehaviour
 				claimantBreathSlider.value = (float)claimant.ap / (float)claimant.data.lung;
 			}
 		}
-		else
-		{
-			gameObject.SetActive(false);
-		}
 	}
 	public void SetOnCharaterInfoSmall()
 	{
