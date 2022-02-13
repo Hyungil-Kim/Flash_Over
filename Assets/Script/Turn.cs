@@ -47,34 +47,32 @@ public static class Turn
 			{
 				GameManager.instance.uIManager.betweenPlaying.ShowStartPlayerTurn();
 			}
-			foreach (var player in players)
-			{
-				
-				if (player.curStateName == PlayerState.Idle)
-				{
-					GameManager.instance.ChangeTargetPlayer(player.gameObject);
-					GameManager.instance.move = player.cd.totalStats.move;
-				}
-               
-                if (player.curStateName == PlayerState.End)
-				{
-					Debug.Log("턴 끝");
-					GameManager.ChangeLayersRecursively(player.transform, "Player");
-				}
-				if (player.curStateName != PlayerState.End)
-				{
+            foreach (var player in players)
+            {
+                
+
+                if (player.curStateName == PlayerState.Idle)
+                {
+                    GameManager.instance.ChangeTargetPlayer(player.gameObject);
+                    GameManager.instance.move = player.cd.totalStats.move;
+                }
+                else if (player.curStateName == PlayerState.End)
+                {
+                    GameManager.ChangeLayersRecursively(player.transform, "Player");
+
+                }
+                if (player.curStateName != PlayerState.End)
+                {
+
 					yield break;
-				}
+                }
+            }
 
-
-
-
-			}
-			///
-			/// setActive UI( 적턴)
-			/// yield return secind
-			///
-			if (fires.Count != 0)
+            ///
+            /// setActive UI( 적턴)
+            /// yield return secind
+            ///
+            if (fires.Count != 0)
 			{
 
 				for (int i = 0; i <= maxArea; i++)

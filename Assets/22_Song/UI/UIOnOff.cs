@@ -212,7 +212,7 @@ public class UIOnOff : MonoBehaviour
     public void StageSelect()
     {
         StopAllCoroutines();
-        Camera.main.transform.position = selectCameraPos.transform.position;
+        Camera.main.transform.position = selectCameraPos.transform.position+new Vector3(8,7, -42);
         Camera.main.transform.rotation = selectCameraPos.transform.rotation;
 
         for (int i = 0; i < uiArray.Length-1; i++)

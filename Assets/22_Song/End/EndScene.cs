@@ -29,6 +29,11 @@ public class EndScene : MonoBehaviour
 
 
     }
+
+    public void resultSound()
+    {
+        
+    }
     public void BackHome()
     {
         SceneManager.LoadScene("MainScene");

@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
 				if (targetPlayer.playerState == PlayerState.Idle || targetPlayer.playerState == PlayerState.End)
 				{
 					targetPlayer = null;
+					
 				}
 			}
 
@@ -278,10 +279,10 @@ public class GameManager : MonoBehaviour
 					break;
 				case PlayerState.Action:
 					targetPlayer = target.GetComponent<Player>();
+
 					//¹öÆ° ¶ç¿ì±â
 					break;
 				case PlayerState.End:
-					//Debug.Log("µé¾î¿È?");
 					//targetPlayer = target.GetComponent<Player>();
 					//ChangeLayersRecursively(targetPlayer.transform, "Player");
 					break;

@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class TilemapManager : MonoBehaviour
 {
 	public Tilemap tilemap;
+	public Player beforePlayer;
 	private GameManager gameManager;
 	private FloodFillAlgorism floodFill = new FloodFillAlgorism();
 	private AstarAlgoritm astarAlgoritm = new AstarAlgoritm();
@@ -401,8 +402,10 @@ public class TilemapManager : MonoBehaviour
 
 					break;
 			}
-			GameManager.ChangeLayersRecursively(targetPlayer.transform, "Player");
+			beforePlayer = targetPlayer;
+			GameManager.ChangeLayersRecursively(beforePlayer.transform, "Player");
 			targetPlayer = FindNextPlayer(targetPlayer);
+
 			gameManager.ChangeTargetPlayer(targetPlayer.gameObject);
 
 		}

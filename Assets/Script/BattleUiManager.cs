@@ -216,9 +216,11 @@ public class BattleUiManager : MonoBehaviour
 				itemButton.gameObject.SetActive(true);
 				waitButton.gameObject.SetActive(true);
 				attackButton.gameObject.SetActive(true);
+				GameManager.ChangeLayersRecursively(gameManager.targetPlayer.transform, "Player");
 				gameManager.targetPlayer.SetState(PlayerState.End);
 				break;
 			case PlayerState.End:
+				
 				break;
 		}
 	}

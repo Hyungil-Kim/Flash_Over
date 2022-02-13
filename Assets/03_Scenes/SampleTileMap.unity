@@ -8235,6 +8235,10 @@ PrefabInstance:
       value: UIManager 1
       objectReference: {fileID: 0}
     - target: {fileID: 4817122632347868796, guid: 2db927bdae29d33459472467fdb2707a, type: 3}
+      propertyPath: audio
+      value: 
+      objectReference: {fileID: 1700598276}
+    - target: {fileID: 4817122632347868796, guid: 2db927bdae29d33459472467fdb2707a, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1616122277}
@@ -8410,6 +8414,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1700598259}
+    - target: {fileID: 5272387500982659016, guid: 2db927bdae29d33459472467fdb2707a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6066684226111716413, guid: 2db927bdae29d33459472467fdb2707a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10314,6 +10322,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1700598277, guid: 5d224d62c12b7f24f819cc16616bd4ed, type: 3}
+      propertyPath: Mute
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7289648790101481579, guid: 5d224d62c12b7f24f819cc16616bd4ed, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -10362,7 +10374,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7289648790101481580, guid: 5d224d62c12b7f24f819cc16616bd4ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5d224d62c12b7f24f819cc16616bd4ed, type: 3}
 --- !u!1 &1414296676
 GameObject:
@@ -10637,6 +10650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 11099259}
+  beforePlayer: {fileID: 0}
 --- !u!114 &1616122277
 MonoBehaviour:
   m_ObjectHideFlags: 0
