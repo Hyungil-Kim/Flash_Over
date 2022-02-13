@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
 		if (!isStart)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("Exit"));
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("Exit") | 1 << LayerMask.NameToLayer("Obstacle"));
 			layerMask = ~layerMask;
 
 			RaycastHit[] hits;
@@ -316,7 +316,7 @@ public class GameManager : MonoBehaviour
 
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade"));
+			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Obstacle"));
 			if (targetPlayer != null)
 			{
 				if (targetPlayer.curStateName == PlayerState.Move)
