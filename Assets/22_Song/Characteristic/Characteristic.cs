@@ -89,10 +89,11 @@ public class SaveClaimant : Buff
     public int prevValue;
     public SaveClaimant(CharacterData characterdata)
     {
-        data = MyDataTableMgr.characteristicTable.GetTable("SaveClaimant");
+        data = MyDataTableMgr.characteristicTable.GetTable(5);
         cd = characterdata;
         Init();
         buffTiming.AddType(BuffTiming.BuffTimingEnum.Move);
+        MyDataTableMgr.eventTable.GetTable(0);
     }
 
     public override bool Check(Player player)
@@ -106,7 +107,7 @@ public class SaveClaimant : Buff
         if(!ing)
         {
             prevValue = cd.totalStats.str.stat;
-            cd.totalStats.str.stat += 50;
+            cd.totalStats.str.stat += Mathf.RoundToInt(increaseValue);
         }
         base.StartBuff();
     }
