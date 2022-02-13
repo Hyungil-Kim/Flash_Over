@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public BetweenPlaying betweenPlaying;
     public GameObject option;
     public CheckUi checkUI;
+    public AudioController audio;
     public bool restart;
     public bool title;
 
@@ -44,7 +45,12 @@ public class UIManager : MonoBehaviour
         gameManager.Init();
         startButton.gameObject.SetActive(false);
         icon.gameObject.SetActive(false);
+
+        InfoUiScript.smallInfo.gameObject.SetActive(false);
+        audio.ChangeAudioClip(1);
+
         betweenPlaying.ShowStartPanel();
+        
     }
     public void OnCharacterIcon()
     {

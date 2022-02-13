@@ -35,6 +35,11 @@ public class EndScene : MonoBehaviour
         Turn.OnDestroy();
         AllTile.OnDestroy();
     }
+
+    public void resultSound()
+    {
+        
+    }
     public void BackHome()
     {
         SceneManager.LoadScene("MainScene");
