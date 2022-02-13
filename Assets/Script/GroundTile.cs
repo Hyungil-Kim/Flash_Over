@@ -478,7 +478,7 @@ public class GroundTile : MonoBehaviour
 		if (!test)
 		{
 			RaycastHit[] hits;
-			int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") | 1 << LayerMask.NameToLayer("Obstacle");
+			int layerMask = 1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("UI") /*| 1 << LayerMask.NameToLayer("Obstacle")*/;
 			layerMask = ~layerMask;
 			hits = Physics.RaycastAll(transform.position, transform.up, 10, layerMask);
 			foreach (var elem in hits)
