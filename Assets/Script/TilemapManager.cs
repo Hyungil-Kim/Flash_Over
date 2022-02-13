@@ -78,7 +78,7 @@ public class TilemapManager : MonoBehaviour
 					if (listElem.tag == "Claimant")
 					{
 						saveClaimant = listElem.GetComponent<Claimant>();
-						if (!saveClaimant.eventOn && !saveClaimant.stun)
+						if (!saveClaimant.eventOn && !saveClaimant.stun && !gameManager.tutorial)
 						{
 							yield return StartCoroutine(meetClaimant());
 						}

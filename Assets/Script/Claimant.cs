@@ -125,6 +125,7 @@ public class Claimant : FSM<ClaimantState>
     }
     public void Awake()
 	{
+		eventdata = MyDataTableMgr.eventTable.GetTable(eventid);
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 		Turn.claimants.Add(this);
 		index = Turn.claimants.Count;
