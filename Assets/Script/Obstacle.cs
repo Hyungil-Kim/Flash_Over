@@ -51,7 +51,7 @@ public class Obstacle : MonoBehaviour
     public void Init()
     {
         data = MyDataTableMgr.objTable.GetTable(objectID);
-        obName = data.id;
+        //obName = data.id;
         exploseDamage = data.dmg;
         exploseRange = data.range;
         endState = data.endtype;
