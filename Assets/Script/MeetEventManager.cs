@@ -8,29 +8,40 @@ public class MeetEventManager : MonoBehaviour
     public UIManager uIManager;
     public Image charImage;
     public TextMeshProUGUI mainText;
+    public TextMeshProUGUI button1Text;
+    public TextMeshProUGUI button2Text;
     public Button leftButton;
     public Button rightButton;
-    private int value1 = 1;
-    private int value2 = 2;
     public int returnValue;
+    private int value = 0;
     public GameManager gameManager;
+    private EventData eventData;
 	public void Start()
 	{
       gameManager = GameManager.instance;
-	}
+    }
+	public void OnEnable()
+	{
+        eventData = MyDataTableMgr.eventTable.GetTable(value);
+        mainText.text = eventData.text;
+        button1Text.text = eventData.answer1;
+        button2Text.text = eventData.answer2;
+    }
 	public void OnClickButton1()
 	{
         gameManager.tilemapManager.SaveClaimant.SetState(ClaimantState.Idle);
-        gameManager.tilemapManager.SaveClaimant.num = value1;
+        gameManager.tilemapManager.SaveClaimant.num = eventData.answer1state;
         gameManager.tilemapManager.SaveClaimant.eventOn = true;
         gameManager.tilemapManager.SaveClaimant.targetPlayer = GameManager.instance.targetPlayer;
+        value++;
     }
     public void OnClickButton2()
     {
         gameManager.tilemapManager.SaveClaimant.SetState(ClaimantState.Idle);
-        gameManager.tilemapManager.SaveClaimant.num = value2;
+        gameManager.tilemapManager.SaveClaimant.num = eventData.answer2state;
         gameManager.tilemapManager.SaveClaimant.eventOn = true;
         gameManager.tilemapManager.SaveClaimant.targetPlayer = GameManager.instance.targetPlayer;
+        value++;
     }
  
 }
