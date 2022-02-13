@@ -47,7 +47,7 @@ public class CharacterInfoSmall : MonoBehaviour
 	}
 	private void OnDisable()
 	{
-		if (!gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.activeSelf)
+		if (!gameManager.uIManager.InfoUiScript.smallInfo.gameObject.activeSelf)
 		{
 			gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(true);
 		}

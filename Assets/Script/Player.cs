@@ -93,7 +93,7 @@ public class Player : FSM<PlayerState>
 		SetState(playerState);
         moveHelper.transform.localPosition = Vector3.zero;
         ap = cd.totalStats.lung.stat;
-		//oxygentank = cd.oxygenCount;
+		oxygentank = cd.oxygenCount;
 		animator = GetComponent<Animator>();
 		cd.setupModel.ApplyToCharacter(custom);
 		cd.setupModel.ApplyToCharacter(moveHelperCustom);
@@ -156,12 +156,14 @@ public class Player : FSM<PlayerState>
 	public IEnumerator AttackParticleStop()
 	{
 		yield return StartCoroutine(fireHose.CheckFireHoseStop(this));
+		yield return new WaitForSeconds(0.5f);
 		SetState(PlayerState.End);
 	}
 	public IEnumerator DeathAnimation()
 	{
 		dead = true;
 		animator.SetBool("death", true);
+		yield return new WaitForSeconds(0.5f);
 		yield return 0;
 	}
 	public IEnumerator ThrowAnimation()
@@ -179,9 +181,14 @@ public class Player : FSM<PlayerState>
 	}
 	public void OpenDoorEnd()
 	{
-		gameManager.targetPlayer.SetState(PlayerState.End);
 		animator.SetBool("openDoor", false);
+		StartCoroutine(WaitTimeEnd(1f));
 		AllTileMesh.instance.UpdateFog();
+	}
+	public IEnumerator WaitTimeEnd(float num)
+	{
+		yield return new WaitForSecondsRealtime(num);
+		gameManager.targetPlayer.SetState(PlayerState.End);
 	}
 	public void Death()
 	{

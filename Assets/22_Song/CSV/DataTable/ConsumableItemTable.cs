@@ -12,6 +12,13 @@ public enum UseItemType
     Heal,
     Damage
 }
+public enum HealItemType
+{
+    DEFAULT,
+    HP,
+    MP
+}
+
 [System.Serializable]
 public class ConsumableItemTableData : ItemTableDataBase
 {
@@ -25,7 +32,7 @@ public class ConsumableItemTableData : ItemTableDataBase
     public ItemRangeType rangeType;
     public int throwRange;
     public UseItemType useItemType;
-
+    public HealItemType healItemType;
 }
 [System.Serializable]
 public class ConsumableItemTable : MyDataTableBase<ConsumableItemTableData>
@@ -56,6 +63,7 @@ public class ConsumableItemTable : MyDataTableBase<ConsumableItemTableData>
             tableData.throwRange = int.Parse(table["THROWRANGE"]);
             tableData.useItemType = StringToEnum.SToE<UseItemType>(table["TYPE"]);
             tableData.rangeType = StringToEnum.SToE<ItemRangeType>(table["RANGETYPE"]);
+            tableData.healItemType = StringToEnum.SToE<HealItemType>(table["HEALTYPE"]);
             
             //tableData.count = 1;
 

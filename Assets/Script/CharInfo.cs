@@ -34,7 +34,20 @@ public class CharInfo : MonoBehaviour
 	{
 		gameManager = GameManager.instance;
 	}
-
+	private void OnEnable()
+	{
+		if (gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.activeSelf)
+		{
+			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(false);
+		}
+	}
+	private void OnDisable()
+	{
+		if (!gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.activeSelf)
+		{
+			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(true);
+		}
+	}
 	public void UpdateData(Player targetPlayer)
 	{
 		if (targetPlayer != null)

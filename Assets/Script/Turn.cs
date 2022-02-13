@@ -201,7 +201,11 @@ public static class Turn
 		{
 			foreach (var player in players)
 			{
-				//if(player.)
+				if(player.oxygentank > 0)
+				{
+					player.oxygentank -= 1;
+					player.cd.oxygen = player.cd.maxoxygen;
+				}
 				player.ChangeState(PlayerState.Idle);
 			}
 		}

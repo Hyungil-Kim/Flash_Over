@@ -2858,7 +2858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4549fe22a66a4b46934ceadea79b736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSettingsExpanded: 1
+  isSettingsExpanded: 0
   selectedsettings: {fileID: 11400000, guid: 1c66d9c5fe58cb84b95393756a971cf6, type: 2}
   _settings: {fileID: 11400000, guid: 1c66d9c5fe58cb84b95393756a971cf6, type: 2}
   characterParts:
@@ -3218,6 +3218,7 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   targetPlayerIndex: 0
   id: 0
+  eventid: 0
   stun: 0
   confuse: 0
   eventOn: 0
@@ -3229,7 +3230,9 @@ MonoBehaviour:
   moveEnd: 0
   claimantCurInjure: 0
   ap: 8
+  dead: 0
   lung: 100
+  animator: {fileID: 0}
   index: 0
 --- !u!1 &5072569480215269339
 GameObject:
