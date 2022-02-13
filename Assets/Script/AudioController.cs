@@ -7,7 +7,7 @@ public class AudioController : MonoBehaviour
     public AudioClip[] clips;
     private bool soundPlay;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         audio = gameObject.GetComponent<AudioSource>();
         soundPlay = true;

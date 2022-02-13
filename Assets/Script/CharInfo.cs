@@ -23,7 +23,7 @@ public class CharInfo : MonoBehaviour
 	public TextMeshProUGUI[] talentNum;
 
 
-	public void Start()
+	public void Awake()
 	{
 		gameManager = GameManager.instance;
 	}
