@@ -20,15 +20,8 @@ public class CharInfo : MonoBehaviour
 	public TextMeshProUGUI roundDamage;
 	public TextMeshProUGUI armorNum;
 	public TextMeshProUGUI airgaugeNum;
-	public TextMeshProUGUI talentNum1;
-	public TextMeshProUGUI talentNum2;
-	public TextMeshProUGUI talentNum3;
-	public TextMeshProUGUI talentNum4;
-	public TextMeshProUGUI talentNum5;
-	public TextMeshProUGUI talentNum6;
-	public TextMeshProUGUI talentNum7;
-	public TextMeshProUGUI talentNum8;
-	public TextMeshProUGUI talentNum9;
+	public TextMeshProUGUI[] talentNum;
+
 
 	public void Start()
 	{
@@ -63,6 +56,17 @@ public class CharInfo : MonoBehaviour
 			armorNum.text = targetPlayer.cd.totalStats.def.ToString();
 			airgaugeNum.text = targetPlayer.oxygentank.ToString();
 			//특성수만큼
+			for(int i =0; i < 9;i++)
+			{
+				if (i < targetPlayer.cd.characteristics.Count)
+				{
+					talentNum[i].text = targetPlayer.cd.characteristics[i].name;
+				}
+				else
+				{
+					talentNum[i].text = "";				
+				}
+			}
 		}
 	}
 	public void ClickChangeTileInfoButton()

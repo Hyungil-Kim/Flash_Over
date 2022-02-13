@@ -25,7 +25,8 @@ public static class Turn
 	public delegate void turnOff();
 	public static turnOff TurnOff;
 	public static CameraController cameraController;
-
+	public static bool win;
+	public static bool lose;
 
 	public static void OnDestroy()
 	{

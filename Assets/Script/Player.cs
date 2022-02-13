@@ -202,7 +202,7 @@ public class Player : FSM<PlayerState>
 		}
 		else
 		{
-			//½ÇÆÐÃ¢
+			gameManager.uIManager.battleUiManager.uIManager.betweenPlaying.FalsePanel();
 		}
 	}
 }

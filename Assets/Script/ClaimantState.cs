@@ -51,7 +51,7 @@ public class ClaimantResuceState : State
 	}
 	public override void Enter()
 	{
-	
+		fsm.animator.SetBool("carried", true);
 	}
 	public override void Update()
 	{
@@ -59,7 +59,7 @@ public class ClaimantResuceState : State
 	}
 	public override void Exit()
 	{
-
+		fsm.animator.SetBool("carried", false);
 	}
 }
 public class ClaimantEndState : State

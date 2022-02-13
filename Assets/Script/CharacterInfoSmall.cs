@@ -60,7 +60,7 @@ public class CharacterInfoSmall : MonoBehaviour
 	public void Init()
 	{
 		var player = gameManager.targetPlayer;
-		if (player != null)
+		if (gameManager.targetPlayer != null)
 		{
 			airGauge.text = player.oxygentank.ToString();
 			hpGauge.text = $"{player.cd.hp}/{player.cd.maxhp}";
