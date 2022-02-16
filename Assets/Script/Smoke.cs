@@ -26,12 +26,11 @@ public class Smoke : FSM<SmokeState>
     public void Awake()
     {
         //GetComponentInChildren<ParticleSystem>().Stop();
-        
+        gameManager = GameManager.instance;
     }
     void Start()
     {
         data = MyDataTableMgr.smokeTable.GetTable(level);
-        NullGameManager();
             smokeArea = gameManager.tilemapManager.ReturnTile(this.gameObject).tileArea;
             AddState(SmokeState.Idle, new SmokeIdleState(this));
             AddState(SmokeState.Move, new SmokeMoveState(this)); ///? 
@@ -46,26 +45,16 @@ public class Smoke : FSM<SmokeState>
     }
     public void SaveSmoke()
     {
-        NullGameManager();
-        gameManager.tilemapManager.SaveSmokeValue(this);
+        GameManager.instance.tilemapManager.SaveSmokeValue(this);
     }
     public void SpreadSmoke()
 	{
-        NullGameManager();
-        gameManager.tilemapManager.SpreadSmoke(this);
+        GameManager.instance.tilemapManager.SpreadSmoke(this);
     }
     public void ResetSmokeValue()
     {
-        NullGameManager();
-        gameManager.tilemapManager.ResetSmokeValue(this);
+        GameManager.instance.tilemapManager.ResetSmokeValue(this);
     } 
-    public void NullGameManager()
-	{
-        if (gameManager == null)
-        {
-            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        }
-    }
     void Update()
     {
         if(data.min > gt.tileSmokeValue)

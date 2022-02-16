@@ -118,7 +118,6 @@ public class ClaimantMove
 		var gameManager = GameManager.instance;
 		var startTile = gameManager.tilemapManager.ReturnTile(claimant.gameObject);
 		var dummyList = new List<List<GroundTile>>();
-		GroundTile goalTile;
 		foreach (var exit in gameManager.exitTiles)
 		{
 			dummyList.Add(gameManager.tilemapManager.SetAstar(startTile, exit));
@@ -202,7 +201,7 @@ public class ClaimantMove
 						{
 							num = 0;
 							go = false;
-							claimant.num = 0;
+							claimant.claimantState = 0;
 							EndMove(claimant, path);
 							yield break;
 						}

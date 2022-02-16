@@ -67,6 +67,19 @@ public class Fire : FSM<FireState>
 	{
 		gameManager.tilemapManager.EndMonsterAttack();
 	}
+	public void Update()
+	{
+		if (fireHp >= data.maxhp)
+		{
+			fireLevel++;
+		}
+		else if (fireHp < data.minhp)
+		{
+			fireLevel--;
+		}
+		fireLevel = Mathf.Clamp(fireLevel, 0, 3);
+		data = MyDataTableMgr.fireTable.GetTable(fireLevel);
+	}
 	public void CheckFireHp()
 	{
 

@@ -38,7 +38,7 @@ public class Claimant : FSM<ClaimantState>
 	public int airGauge;//산소통 이름변경 필요
 	//public int data.move;
 	//public int data.weight;
-	public int num = 0;
+	public int claimantState = 0;
 	public bool moveEnd;
 	private ClaimantMove claimantMove = new ClaimantMove();
 	public ClaimantInjure claimantCurInjure = ClaimantInjure.Idle;
@@ -73,7 +73,7 @@ public class Claimant : FSM<ClaimantState>
 		csd.airGauge = airGauge;
 		csd.speed = data.move;
 		csd.weight = data.weight;
-		csd.num = num;
+		csd.claimantState = claimantState;
 		csd.moveEnd = moveEnd;
 
 		csd.ap = ap;
@@ -104,7 +104,7 @@ public class Claimant : FSM<ClaimantState>
 		airGauge = sd.airGauge;
 		data.move = sd.speed;
 		data.weight = sd.weight;
-		num = sd.num;
+		claimantState = sd.claimantState;
 		moveEnd = sd.moveEnd;
 		
 		ap = sd.ap;
@@ -146,7 +146,7 @@ public class Claimant : FSM<ClaimantState>
 	}
 	public void ClaimantAct()
 	{
-		switch (num)
+		switch (claimantState)
 		{
 			case 0:
 				claimantMove.JustStay(this);

@@ -30,7 +30,7 @@ public class MeetEventManager : MonoBehaviour
 	public void OnClickButton1()
 	{
         gameManager.tilemapManager.SaveClaimant.SetState(ClaimantState.Idle);
-        gameManager.tilemapManager.SaveClaimant.num = eventData.answer1state;
+        gameManager.tilemapManager.SaveClaimant.claimantState = eventData.answer1state;
         gameManager.tilemapManager.SaveClaimant.eventOn = true;
         gameManager.tilemapManager.SaveClaimant.targetPlayer = GameManager.instance.targetPlayer;
         value++;
@@ -38,7 +38,7 @@ public class MeetEventManager : MonoBehaviour
     public void OnClickButton2()
     {
         gameManager.tilemapManager.SaveClaimant.SetState(ClaimantState.Idle);
-        gameManager.tilemapManager.SaveClaimant.num = eventData.answer2state;
+        gameManager.tilemapManager.SaveClaimant.claimantState = eventData.answer2state;
         gameManager.tilemapManager.SaveClaimant.eventOn = true;
         gameManager.tilemapManager.SaveClaimant.targetPlayer = GameManager.instance.targetPlayer;
         value++;

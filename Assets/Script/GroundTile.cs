@@ -547,7 +547,7 @@ public class GroundTile : MonoBehaviour
 			}
 			objectsMesh = 0;
 		}
-		var fire = tile.GetComponentInChildren<Fire>(true);
+		var fire = tile.firePrefab.GetComponent<Fire>();
 		var weat = 0f;
 		if(tile.tileIsWeat)
 		{
@@ -584,7 +584,8 @@ public class GroundTile : MonoBehaviour
 
 		if (tile.tileIsFire)
 		{
-			tile.tileSmokeValue = fire.data.makeSmoke +tile.tileSaveSmokeValue;
+
+ 			tile.tileSmokeValue = fire.data.makeSmoke + tile.tileSaveSmokeValue;
 		}
 		else
 		{

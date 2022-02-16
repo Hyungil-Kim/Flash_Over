@@ -11,15 +11,6 @@ public class FireIdleState : State
 	}
 	public override void Enter()
 	{
-		if (fsm.fireHp >= fsm.data.maxhp)
-		{
-			fsm.fireLevel++;
-		}
-		else if (fsm.fireHp < fsm.data.minhp)
-		{
-			fsm.fireLevel--;
-		}
-		fsm.data = MyDataTableMgr.fireTable.GetTable(fsm.fireLevel);
 	}
 	public override void Update()
 	{

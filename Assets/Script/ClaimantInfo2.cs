@@ -38,7 +38,7 @@ public class ClaimantInfo2 : MonoBehaviour
 			}
 			else
 			{
-				switch (claimant.num)
+				switch (claimant.claimantState)
 				{
 					case 0:
 						claimantState.text = "∏ÿ√„";

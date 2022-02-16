@@ -176,7 +176,7 @@ public class TilemapManager : MonoBehaviour
 				else if (defender.tag == "Claimant")
 				{
 					defender.GetComponent<Claimant>().hp -= iDamage;
-					defender.GetComponent<Claimant>().num = Random.Range(1, 4);
+					defender.GetComponent<Claimant>().claimantState = Random.Range(1, 4);
 					defender.GetComponent<Claimant>().CheckClaimantHp();
 				}
 				else if (defender.tag == "Obstacle")
@@ -447,10 +447,7 @@ public class TilemapManager : MonoBehaviour
 	}
 	public void Escape(Claimant claimant)
 	{
-		switch (claimant.claimantCurInjure)
-		{
 
-		}
 		if (ReturnTile(claimant.gameObject).isExit)
 		{
 			//ani

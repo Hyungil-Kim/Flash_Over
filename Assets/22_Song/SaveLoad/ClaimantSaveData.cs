@@ -20,7 +20,7 @@ public class ClaimantSaveData
 	public int airGauge;//산소통 이름변경 필요
 	public int speed;
 	public int weight;
-	public int num;
+	public int claimantState;
 	public bool moveEnd;
 
 	public int oxygentank ;//산소탱크
