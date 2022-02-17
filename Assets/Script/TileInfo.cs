@@ -17,7 +17,6 @@ public class TileInfo : MonoBehaviour
 	public TextMeshProUGUI tileHp;
 	public Slider tileHpSlider;
 	public TextMeshProUGUI tileSmokeLevel;
-	public TextMeshProUGUI tileSmokeValue;
 	public TextMeshProUGUI tileInterruptVision;
 	public List<Obstacle> obstacles;
 	public GameObject[] objectsPanel;
@@ -120,7 +119,6 @@ public class TileInfo : MonoBehaviour
 			{
 				smokePanel.SetActive(true);
 				tileSmokeLevel.text = gameManager.targetTile.smokePrefab.GetComponent<Smoke>().level.ToString();
-				tileSmokeValue.text = gameManager.targetTile.tileSmokeValue.ToString();
 				tileInterruptVision.text = "0";
 			}
 			else

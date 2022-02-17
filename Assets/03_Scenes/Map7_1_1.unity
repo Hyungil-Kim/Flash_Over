@@ -4384,6 +4384,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 2662175463750084794, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662175463750084794, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662175463750084794, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662175463750084794, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662175463750084794, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662175463750084794, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4438634023190237778, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4413,6 +4437,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4464273684776110251, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499455782225189405, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499455782225189405, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499455782225189405, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499455782225189405, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499455782225189405, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499455782225189405, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -4616,6 +4664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 11099259}
+  beforePlayer: {fileID: 0}
 --- !u!114 &1616122277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4653,6 +4702,7 @@ MonoBehaviour:
   multiTouch: {fileID: 1616122274}
   mouseMove: {x: 0, y: 0, z: 0}
   drag: 0
+  prevPos: {x: 0, y: 0, z: 0}
   isStart: 0
   pickup: 0
   putdown: 0
@@ -5189,6 +5239,7 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   targetPlayerIndex: 0
   id: 0
+  eventid: 0
   stun: 0
   confuse: 0
   eventOn: 0
@@ -6242,7 +6293,7 @@ Tilemap:
     m_Data: {r: 0.82355, g: 0.36027545, b: 0.47979137, a: 1}
   m_TileObjectToInstantiateArray:
   - m_RefCount: 9
-    m_Data: {fileID: 5268566591310351988, guid: 295c25e2c6d543e4c9c71d0b57a1a1c8, type: 3}
+    m_Data: {fileID: 5268566591310351988, guid: 365eee152da5f8345a4cfd1b0eeb573d, type: 3}
   - m_RefCount: 43
     m_Data: {fileID: 7970702044888298642, guid: f9ab152777383cb4db244c073dfedb75, type: 3}
   - m_RefCount: 9
