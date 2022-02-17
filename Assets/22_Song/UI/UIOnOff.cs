@@ -13,6 +13,8 @@ using AdvancedPeopleSystem;
 public class UIOnOff : MonoBehaviour
 {
     public TutorialPlay[] tutorialPlays;
+    public TutorialPlay worldmapTuto;
+
     //터치아무데나해도 ui창 사라지는거 하고 싶어서
     public MoveControlor mousePoint;
 
@@ -130,6 +132,13 @@ public class UIOnOff : MonoBehaviour
     public void GetMousePos(Vector2 pos)
     {
         mousepos = pos;
+    }
+    public void WorldMapTutorial()
+    {
+        if(!GameData.userData.WorldmapTuto)
+        {
+            worldmapTuto.gameObject.SetActive(true);
+        }
     }
     public void Open(string uiName)
     {

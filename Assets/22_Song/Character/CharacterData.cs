@@ -1094,7 +1094,7 @@ public class CharacterData
                 AddCharacterisic(CharacteristicList.Ptsd);
             }
         }
-        
+        #region 이건 태명이
         //if(check.friendShip)
         //{
         //    if (0.03f + benefit >= Random.value)
@@ -1158,6 +1158,7 @@ public class CharacterData
         //        AddCharacterisic(CharacteristicList.Heroism);
         //    }
         //}
+        #endregion
     }
 
     public void StartStage()

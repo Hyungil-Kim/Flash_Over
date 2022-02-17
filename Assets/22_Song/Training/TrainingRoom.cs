@@ -79,14 +79,17 @@ public class TrainingRoom : MonoBehaviour
         {
             case TrainingType.Str:
                 trainingExp = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.str).TS1Str;
+                trainingCost = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.str).TS1Price;
                 sliders[index].Init(TrainingStatType.Str, trainingExp);
                 break;
             case TrainingType.Lung:
                 trainingExp = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.lung).TS3Lung;
+                trainingCost = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.lung).TS3Price;
                 sliders[index].Init(TrainingStatType.Lung, trainingExp);
                 break;
             case TrainingType.Hp:
                 trainingExp = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.hp).TS2Hp;
+                trainingCost = MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.hp).TS2Price;
                 sliders[index].Init(TrainingStatType.Hp, trainingExp);
                 break;
             case TrainingType.Balence:

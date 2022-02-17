@@ -26,7 +26,7 @@ public class Smoke : FSM<SmokeState>
     public void Awake()
     {
         //GetComponentInChildren<ParticleSystem>().Stop();
-        
+        gameManager = GameManager.instance;
     }
     void Start()
     {

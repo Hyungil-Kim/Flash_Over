@@ -26,7 +26,7 @@ public class TrainingSlider : MonoBehaviour
         float statExp = 0;
         var oldIncrease = increase.rectTransform.sizeDelta.x;
         var oldIncreaseNomalize = increase.rectTransform.sizeDelta.x / sliderWidth;
-        var critical = 0.5f;
+        var critical = 0.01f;
         var random = Random.value;
         if (character == null)
         {
@@ -58,13 +58,13 @@ public class TrainingSlider : MonoBehaviour
             default:
                 break;
         }
-        exp = critical < random ? Mathf.RoundToInt(exp + increaseExp * 1.5f) : exp + increaseExp;
+        exp = critical > random ? Mathf.RoundToInt(exp + increaseExp * 1.5f) : exp + increaseExp;
         //exp += increaseExp;
         normalExp += increaseExp;
 
         var increaseNomalize = normalExp / statMaxExp;
         increaseNomalize = Mathf.Clamp(increaseNomalize, 0, 1 - (slider.value/* + oldIncreaseNomalize*/));
-        increase.rectTransform.sizeDelta = new Vector2(/*oldIncrease +*/ -sliderWidth * increaseNomalize, increase.rectTransform.sizeDelta.y);
+        increase.rectTransform.sizeDelta = new Vector2(/*oldIncrease +*/ sliderWidth * increaseNomalize, increase.rectTransform.sizeDelta.y);
         if(normalExp + statExp >= statMaxExp)
         {
             levelUp.SetActive(true);
