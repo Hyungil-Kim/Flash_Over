@@ -7134,8 +7134,10 @@ MonoBehaviour:
   restOver: {fileID: 1016728069202852632}
   restUpgrade: {fileID: 7805089767856007162}
   upgradePopup: {fileID: 0}
+  daewonList: {fileID: 0}
   characterInfoList: {fileID: 0}
   characterInfoStat: {fileID: 0}
+  restType: 0
 --- !u!1 &1016728068494320567
 GameObject:
   m_ObjectHideFlags: 0
@@ -7612,7 +7614,6 @@ MonoBehaviour:
   chaStatPanal: {fileID: 7854323254132167199}
   chaListPanal: {fileID: 7854323254774844344}
   info: {fileID: 0}
-  currentCharacterIndex: 0
   currentItemType: 0
   currentIndex: 0
 --- !u!1 &1016728068524859774
@@ -7795,6 +7796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581dba9ca02e3d740b48ecfddcc83fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialPlays: []
   uiArray:
   - {fileID: 1016728070105483187}
   - {fileID: 1029500534631130924}
@@ -7817,9 +7819,16 @@ MonoBehaviour:
   mousepos: {x: 0, y: 0}
   character: {fileID: 0}
   uiCharacterList: []
+  MainCharacterUi: {fileID: 0}
+  fireTruckCharacterList: []
   mainCameraPos: {fileID: 0}
   selectCameraPos: {fileID: 0}
   offscreanIndicatorPanel: {fileID: 0}
+  timeSpend: {fileID: 0}
+  timetext: {fileID: 0}
+  delayTime: 3
+  shop: {fileID: 0}
+  ontouch: 0
 --- !u!114 &1016728068530081859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20748,7 +20757,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 1
   icon: {fileID: 1016728068290491809}
-  stat: {fileID: 1016728068459203077}
+  itemName: {fileID: 0}
+  desc: {fileID: 0}
+  price: {fileID: 0}
 --- !u!1 &1016728069398096994
 GameObject:
   m_ObjectHideFlags: 0
@@ -21654,7 +21665,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 2
   icon: {fileID: 1016728069092965110}
-  stat: {fileID: 1016728068590309121}
+  itemName: {fileID: 0}
+  desc: {fileID: 0}
+  price: {fileID: 0}
 --- !u!1 &1016728069469853429
 GameObject:
   m_ObjectHideFlags: 0
@@ -22268,17 +22281,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6e26b78cf8bf6489219b71623568b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notReady: {fileID: 0}
   curFiremanIndex: 0
   prefab: {fileID: 3102377153218138296, guid: 93d8dc9aa345c674e841c83d9e7dc8cf, type: 3}
   content: {fileID: 1016728068318606234}
   maxFireMan: 9
   fireTruckList: {fileID: 0}
-  inventory: {fileID: 0}
   firemanCharacter: {fileID: 0}
   consumShop: {fileID: 0}
+  fireManList: []
   curCharacterIndex: 0
   curIndex: 0
   icon: {fileID: 0}
+  daewonList: {fileID: 0}
   characterInfoList: {fileID: 0}
   characterInfoStat: {fileID: 0}
 --- !u!114 &7805089766575873671
@@ -33863,7 +33878,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 0
   icon: {fileID: 4340586246236225659}
-  stat: {fileID: 84974095989488613}
+  itemName: {fileID: 0}
+  desc: {fileID: 0}
+  price: {fileID: 0}
 --- !u!1 &7588496144804767471
 GameObject:
   m_ObjectHideFlags: 0
@@ -41983,7 +42000,11 @@ MonoBehaviour:
   alreadyEquip: {fileID: 1016728068896753086}
   optionDropdown: {fileID: 6424058215427783287}
   type: 0
+  infoType: 0
   isReverse: 0
+  hose: {fileID: 0}
+  bunkerGear: {fileID: 0}
+  oxygenTank: {fileID: 0}
 --- !u!1 &7854323253721782174
 GameObject:
   m_ObjectHideFlags: 0
@@ -42773,6 +42794,11 @@ MonoBehaviour:
   hpstat: {fileID: 7854323254418790120}
   lungstat: {fileID: 1016728068042898733}
   strstat: {fileID: 1016728068978484089}
+  movestat: {fileID: 0}
+  visionstat: {fileID: 0}
+  tiredscore: {fileID: 0}
+  saveClaimantCount: {fileID: 0}
+  clearStageCount: {fileID: 0}
   weightslider: {fileID: 1119884563784116731}
   weight: {fileID: 1016728068267582633}
   hosestat: {fileID: 7854323253215469548}
@@ -48637,6 +48663,7 @@ MonoBehaviour:
       id: 
       iconID: 
       itemName: 
+      type: 0
       grade: 
       weight: 0
       price: 0
@@ -48651,6 +48678,7 @@ MonoBehaviour:
       durability: 0
       regular: 0
     isSold: 0
+    type: 0
 --- !u!1 &8470694954708478110
 GameObject:
   m_ObjectHideFlags: 0

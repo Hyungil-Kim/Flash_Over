@@ -2988,7 +2988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2383889582165090828, guid: a08c4b6d001e9ae4eb7ed89cf1200f74, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2383889582165090828, guid: a08c4b6d001e9ae4eb7ed89cf1200f74, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3107,7 +3107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6567592515887612524, guid: ae90ecc6015806a46b6d74025a73a18f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6567592515887612524, guid: ae90ecc6015806a46b6d74025a73a18f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4677,6 +4677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 11099259}
+  beforePlayer: {fileID: 0}
 --- !u!114 &1616122277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4705,13 +4706,16 @@ MonoBehaviour:
   press: 0
   groundTile: {fileID: 0}
   cameraController: {fileID: 1700598259}
+  audioController: {fileID: 0}
   readyPlayerAction: 0
   num: -1
   move: 0
+  point: 0
   tutorial: 0
   multiTouch: {fileID: 1616122274}
   mouseMove: {x: 0, y: 0, z: 0}
   drag: 0
+  prevPos: {x: 0, y: 0, z: 0}
   isStart: 0
   pickup: 0
   putdown: 0
@@ -5170,6 +5174,7 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   targetPlayerIndex: 0
   id: 0
+  eventid: 0
   stun: 0
   confuse: 0
   eventOn: 0
@@ -6549,7 +6554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4791607220279091952, guid: 41d515d273968d84bbb7fde5b9eb2e1d, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4791607220279091952, guid: 41d515d273968d84bbb7fde5b9eb2e1d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6606,7 +6611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8160103459373632277, guid: d83dae319b796214e93203889b8ae378, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8160103459373632277, guid: d83dae319b796214e93203889b8ae378, type: 3}
       propertyPath: m_LocalPosition.x

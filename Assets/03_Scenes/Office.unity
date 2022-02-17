@@ -7527,6 +7527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 11099259}
+  beforePlayer: {fileID: 0}
 --- !u!114 &1616122277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7555,13 +7556,16 @@ MonoBehaviour:
   press: 0
   groundTile: {fileID: 0}
   cameraController: {fileID: 1700598259}
+  audioController: {fileID: 0}
   readyPlayerAction: 0
   num: -1
   move: 0
+  point: 0
   tutorial: 0
   multiTouch: {fileID: 1616122274}
   mouseMove: {x: 0, y: 0, z: 0}
   drag: 0
+  prevPos: {x: 0, y: 0, z: 0}
   isStart: 0
   pickup: 0
   putdown: 0
@@ -8046,6 +8050,7 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   targetPlayerIndex: 0
   id: 0
+  eventid: 0
   stun: 0
   confuse: 0
   eventOn: 0

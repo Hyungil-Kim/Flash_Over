@@ -9821,17 +9821,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92892b31cbef5cf47b52d56639161eed, type: 3}
---- !u!114 &97815479 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 860913190253158331, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
-  m_PrefabInstance: {fileID: 860913190172120076}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &188011956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10242,33 +10231,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac1054da03950474893667835f29e386, type: 3}
---- !u!114 &495303039 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 860913190113766771, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
-  m_PrefabInstance: {fileID: 860913190172120076}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &540640047 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7289648790101481579, guid: 5d224d62c12b7f24f819cc16616bd4ed, type: 3}
   m_PrefabInstance: {fileID: 1349708041}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &621983567 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 860913189720351555, guid: 385ea92fa24ba4d438e1aa4e9a9de878, type: 3}
-  m_PrefabInstance: {fileID: 860913190172120076}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &648561122
 GameObject:
   m_ObjectHideFlags: 0
@@ -11004,6 +10971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 11099259}
+  beforePlayer: {fileID: 0}
 --- !u!114 &1616122277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11032,6 +11000,7 @@ MonoBehaviour:
   press: 0
   groundTile: {fileID: 0}
   cameraController: {fileID: 1700598259}
+  audioController: {fileID: 0}
   readyPlayerAction: 0
   num: -1
   move: 0
@@ -11040,15 +11009,16 @@ MonoBehaviour:
   multiTouch: {fileID: 1616122274}
   mouseMove: {x: 0, y: 0, z: 0}
   drag: 0
+  prevPos: {x: 0, y: 0, z: 0}
   isStart: 0
   pickup: 0
   putdown: 0
   showMeleeRange: 0
   showthrowwRange: 0
   turnCount: 0
-  tMPro: {fileID: 97815479}
-  pressPro: {fileID: 621983567}
-  ready: {fileID: 495303039}
+  tMPro: {fileID: 0}
+  pressPro: {fileID: 0}
+  ready: {fileID: 0}
   isUsingMap: 0
   escape: 0
   exitTiles: []
@@ -11590,6 +11560,7 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   targetPlayerIndex: 0
   id: 0
+  eventid: 0
   stun: 0
   confuse: 0
   eventOn: 0
