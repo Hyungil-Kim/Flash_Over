@@ -547,7 +547,7 @@ public class GroundTile : MonoBehaviour
 			}
 			objectsMesh = 0;
 		}
-		var fire = tile.GetComponentInChildren<Fire>(true);
+		var fire = tile.firePrefab.GetComponent<Fire>();
 		var weat = 0f;
 		if(tile.tileIsWeat)
 		{
@@ -566,11 +566,17 @@ public class GroundTile : MonoBehaviour
 			
 			tile.tileHp = tile.tileHp < 0 ? 0 : tileHp;
 			
-			if(tile.tileHp < 0 && tile.tileGrowthExp >=0)
+			if(tile.tileHp <= 0 && tile.tileGrowthExp >=0)
 			{
 				tile.tileGrowthExp *= -1;
 			}
 
+			tile.tileSmokeValue = fire.data.makeSmoke + tile.tileSaveSmokeValue;
+
+		}
+		else
+		{
+			tile.tileSmokeValue = tile.tileSaveSmokeValue;
 		}
 		tile.tileExp += damage * (int)(tile.tileMesh - weat + objectsMesh);
 		if(tile.tileExp >= 100)
@@ -580,15 +586,6 @@ public class GroundTile : MonoBehaviour
 		else if (tile.tileExp <= 0)
 		{
 			tile.tileExp = 0;
-		}
-
-		if (tile.tileIsFire)
-		{
-			tile.tileSmokeValue = fire.data.makeSmoke +tile.tileSaveSmokeValue;
-		}
-		else
-		{
-			tile.tileSmokeValue = tile.tileSaveSmokeValue;
 		}
 	}
 	public void CheckParticleOn(GroundTile tile)

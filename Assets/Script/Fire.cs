@@ -36,11 +36,11 @@ public class Fire : FSM<FireState>
 	{
 		gameManager = GameManager.instance;
 		gt = GetComponentInParent<GroundTile>();
+		data = MyDataTableMgr.fireTable.GetTable(fireLevel);
 		//Turn.fires.Add(this);
 	}
 	public void Start()
 	{
-		data = MyDataTableMgr.fireTable.GetTable(fireLevel);
 		fireArea = gameManager.tilemapManager.ReturnTile(this.gameObject).tileArea;
 		AddState(FireState.Idle, new FireIdleState(this));
 		AddState(FireState.End, new FireEndState(this));

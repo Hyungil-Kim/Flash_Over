@@ -19,6 +19,7 @@ public class FireIdleState : State
 		{
 			fsm.fireLevel--;
 		}
+		fsm.fireLevel = Mathf.Clamp(fsm.fireLevel, 0, 3);
 		fsm.data = MyDataTableMgr.fireTable.GetTable(fsm.fireLevel);
 	}
 	public override void Update()

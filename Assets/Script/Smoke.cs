@@ -72,8 +72,13 @@ public class Smoke : FSM<SmokeState>
         {
             level--;
         }
-        else if(data.max < gt.tileSmokeValue)
+        else if(data.max <= gt.tileSmokeValue)
         {
+            if(gt.tileSmokeValue >= data.max)
+			{
+                gt.tileSmokeValue = data.max;
+                gt.tileSaveSmokeValue = data.max;
+			}
             level++;
         }
         level = Mathf.Clamp(level, 0, 3);
