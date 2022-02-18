@@ -17,7 +17,6 @@ public class TileInfo : MonoBehaviour
 	public TextMeshProUGUI tileHp;
 	public Slider tileHpSlider;
 	public TextMeshProUGUI tileSmokeLevel;
-	public TextMeshProUGUI tileSmokeValue;
 	public TextMeshProUGUI tileInterruptVision;
 	public List<Obstacle> obstacles;
 	public GameObject[] objectsPanel;
@@ -49,7 +48,7 @@ public class TileInfo : MonoBehaviour
 	}
 	public void OnDisable()
 	{
-		if(gameManager.targetPlayer != null)
+		if (gameManager.targetPlayer != null)
 		{
 			switch (gameManager.targetPlayer.curStateName)
 			{
@@ -70,18 +69,18 @@ public class TileInfo : MonoBehaviour
 	}
 	public void UpdateTileInfo()
 	{
-		if (gameManager.targetTile !=null)
+		if (gameManager.targetTile != null)
 		{
 			if (gameManager.targetTile.tileIsFire)
 			{
 				firePanel.SetActive(true);
 				var fire = gameManager.targetTile.GetComponentInChildren<Fire>();
-				levelNum.text = (fire.fireLevel+1).ToString();
+				levelNum.text = (fire.fireLevel + 1).ToString();
 				fireHpNum.text = fire.fireHp.ToString();
 				fireMidDamage.text = fire.data.dmg.ToString();
 				fireAroundDamage.text = (fire.data.dmg * 0.5f).ToString();
 				fireHpSlider.value = ((float)fire.fireHp - (float)fire.data.minhp) / ((float)fire.data.maxhp - (float)fire.data.minhp);
-				if(fire.fireLevel == 0)
+				if (fire.fireLevel == 0)
 				{
 					fireHpSliderImage.sprite = red;
 					fireHpSliderbackGroundImage.sprite = backGroundDefault;
@@ -102,15 +101,15 @@ public class TileInfo : MonoBehaviour
 				firePanel.SetActive(false);
 			}
 			tileName.text = gameManager.targetTile.GetComponent<GroundTile>().name.ToString();
-			if(gameManager.targetTile.tileIsWeat)
+			if (gameManager.targetTile.tileIsWeat)
 			{
 				isweat.text = "¡•¿Ω";
 			}
-			else if(gameManager.targetTile.tileIsFire)
+			else if (gameManager.targetTile.tileIsFire)
 			{
 				isweat.text = "∫“≈Ω";
 			}
-			else 
+			else
 			{
 				isweat.text = "∫∏≈Î";
 			}
@@ -120,7 +119,6 @@ public class TileInfo : MonoBehaviour
 			{
 				smokePanel.SetActive(true);
 				tileSmokeLevel.text = gameManager.targetTile.smokePrefab.GetComponent<Smoke>().level.ToString();
-				tileSmokeValue.text = gameManager.targetTile.tileSmokeValue.ToString();
 				tileInterruptVision.text = "0";
 			}
 			else
@@ -128,7 +126,7 @@ public class TileInfo : MonoBehaviour
 				smokePanel.SetActive(false);
 			}
 			obstacles.Clear();
-			for(int i =0; i < gameManager.targetTile.fillList.Count;i++)
+			for (int i = 0; i < gameManager.targetTile.fillList.Count; i++)
 			{
 				if (gameManager.targetTile.fillList[i].layer == LayerMask.NameToLayer("Obstacle"))
 				{
@@ -153,18 +151,18 @@ public class TileInfo : MonoBehaviour
 					break;
 			}
 
-			for (int i =0; i<obstacles.Count;i++)
+			for (int i = 0; i < obstacles.Count; i++)
 			{
 				obstacleName[i].text = obstacles[i].GetComponent<Obstacle>().obName;
 				obstacleHpSlider[i].value = (float)obstacles[i].hp / (float)obstacles[i].maxhp;
 				obstacleHp[i].text = obstacles[i].hp.ToString();
 			}
-			
+
 		}
 	}
 	public void ChangePlayerInfo()
 	{
-		foreach ( var elem in gameManager.target.GetComponent<GroundTile>().fillList)
+		foreach (var elem in gameManager.target.GetComponent<GroundTile>().fillList)
 		{
 			if (elem.tag == "Player")
 			{
