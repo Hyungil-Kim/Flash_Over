@@ -1413,7 +1413,7 @@ namespace AdvancedPeopleSystem
 
                         string prefabName = prebuiltPrefab.name.Trim();
 
-                        path = "Assets" + path.Remove(0, Application.dataPath.Length);
+                        path = "Assets" + path.Remove(0, Application.persistentDataPath.Length);
 
                         string newFolderPath = AssetDatabase.GUIDToAssetPath(AssetDatabase.CreateFolder(path, prefabName));
 
