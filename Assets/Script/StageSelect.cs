@@ -124,9 +124,9 @@ public class StageSelect : MonoBehaviour
     public void RandomSelect()
     
     {
-        randomLevel1 = Random.Range(0, 6);
-        randomLevel2 = Random.Range(0, 6);
-        randomLevel3 = Random.Range(0, 6);
+        randomLevel1 = Random.Range(0, 12);
+        randomLevel2 = Random.Range(0, 16);
+        randomLevel3 = Random.Range(0, 5);
 
         level1[randomLevel1].GetComponentInChildren<VisualEffect>().enabled = true;
         level1[randomLevel1].layer = 21;
