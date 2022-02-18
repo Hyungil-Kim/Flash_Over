@@ -22,9 +22,9 @@ public class CharacterInfoList : MonoBehaviour
         for (int i = 0; i < maxChaCount; i++)
         {
             var character = Instantiate(chaPrefab, content.transform);
+            
             character.SetActive(false);
             var chaButton = character.GetComponent<ChaButton>();
-            //chaButton.Init(i);
             chaList.Add(character);
         }
         DropDownInit();
@@ -33,6 +33,7 @@ public class CharacterInfoList : MonoBehaviour
     {
         sortIndex = 0;
         Init();
+        
     }
     public void Init()
     {
@@ -75,12 +76,15 @@ public class CharacterInfoList : MonoBehaviour
             var chaButton = chaList[index].GetComponent<ChaButton>();
             chaButton.Init(sortUserCharacter[index],sortIndex,i);
             chaButton.button.onClick.AddListener(() =>OnChaButton(index));
+            chaButton.button.onClick.AddListener(() =>UIOnOff.instance.tutorialPlays[0].moveNext = true);
             chaList[index].SetActive(true);
-
+            
             var uiChaList = UIOnOff.instance.uiCharacterList;
             var model = uiChaList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
             sortUserCharacter[index].setupModel.ApplyToCharacter(model);
             uiChaList[i].GetComponent<UICharacter>().Init(i);
+
+            //chaList[0].transform.SetParent(UIOnOff.instance.tutorial.transform);
         }
     }
     //public void UIChaInit()

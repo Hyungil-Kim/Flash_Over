@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 public class TutorialPlay : MonoBehaviour
 {
     public GameObject[] tuto;
@@ -14,29 +15,20 @@ public class TutorialPlay : MonoBehaviour
 
     public bool next;
     public bool moveNext;
-
+    private TutorialObject tutoObject;
     //public bool isEmpty;
     //public TutorialPanel[] panals;
+
+    private void OnEnable()
+    {
+        tuto[0].SetActive(true);
+
+        tutoObject = tuto[index].GetComponent<TutorialObject>();
+    }
     public void CheckNext()
     {
         if (totalTime>delay)
         {
-            //if (!isEmpty)
-            //{
-            //    next = UIOnOff.instance.ontouch;
-            //}
-            //else
-            //{
-            //    foreach (var item in panals)
-            //    {
-            //        if(UIOnOff.instance.ontouch && item.isPoint)
-            //        {
-            //            return;
-            //        }
-            //    }
-            //    next = UIOnOff.instance.ontouch;
-            //}
-            var tutoObject = tuto[index].GetComponent<TutorialObject>();
             next = tutoObject.CheckNext();
         }
     }
@@ -48,7 +40,7 @@ public class TutorialPlay : MonoBehaviour
         }
         if (totalTime > delay)
         {
-            var tutoObject = tuto[index].GetComponent<TutorialObject>();
+            //tutoObject = tuto[index].GetComponent<TutorialObject>();
             if (tutoObject.hidepanals != null)
             {
                 tutoObject.Open();
@@ -60,15 +52,18 @@ public class TutorialPlay : MonoBehaviour
             {
                 moveNext = true;
                 next = false;
+                
             }
         }
         totalTime += Time.deltaTime;
         if(totalTime > delay && moveNext)
         {
-            
             moveNext = false;
             tuto[index].SetActive(false);
             index = Mathf.Clamp(index + 1, 0, tuto.Length);
+            tutoObject.HideObj();
+            
+
             if (index >= tuto.Length)
             {
                 gameObject.SetActive(false);
@@ -96,7 +91,7 @@ public class TutorialPlay : MonoBehaviour
             else
             {
                 tuto[index].SetActive(true);
-                var tutoObject = tuto[index].GetComponent<TutorialObject>();
+                tutoObject = tuto[index].GetComponent<TutorialObject>();
                 if (tutoObject.hidepanals != null)
                 {
                     tutoObject.Hide();

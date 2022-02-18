@@ -12,6 +12,7 @@ using UnityEngine.InputSystem.EnhancedTouch;
 using AdvancedPeopleSystem;
 public class UIOnOff : MonoBehaviour
 {
+    public GameObject tutorial;
     public TutorialPlay[] tutorialPlays;
     public TutorialPlay worldmapTuto;
 
@@ -314,5 +315,11 @@ public class UIOnOff : MonoBehaviour
         var custom = fireTruckCharacterList[index].GetComponent<CharacterCustomization>();
         var customInfo = cd.setupModel;
         customInfo.ApplyToCharacter(custom);
+    }
+    bool tuto;
+    public void OnTuto()
+    {
+        
+
     }
 }

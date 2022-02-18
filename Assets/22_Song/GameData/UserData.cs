@@ -32,6 +32,7 @@ public class UserData : MySaveData
     //테스트 임시..스테이지 클리어 불변수
     public bool stageClear;
 
+    public bool StartTuto;
     public bool DaewonTuto;
     public bool HireTuto;
     public bool RestTuto;

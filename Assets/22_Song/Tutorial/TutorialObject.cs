@@ -5,9 +5,29 @@ using UnityEngine;
 public class TutorialObject : MonoBehaviour
 {
     public bool isEmpty;
+    public bool needHide;
+
+    public GameObject needHideObj;
+
+
     public bool next;
-    public TutorialPanel[] panals;
+    public TutorialPanel touchpanal;
     public GameObject hidepanals;
+
+    private void OnEnable()
+    {
+        if(needHide)
+        {
+            needHideObj.SetActive(true);
+        }
+    }
+    public void HideObj()
+    {
+        if (needHide)
+        {
+            needHideObj.SetActive(false);
+        }
+    }
     public void Open()
     {
         hidepanals.SetActive(false);
@@ -26,19 +46,27 @@ public class TutorialObject : MonoBehaviour
         else
         {
             bool inPoint = false;
-            foreach (var item in panals)
+            if(UIOnOff.instance.ontouch && touchpanal.isPoint)
             {
-                if (UIOnOff.instance.ontouch && item.isPoint)
-                {
-                    inPoint = true;
-                    break;
-                }
+                inPoint = true;
             }
-            if (!inPoint)
+            //foreach (var item in panals)
+            //{
+            //    if (UIOnOff.instance.ontouch && item.isPoint)
+            //    {
+            //        inPoint = true;
+            //        break;
+            //    }
+            //}
+            if (inPoint)
             {
                 next = UIOnOff.instance.ontouch;
             }
         }
         return next;
+    }
+    public void GoNext()
+    {
+        next = true;
     }
 }

@@ -7,6 +7,11 @@ public class TutorialPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
     public bool isPoint;
 
+
+    private void Start()
+    {
+
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         isPoint = true;

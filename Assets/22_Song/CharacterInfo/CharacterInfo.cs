@@ -26,7 +26,6 @@ public class CharacterInfo : MonoBehaviour
     public void OnExitStat()
     {
         chaStatPanal.gameObject.SetActive(false);
-        gameObject.SetActive(false);
         //chaListPanal.Init();
     }
     public void OnInventory()
@@ -50,7 +49,7 @@ public class CharacterInfo : MonoBehaviour
     }
     public void OnFire()
     {
-        if (GameData.userData.characterList.Contains(curCharacter))
+        if (GameData.userData.characterList.Contains(curCharacter) && GameData.userData.characterList.Count > 1)
         {
             GameData.userData.characterList.Remove(curCharacter);
         }
