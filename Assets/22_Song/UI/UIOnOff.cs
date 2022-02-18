@@ -60,6 +60,8 @@ public class UIOnOff : MonoBehaviour
     public Shop shop;
 
     public bool ontouch;
+
+    private int mapLevel;
     private void Start()
     {
         Camera.main.transform.position = mainCameraPos.transform.position;
@@ -222,6 +224,10 @@ public class UIOnOff : MonoBehaviour
 
     public void OnStart()
     { 
+        if(mapLevel==1)
+        {
+
+        }
         SceneManager.LoadScene(mapName);
     }
 
@@ -262,15 +268,25 @@ public class UIOnOff : MonoBehaviour
 
     public void OverviewOftheSite(int level)
     {
-        text.text = $"현장: {MyDataTableMgr.stageInfoTable.GetTable(level-1).sceneOfFire}\n"+
-           $"난이도: {MyDataTableMgr.stageInfoTable.GetTable(level-1).level}\n"+
-           $"요구조자: {MyDataTableMgr.stageInfoTable.GetTable(level-1).survivor}명\n"+
-           $"구조자: {MyDataTableMgr.stageInfoTable.GetTable(level-1).rescuer}명\n"+
-           $"현장설명: {MyDataTableMgr.stageInfoTable.GetTable(level-1).descreption}";
-           mapName = MyDataTableMgr.stageInfoTable.GetTable(level - 1).map;
+       
+        text.text = $"● 현장: {MyDataTableMgr.stageInfoTable.GetTable(level).sceneOfFire}\n"+
+           $"● 난이도: {DifficultyLevel(level)}\n" +
+           $"● 요구조자: {MyDataTableMgr.stageInfoTable.GetTable(level).survivor}명\n"+
+           $"● 구조자: {MyDataTableMgr.stageInfoTable.GetTable(level).rescuer}명\n"+
+           $"● 현장설명:\n {MyDataTableMgr.stageInfoTable.GetTable(level).descreption}\n"+
+           $"● 임무:\n {MyDataTableMgr.stageInfoTable.GetTable(level).mission}";
 
-        GameData.userData.gofireman = MyDataTableMgr.stageInfoTable.GetTable(level - 1).rescuer;
-        GameData.userData.stageName = MyDataTableMgr.stageInfoTable.GetTable(level - 1).sceneOfFire;
+        mapName = MyDataTableMgr.stageInfoTable.GetTable(level).map;
+        mapLevel = MyDataTableMgr.stageInfoTable.GetTable(level).level;
+        GameData.userData.gofireman = MyDataTableMgr.stageInfoTable.GetTable(level).rescuer;
+        GameData.userData.stageName = MyDataTableMgr.stageInfoTable.GetTable(level).sceneOfFire;
+    }
+
+    private string DifficultyLevel(int level)
+    {
+        if (MyDataTableMgr.stageInfoTable.GetTable(level).level == 1)return "★";
+        else if (MyDataTableMgr.stageInfoTable.GetTable(level).level == 2) return "★★";
+        else  return "★★★";
     }
 
     public void OnNotEnoughMoney()

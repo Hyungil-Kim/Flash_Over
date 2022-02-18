@@ -63,6 +63,7 @@ public class OffScreenIndicator : MonoBehaviour
                         screenPosition.z = 0;
                         indicator = GetIndicator(ref target.indicator, IndicatorType.MARKER); // Gets the box indicator from the pool.
                         indicator.targetLevel = target.level;
+                        indicator.targetCategory = target.category;
                         indicator.SetIndicatorSprite(target.level);
                     }
                    

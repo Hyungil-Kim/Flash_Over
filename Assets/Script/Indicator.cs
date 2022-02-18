@@ -19,6 +19,11 @@ public class Indicator : MonoBehaviour
     private Text distanceText;
     private UIOnOff uiOnOff;
     public int targetLevel;
+    public int random;
+    public int targetCategory;
+    public int[] level1Map = new int[] { 0, 1};
+    public int[] level2Map = new int[] { 2, 3 };
+    public int[] level3Map = new int[] { 4, 7 };
 
     public bool Active
     {
@@ -85,9 +90,38 @@ public class Indicator : MonoBehaviour
     {
         uiOnOff.uiArray[9].SetActive(true);
         uiOnOff.uiArray[10].SetActive(false);
-     
-        uiOnOff.OverviewOftheSite(targetLevel);
 
+        if (targetCategory == 0)
+        {
+            if (targetLevel == 1)
+            {
+                random = Random.Range(0, 2);
+                uiOnOff.OverviewOftheSite(level1Map[random]);
+            }
+            else if (targetLevel == 2)
+            {
+                random = Random.Range(0, 2);
+
+                uiOnOff.OverviewOftheSite(level2Map[random]);
+            }
+            else if (targetLevel == 3)
+            {
+                random = Random.Range(0, 2);
+
+                uiOnOff.OverviewOftheSite(level3Map[random]);
+            }
+        }
+        else if (targetCategory == 1)
+        {
+            if (targetLevel == 1)
+            {
+                uiOnOff.OverviewOftheSite(5);
+            } 
+            else if (targetLevel == 2)
+            {
+                uiOnOff.OverviewOftheSite(6);
+            }
+        }
     }
 
     //public GameObject ButtonReturn()

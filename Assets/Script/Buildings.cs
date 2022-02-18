@@ -7,6 +7,7 @@ public class Buildings : MonoBehaviour
 
     //public Level level;
     public int level;
+    public int category;
     [SerializeField] private Color targetColor = Color.red;
 
     [SerializeField] private bool needBoxIndicator = true;
@@ -75,5 +76,7 @@ public class Buildings : MonoBehaviour
         float distanceFromCamera = Vector3.Distance(cameraPosition, transform.position);
         return distanceFromCamera;
     }
+
+    
 
 }
