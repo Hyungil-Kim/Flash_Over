@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class LoadUI : MonoBehaviour
 {
     public GameObject slotUI;
-    
+    public GameObject option;
     public void NewGame()
     {
         SceneManager.LoadScene("MainScene");
@@ -18,6 +18,10 @@ public class LoadUI : MonoBehaviour
     public void OffSlot()
     {
         slotUI.SetActive(false);
+    }
+    public void OnOption()
+    {
+        option.SetActive(true);
     }
     public void Exit()
     {
