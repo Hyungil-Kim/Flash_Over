@@ -22,22 +22,22 @@ public class Smoke : FSM<SmokeState>
     public int decreaseVision;
     public int smokeArea;
     public SmokeData data;
-    
+
     public void Awake()
     {
         //GetComponentInChildren<ParticleSystem>().Stop();
-        gameManager = GameManager.instance;
+
     }
     void Start()
     {
         data = MyDataTableMgr.smokeTable.GetTable(level);
         NullGameManager();
-            smokeArea = gameManager.tilemapManager.ReturnTile(this.gameObject).tileArea;
-            AddState(SmokeState.Idle, new SmokeIdleState(this));
-            AddState(SmokeState.Move, new SmokeMoveState(this)); ///? 
-            AddState(SmokeState.End, new SmokeEndState(this));
-            SetState(SmokeState.Idle);
-        if(!GetComponentInParent<GroundTile>().CheakVision)
+        smokeArea = gameManager.tilemapManager.ReturnTile(this.gameObject).tileArea;
+        AddState(SmokeState.Idle, new SmokeIdleState(this));
+        AddState(SmokeState.Move, new SmokeMoveState(this)); ///? 
+        AddState(SmokeState.End, new SmokeEndState(this));
+        SetState(SmokeState.Idle);
+        if (!GetComponentInParent<GroundTile>().CheakVision)
         {
             GetComponentInChildren<ParticleSystem>().Stop();
         }
@@ -50,7 +50,7 @@ public class Smoke : FSM<SmokeState>
         gameManager.tilemapManager.SaveSmokeValue(this);
     }
     public void SpreadSmoke()
-	{
+    {
         NullGameManager();
         gameManager.tilemapManager.SpreadSmoke(this);
     }
@@ -58,9 +58,9 @@ public class Smoke : FSM<SmokeState>
     {
         NullGameManager();
         gameManager.tilemapManager.ResetSmokeValue(this);
-    } 
+    }
     public void NullGameManager()
-	{
+    {
         if (gameManager == null)
         {
             gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -68,12 +68,17 @@ public class Smoke : FSM<SmokeState>
     }
     void Update()
     {
-        if(data.min > gt.tileSmokeValue)
+        if (data.min > gt.tileSmokeValue)
         {
             level--;
         }
-        else if(data.max < gt.tileSmokeValue)
+        else if (data.max <= gt.tileSmokeValue)
         {
+            if (gt.tileSmokeValue >= data.max)
+            {
+                gt.tileSmokeValue = data.max;
+                gt.tileSaveSmokeValue = data.max;
+            }
             level++;
         }
         level = Mathf.Clamp(level, 0, 3);

@@ -11,16 +11,16 @@ public enum FireState
 
 public class Fire : FSM<FireState>
 {
-    public GameManager gameManager;
+	public GameManager gameManager;
 
-    public float fireHp;
-    public int fireLevel;
+	public float fireHp;
+	public int fireLevel;
 
 	//public int data.increaseHp;//내 체력 상승치
-    //public int data.increaseExp;//주변타일(1칸범위) 체력 상승치
+	//public int data.increaseExp;//주변타일(1칸범위) 체력 상승치
 
-    //public int data.dmg;
-    public int fireArea;
+	//public int data.dmg;
+	public int fireArea;
 	//public int data.minhp;
 	//public int data.maxhp;
 
@@ -30,27 +30,27 @@ public class Fire : FSM<FireState>
 	public GameObject fire;
 
 
-	public FireData data ;
+	public FireData data;
 
 	public void Awake()
 	{
 		gameManager = GameManager.instance;
 		gt = GetComponentInParent<GroundTile>();
+		data = MyDataTableMgr.fireTable.GetTable(fireLevel);
 		//Turn.fires.Add(this);
 	}
 	public void Start()
 	{
-		data = MyDataTableMgr.fireTable.GetTable(fireLevel);
 		fireArea = gameManager.tilemapManager.ReturnTile(this.gameObject).tileArea;
 		AddState(FireState.Idle, new FireIdleState(this));
 		AddState(FireState.End, new FireEndState(this));
 		SetState(FireState.Idle);
 		Turn.fires.Add(this);
 		var particle = GetComponentInChildren<ParticleSystem>();
-		if(particle !=null)
-        {
+		if (particle != null)
+		{
 			particle.Stop();
-        }
+		}
 	}
 	public void OnEnable()
 	{
@@ -70,7 +70,7 @@ public class Fire : FSM<FireState>
 	public void CheckFireHp()
 	{
 
-		if(fireHp <= 0)
+		if (fireHp <= 0)
 		{
 			GameManager.instance.tilemapManager.ReturnTile(this.gameObject).tileExp = 0;
 			gameObject.SetActive(false);
@@ -78,26 +78,26 @@ public class Fire : FSM<FireState>
 			Turn.CheckSafeArea(fireArea);
 			Turn.fires.Remove(this);
 		}
-		
+
 	}
 	public void OnFire()
-    {
+	{
 		if (fire != null)
 		{
 			fire.SetActive(true);
-			if(gt.tileIsWeat)
+			if (gt.tileIsWeat)
 			{
 				gt.tileIsWeat = false;
 			}
 		}
 	}
 	public void OffFire()
-    {
+	{
 		if (fire != null)
 		{
-			
+
 			fire.SetActive(false);
 
 		}
-    }
+	}
 }
