@@ -8,7 +8,7 @@ public class LoadUI : MonoBehaviour
     public GameObject option;
     public void NewGame()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("BattleTutorial");
     }
     
     public void OnSlot()

@@ -8,6 +8,7 @@ public class EndScene : MonoBehaviour
     public EndUI endUI;
     public int turnCount;
     public string stageName;
+    public bool tutorial;
     public void EndGame()
     {
         foreach (var fireman in GameData.userData.fireManList)
@@ -45,6 +46,13 @@ public class EndScene : MonoBehaviour
     }
     public void BackHome()
     {
-        SceneManager.LoadScene("MainScene");
+        if (tutorial)
+        {
+            SceneManager.LoadScene("SetName");
+        }
+        else
+        {
+            SceneManager.LoadScene("MainScene");
+        }
     }
 }

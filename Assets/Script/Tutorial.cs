@@ -476,7 +476,8 @@ public class Tutorial : MonoBehaviour
 				{
 					tutorialUiManager.turto9_Text2.SetActive(false);
 					tutorialUiManager.turto9_Text3.SetActive(true);
-					SceneManager.LoadScene("EndScene");
+					yield return new WaitForSeconds(1f);
+					SceneManager.LoadScene("TutorialEnd");
 					tuto8finish = true;
 				}
 				yield return 0;

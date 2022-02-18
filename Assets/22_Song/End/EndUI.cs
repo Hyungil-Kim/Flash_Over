@@ -10,7 +10,7 @@ public class EndUI : MonoBehaviour
     public GameObject content;
     public GameObject endInfoPrefab;
     public TextMeshProUGUI stageName;
-    
+    public bool tutorial;
     private void Start()
     {
         //if (GameData.userData.fireManList != null)
