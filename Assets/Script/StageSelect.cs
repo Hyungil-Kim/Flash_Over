@@ -49,13 +49,13 @@ public class StageSelect : MonoBehaviour
 
     public void LateUpdate()
     {
-        if (mapDrag)
+        if (mapDrag&&uiOnOff.uiArray[10].activeSelf==true)
         {
             CameraMove();
         }
     }
     public void CameraMove()
-    {
+    { 
         var currPos = mousePos;
         currPos.z = 50f;
         var pos1 = Camera.main.ScreenToWorldPoint(currPos);

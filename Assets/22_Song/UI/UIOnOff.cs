@@ -224,10 +224,6 @@ public class UIOnOff : MonoBehaviour
 
     public void OnStart()
     { 
-        if(mapLevel==1)
-        {
-
-        }
         SceneManager.LoadScene(mapName);
     }
 

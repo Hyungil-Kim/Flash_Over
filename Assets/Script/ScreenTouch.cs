@@ -56,11 +56,11 @@ public class ScreenTouch : MonoBehaviour
 	}
 	public void Update()
 	{
-        //var touchList = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.ToArray();
-        //if (touchList.Length == 2)
-        //{
-        //    mulitiTouchCount(touchList);
-        //}
+        var touchList = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.ToArray();
+        if (touchList.Length == 2)
+        {
+            mulitiTouchCount(touchList);
+        }
     }
 
     public void mulitiTouchCount(UnityEngine.InputSystem.EnhancedTouch.Touch[] touches)
