@@ -7,6 +7,7 @@ using TMPro;
 public class TutorialUiManager : MonoBehaviour
 {
     public GameObject tuto1;
+    public GameObject tuto1Image;
     public GameObject tuto2;
     public GameObject tuto2_Text;
     public GameObject tuto3_Text;
