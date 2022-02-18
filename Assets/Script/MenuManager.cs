@@ -40,6 +40,9 @@ public class MenuManager : MonoBehaviour
 		var checkUi = gameManager.uIManager.checkUI;
 		checkUi.gameObject.SetActive(true);
 		gameManager.uIManager.title = true;
+
+		Turn.OnDestroy();
+		AllTile.OnDestroy();
 	}
 
 	public void OnClickEndMenu()

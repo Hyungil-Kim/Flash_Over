@@ -9,7 +9,11 @@ using UnityEngine;
 public static class MySaveLoadSystem<T> where T : MySaveData
 {
     private static string SaveFileName = "savefile";
-
+    public static bool CheckSaveFile(SaveDataType type, int slot = 0)
+    {
+        var filePath = string.Concat(SaveFileName, type.ToString(), slot.ToString());
+        return File.Exists(filePath);
+    }
     public static void Save(T saveData, SaveDataType type, int slot = 1)
     {
 

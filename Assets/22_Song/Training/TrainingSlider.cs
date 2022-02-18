@@ -8,6 +8,7 @@ public class TrainingSlider : MonoBehaviour
 {
     public TextMeshProUGUI text;
     public Slider slider;
+    public Slider increaseSlider;
     public RectTransform rectTransform; 
     public Image increase;
     public GameObject levelUp;
@@ -64,7 +65,8 @@ public class TrainingSlider : MonoBehaviour
 
         var increaseNomalize = normalExp / statMaxExp;
         increaseNomalize = Mathf.Clamp(increaseNomalize, 0, 1 - (slider.value/* + oldIncreaseNomalize*/));
-        increase.rectTransform.sizeDelta = new Vector2(/*oldIncrease +*/ sliderWidth * increaseNomalize, increase.rectTransform.sizeDelta.y);
+        increaseSlider.value = increaseNomalize + slider.value;
+        //increase.rectTransform.sizeDelta = new Vector2(/*oldIncrease +*/ sliderWidth * increaseNomalize, increase.rectTransform.sizeDelta.y);
         if(normalExp + statExp >= statMaxExp)
         {
             levelUp.SetActive(true);
@@ -74,7 +76,8 @@ public class TrainingSlider : MonoBehaviour
     {
         exp = 0;
         normalExp = 0;
-        increase.rectTransform.sizeDelta = new Vector2(0, increase.rectTransform.sizeDelta.y);
+        increaseSlider.value = 0;
+        //increase.rectTransform.sizeDelta = new Vector2(0, increase.rectTransform.sizeDelta.y);
         levelUp.SetActive(false);
     }
     public void SetExp(TrainingStatType type)

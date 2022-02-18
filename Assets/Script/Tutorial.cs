@@ -477,6 +477,11 @@ public class Tutorial : MonoBehaviour
 					tutorialUiManager.turto9_Text2.SetActive(false);
 					tutorialUiManager.turto9_Text3.SetActive(true);
 					yield return new WaitForSeconds(1f);
+
+					AllTile.OnDestroy();
+					Turn.OnDestroy();
+					GameManager.instance.tutorial = false;
+
 					SceneManager.LoadScene("TutorialEnd");
 					tuto8finish = true;
 				}

@@ -119,12 +119,13 @@ public class UserData : MySaveData
     {
         MySaveLoadSystem<UserData>.Save(GameData.userData, SaveDataType.PlayerData,slot);
     }
-    public void LoadUserData(int slot)
+    public bool LoadUserData(int slot)
     {
         GameData.userData = MySaveLoadSystem<UserData>.Load(SaveDataType.PlayerData,slot);
         if (GameData.userData == null)
         {
             GameData.userData = new UserData();
+            return false;
         }
         else if (GameData.userData.characterList != null)
         {
@@ -133,8 +134,9 @@ public class UserData : MySaveData
                 character.StatInit();
                 character.LoadCd();
             }
+            return true;
         }
-
+        return false;
     }
     public void AddExp(int exp)
     {
