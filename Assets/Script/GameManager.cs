@@ -158,9 +158,10 @@ public class GameManager : MonoBehaviour
 		if (AllTileMesh.instance != null)
 		{
 			AllTileMesh.instance.Init();
-			if (Turn.players.Count != 0 && PlaySaveSystem.ps == null)
+			if (Turn.players !=null &&Turn.players.Count <0)
 			{
 				ChangeTargetPlayer(Turn.players[0].gameObject);
+				Debug.Log("in");
 			}
 			else if (targetPlayer != null)
 			{
