@@ -156,19 +156,19 @@ public class UIOnOff : MonoBehaviour
             case "HireFireMan":
                 if (!GameData.userData.HireTuto)
                 {
-                    tutorialPlays[1].gameObject.SetActive(true);
+                    tutorialPlays[3].gameObject.SetActive(true);
                 }
                 break;
             case "Training":
                 if (!GameData.userData.TrainingTuto)
                 {
-                    tutorialPlays[2].gameObject.SetActive(true);
+                    tutorialPlays[1].gameObject.SetActive(true);
                 }
                 break;
             case "Rest":
                 if (!GameData.userData.RestTuto)
                 {
-                    tutorialPlays[3].gameObject.SetActive(true);
+                    tutorialPlays[2].gameObject.SetActive(true);
                 }
                 break;
             case "Shop":
@@ -333,9 +333,9 @@ public class UIOnOff : MonoBehaviour
         customInfo.ApplyToCharacter(custom);
     }
     bool tuto;
-    public void OnTuto()
+    public void NextTutorial(int index)
     {
-        
-
+        //int index = (int)type;
+        tutorialPlays[index].moveNext = true;
     }
 }

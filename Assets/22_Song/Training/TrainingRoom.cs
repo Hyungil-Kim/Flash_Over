@@ -55,7 +55,7 @@ public class TrainingRoom : MonoBehaviour
         var index = GetComponentInParent<TrainingCharacter>().curIndex;
         icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
         var st = $"Gold : {GameData.userData.gold}";
-        gold.text = totalGold != 0 ? st.Insert(st.Length, $" - {totalGold}") : st;
+        //gold.text = totalGold != 0 ? st.Insert(st.Length, $" - {totalGold}") : st;
         for (int i = 0; i < buttons.Length; i++)
         {
             ButtonInit(i);

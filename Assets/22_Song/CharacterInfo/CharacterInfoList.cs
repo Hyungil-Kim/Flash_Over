@@ -76,7 +76,7 @@ public class CharacterInfoList : MonoBehaviour
             var chaButton = chaList[index].GetComponent<ChaButton>();
             chaButton.Init(sortUserCharacter[index],sortIndex,i);
             chaButton.button.onClick.AddListener(() =>OnChaButton(index));
-            chaButton.button.onClick.AddListener(() =>UIOnOff.instance.tutorialPlays[0].moveNext = true);
+            chaButton.button.onClick.AddListener(() =>UIOnOff.instance.NextTutorial((int)type));
             chaList[index].SetActive(true);
             
             var uiChaList = UIOnOff.instance.uiCharacterList;
