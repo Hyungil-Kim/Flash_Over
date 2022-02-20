@@ -437,7 +437,7 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Action)
 				{
-					if (check6)
+					if (!check6)
 					{
 						tutorialUiManager.tuto_add1.SetActive(false);
 						tutorialUiManager.tuto_add2.SetActive(true);
