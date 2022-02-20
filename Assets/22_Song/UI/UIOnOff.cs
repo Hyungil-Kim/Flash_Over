@@ -234,6 +234,7 @@ public class UIOnOff : MonoBehaviour
 
     public void OnStart()
     { 
+        if(GameData.userData.fireManList.Count != 0)
         SceneManager.LoadScene(mapName);
     }
 

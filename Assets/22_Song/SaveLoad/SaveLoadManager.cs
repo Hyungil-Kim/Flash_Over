@@ -46,7 +46,7 @@ public class SaveLoadManager : MonoBehaviour
         playdata.gsd.turnCount = GameManager.instance.turnCount;
 
         playdata.inGameTime = $"{GameData.userData.weekend}주차";
-        playdata.stageName = "살려주세요";
+        playdata.stageName = $"{GameData.userData.stageName}";
         playdata.dateTime = System.DateTime.Now.ToString();
         playdata.userName = $"{GameData.userData.userName}";
         playdata.weekend = GameData.userData.weekend;

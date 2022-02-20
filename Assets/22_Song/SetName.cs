@@ -9,6 +9,7 @@ public class SetName : MonoBehaviour
     public void OnNext()
     {
         GameData.userData.userName = setName.text;
+        GameData.userData.userName.Replace(" ", "");
         if(GameData.userData.userName == "")
         {
             GameData.userData.userName = "¼Ò¹æ´ë";
