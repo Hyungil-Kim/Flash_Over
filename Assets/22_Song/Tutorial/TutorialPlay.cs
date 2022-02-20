@@ -84,6 +84,12 @@ public class TutorialPlay : MonoBehaviour
                     case 4:
                         GameData.userData.ShopTuto = true;
                         break;
+                    case 5:
+                        GameData.userData.FireTruckTuto = true;
+                        break;
+                    case 6:
+                        GameData.userData.StartTuto = true;
+                        break;
                     default:
                         break;
                 }

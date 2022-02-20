@@ -116,6 +116,10 @@ public class UIOnOff : MonoBehaviour
             shop.ShopUpdate();
             GameData.userData.stageClear = false;
         }
+        if(!GameData.userData.StartTuto)
+        {
+            tutorialPlays[6].gameObject.SetActive(true);
+        }
     }
     public IEnumerator CoFadeIn()
     {
@@ -175,6 +179,12 @@ public class UIOnOff : MonoBehaviour
                 if (!GameData.userData.ShopTuto)
                 {
                     tutorialPlays[4].gameObject.SetActive(true);
+                }
+                break;
+            case "FireTruck":
+                if (!GameData.userData.FireTruckTuto)
+                {
+                    tutorialPlays[5].gameObject.SetActive(true);
                 }
                 break;
             default:

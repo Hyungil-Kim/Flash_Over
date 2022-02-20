@@ -38,6 +38,7 @@ public class UserData : MySaveData
     public bool RestTuto;
     public bool ShopTuto;
     public bool TrainingTuto;
+    public bool FireTruckTuto;
     public bool WorldmapTuto;
 
     public CharacterShopUpgradeData chaShopData = new CharacterShopUpgradeData();

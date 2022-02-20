@@ -31,6 +31,7 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
     private void Start()
     {
         fireTruck = GetComponentInParent<FireTruck>();
+        selectButton.GetComponent<Button>().onClick.AddListener(() => UIOnOff.instance.NextTutorial(5));
     }
     //public TextMeshProUGUI personality;
     public void Init(CharacterData cd)

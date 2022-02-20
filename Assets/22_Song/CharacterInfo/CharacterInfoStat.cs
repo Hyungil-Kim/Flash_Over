@@ -9,6 +9,8 @@ public enum InfoType
     Character,
     Training,
     Rest,
+    Hire,
+    Shop,
     Truck,
 }
 public class CharacterInfoStat : MonoBehaviour
