@@ -41,10 +41,10 @@ public class TutorialPlay : MonoBehaviour
         if (totalTime > delay)
         {
             //tutoObject = tuto[index].GetComponent<TutorialObject>();
-            if (tutoObject.hidepanals != null)
-            {
-                tutoObject.Open();
-            }
+            //if (tutoObject.hidepanals != null)
+            //{
+            //    tutoObject.Open();
+            //}
         }
         if (next == true)
         {
@@ -92,10 +92,10 @@ public class TutorialPlay : MonoBehaviour
             {
                 tuto[index].SetActive(true);
                 tutoObject = tuto[index].GetComponent<TutorialObject>();
-                if (tutoObject.hidepanals != null)
-                {
-                    tutoObject.Hide();
-                }
+                //if (tutoObject.hidepanals != null)
+                //{
+                //    tutoObject.Hide();
+                //}
                 //tuto[index].GetComponent<TutorialObject>().Hide();
                 totalTime = 0f;
             }

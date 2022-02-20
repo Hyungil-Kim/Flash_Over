@@ -13,7 +13,7 @@ public enum InfoType
 }
 public class CharacterInfoStat : MonoBehaviour
 {
-    public RawImage icon;
+    public Image icon;
     public ItemButtonPrefab hose;
     public ItemButtonPrefab bunkerGear;
     public ItemButtonPrefab oxygenTank;
@@ -147,7 +147,7 @@ public class CharacterInfoStat : MonoBehaviour
 
         chaname.text = $"{curCharacter.characterName}";
         UIOnOff.instance.MainCharacterSetting(curCharacter);
-        icon.texture = Resources.Load<RenderTexture>($"Icon/MainIcon");
+        icon.sprite = curCharacter.portrait;
 
         //var statSB = new StringBuilder();
         //statSB.Append(string.Format($"Hp : {curCharacter.totalStats.hp.stat}\n"));
@@ -181,8 +181,11 @@ public class CharacterInfoStat : MonoBehaviour
         //}
         //personality.text = personality.text.Remove(0, 1);
 
-        weightslider.value = ((float)curCharacter.totalStats.str.stat - (float)curCharacter.weight) / (float)curCharacter.totalStats.str.stat;
-        weight.text = $"{curCharacter.totalStats.str.stat - curCharacter.weight} / {curCharacter.totalStats.str.stat}";
+        //무게슬라이더
+        //weightslider.value = ((float)curCharacter.totalStats.str.stat - (float)curCharacter.weight) / (float)curCharacter.totalStats.str.stat;
+        //weight.text = $"{curCharacter.totalStats.str.stat - curCharacter.weight} / {curCharacter.totalStats.str.stat}";
+
+
         //hp.text = $"Hp : {curCharacter.totalStats.hp}";
         //move.text = $"Move : {curCharacter.totalStats.move}";
         //str.text = $"Str : {curCharacter.totalStats.str}";

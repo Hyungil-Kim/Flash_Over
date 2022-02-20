@@ -183,6 +183,16 @@ public class CharacterData
 
     public List<CharacteristicList> addCharacteristics = new List<CharacteristicList>();
 
+    public int portraitIndex;
+    public Sprite portrait
+    {
+        get
+        {
+            return Resources.Load<Sprite>($"portrait/cha{portraitIndex}");
+        }
+    }
+
+
     public int weight
     {
         get
@@ -245,6 +255,8 @@ public class CharacterData
     public List<Buff> buff = new List<Buff>();
     public List<Buff> badCharacteristics = new List<Buff>();
     public List<Buff> characteristics = new List<Buff>();
+    public List<Buff> badPhysical = new List<Buff>();
+    public List<Buff> badPsycholosical = new List<Buff>();
 
     public CharacteristicCheck check = new CharacteristicCheck();
 
@@ -429,6 +441,7 @@ public class CharacterData
         characterGrade = "평범한";
         characterClass = "소방관";
 
+        portraitIndex = Random.Range(0, 6);
         //변수선언
         //list : 랜덤하게 뽑아올려고 만듬..맨 위 스탯부터 랜덤배정되면 아래 스탯은 비교적 적게 낮을 확률이 늘어날것같아서
         //deficientStatList : 부족한 스탯 확인하려고 만듬

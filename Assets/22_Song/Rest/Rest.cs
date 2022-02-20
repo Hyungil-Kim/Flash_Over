@@ -84,7 +84,7 @@ public class Rest : MonoBehaviour
     }
     public void OnClickExitCharacter()
     {
-        restCharacter.gameObject.SetActive(false);
+        //restCharacter.gameObject.SetActive(false);
 
         //characterInfoList.gameObject.SetActive(false);
         

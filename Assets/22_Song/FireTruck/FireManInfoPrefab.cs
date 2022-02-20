@@ -10,7 +10,7 @@ using AdvancedPeopleSystem;
 
 public class FireManInfoPrefab : MonoBehaviour, IDropHandler
 {
-    public RawImage icon;
+    public Image icon;
     public FireManItem hose;
     public FireManItem bunkerGear;
     public FireManItem oxygenTank;
@@ -41,11 +41,12 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
             var custom = UIOnOff.instance.uiCharacterList[index].GetComponent<CharacterCustomization>();
             var uicha = UIOnOff.instance.uiCharacterList[index].GetComponent<UICharacter>();
 
-            var customInfo = GameData.userData.characterList[index].setupModel;
-            customInfo.ApplyToCharacter(custom);
-            uicha.Init(index);
+            //var customInfo = GameData.userData.characterList[index].setupModel;
+            //customInfo.ApplyToCharacter(custom);
+            //uicha.Init(index);
             UIOnOff.instance.MainCharacterSetting(cd, index);
-            icon.texture = Resources.Load<RenderTexture>($"Icon/MainIcon {index+1}");
+            //icon.texture = Resources.Load<RenderTexture>($"Icon/MainIcon {index+1}");
+            icon.sprite = cd.portrait;
 
             infoUI.SetActive(true);
             selectButton.SetActive(false);

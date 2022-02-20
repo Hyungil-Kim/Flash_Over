@@ -6,10 +6,14 @@ using TMPro;
 
 public class RestPrefab : MonoBehaviour
 {
-    public RawImage icon;
+    //public RawImage icon;
+    public Image icon;
     public TextMeshProUGUI text;
+    public TextMeshProUGUI chaName;
 
-    public Texture baseSprite;
+    //public Texture baseSprite;
+    public Sprite baseSprite;
+    public Sprite lockSprite;
 
     public GameObject restbutton;
     public GameObject canclebutton;
@@ -30,7 +34,7 @@ public class RestPrefab : MonoBehaviour
             //baseSprite = icon.sprite;
         }
     }
-
+    
 
     public void init(CharacterData cd, bool isActive, int index)
     {
@@ -41,7 +45,9 @@ public class RestPrefab : MonoBehaviour
         if (!isActive)
         {
             button.interactable = false;
-            icon.texture = baseSprite;
+            //icon.texture = baseSprite;
+            icon.sprite = lockSprite;
+            chaName.text = "";
             text.text = "";
             upgradebutton.SetActive(true);
         }
@@ -49,28 +55,31 @@ public class RestPrefab : MonoBehaviour
         {
             upgradebutton.SetActive(false);
             button.onClick.AddListener(() => OnClick(index));
+            button.onClick.AddListener(() => UIOnOff.instance.NextTutorial(2));
             if (cd != null)
             {
                 var iconIndex = GetComponentInParent<Rest>().curCharacterIndex;
-                icon.texture = Resources.Load<RenderTexture>($"Icon/icon {iconIndex}");
+                //icon.texture = Resources.Load<RenderTexture>($"Icon/icon {iconIndex}");
+                icon.sprite = cd.portrait;
+                chaName.text = cd.characterName;
                 restcd = cd;
                 restIndex = index;
                 switch (cd.admission)
                 {
                     case Admission.Rest:
-                        text.text = $"{cd.characterName}이(가)\n{cd.restCount}주차 휴식중입니다";
+                        text.text = $"휴식중입니다.\n{2 - cd.restCount}주뒤에 복귀합니다";
                         CharacterRest();
                         break;
                     case Admission.Hospital:
-                        text.text = $"{cd.characterName}이(가)\n{cd.restCount}주차 병원 치료중입니다";
+                        text.text = $"외상 치료중입니다.\n{2 - cd.restCount}주뒤에 복귀합니다";
                         CharacterRest();
                         break;
                     case Admission.Phycho:
-                        text.text = $"{cd.characterName}이(가)\n{cd.restCount}주차 상담 치료중입니다";
+                        text.text = $"심리 상담중입니다.\n{2 - cd.restCount}주뒤에 복귀합니다";
                         CharacterRest();
                         break;
                     case Admission.None:
-                        text.text = $"{cd.characterName}";
+                        text.text = $"피로도 {cd.tiredScore}\n심리적 부상 {cd.badPsycholosical.Count}\n신체적 부상 {cd.badPhysical.Count}";
                         CanRest();
                         break;
                     default:
@@ -84,7 +93,9 @@ public class RestPrefab : MonoBehaviour
             else
             {
                 button.interactable = true;
-                icon.texture = baseSprite;
+                //icon.texture = baseSprite;
+                icon.sprite = baseSprite;
+                chaName.text = "";
                 text.text = $"휴식할 대원을\n선택해 주세요.";
                 restbutton.SetActive(false);
                 backbutton.SetActive(false);
@@ -100,6 +111,7 @@ public class RestPrefab : MonoBehaviour
         init(null, true, restIndex);
 
     }
+
     public void UpgradePopUp()
     {
         GetComponentInParent<Rest>().OnUpgradePopup();

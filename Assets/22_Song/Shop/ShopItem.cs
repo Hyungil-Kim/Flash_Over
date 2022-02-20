@@ -27,13 +27,14 @@ public class ShopItem : MonoBehaviour
         switch (itemData.type)
         {
             case ItemType.Hose:
-                stat.text = $"공격력:{itemData.dataTable.dmg}";
+                var hoseData = (HoseData)itemData;
+                stat.text = $"직사 {itemData.dataTable.dmg}\n분사 {hoseData.hoseData.burnDmg}";
                 break;
             case ItemType.BunkerGear:
-                stat.text = $"방어력:{itemData.dataTable.def}";
+                stat.text = $"방어력 {itemData.dataTable.def}";
                 break;
             case ItemType.OxygenTank:
-                stat.text = $"산소:{itemData.dataTable.sta}";
+                stat.text = $"충전량 {itemData.dataTable.sta}";
                 break;
             case ItemType.Max:
                 break;

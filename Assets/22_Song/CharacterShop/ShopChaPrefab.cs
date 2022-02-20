@@ -6,8 +6,8 @@ using TMPro;
 
 public class ShopChaPrefab : MonoBehaviour
 {
-    //public Image icon;
-    public RawImage icon;
+    public Image icon;
+    //public RawImage icon;
 
     public TextMeshProUGUI chaName;
     public TextMeshProUGUI chaHp;
@@ -22,7 +22,8 @@ public class ShopChaPrefab : MonoBehaviour
     public GameObject characteristicContent;
     public void SetValue(CharacterData cd, int index)
     {
-        icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
+        icon.sprite = cd.portrait;
+        //icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
         character = cd;
         chaName.text = $"이름 : {cd.characterName}";
         chaHp.text = $"체력 : {cd.totalStats.hp.stat}";

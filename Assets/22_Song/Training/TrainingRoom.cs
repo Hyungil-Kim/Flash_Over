@@ -18,13 +18,15 @@ public class TrainingRoomUpgradeData
 public class TrainingRoom : MonoBehaviour
 {
     public Button[] buttons;
+    public Button trainingButton;
+    public Button cancleButton;
     public TrainingSlider[] sliders;
     public TextMeshProUGUI gold;
     private TrainingCharacter tc;
     private int totalGold = 0;
     private bool isTraining = false;
 
-    public RawImage icon;
+    public Image icon;
     public GameObject upgrade;
     private void Start()
     {
@@ -32,14 +34,14 @@ public class TrainingRoom : MonoBehaviour
         {
             var index = i;
             buttons[index].onClick.AddListener(() => SetExp(index));
+            buttons[index].onClick.AddListener(() => OnCancleTrainingButton());
             ButtonInit(index);
         }
         for (int i = 0; i < sliders.Length; i++)
         {
             sliders[i].Init((TrainingStatType)i);
         }
-        tc = GetComponentInParent<TrainingCharacter>();
-        //Init();
+        DisCancleTrainingButton();
     }
     private void OnEnable()
     {
@@ -53,7 +55,8 @@ public class TrainingRoom : MonoBehaviour
             sliders[i].Init((TrainingStatType)i);
         }
         var index = GetComponentInParent<TrainingCharacter>().curIndex;
-        icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
+        icon.sprite = tc.curCharacter.portrait;
+        //icon.texture = Resources.Load<RenderTexture>($"Icon/icon {index}");
         var st = $"Gold : {GameData.userData.gold}";
         //gold.text = totalGold != 0 ? st.Insert(st.Length, $" - {totalGold}") : st;
         for (int i = 0; i < buttons.Length; i++)
@@ -68,6 +71,32 @@ public class TrainingRoom : MonoBehaviour
         {   
             buttons[index].interactable = false;    
         }
+        var text = buttons[index].GetComponentInChildren<TextMeshProUGUI>();
+        var type = (TrainingStatType)index;
+        switch (type)
+        {
+            case TrainingStatType.Str:
+                text.text = $"Èû ÈÆ·Ã\n<{GetCost(index)}°ñµå>";
+                break;
+            case TrainingStatType.Lung:
+                text.text = $"ÆóÈ°·® ÈÆ·Ã\n<{GetCost(index)}°ñµå>";
+                break;
+            case TrainingStatType.Hp:
+                text.text = $"Ã¼·Â ÈÆ·Ã\n<{GetCost(index)}°ñµå>";
+                break;
+            default:
+                break;
+        }
+    }
+    public void OnCancleTrainingButton()
+    {
+        trainingButton.interactable = true;
+        cancleButton.interactable = true;
+    }
+    public void DisCancleTrainingButton()
+    {
+        trainingButton.interactable = false;
+        cancleButton.interactable = false;
     }
     public void SetExp(int index)
     {
@@ -111,9 +140,9 @@ public class TrainingRoom : MonoBehaviour
             case TrainingType.Str:
                 return MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.str).TS1Price;
             case TrainingType.Lung:
-                return MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.lung).TS3Lung;
+                return MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.lung).TS3Price;
             case TrainingType.Hp:
-                return MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.hp).TS2Hp;
+                return MyDataTableMgr.menuTable.GetTable(GameData.userData.traingShopData.hp).TS2Price;
             case TrainingType.Balence:
                 return 100;
             case TrainingType.Random:
@@ -135,6 +164,7 @@ public class TrainingRoom : MonoBehaviour
             tc.curCharacter.isTraining = isTraining;
         }
         Init();
+        DisCancleTrainingButton();
     }
     public void Back()
     {
@@ -146,6 +176,7 @@ public class TrainingRoom : MonoBehaviour
             sliders[i].Back();
         }
         Init();
+        DisCancleTrainingButton();
     }
     public void ShopLevelUp()
     {

@@ -12,14 +12,27 @@ public class TutorialObject : MonoBehaviour
 
     public bool next;
     public TutorialPanel touchpanal;
-    public GameObject hidepanals;
+    //public GameObject hidepanals;
 
+    public GameObject textBox;
+    public GameObject hideEmpty;
     private void OnEnable()
     {
         if(needHide)
         {
             needHideObj.SetActive(true);
         }
+        if(textBox != null)
+        textBox.SetActive(true);
+        if(hideEmpty != null)
+        hideEmpty.SetActive(true);
+    }
+    private void OnDisable()
+    {
+        if(textBox !=null)
+        textBox.SetActive(false);
+        if(hideEmpty != null)
+        hideEmpty.SetActive(false);
     }
     public void HideObj()
     {
@@ -30,11 +43,11 @@ public class TutorialObject : MonoBehaviour
     }
     public void Open()
     {
-        hidepanals.SetActive(false);
+        //hidepanals.SetActive(false);
     }
     public void Hide()
     {
-        hidepanals.SetActive(true);
+        //hidepanals.SetActive(true);
     }
     public bool CheckNext()
     {

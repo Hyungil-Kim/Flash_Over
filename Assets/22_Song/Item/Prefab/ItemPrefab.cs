@@ -10,6 +10,7 @@ public class ItemPrefab : MonoBehaviour
     public Image image;
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemStat;
+    public TextMeshProUGUI itemduablity;
     public TextMeshProUGUI itemPrice;
     public TextMeshProUGUI number;
     public ItemDataBase itemData;
@@ -21,6 +22,7 @@ public class ItemPrefab : MonoBehaviour
         number.text = itemData.count.ToString();
         image.sprite = itemData.dataTable.iconSprite;
         itemName.text = itemData.dataTable.itemName;
+        itemduablity.text = $"³»±¸µµ {itemData.dataTable.durability.ToString()}";
         switch (data.type)
         {
             case ItemType.Hose:

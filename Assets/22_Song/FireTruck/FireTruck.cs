@@ -34,6 +34,12 @@ public class FireTruck : MonoBehaviour
     private void OnEnable()
     {
         outFireMan.Clear();
+        foreach (var fireman in fireManList)
+        {
+            fireman.SetActive(false);
+            GameObject.Destroy(fireman);
+        }
+        fireManList.Clear();
         for (int i = 0; i < GameData.userData.gofireman; i++)
         {
             var index = i;
