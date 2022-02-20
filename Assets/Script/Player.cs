@@ -199,7 +199,10 @@ public class Player : FSM<PlayerState>
 	}
 	public void Death()
 	{
-		SetState(PlayerState.End);
+		if(gameManager.playerMove.go)
+		{
+			gameManager.playerMove.go = false;
+		}
 		gameObject.SetActive(false);
 		Turn.players.Remove(this);
 		if(GameData.userData.characterList.Contains(cd))
@@ -209,14 +212,8 @@ public class Player : FSM<PlayerState>
 			int key = GameData.userData.fireManList.First((x)=>x.Value == cd).Key;
 			GameData.userData.fireManList.Remove(key);
 		}
+		SetState(PlayerState.End);
 
-		if (Turn.players.Count != 0)
-		{
-			gameManager.tilemapManager.SelectNextPlayer();
-		}
-		else
-		{
-			gameManager.uIManager.battleUiManager.uIManager.betweenPlaying.FalsePanel();
-		}
+		
 	}
 }

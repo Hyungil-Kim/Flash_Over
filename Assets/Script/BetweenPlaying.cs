@@ -74,10 +74,10 @@ public class BetweenPlaying : MonoBehaviour
 	public IEnumerator WinPanel()
 	{
 		winPanel.SetActive(true);
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(2f);
 		winPanel.SetActive(false);
 
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(1.5f);
 
 		Turn.win = true;
 		SceneManager.LoadScene("EndScene");
@@ -87,10 +87,10 @@ public class BetweenPlaying : MonoBehaviour
 	public IEnumerator FalsePanel()
 	{
 		falsePanel.SetActive(true);
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(2f);
 		falsePanel.SetActive(false);
 
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(1.5f);
 
 		Turn.lose = true;
 		SceneManager.LoadScene("EndScene");

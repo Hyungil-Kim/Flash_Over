@@ -157,8 +157,17 @@ public class PlayerEndState : State
 		}
 		fsm.isPlayerParticle = false;
 		fsm.moveHelper.transform.localPosition = Vector3.zero;
-		if(!fsm.gameManager.tutorial)
-		fsm.StartCoroutine(Turn.CoTurnSystem());
+		if (!fsm.gameManager.tutorial)
+		{
+			if (Turn.players.Count != 0)
+			{
+				fsm.StartCoroutine(Turn.CoTurnSystem());
+			}
+			else
+			{
+				fsm.gameManager.uIManager.battleUiManager.uIManager.betweenPlaying.FalsePanel();
+			}
+		}
 	}
 
 	public override void Exit()

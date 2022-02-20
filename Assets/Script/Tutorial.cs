@@ -38,6 +38,7 @@ public class Tutorial : MonoBehaviour
 	private bool check3;
 	private bool check4;
 	private bool check5;
+	private bool check6;
 	public Button button;
 	public void Awake()
 	{
@@ -277,6 +278,7 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Action)
 				{
+					marker.SetActive(false);
 					HoldPlayerRotation(player, 0);
 					tutorialUiManager.tuto6_Text.SetActive(false);
 					tutorialUiManager.tuto6_Text_1.SetActive(true);
@@ -301,10 +303,10 @@ public class Tutorial : MonoBehaviour
 					{
 						tutorialUiManager.tuto6_Text_1.SetActive(false);
 						tutorialUiManager.tuto6_Text_2.SetActive(true);
-						yield return new WaitForSeconds(1f);
+						yield return new WaitForSeconds(2.5f);
 						tutorialUiManager.tuto6_Text_2.SetActive(false);
 						tutorialUiManager.tuto6.SetActive(true);
-						yield return new WaitForSeconds(2f);
+						yield return new WaitForSeconds(2.5f);
 						tuto6finish2 = true;
 						yield return 0;
 					}
@@ -408,7 +410,7 @@ public class Tutorial : MonoBehaviour
 			{
 				if (!check5)
 				{
-					//ChangeTile(new Vector3(17.5f, 0, -12.5f));
+					
 					marker.SetActive(true);
 					marker.transform.position = new Vector3(17.5f, 1, -12.5f);
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
@@ -423,6 +425,7 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Move)
 				{
+					tutorialUiManager.tuto_add1.SetActive(true);
 					if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(17.5f, 0, -12.5f)))
 					{
 						gameManager.uIManager.battleUiManager.moveButton.interactable = true;
@@ -434,14 +437,28 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Action)
 				{
-					marker.SetActive(false);
-					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
-					gameManager.uIManager.battleUiManager.itemButton.interactable = true;
-					gameManager.uIManager.battleUiManager.attackButton.interactable = false;
-					gameManager.uIManager.battleUiManager.useItemManager.useitemButton1.interactable = false;
+					if (check6)
+					{
+						tutorialUiManager.tuto_add1.SetActive(false);
+						tutorialUiManager.tuto_add2.SetActive(true);
+						marker.SetActive(false);
+						gameManager.uIManager.battleUiManager.moveButton.interactable = false;
+						gameManager.uIManager.battleUiManager.itemButton.interactable = true;
+						gameManager.uIManager.battleUiManager.attackButton.interactable = false;
+						gameManager.uIManager.battleUiManager.useItemManager.useitemButton1.interactable = false;
+						check6 = true;
+					}
+					while(gameManager.uIManager.battleUiManager.useItemManager.gameObject.activeSelf)
+					{
+						gameManager.uIManager.battleUiManager.itemButton.interactable = false;
+						tutorialUiManager.tuto_add2.SetActive(false);
+						tutorialUiManager.tuto_add3.SetActive(true);
+						yield return 0;
+					}
 					//gameManager.uIManager.battleUiManager.useItemManager.cancleItemButton.interactable = false;
 					while (gameManager.showMeleeRange)
 					{
+						tutorialUiManager.tuto_add3.SetActive(false);
 						tutorialUiManager.turto8_Text.SetActive(true);
 						yield return 0;
 					}

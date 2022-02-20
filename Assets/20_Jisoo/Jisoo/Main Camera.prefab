@@ -192,6 +192,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: fae55ba5-d4af-4ea5-bc59-85770cba6314
     m_ActionName: Mouse/TestTouch[/Device Simulator Touchscreen/press]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a4f955e7-47bf-4dfb-8d43-9452709ff410
+    m_ActionName: Mouse/PrimaryFingerPosition[/Device Simulator Touchscreen/touch0/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2e3103e6-bc51-436f-b0a4-2da1d9141e55
+    m_ActionName: Mouse/SecondaryFingerPosition[/Device Simulator Touchscreen/touch1/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 53e2fc4f-4d11-4fe6-8347-f78a46cda62b
+    m_ActionName: Mouse/SecondaryFingerContact[/Device Simulator Touchscreen/touch1/press]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Mouse
@@ -276,8 +288,8 @@ AudioSource:
   m_GameObject: {fileID: 7289648790101481579}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -7371991415297537667, guid: de49784ab5d88f946912f2a789aeefea, type: 2}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8403852224689066064, guid: de49784ab5d88f946912f2a789aeefea, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 1f6be0350b0ab3847ad9c36a001f1be0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -372,8 +384,8 @@ AudioSource:
   m_GameObject: {fileID: 7289648790101481579}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 8403852224689066064, guid: de49784ab5d88f946912f2a789aeefea, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 1f6be0350b0ab3847ad9c36a001f1be0, type: 3}
+  OutputAudioMixerGroup: {fileID: -7371991415297537667, guid: de49784ab5d88f946912f2a789aeefea, type: 2}
+  m_audioClip: {fileID: 8300000, guid: b79a225b37333f944aabbc6ca2f22ed4, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -473,7 +485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: a3587aa0c991e8b4f845d72118671f57, type: 3}
-  - {fileID: 8300000, guid: 39a53c6b59305ea41bc533f684753a6f, type: 3}
+  - {fileID: 8300000, guid: b5bc10f4d9bd65243b56e20218638cf8, type: 3}
 --- !u!1001 &756134003
 PrefabInstance:
   m_ObjectHideFlags: 0
