@@ -30,8 +30,6 @@ public class CheckUi : MonoBehaviour
 	}
 	public void OnclickNOButton()
 	{
-
-		
 		gameObject.SetActive(false);
 	}
 	public void Restart()
@@ -42,7 +40,7 @@ public class CheckUi : MonoBehaviour
 	}
 	public void Tiltle() 
 	{
-		SceneManager.LoadScene("SaveLoadTest");
+		SceneManager.LoadScene("TitleScene");
 	}
 	public void Off()
 	{

@@ -116,7 +116,7 @@ public class Tutorial : MonoBehaviour
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
 					if (!tuto2finish)
 					{
-						//yield return new WaitForSeconds(2f);
+						yield return new WaitForSeconds(1.8f);
 						tutorialUiManager.tuto1.SetActive(true);
 						if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(16.5f, 0f, -16.5f)))
 						{
@@ -374,6 +374,7 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Action)
 				{
+					marker.SetActive(false);
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
 					gameManager.uIManager.battleUiManager.attackButton.interactable = true;
 					gameManager.uIManager.battleUiManager.weapon2Button.interactable = false;
@@ -391,12 +392,12 @@ public class Tutorial : MonoBehaviour
 							//gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(false);
 							tutorialUiManager.turto7_Text2.SetActive(false);
 							tutorialUiManager.turto7_Text3.SetActive(true);
-							yield return new WaitForSeconds(2f);
+							yield return new WaitForSeconds(3f);
 							check3 = true;
 							tuto7finish3 = true;
 							check2 = false;
 							Turn.ChangeStateIdle();
-							yield return 0;
+							yield return 0; 
 						}
 						yield return 0;
 					}
@@ -433,6 +434,7 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Action)
 				{
+					marker.SetActive(false);
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
 					gameManager.uIManager.battleUiManager.itemButton.interactable = true;
 					gameManager.uIManager.battleUiManager.attackButton.interactable = false;
