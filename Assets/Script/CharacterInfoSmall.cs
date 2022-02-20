@@ -26,10 +26,6 @@ public class CharacterInfoSmall : MonoBehaviour
 	}
 	private void OnEnable()
 	{
-		if(gameManager.uIManager.InfoUiScript.smallInfo.gameObject.activeSelf)
-		{
-			gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(false);
-		}
 		if (gameManager.targetPlayer != null)
 		{
 			if (gameManager.targetPlayer.handFull)
@@ -44,13 +40,6 @@ public class CharacterInfoSmall : MonoBehaviour
 			}
 		}
 		
-	}
-	private void OnDisable()
-	{
-		if (!gameManager.uIManager.InfoUiScript.smallInfo.gameObject.activeSelf)
-		{
-			gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(true);
-		}
 	}
 	private void Update()
 	{

@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour
     }
     public void OnCharacterInfo()
     {
-        InfoUiScript.smallInfo.gameObject.SetActive(true);
+        InfoUiScript.ChangeInfoUi(3);
     }
     public void OffCharacterInfo()
     {

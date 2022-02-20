@@ -404,7 +404,7 @@ public class Tutorial : MonoBehaviour
 				}
 				yield return 0;
 			}
-			while (i ==3 && !tuto7finish4)
+			while (i ==3 && !tuto7finish4 && tuto7finish3)
 			{
 				if (!check5)
 				{

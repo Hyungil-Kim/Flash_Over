@@ -27,14 +27,6 @@ public class CharInfo : MonoBehaviour
 	{
 		gameManager = GameManager.instance;
 	}
-	private void OnEnable()
-	{
-			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(false);
-	}
-	private void OnDisable()
-	{
-			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(true);
-	}
 	public void UpdateData(Player targetPlayer)
 	{
 		if (targetPlayer != null)
@@ -66,7 +58,7 @@ public class CharInfo : MonoBehaviour
 	public void ClickChangeTileInfoButton()
 	{
 		gameManager.target = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject).gameObject;
-		gameManager.uIManager.InfoUiScript.tileInfo.gameObject.SetActive(true);
+		gameManager.uIManager.InfoUiScript.ChangeInfoUi(1);
 		gameObject.SetActive(false);
 	}
 
