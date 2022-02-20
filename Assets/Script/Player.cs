@@ -35,7 +35,7 @@ public class Player : FSM<PlayerState>
 	public GameObject Fire_Hose;
 	public ParticleSystem waterStraight;
 	public ParticleSystem waterWide;
-
+	public bool isPlayerParticle;
 	private FireHose fireHose;
 
 
@@ -143,6 +143,7 @@ public class Player : FSM<PlayerState>
 	}
 	public void PlayAttackParticle()
 	{
+		isPlayerParticle = true;
 		if (gameManager.num == 1)
 		{
 			waterStraight.Play();
@@ -157,11 +158,13 @@ public class Player : FSM<PlayerState>
 	{
 		yield return StartCoroutine(fireHose.CheckFireHoseStop(this));
 		yield return new WaitForSeconds(0.5f);
+		isPlayerParticle = false;
 		SetState(PlayerState.End);
 	}
 	public IEnumerator DeathAnimation()
 	{
 		dead = true;
+		isPlayerParticle = true;
 		animator.SetBool("death", true);
 		yield return new WaitForSeconds(0.5f);
 		yield return 0;
@@ -169,20 +172,24 @@ public class Player : FSM<PlayerState>
 	public IEnumerator ThrowAnimation()
 	{
 		animator.SetBool("throw", true);
+		isPlayerParticle = true;
 		yield return new WaitForSeconds(1f);
 	}
 	public void ThrowEnd()
 	{
+		isPlayerParticle = false;
 		animator.SetBool("throw", false);
 	}
 	public void OpenDoor()
 	{
 		StartCoroutine(gameManager.uIManager.battleUiManager.findDoor.OpenDoor());
+		isPlayerParticle = true;
 	}
 	public void OpenDoorEnd()
 	{
 		animator.SetBool("openDoor", false);
 		StartCoroutine(WaitTimeEnd(1f));
+		isPlayerParticle = false;
 		AllTileMesh.instance.UpdateFog();
 	}
 	public IEnumerator WaitTimeEnd(float num)

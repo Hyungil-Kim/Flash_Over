@@ -309,12 +309,11 @@ public class GameManager : MonoBehaviour
     public void GetClickedEndMouse()
 	{
 		press = false;
-		if (!point && isStart && !uIManager.InfoUiScript.tileInfo.on )
+		if (!point && isStart && !uIManager.InfoUiScript.tileInfo.on)
 		{
 
-			uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(false);
-			uIManager.InfoUiScript.tileInfo.gameObject.SetActive(false);
-			uIManager.InfoUiScript.claimantInfo.gameObject.SetActive(false);
+			uIManager.InfoUiScript.ChangeInfoUi(3);
+
 			Debug.Log("Start");
 
 			/////////////////////////////////////////////////////////////////////////////////////////////// 마우스 위치 저장
@@ -367,8 +366,8 @@ public class GameManager : MonoBehaviour
 						preTile = tilemapManager.ReturnTile(targetPlayer.gameObject);
 					}
 					if (targetPlayer != target)
-					{	
-						uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(true);
+					{
+						uIManager.InfoUiScript.ChangeInfoUi(0);
 						uIManager.InfoUiScript.charaterInfo.UpdateData(target.GetComponent<Player>());
 					}
 					else
@@ -420,7 +419,7 @@ public class GameManager : MonoBehaviour
 							{
 								if (targetTile != tilemapManager.ReturnTile(targetPlayer.moveHelper))
 								{
-									uIManager.InfoUiScript.tileInfo.gameObject.SetActive(true);
+									uIManager.InfoUiScript.ChangeInfoUi(1);
 									uIManager.InfoUiScript.tileInfo.UpdateTileInfo();
 								}
 							}
@@ -428,7 +427,7 @@ public class GameManager : MonoBehaviour
 							{
 								if (targetTile != tilemapManager.ReturnTile(targetPlayer.gameObject))
 								{
-									uIManager.InfoUiScript.tileInfo.gameObject.SetActive(true);
+									uIManager.InfoUiScript.ChangeInfoUi(1);
 									uIManager.InfoUiScript.tileInfo.UpdateTileInfo();
 								}
 							}
@@ -438,11 +437,11 @@ public class GameManager : MonoBehaviour
 				}
 				else if (target.tag == "Claimant")
 				{
-					uIManager.InfoUiScript.claimantInfo.gameObject.SetActive(true);
-					uIManager.InfoUiScript.claimantInfo.GetComponent<ClaimantInfo2>().UpdateClaimantInfo();
+					uIManager.InfoUiScript.ChangeInfoUi(2);
+					uIManager.InfoUiScript.claimantInfo.UpdateClaimantInfo();
 				}
 
-				if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Action)
+				if (targetPlayer != null && targetPlayer.curStateName == PlayerState.Action && !targetPlayer.isPlayerParticle)
 				{
 					var fixedPos = mouse3DPos - targetPlayer.transform.position;
 					if (0 < fixedPos.x && Mathf.Abs(fixedPos.x) > Mathf.Abs(fixedPos.z))//오
@@ -483,7 +482,7 @@ public class GameManager : MonoBehaviour
 				if (uIManager.InfoUiScript.tileInfo.on)
 				{
 					uIManager.InfoUiScript.tileInfo.on = false;
-					uIManager.InfoUiScript.tileInfo.gameObject.SetActive(false);
+					uIManager.InfoUiScript.ChangeInfoUi(3);
 				}
 			}
 		}

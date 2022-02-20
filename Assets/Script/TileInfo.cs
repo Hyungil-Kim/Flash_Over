@@ -170,7 +170,7 @@ public class TileInfo : MonoBehaviour
 				gameManager.targetPlayer = elem.GetComponent<Player>();
 			}
 		}
-		gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.SetActive(true);
+		gameManager.uIManager.InfoUiScript.ChangeInfoUi(0);
 		gameObject.SetActive(false);
 	}
 }

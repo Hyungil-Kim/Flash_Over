@@ -155,7 +155,7 @@ public class PlayerEndState : State
 			fsm.gameManager.readyPlayerAction = true;
 			fsm.gameManager.targetPlayer = null;
 		}
-
+		fsm.isPlayerParticle = false;
 		fsm.moveHelper.transform.localPosition = Vector3.zero;
 		if(!fsm.gameManager.tutorial)
 		fsm.StartCoroutine(Turn.CoTurnSystem());
