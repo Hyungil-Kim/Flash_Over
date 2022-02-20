@@ -38,7 +38,8 @@ public class CreateCharacter : MonoBehaviour
             //test.NewSetCharacter();
             if (GameManager.instance.tutorial)
             {
-                test.SettingFixCharacter(20, 10, 50, 20,20);
+                test.SettingFixCharacter(20, 10, 50, 5,5);
+                GameData.userData.fireManList.Add(0,GameData.userData.characterList[0]);
             }
             else
             {

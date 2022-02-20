@@ -160,12 +160,15 @@ public class GameManager : MonoBehaviour
 			AllTileMesh.instance.Init();
 			if (Turn.players.Count != 0 && PlaySaveSystem.ps == null)
 			{
+				targetPlayer = Turn.players[0];
 				ChangeTargetPlayer(Turn.players[0].gameObject);
+				Debug.Log("in");
 			}
 			else if (targetPlayer != null)
 			{
 				ChangeTargetPlayer(targetPlayer.gameObject);
 			}
+
 		}
 	}
 	public void GetTilePosition(Vector2 mousePosition)
@@ -598,7 +601,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void LateUpdate()
 	{
-		if (drag && isStart)
+		if (drag && isStart && !tutorial)
 		{
 			CameraMove();
 		}

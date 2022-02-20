@@ -29,17 +29,11 @@ public class CharInfo : MonoBehaviour
 	}
 	private void OnEnable()
 	{
-		if (gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.activeSelf)
-		{
 			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(false);
-		}
 	}
 	private void OnDisable()
 	{
-		if (!gameManager.uIManager.InfoUiScript.charaterInfo.gameObject.activeSelf)
-		{
 			gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(true);
-		}
 	}
 	public void UpdateData(Player targetPlayer)
 	{

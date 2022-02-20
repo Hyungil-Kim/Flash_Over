@@ -249,7 +249,7 @@ public class Tutorial : MonoBehaviour
 				{
 					ChangeTile(new Vector3(15.5f, 0, -14.5f));
 					marker.SetActive(true);
-					marker.transform.position = new Vector3(17.5f, 0, -14.5f);
+					marker.transform.position = new Vector3(17.5f, 1, -14.5f);
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
 					check = true;
 				}
@@ -350,7 +350,7 @@ public class Tutorial : MonoBehaviour
 				{
 					//ChangeTile(new Vector3(16.5f, 0, -12.5f));
 					marker.SetActive(true);
-					marker.transform.position = new Vector3(16.5f, 0, -12.5f);
+					marker.transform.position = new Vector3(17.5f, 1, -13.5f);
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
 					gameManager.uIManager.battleUiManager.rescueButton.interactable = false;
 
@@ -363,7 +363,7 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Move)
 				{
-					if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(16.5f, 0, -12.5f)))
+					if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(17.5f, 0, -13.5f)))
 					{
 						gameManager.uIManager.battleUiManager.moveButton.interactable = true;
 					}
@@ -388,9 +388,10 @@ public class Tutorial : MonoBehaviour
 					{
 						while(!check3 && gameManager.uIManager.InfoUiScript.claimantInfo.gameObject.activeSelf)
 						{
+							//gameManager.uIManager.InfoUiScript.smallInfo.gameObject.SetActive(false);
 							tutorialUiManager.turto7_Text2.SetActive(false);
 							tutorialUiManager.turto7_Text3.SetActive(true);
-							yield return new WaitForSeconds(1f);
+							yield return new WaitForSeconds(2f);
 							check3 = true;
 							tuto7finish3 = true;
 							check2 = false;
@@ -408,7 +409,7 @@ public class Tutorial : MonoBehaviour
 				{
 					//ChangeTile(new Vector3(17.5f, 0, -12.5f));
 					marker.SetActive(true);
-					marker.transform.position = new Vector3(17.5f, 0, -12.5f);
+					marker.transform.position = new Vector3(17.5f, 1, -12.5f);
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
 					gameManager.uIManager.battleUiManager.rescueButton.interactable = false;
 

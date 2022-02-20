@@ -44,6 +44,7 @@ public class TileInfo : MonoBehaviour
 	public void OnEnable()
 	{
 		gameManager.uIManager.battleUiManager.AllButtonOff();
+		gameManager.uIManager.battleUiManager.AllButtonOff();
 		on = true;
 	}
 	public void OnDisable()

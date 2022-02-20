@@ -42,14 +42,15 @@ public class UIManager : MonoBehaviour
             gameManager.prevPos = pos;
         }
         gameManager.isStart = true;
+        
         gameManager.Init();
         startButton.gameObject.SetActive(false);
         icon.gameObject.SetActive(false);
         audio.ChangeAudioClip(1);
-
         betweenPlaying.ShowStartPanel();
         
     }
+ 
     public void OnCharacterIcon()
     {
         icon.gameObject.SetActive(true);

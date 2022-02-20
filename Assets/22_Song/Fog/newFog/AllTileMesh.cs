@@ -42,23 +42,23 @@ public class AllTileMesh : MonoBehaviour
 
     void Update()
     {
-        LerpBlur();
+      //  LerpBlur();
     }
     private void Start()
     {
-        blurMat = new Material(Shader.Find("FogOfWar/AverageBlur"));
-        texBuffer = new Texture2D(/*mapWidth*/ 128, /*mapHeight*/128, TextureFormat.ARGB32, false);
-        texBuffer.wrapMode = TextureWrapMode.Clamp;
+        //blurMat = new Material(Shader.Find("FogOfWar/AverageBlur"));
+        //texBuffer = new Texture2D(/*mapWidth*/ 128, /*mapHeight*/128, TextureFormat.ARGB32, false);
+        //texBuffer.wrapMode = TextureWrapMode.Clamp;
 
-        int width = (int)(/*mapWidth*/128 * 1.5f);
-        int height = (int)(/*mapHeight*/ 128* 1.5f);    
+        //int width = (int)(/*mapWidth*/128 * 1.5f);
+        //int height = (int)(/*mapHeight*/ 128* 1.5f);    
 
-        blurBuffer = RenderTexture.GetTemporary(width, height, 0);
-        blurBuffer2 = RenderTexture.GetTemporary(width, height, 0);
+        //blurBuffer = RenderTexture.GetTemporary(width, height, 0);
+        //blurBuffer2 = RenderTexture.GetTemporary(width, height, 0);
 
-        curTexture = RenderTexture.GetTemporary(width, height, 0);
-        nextTexture = RenderTexture.GetTemporary(width, height, 0);
-        lerpBuffer = RenderTexture.GetTemporary(width, height, 0);
+        //curTexture = RenderTexture.GetTemporary(width, height, 0);
+        //nextTexture = RenderTexture.GetTemporary(width, height, 0);
+        //lerpBuffer = RenderTexture.GetTemporary(width, height, 0);
 
     }
     public void Init()
@@ -77,52 +77,52 @@ public class AllTileMesh : MonoBehaviour
         UpdateFog();
         Turn.TurnOff += UpdateFog;
 
-        SetMaterial();
+        //SetMaterial();
     }
-    public void SetMaterial()
-    {
-        //Texture2D texture = new Texture2D(128, 128, TextureFormat.ARGB32,false);
-        //texture.wrapMode = TextureWrapMode.Clamp;
-        ////var colorBuffer = new Color[10];
+    //public void SetMaterial()
+    //{
+    //    //Texture2D texture = new Texture2D(128, 128, TextureFormat.ARGB32,false);
+    //    //texture.wrapMode = TextureWrapMode.Clamp;
+    //    ////var colorBuffer = new Color[10];
 
-        //texture.SetPixel(0,0,fogMaterial.color);
-        //texture.SetPixel(0,1,fogMaterial.color);
-        //texture.SetPixel(0,2,fogMaterial.color);
-        //texture.SetPixel(0,3,fogMaterial.color);
-        //texture.SetPixel(0,4,fogMaterial.color);
-        //texture.SetPixel(0,5,fogMaterial.color);
-        //texture.Apply();
-        //Graphics.Blit(texture, testBuffer, blurMat, 1);
+    //    //texture.SetPixel(0,0,fogMaterial.color);
+    //    //texture.SetPixel(0,1,fogMaterial.color);
+    //    //texture.SetPixel(0,2,fogMaterial.color);
+    //    //texture.SetPixel(0,3,fogMaterial.color);
+    //    //texture.SetPixel(0,4,fogMaterial.color);
+    //    //texture.SetPixel(0,5,fogMaterial.color);
+    //    //texture.Apply();
+    //    //Graphics.Blit(texture, testBuffer, blurMat, 1);
 
-        Graphics.Blit(texBuffer, blurBuffer, blurMat, 0);
-        Graphics.Blit(blurBuffer, blurBuffer2, blurMat, 0);
-        Graphics.Blit(blurBuffer2, blurBuffer, blurMat, 0);
+    //    //Graphics.Blit(texBuffer, blurBuffer, blurMat, 0);
+    //    //Graphics.Blit(blurBuffer, blurBuffer2, blurMat, 0);
+    //    //Graphics.Blit(blurBuffer2, blurBuffer, blurMat, 0);
 
-        Graphics.Blit(blurBuffer, nextTexture);
-
-
-        testTexture = new Texture2D(16, 16);
-        testTexture.Apply();
-        Graphics.Blit(testTexture, testBuffer);
-        fogMaterial.SetTexture("_MainTex", testBuffer);
+    //    //Graphics.Blit(blurBuffer, nextTexture);
 
 
-        if (curTexture != null)
-        {
-            //fogMaterial.SetTexture("_MainTex", curTexture);
-        }
-    }
-    public void LerpBlur()
-    {
-        // CurTexture  -> LerpBuffer
-        // LerpBuffer  -> "_LastTex"
-        // NextTexture -> FogTexture [Pass 1 : Lerp]
+    //    //testTexture = new Texture2D(16, 16);
+    //    //testTexture.Apply();
+    //    //Graphics.Blit(testTexture, testBuffer);
+    //    //fogMaterial.SetTexture("_MainTex", testBuffer);
 
-        Graphics.Blit(curTexture, lerpBuffer);
-        blurMat.SetTexture("_LastTex", lerpBuffer);
 
-        Graphics.Blit(nextTexture, curTexture, blurMat, 1);
-    }
+    //    //if (curTexture != null)
+    //    //{
+    //    //    //fogMaterial.SetTexture("_MainTex", curTexture);
+    //    //}
+    //}
+    //public void LerpBlur()
+    //{
+    //    // CurTexture  -> LerpBuffer
+    //    // LerpBuffer  -> "_LastTex"
+    //    // NextTexture -> FogTexture [Pass 1 : Lerp]
+
+    //    Graphics.Blit(curTexture, lerpBuffer);
+    //    blurMat.SetTexture("_LastTex", lerpBuffer);
+
+    //    Graphics.Blit(nextTexture, curTexture, blurMat, 1);
+    //}
     public void UpdateFog()
     {
         ExceptVisiable();

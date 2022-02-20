@@ -50,8 +50,6 @@ public static class Turn
 			}
             foreach (var player in players)
             {
-                
-
                 if (player.curStateName == PlayerState.Idle)
                 {
                     GameManager.instance.ChangeTargetPlayer(player.gameObject);
