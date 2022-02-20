@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
 	}
 	public void Start()
 	{
+		Turn.lose = false;
+		Turn.win = false;
 		//VisionCheck.Init();
 		var characters = GameObject.FindGameObjectsWithTag("CreateCharacter");
 
@@ -186,14 +188,17 @@ public class GameManager : MonoBehaviour
 	}
 	public void GetTilePosition(Vector2 mousePosition)
 	{
+		if(!point)
 		mousePos = mousePosition;
 
 	}
 	public void GetClickedStartMouse(Vector2 callBack)
 	{
-		prevPos = callBack;
-		drag = true;
-
+		if (!point)
+		{
+			prevPos = callBack;
+			drag = true;
+		}
 	}
 	public Player changePlayer = null;
 	public CreateCharacter change = null;
@@ -583,7 +588,7 @@ public class GameManager : MonoBehaviour
 	{
 		var t = turnCount;
 		uIManager.upperUIManager.turn.text = t.ToString();
-		tMPro.text = Turn.players.Count.ToString();
+		//tMPro.text = Turn.players.Count.ToString();
 		var pointer = IsPointerOverUI();
 		if (pointer)
 		{
@@ -613,7 +618,7 @@ public class GameManager : MonoBehaviour
 	}
 	public void LateUpdate()
 	{
-		if (drag && isStart && !tutorial)
+		if (drag && isStart && !tutorial && !point)
 		{
 			CameraMove();
 		}
