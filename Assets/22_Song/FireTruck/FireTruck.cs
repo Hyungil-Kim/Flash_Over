@@ -235,6 +235,8 @@ public class FireTruck : MonoBehaviour
             fireman.Value.isSelected = false;
         }
         OnExitConsumShop();
+        outFireMan.Clear();
+        gameObject.SetActive(false);
     }
     public void OnExitConsumShop()
     {

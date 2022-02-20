@@ -14,7 +14,7 @@ public class UIOnOff : MonoBehaviour
 {
     public GameObject tutorial;
     public TutorialPlay[] tutorialPlays;
-    public TutorialPlay worldmapTuto;
+    public GameObject worldmapTuto;
 
     //터치아무데나해도 ui창 사라지는거 하고 싶어서
     public MoveControlor mousePoint;
@@ -251,10 +251,18 @@ public class UIOnOff : MonoBehaviour
         stage.SetActive(true);
         returnButton.SetActive(true);
 
+        if(!GameData.userData.WorldmapTuto)
+        {
+            worldmapTuto.SetActive(true);
+        }
         //character.SetActive(false);
 
     }
-
+    public void CloseWorldmapTuto()
+    {
+        worldmapTuto.SetActive(false);
+        GameData.userData.WorldmapTuto = true;
+    }
     public void ReturnMainLobby(string uiName)
     {
         offscreanIndicatorPanel.SetActive(false);

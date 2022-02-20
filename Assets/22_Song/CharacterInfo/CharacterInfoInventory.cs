@@ -21,7 +21,7 @@ public class CharacterInfoInventory : MonoBehaviour
     public int sortIndex;
 
     public GameObject weightFull;
-    public AlreadyEquip alreadyEquip;
+    public GameObject alreadyEquip;
 
     public TMP_Dropdown optionDropdown;
 
@@ -312,9 +312,10 @@ public class CharacterInfoInventory : MonoBehaviour
     }
     public void AlreadyEquip(CharacterData character, ItemDataBase itemData, ItemType itemType)
     {
-        alreadyEquip.Init(character, itemData, itemType);
-        alreadyEquip.exit = GetComponentInParent<CharacterInfo>().OnExitInventory;
-        alreadyEquip.gameObject.SetActive(true);
+        var already = alreadyEquip.GetComponentInChildren<AlreadyEquip>();
+        already.Init(character, itemData, itemType);
+        already.exit = GetComponentInParent<CharacterInfo>().OnExitInventory;
+        alreadyEquip.SetActive(true);
     }
     public void OptionSort(int index)
     {
