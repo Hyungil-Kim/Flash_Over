@@ -3,13 +3,19 @@ using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.InputSystem.EnhancedTouch;
-
+using System.Collections;
 public class ScreenTouch : MonoBehaviour
 {
 	public float Zoom { get; private set; }
 
 	public MoveControlor mousePoint;
-    private StageSelect stageSelect;
+	private Coroutine zoomCoroutine;
+	private StageSelect stageSelect;
+	private Transform cameraTransform;
+
+	[SerializeField]
+	private float cameraSpeed = 4f;
+
 	public float minZoomInch = 0.2f;
 	public float maxZoomInch = 0.5f;
 	// Start is called before the first frame update
@@ -44,26 +50,67 @@ public class ScreenTouch : MonoBehaviour
 	void Awake()
     {
 		mousePoint = new MoveControlor();
+		cameraTransform = Camera.main.transform;
 		stageSelect = GameObject.Find("StageSelectFix").GetComponent<StageSelect>();
 
+		
+	}
+    private void Start()
+    {
 		mousePoint.Mouse.UiMove.performed += val => stageSelect.ScreenMove(val.ReadValue<Vector2>());
 		mousePoint.Mouse.UiTouch.started += val => stageSelect.ScreenDrag(mousePoint.Mouse.UiMove.ReadValue<Vector2>());
 		mousePoint.Mouse.UiTouch.started += val => stageSelect.ScreenTouch(mousePoint.Mouse.UiMove.ReadValue<Vector2>());
-    }
-	private void LateUpdate()
+		mousePoint.Mouse.SecondaryFingerContact.started += val => ZoomStart();
+		mousePoint.Mouse.SecondaryFingerContact.canceled += val => ZoomEnd();
+	}
+    private void LateUpdate()
 	{
 		Zoom = 0f;
 	}
 	public void Update()
 	{
-        var touchList = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.ToArray();
-        if (touchList.Length == 2)
-        {
-            mulitiTouchCount(touchList);
-        }
+        //var touchList = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.ToArray();
+        //if (touchList.Length == 2)
+        //{
+        //    mulitiTouchCount(touchList);
+        //}
     }
+	private void ZoomStart()
+	{
+		zoomCoroutine = StartCoroutine(ZoomDetection());
+	}
+	private void ZoomEnd()
+	{
+		StopCoroutine(zoomCoroutine);
+	}
+	IEnumerator ZoomDetection()
+	{
+		
+		float previousDistance = 0f;
+		float distance = 0f;
+		while (true)
+		{
+			distance = Vector2.Distance(mousePoint.Mouse.PrimaryFingerPosition.ReadValue<Vector2>(), mousePoint.Mouse.SecondaryFingerPosition.ReadValue<Vector2>());
+			if (distance > previousDistance)
+			{
+				Vector3 targetPosition = cameraTransform.position;
+				targetPosition.y -= 1;
+				if (targetPosition.y <= 1) yield return targetPosition.y == 5;
+				cameraTransform.position = Vector3.Slerp(cameraTransform.position, targetPosition, Time.deltaTime * cameraSpeed);
+			}
+			else if (distance < previousDistance)
+			{
+				Vector3 targetPosition = cameraTransform.position;
+				targetPosition.y += 1;
+				if (targetPosition.y > 1) yield return targetPosition.y == 700;
 
-    public void mulitiTouchCount(UnityEngine.InputSystem.EnhancedTouch.Touch[] touches)
+				cameraTransform.position = Vector3.Slerp(cameraTransform.position, targetPosition, Time.deltaTime * cameraSpeed);
+			}
+			previousDistance = distance;
+			yield return null;
+		}
+	}
+	public void mulitiTouchCount(UnityEngine.InputSystem.EnhancedTouch.Touch[] touches)
 	{
 		var touch0 = touches[0];
 		var touch1 = touches[1];

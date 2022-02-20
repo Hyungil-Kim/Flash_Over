@@ -570,7 +570,7 @@ public class GameManager : MonoBehaviour
 	{
 		var t = turnCount;
 		uIManager.upperUIManager.turn.text = t.ToString();
-		tMPro.text = Turn.players.Count.ToString();
+		//tMPro.text = Turn.players.Count.ToString();
 		var pointer = IsPointerOverUI();
 		if (pointer)
 		{
