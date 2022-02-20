@@ -267,7 +267,7 @@ public class GameManager : MonoBehaviour
 		ChangeLayersRecursively(player.Fire_Hose.transform, "Player");
 
 		cameraController.CameraMoving(player);
-		if ((player.curStateName == PlayerState.Idle || player.curStateName == PlayerState.Action|| player.curStateName == PlayerState.End))
+		if ((player.curStateName == PlayerState.Idle || player.curStateName == PlayerState.Action || player.curStateName == PlayerState.End))
 		{
 			switch (player.curStateName)
 			{

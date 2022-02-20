@@ -9,6 +9,8 @@ public class ClaimantInfo2 : MonoBehaviour
     public TextMeshProUGUI claimantState;
     public Slider sliderHp;
     public Slider sliderBreath;
+	public TextMeshProUGUI hpValue;
+	public TextMeshProUGUI BreathValue;
 	private void Awake()
 	{
 		gameManager = GameManager.instance;
@@ -45,6 +47,8 @@ public class ClaimantInfo2 : MonoBehaviour
 			}
 			sliderHp.value = (float)claimant.hp / (float)claimant.data.hp;
 			sliderBreath.value = (float)claimant.ap / (float)claimant.data.lung;
+			hpValue.text = claimant.hp.ToString();
+			BreathValue.text = claimant.ap.ToString();
 		}
 	}
 }

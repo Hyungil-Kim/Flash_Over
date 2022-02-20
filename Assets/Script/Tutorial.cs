@@ -304,7 +304,7 @@ public class Tutorial : MonoBehaviour
 						yield return new WaitForSeconds(1f);
 						tutorialUiManager.tuto6_Text_2.SetActive(false);
 						tutorialUiManager.tuto6.SetActive(true);
-						yield return new WaitForSeconds(1f);
+						yield return new WaitForSeconds(2f);
 						tuto6finish2 = true;
 						yield return 0;
 					}
