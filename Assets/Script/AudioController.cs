@@ -9,7 +9,7 @@ public class AudioController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        audio = gameObject.GetComponent<AudioSource>();
+        audio = Camera.main.GetComponent<AudioSource>();
         soundPlay = true;
     }
 

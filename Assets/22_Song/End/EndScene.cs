@@ -29,6 +29,7 @@ public class EndScene : MonoBehaviour
     }
     private void Start()
     {
+        audio = Camera.main.GetComponent<AudioController>();
         var count = 0;
         if (GameData.userData.fireManList != null)
         {
@@ -53,7 +54,7 @@ public class EndScene : MonoBehaviour
         {
             audio.ChangeAudioClip(0);
         }
-        else if (Turn.lose==true)
+        if (Turn.lose==true)
         {
             audio.ChangeAudioClip(1);
         }
