@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
         Turn.cameraController = this;
         camera = Camera.main;
         playerList = Turn.players;
-        offset = new Vector3(0, 6, -3);
+        offset = new Vector3(0, 6, -1);
         gameManager = GameManager.instance;
         target = gameManager.targetPlayer;
         transform.position = playerList[0].transform.position + offset;

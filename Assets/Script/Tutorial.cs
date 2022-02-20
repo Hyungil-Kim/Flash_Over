@@ -64,7 +64,7 @@ public class Tutorial : MonoBehaviour
 	}
 	public void StartTutorial()
 	{
-		var offset = new Vector3(0, 6, -3);
+		var offset = new Vector3(0, 6, -1.5f);
 		var pos = Turn.players[0].transform.position + offset;
 		gameManager.mousePos = pos;
 		gameManager.prevPos = pos;
@@ -425,6 +425,8 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Move)
 				{
+					var vector3 = new Vector3(17.5f, 6f, -14.3f);
+					Camera.main.transform.position = vector3;
 					tutorialUiManager.tuto_add1.SetActive(true);
 					if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(17.5f, 0, -12.5f)))
 					{

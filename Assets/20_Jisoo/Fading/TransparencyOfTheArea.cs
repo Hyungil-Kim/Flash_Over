@@ -39,7 +39,9 @@ public class TransparencyOfTheArea : MonoBehaviour
     {
         if (other == null) return;
         if (other.tag == "Wall" || other.tag == "DoorColider" || other.tag == "Untagged" || other.gameObject.layer == LayerMask.NameToLayer("Door"))
+		{
             color = other.gameObject.GetComponent<MeshRenderer>().material.color;
+		}
     }
     private void OnTriggerStay(Collider other)
     {
