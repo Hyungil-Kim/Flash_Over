@@ -9,6 +9,7 @@ public class EndScene : MonoBehaviour
     public int turnCount;
     public string stageName;
     public bool tutorial;
+    private AudioController audio;
     public void EndGame()
     {
         foreach (var fireman in GameData.userData.fireManList)
@@ -19,6 +20,7 @@ public class EndScene : MonoBehaviour
         GameData.userData.AddExp(50);
         GameData.userData.gold += 900;
         GameData.userData.StageClear();
+        resultSound();
     }
     private void Start()
     {
@@ -42,7 +44,15 @@ public class EndScene : MonoBehaviour
 
     public void resultSound()
     {
-        
+        if(Turn.win == true)
+        {
+            audio.ChangeAudioClip(0);
+        }
+        else if (Turn.lose==true)
+        {
+            audio.ChangeAudioClip(1);
+        }
+
     }
     public void BackHome()
     {

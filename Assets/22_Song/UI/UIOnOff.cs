@@ -240,8 +240,8 @@ public class UIOnOff : MonoBehaviour
     public void StageSelect()
     {
         StopAllCoroutines();
-        Camera.main.transform.position = selectCameraPos.transform.position;
-        Camera.main.transform.rotation = selectCameraPos.transform.rotation;
+        Camera.main.transform.position = selectCameraPos.transform.position+new Vector3(-50,130,-70);
+        Camera.main.transform.rotation = Quaternion.Euler(55,0,0);
 
         for (int i = 0; i < uiArray.Length-1; i++)
         {

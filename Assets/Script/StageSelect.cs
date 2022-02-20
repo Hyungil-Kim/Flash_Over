@@ -9,6 +9,7 @@ public class StageSelect : MonoBehaviour
 
     private GameObject[] buildings;
     private GameManager gameManager;
+    private ScreenTouch screenTouch;
     private UIOnOff uiOnOff;
     private Vector3 prevPos;
     private Vector3 mousePos;
@@ -27,7 +28,7 @@ public class StageSelect : MonoBehaviour
     private void Awake()
     {
         buildings = GameObject.FindGameObjectsWithTag("Building");
-
+        screenTouch = gameObject.GetComponent<ScreenTouch>();
         levels = new List<GameObject>(buildings);
         DivideByLevel();
         RandomSelect();
@@ -57,9 +58,9 @@ public class StageSelect : MonoBehaviour
     public void CameraMove()
     { 
         var currPos = mousePos;
-        currPos.z = 50f;
+        currPos.z = 75f;
         var pos1 = Camera.main.ScreenToWorldPoint(currPos);
-        prevPos.z = 50f;
+        prevPos.z = 75f;
         var pos2 = Camera.main.ScreenToWorldPoint(prevPos);
 
         var delta = pos2 - pos1;
@@ -139,7 +140,6 @@ public class StageSelect : MonoBehaviour
     public void GetMousePosition(Vector2 mousePosition)
     {
         mousePos = mousePosition;
-
     }
 
 }
