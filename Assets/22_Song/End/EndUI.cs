@@ -34,7 +34,6 @@ public class EndUI : MonoBehaviour
         //}
 
         stageName.text = $"{ GameData.userData.stageName}";
-
         //Turn.turnCount = 0;
     }
     public void Init()

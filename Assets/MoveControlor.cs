@@ -80,6 +80,33 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrimaryFingerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""a4f955e7-47bf-4dfb-8d43-9452709ff410"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SecondaryFingerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""2e3103e6-bc51-436f-b0a4-2da1d9141e55"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SecondaryFingerContact"",
+                    ""type"": ""Button"",
+                    ""id"": ""53e2fc4f-4d11-4fe6-8347-f78a46cda62b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -146,6 +173,39 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""touch"",
                     ""action"": ""TestTouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""880b289a-2b6a-4a61-b78b-4ff0b635c174"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimaryFingerPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4a97d5d-2b50-43f4-8505-f24aa6319408"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryFingerPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""272c1055-32aa-439f-8f7d-5aff28d7e286"",
+                    ""path"": ""<Touchscreen>/touch1/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryFingerContact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -701,6 +761,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         m_Mouse_UiTouch = m_Mouse.FindAction("UiTouch", throwIfNotFound: true);
         m_Mouse_UiMove = m_Mouse.FindAction("UiMove", throwIfNotFound: true);
         m_Mouse_TestTouch = m_Mouse.FindAction("TestTouch", throwIfNotFound: true);
+        m_Mouse_PrimaryFingerPosition = m_Mouse.FindAction("PrimaryFingerPosition", throwIfNotFound: true);
+        m_Mouse_SecondaryFingerPosition = m_Mouse.FindAction("SecondaryFingerPosition", throwIfNotFound: true);
+        m_Mouse_SecondaryFingerContact = m_Mouse.FindAction("SecondaryFingerContact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -778,6 +841,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
     private readonly InputAction m_Mouse_UiTouch;
     private readonly InputAction m_Mouse_UiMove;
     private readonly InputAction m_Mouse_TestTouch;
+    private readonly InputAction m_Mouse_PrimaryFingerPosition;
+    private readonly InputAction m_Mouse_SecondaryFingerPosition;
+    private readonly InputAction m_Mouse_SecondaryFingerContact;
     public struct MouseActions
     {
         private @MoveControlor m_Wrapper;
@@ -788,6 +854,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         public InputAction @UiTouch => m_Wrapper.m_Mouse_UiTouch;
         public InputAction @UiMove => m_Wrapper.m_Mouse_UiMove;
         public InputAction @TestTouch => m_Wrapper.m_Mouse_TestTouch;
+        public InputAction @PrimaryFingerPosition => m_Wrapper.m_Mouse_PrimaryFingerPosition;
+        public InputAction @SecondaryFingerPosition => m_Wrapper.m_Mouse_SecondaryFingerPosition;
+        public InputAction @SecondaryFingerContact => m_Wrapper.m_Mouse_SecondaryFingerContact;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -815,6 +884,15 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @TestTouch.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnTestTouch;
                 @TestTouch.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnTestTouch;
                 @TestTouch.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnTestTouch;
+                @PrimaryFingerPosition.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnPrimaryFingerPosition;
+                @PrimaryFingerPosition.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnPrimaryFingerPosition;
+                @PrimaryFingerPosition.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnPrimaryFingerPosition;
+                @SecondaryFingerPosition.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnSecondaryFingerPosition;
+                @SecondaryFingerPosition.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnSecondaryFingerPosition;
+                @SecondaryFingerPosition.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnSecondaryFingerPosition;
+                @SecondaryFingerContact.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnSecondaryFingerContact;
+                @SecondaryFingerContact.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnSecondaryFingerContact;
+                @SecondaryFingerContact.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnSecondaryFingerContact;
             }
             m_Wrapper.m_MouseActionsCallbackInterface = instance;
             if (instance != null)
@@ -837,6 +915,15 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
                 @TestTouch.started += instance.OnTestTouch;
                 @TestTouch.performed += instance.OnTestTouch;
                 @TestTouch.canceled += instance.OnTestTouch;
+                @PrimaryFingerPosition.started += instance.OnPrimaryFingerPosition;
+                @PrimaryFingerPosition.performed += instance.OnPrimaryFingerPosition;
+                @PrimaryFingerPosition.canceled += instance.OnPrimaryFingerPosition;
+                @SecondaryFingerPosition.started += instance.OnSecondaryFingerPosition;
+                @SecondaryFingerPosition.performed += instance.OnSecondaryFingerPosition;
+                @SecondaryFingerPosition.canceled += instance.OnSecondaryFingerPosition;
+                @SecondaryFingerContact.started += instance.OnSecondaryFingerContact;
+                @SecondaryFingerContact.performed += instance.OnSecondaryFingerContact;
+                @SecondaryFingerContact.canceled += instance.OnSecondaryFingerContact;
             }
         }
     }
@@ -972,6 +1059,9 @@ public partial class @MoveControlor : IInputActionCollection2, IDisposable
         void OnUiTouch(InputAction.CallbackContext context);
         void OnUiMove(InputAction.CallbackContext context);
         void OnTestTouch(InputAction.CallbackContext context);
+        void OnPrimaryFingerPosition(InputAction.CallbackContext context);
+        void OnSecondaryFingerPosition(InputAction.CallbackContext context);
+        void OnSecondaryFingerContact(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
