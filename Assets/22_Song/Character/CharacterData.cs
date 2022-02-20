@@ -1196,14 +1196,29 @@ public class CharacterData
         if(hose!=null)
         {
             hose.dataTable.durability--;
+            if(hose.dataTable.durability  <= 0)
+            {
+                GameData.userData.hoseList.Remove(hose);
+                DisarmItem(ItemType.Hose);
+            }
         }
         if(bunkerGear !=null)
         {
             bunkerGear.dataTable.durability--;
+            if (bunkerGear.dataTable.durability <= 0)
+            {
+                GameData.userData.bunkerGearList.Remove(bunkerGear);
+                DisarmItem(ItemType.BunkerGear);
+            }
         }
         if(oxygenTank != null)
         {
             oxygenTank.dataTable.durability--;
+            if (oxygenTank.dataTable.durability <= 0)
+            {
+                GameData.userData.oxygenTankList.Remove(oxygenTank);
+                DisarmItem(ItemType.OxygenTank);
+            }
         }
     }
 }

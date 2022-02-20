@@ -294,6 +294,8 @@ public class UIOnOff : MonoBehaviour
         mapLevel = MyDataTableMgr.stageInfoTable.GetTable(level).level;
         GameData.userData.gofireman = MyDataTableMgr.stageInfoTable.GetTable(level).rescuer;
         GameData.userData.stageName = MyDataTableMgr.stageInfoTable.GetTable(level).sceneOfFire;
+        GameData.userData.stageGold = MyDataTableMgr.stageInfoTable.GetTable(level).gold;
+        GameData.userData.stageExp = MyDataTableMgr.stageInfoTable.GetTable(level).exp;
     }
 
     private string DifficultyLevel(int level)

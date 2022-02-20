@@ -31,6 +31,10 @@ public class UserData : MySaveData
     public string stageName;
     //테스트 임시..스테이지 클리어 불변수
     public bool stageClear;
+    //스테이지 클리어 골드
+    public int stageGold;
+    //스테이지 클리어 경험치
+    public int stageExp;
 
     public bool StartTuto;
     public bool DaewonTuto;
@@ -108,7 +112,6 @@ public class UserData : MySaveData
                     buf.EndBuff();
                 }
             }
-            
         }
         fireManList.Clear();
         shopChaList.Clear();

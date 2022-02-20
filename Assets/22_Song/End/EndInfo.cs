@@ -20,6 +20,11 @@ public class EndInfo : MonoBehaviour
         chaName.text = $"이름 : {cd.characterName}";
         tired.text = $"피로도 : {cd.tiredScore}";
 
-        characteristic.text = $"특성 : ";
+        characteristic.text = $"특성";
+        foreach (var cha in cd.addCharacteristics)
+        {
+            characteristic.text = characteristic.text.Insert(characteristic.text.Length, $"\n{cha}");
+        }
+        
     }
 }

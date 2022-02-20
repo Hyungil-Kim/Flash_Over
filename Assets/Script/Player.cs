@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public enum PlayerState
 {
 	Idle,
@@ -202,6 +202,13 @@ public class Player : FSM<PlayerState>
 		SetState(PlayerState.End);
 		gameObject.SetActive(false);
 		Turn.players.Remove(this);
+		if(GameData.userData.characterList.Contains(cd))
+		GameData.userData.characterList.Remove(cd);
+		if(GameData.userData.fireManList.ContainsValue(cd))
+        {
+			int key = GameData.userData.fireManList.First((x)=>x.Value == cd).Key;
+			GameData.userData.fireManList.Remove(key);
+		}
 
 		if (Turn.players.Count != 0)
 		{

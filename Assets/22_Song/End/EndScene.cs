@@ -14,11 +14,11 @@ public class EndScene : MonoBehaviour
     {
         foreach (var fireman in GameData.userData.fireManList)
         {
-            //fireman.Value.EndStage(Turn.turnCount);
+            
             
         }
-        GameData.userData.AddExp(50);
-        GameData.userData.gold += 900;
+        GameData.userData.AddExp(GameData.userData.stageExp);
+        GameData.userData.gold += GameData.userData.stageGold;
         GameData.userData.StageClear();
         resultSound();
     }

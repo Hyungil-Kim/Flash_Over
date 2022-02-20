@@ -39,21 +39,21 @@ public class TrainingSlider : MonoBehaviour
         switch (type)
         {
             case TrainingStatType.Str:
-                text.text = $"Èû:{character.totalStats.str.stat}";
-                statMaxExp = character.totalStats.str.statData.maxexp;
-                statExp = character.totalStats.str.exp;
+                text.text = $"Èû:{character.baseStats.str.stat}\n·¹º§ {character.baseStats.str.level}";
+                statMaxExp = character.baseStats.str.statData.maxexp;
+                statExp = character.baseStats.str.exp;
                 slider.value = statExp / statMaxExp;
                 break;
             case TrainingStatType.Lung:
-                text.text = $"Æó:{character.totalStats.lung.stat}";
-                statMaxExp = character.totalStats.lung.statData.maxexp;
-                statExp = character.totalStats.lung.exp;
+                text.text = $"Æó:{character.baseStats.lung.stat}\n·¹º§ {character.baseStats.lung.level}";
+                statMaxExp = character.baseStats.lung.statData.maxexp;
+                statExp = character.baseStats.lung.exp;
                 slider.value = statExp / statMaxExp;
                 break;
             case TrainingStatType.Hp:
-                text.text = $"Ã¼·Â:{character.totalStats.hp.stat}";
-                statMaxExp = character.totalStats.hp.statData.maxexp;
-                statExp = character.totalStats.hp.exp;
+                text.text = $"Ã¼·Â:{character.baseStats.hp.stat}\n·¹º§ {character.baseStats.hp.level}";
+                statMaxExp = character.baseStats.hp.statData.maxexp;
+                statExp = character.baseStats.hp.exp;
                 slider.value = statExp / statMaxExp;
                 break;
             default:
@@ -87,23 +87,27 @@ public class TrainingSlider : MonoBehaviour
         switch (type)
         {
             case TrainingStatType.Str:
-                var stat = character.totalStats.str;
-                stat.exp += exp;
-                stat.CheakExp();
+                var stat = character.baseStats.str;
+                stat.IncreaseExp(exp);
+                //stat.exp += exp;
+                //stat.CheakExp();
                 break;
             case TrainingStatType.Lung:
-                stat = character.totalStats.lung;
-                stat.exp += exp;
-                stat.CheakExp();
+                stat = character.baseStats.lung;
+                stat.IncreaseExp(exp);
+                //stat.exp += exp;
+                //stat.CheakExp();
                 break;
             case TrainingStatType.Hp:
-                stat = character.totalStats.hp;
-                stat.exp += exp;
-                stat.CheakExp();
+                stat = character.baseStats.hp;
+                stat.IncreaseExp(exp);
+                //stat.exp += exp;
+                //stat.CheakExp();
                 break;
             default:
                 break;
         }
+        character.StatInit();
         exp = 0;
         normalExp = 0;
         Init(type);
