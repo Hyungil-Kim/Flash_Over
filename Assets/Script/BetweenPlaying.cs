@@ -86,14 +86,19 @@ public class BetweenPlaying : MonoBehaviour
 
 	public IEnumerator FalsePanel()
 	{
+		StopTurn();
+		Turn.lose = true;
 		falsePanel.SetActive(true);
 		yield return new WaitForSeconds(2f);
 		falsePanel.SetActive(false);
 
 		yield return new WaitForSeconds(1.5f);
 
-		Turn.lose = true;
 		SceneManager.LoadScene("EndScene");
+	}
+	public void FalsePanelVoid()
+	{
+		StartCoroutine(FalsePanel());
 	}
 	public void StopTurn()
 	{

@@ -165,7 +165,7 @@ public class PlayerEndState : State
 			}
 			else
 			{
-				fsm.gameManager.uIManager.battleUiManager.uIManager.betweenPlaying.FalsePanel();
+				fsm.gameManager.uIManager.battleUiManager.uIManager.betweenPlaying.FalsePanelVoid();
 			}
 		}
 	}
