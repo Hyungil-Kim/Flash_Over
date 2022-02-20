@@ -147,11 +147,24 @@ public class GameManager : MonoBehaviour
 		//PlaySaveSystem.ps.isPlay = true;
 
 		Turn.players = Turn.players.OrderBy((x) => x.index).ToList();
+
+		
 	}
 	public void StartGame()
 	{
 		uIManager.StartGame();
 		audioController.ChangeAudioClip(1);
+
+        foreach (var fireman in Turn.players)
+        {
+            foreach (var characteristic in fireman.cd.buff)
+            {
+				if(characteristic.buffTiming.Check(BuffTiming.BuffTimingEnum.GameStart))
+                {
+					characteristic.StartBuff();
+				}
+            }
+        }
 	}
 	public void Init()
 	{

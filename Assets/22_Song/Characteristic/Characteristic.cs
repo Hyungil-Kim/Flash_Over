@@ -2,44 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-public class CharacteristicTest : Buff
-{
-    private int prevStat = 0;
-    public CharacteristicTest(CharacterData characterData)
-    {
-        data = MyDataTableMgr.characteristicTable.GetTable(0);
-        cd = characterData;
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.GameStart);
-    }
-    public override bool Check(Player player)
-    {
-        return true;
-    }
-    
-    public override void EndBuff()
-    {
-    }
-    
-    public override void StartBuff()
-    {
-    }
-    
-    public override void WhileBuff()
-    {
-        if (cd.hp <= data.checkValue && prevStat == 0)
-        {
-            prevStat = cd.totalStats.str.stat;
-            cd.totalStats.str.stat += Mathf.RoundToInt(data.increaseStat);
-        }
-        else if (cd.hp > data.checkValue && prevStat != 0)
-        {
-            cd.totalStats.str.stat = prevStat;
-            prevStat = 0;
-        }
-    }
-}
-
 public class HeavyWeight : Buff
 {
     public int prevValue;
@@ -87,13 +49,13 @@ public class HeavyWeight : Buff
 public class SaveClaimant : Buff
 {
     public int prevValue;
+
     public SaveClaimant(CharacterData characterdata)
     {
-        data = MyDataTableMgr.characteristicTable.GetTable(5);
+        data = MyDataTableMgr.characteristicTable.GetTable("SaveClaimant");
         cd = characterdata;
         Init();
         buffTiming.AddType(BuffTiming.BuffTimingEnum.Move);
-        MyDataTableMgr.eventTable.GetTable(0);
     }
 
     public override bool Check(Player player)
@@ -155,17 +117,18 @@ public class Excited : Buff
         data = MyDataTableMgr.characteristicTable.GetTable("Excited");
         cd = characterdata;
         Init();
-        buffTiming.AddType(BuffTiming.BuffTimingEnum.TurnEnd);
+        buffTiming.AddType(BuffTiming.BuffTimingEnum.GameEnd);
     }
     public override bool Check(Player player)
     {
-        check = cd.tiredScore >= increaseValue;
+        check = cd.tiredScore >= 0;
         base.Check(player);
         return ing;
     }
     public override void StartBuff()
     {
-        cd.tiredScore -= Mathf.RoundToInt(increaseValue);
+        //cd.tiredScore -= Mathf.RoundToInt(increaseValue);
+        cd.tiredScore = Mathf.Clamp(cd.tiredScore - Mathf.RoundToInt(increaseValue), 0, 100);
         base.StartBuff();
     }
     public override void EndBuff()

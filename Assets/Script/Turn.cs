@@ -42,6 +42,17 @@ public static class Turn
 	}
 	public static IEnumerator CoTurnSystem()
 	{
+		foreach (var fireman in players)
+		{
+			foreach (var characteristic in fireman.cd.buff)
+			{
+				if (characteristic.buffTiming.Check(BuffTiming.BuffTimingEnum.TurnStart))
+				{
+					characteristic.Check(fireman);
+				}
+			}
+		}
+
 		if (!GameManager.instance.tutorial)
 		{
 			if (!GameManager.instance.uIManager.betweenPlaying.playerTurn)
@@ -190,6 +201,17 @@ public static class Turn
 		else
 		{
 			Tutorial.instance.StartTutorial();
+		}
+
+		foreach (var fireman in players)
+		{
+			foreach (var characteristic in fireman.cd.buff)
+			{
+				if (characteristic.buffTiming.Check(BuffTiming.BuffTimingEnum.TurnEnd))
+				{
+					characteristic.Check(fireman);
+				}
+			}
 		}
 	}
 	public static void ChangeStateIdle()

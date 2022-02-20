@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using AdvancedPeopleSystem;
+using Newtonsoft.Json;
+
 public enum CharacterStatType
 {
     Hp,
@@ -184,6 +186,7 @@ public class CharacterData
     public List<CharacteristicList> addCharacteristics = new List<CharacteristicList>();
 
     public int portraitIndex;
+    [JsonIgnore]
     public Sprite portrait
     {
         get
@@ -964,86 +967,26 @@ public class CharacterData
             case CharacteristicList.Ptsd:
                 characteristic = new Ptsd(this);
                 break;
-                //case CharacteristicList.Haughtiness:
-                //    characteristic = new Haughtiness(this);
-                //    break;
-                //case CharacteristicList.StrongMind:
-                //    characteristic = new StrongMind(this);
-                //    break;
-                //case CharacteristicList.Boldness:
-                //    characteristic = new Boldness(this);
-                //    break;
-                //case CharacteristicList.WidePersPective:
-                //    characteristic = new WidePersPective(this);
-                //    break;
-                //case CharacteristicList.FriendShip:
-                //    characteristic = new FriendShip(this);
-                //    break;
-                //case CharacteristicList.MasterOfWeapon:
-                //    characteristic = new MasterOfWeapon(this);
-                //    break;
-                //case CharacteristicList.QuickHealing:
-                //    characteristic = new QuickHealing(this);
-                //    break;
-                //case CharacteristicList.Hearing:
-                //    characteristic = new Hearing(this);
-                //    break;
-                //case CharacteristicList.Resilience:
-                //    characteristic = new Resilience(this);
-                //    break;
-                //case CharacteristicList.Coward:
-                //    characteristic = new Coward(this);
-                //    break;
-                //case CharacteristicList.Exaggerating:
-                //    characteristic = new Exaggerating(this);
-                //    break;
-                //case CharacteristicList.Laziness:
-                //    characteristic = new Laziness(this);
-                //    break;
-                //case CharacteristicList.Stubborn:
-                //    characteristic = new Stubborn(this);
-                //    break;
-                //case CharacteristicList.Mute:
-                //    //characteristic = new Mute(this);
-                //    break;
-                //case CharacteristicList.TooMuchStress:
-                //    characteristic = new TooMuchStress(this);
-                //    break;
-                //case CharacteristicList.LowSelfEsteem:
-                //    characteristic = new LowSelfEsteem(this);
-                //    break;
-                //case CharacteristicList.Heroism:
-                //    characteristic = new Heroism(this);
-                //    break;
-                //case CharacteristicList.Intelligent:
-                //    characteristic = new Intelligent(this);
-                //    break;
-                //case CharacteristicList.Nimble:
-                //    characteristic = new Nimble(this);
-                //    break;
-                //case CharacteristicList.Inside:
-                //    characteristic = new Inside(this);
-                //    break;
-                //case CharacteristicList.FireTolerance:
-                //    characteristic = new FireTolerance(this);
-                //    break;
-                //case CharacteristicList.Stronger:
-                //    characteristic = new Stronger(this);
-                //    break;
-                //case CharacteristicList.Berserker:
-                //    characteristic = new Berserker(this);
-                //    break;
-                //default:
-                //    break;
         }
-        buff.Add(characteristic);
-        if(characteristic.isCharacteristic)
+        if (!buff.Contains(characteristic))
         {
-            characteristics.Add(characteristic);
-        }
-        if(characteristic.isBadCharacteristic)
-        {
-            badCharacteristics.Add(characteristic);
+            buff.Add(characteristic);
+            if (characteristic.isCharacteristic)
+            {
+                characteristics.Add(characteristic);
+            }
+            if (characteristic.isBadCharacteristic)
+            {
+                badCharacteristics.Add(characteristic);
+                if (characteristic.isPhysical)
+                {
+                    badPhysical.Add(characteristic);
+                }
+                else if (characteristic.isPsychological)
+                {
+                    badPsycholosical.Add(characteristic);
+                }
+            }
         }
     }
 
@@ -1071,11 +1014,11 @@ public class CharacterData
     {
         
         var random = Random.value;
-        if (random <= MyDataTableMgr.menuTable.GetTable(GameData.userData.chaShopData.characteristicUpgrade).CS3Characteristic)
+        if (random <= 1f/*MyDataTableMgr.menuTable.GetTable(GameData.userData.chaShopData.characteristicUpgrade).CS3Characteristic*/)
         {
             var max = TotalCharacteristic.innateList.Count;
             var randomInnate = Random.Range(0, max);
-            //BuildCharacteristic(TotalCharacteristic.innateList[randomInnate]);
+            BuildCharacteristic(TotalCharacteristic.innateList[randomInnate]);
         }
     }
 

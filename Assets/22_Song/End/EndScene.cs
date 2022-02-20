@@ -12,10 +12,15 @@ public class EndScene : MonoBehaviour
     private AudioController audio;
     public void EndGame()
     {
-        foreach (var fireman in GameData.userData.fireManList)
+        foreach (var fireman in Turn.players)
         {
-            
-            
+            foreach (var characteristic in fireman.cd.buff)
+            {
+                if (characteristic.buffTiming.Check(BuffTiming.BuffTimingEnum.GameEnd))
+                {
+                    characteristic.Check(fireman);
+                }
+            }
         }
         GameData.userData.AddExp(GameData.userData.stageExp);
         GameData.userData.gold += GameData.userData.stageGold;

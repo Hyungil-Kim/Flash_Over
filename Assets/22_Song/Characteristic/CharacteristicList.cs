@@ -10,34 +10,7 @@ public enum CharacteristicList
     Movefaster,
     Stressfull,
     Ptsd,
-    
-    //Haughtiness,
-
-    //StrongMind,
-    //Boldness,
-    //WidePersPective,
-    //FriendShip,
-    //MasterOfWeapon,
-    //QuickHealing,
-    //Hearing,
-    //Resilience,
-    //Coward,
-    //Exaggerating,
-    //Laziness,
-    //Stubborn,
-    //Mute,
-    //TooMuchStress,
-    //LowSelfEsteem,
-    //Heroism,
-    //Intelligent,
-    //Nimble,
-    //Inside,
-    //FireTolerance,
-    //Stronger,
-    //Berserker,
-
 }
-
 public static class TotalCharacteristic
 {
     public static List<Buff> list = new List<Buff>();
@@ -47,5 +20,9 @@ public static class TotalCharacteristic
         innateList.Add(CharacteristicList.Excited);
         innateList.Add(CharacteristicList.Movefaster);
         innateList.Add(CharacteristicList.SaveClamant);
+    }
+    public static string CharacteristicName(CharacteristicList type)
+    {
+        return MyDataTableMgr.characteristicTable.GetTable(type.ToString()).name;
     }
 }

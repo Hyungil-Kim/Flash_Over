@@ -23,7 +23,7 @@ public class EndInfo : MonoBehaviour
         characteristic.text = $"Æ¯¼º";
         foreach (var cha in cd.addCharacteristics)
         {
-            characteristic.text = characteristic.text.Insert(characteristic.text.Length, $"\n{cha}");
+            characteristic.text = characteristic.text.Insert(characteristic.text.Length, $"\n{TotalCharacteristic.CharacteristicName(cha)}");
         }
         
     }

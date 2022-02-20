@@ -47,6 +47,8 @@ public class Buff
 
     public CheckBuff checkingCondition = new CheckBuff();
     public CharacteristicData data;
+
+
     public void Init()
     {
         id = data.id;
