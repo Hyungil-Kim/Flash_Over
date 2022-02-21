@@ -108,11 +108,11 @@ public class CharacterShop : MonoBehaviour
             testSettings.selectedElements.Accessory = Random.Range(-1,5);
             
             //testSettings.ApplyToCharacter(custom);
-            cd.setupModel = testSettings;
+            //cd.setupModel = testSettings;
 
-            var model = uiCharacterList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
-            cd.setupModel.ApplyToCharacter(model);
-            uiCharacterList[i].GetComponent<UICharacter>().Init(i);
+            //var model = uiCharacterList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            //cd.setupModel.ApplyToCharacter(model);
+            //uiCharacterList[i].GetComponent<UICharacter>().Init(i);
         }
     }
 
