@@ -13,14 +13,17 @@ public class LoadUI : MonoBehaviour
     public void Start()
     {
         //if (MySaveLoadSystem.CheckSaveFile())
-        if (continueButton != null)
-        {
-            continueButton.interactable = MySaveLoadSystem<UserData>.CheckSaveFile(SaveDataType.PlayerData);
-        }
+        //if (continueButton != null)
+        //{
+        //    continueButton.interactable = MySaveLoadSystem<PlaySave>.CheckSaveFile(SaveDataType.PlayerData,0);
+        //}
     }
     public void OnEnable()
     {
-        
+        if (continueButton != null)
+        {
+            continueButton.interactable = MySaveLoadSystem<PlaySave>.CheckSaveFile(SaveDataType.PlayerData, 0);
+        }
         //continueButton.interactable = MySaveLoadSystem<UserData>.CheckSaveFile(SaveDataType.PlayerData);
     }
     
