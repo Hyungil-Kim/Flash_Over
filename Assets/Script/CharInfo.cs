@@ -27,6 +27,13 @@ public class CharInfo : MonoBehaviour
 	{
 		gameManager = GameManager.instance;
 	}
+	public void Update()
+	{
+		if(gameManager.targetPlayer != null)
+		{
+			UpdateData(gameManager.targetPlayer);
+		}
+	}
 	public void UpdateData(Player targetPlayer)
 	{
 		if (targetPlayer != null)
