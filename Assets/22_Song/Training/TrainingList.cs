@@ -69,10 +69,10 @@ public class TrainingList : MonoBehaviour
             chaButton.button.onClick.AddListener(() => OnChaButton(index));
             chaList[index].SetActive(true);
 
-            var uiChaList = UIOnOff.instance.uiCharacterList;
-            var model = uiChaList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
-            sortUserCharacter[index].setupModel.ApplyToCharacter(model);
-            uiChaList[i].GetComponent<UICharacter>().Init(i);
+            //var uiChaList = UIOnOff.instance.uiCharacterList;
+            //var model = uiChaList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            //sortUserCharacter[index].setupModel.ApplyToCharacter(model);
+            //uiChaList[i].GetComponent<UICharacter>().Init(i);
         }
     }
     public void DropDownInit()

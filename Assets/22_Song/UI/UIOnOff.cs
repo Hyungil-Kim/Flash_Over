@@ -44,9 +44,9 @@ public class UIOnOff : MonoBehaviour
     public Vector2 mousepos;
 
     public GameObject character;
-    public List<GameObject> uiCharacterList = new List<GameObject>();
-    public GameObject MainCharacterUi;
-    public List<GameObject> fireTruckCharacterList = new List<GameObject>();
+    //public List<GameObject> uiCharacterList = new List<GameObject>();
+    //public GameObject MainCharacterUi;
+    //public List<GameObject> fireTruckCharacterList = new List<GameObject>();
 
     public GameObject mainCameraPos;
     public GameObject selectCameraPos;
@@ -67,16 +67,16 @@ public class UIOnOff : MonoBehaviour
     {
         Camera.main.transform.position = mainCameraPos.transform.position;
         Camera.main.transform.rotation = mainCameraPos.transform.rotation;
-        var uiCharacters = GameObject.FindGameObjectsWithTag("UICharacter");
-        foreach (var uicharacter in uiCharacters)
-        {
-            uiCharacterList.Add(uicharacter);
-        }
-        var fireTruckCharacters = GameObject.FindGameObjectsWithTag("FireTruckCharacter");
-        foreach (var uicharacter in fireTruckCharacters)
-        {
-            fireTruckCharacterList.Add(uicharacter);
-        }
+        //var uiCharacters = GameObject.FindGameObjectsWithTag("UICharacter");
+        //foreach (var uicharacter in uiCharacters)
+        //{
+        //    uiCharacterList.Add(uicharacter);
+        //}
+        //var fireTruckCharacters = GameObject.FindGameObjectsWithTag("FireTruckCharacter");
+        //foreach (var uicharacter in fireTruckCharacters)
+        //{
+        //    fireTruckCharacterList.Add(uicharacter);
+        //}
         instance = this;
         foreach (var ui in uiArray)
         {
@@ -326,30 +326,30 @@ public class UIOnOff : MonoBehaviour
         //notEnoughMoney.SetActive(false);
     }
     
-    public void SettingCharacter()
-    {
-        for (int i = 0; i < GameData.userData.characterList.Count; i++)
-        {
-            var custom = uiCharacterList[i].GetComponent<CharacterCustomization>();
-            var uicha = uiCharacterList[i].GetComponent<UICharacter>();
+    //public void SettingCharacter()
+    //{
+    //    for (int i = 0; i < GameData.userData.characterList.Count; i++)
+    //    {
+    //        var custom = uiCharacterList[i].GetComponent<CharacterCustomization>();
+    //        var uicha = uiCharacterList[i].GetComponent<UICharacter>();
 
-            var customInfo = GameData.userData.characterList[i].setupModel;
-            customInfo.ApplyToCharacter(custom);
-            uicha.Init(i);
-        }
-    }
-    public void MainCharacterSetting(CharacterData cd)
-    {
-        var custom = MainCharacterUi.GetComponent<CharacterCustomization>();
-        var customInfo = cd.setupModel;
-        customInfo.ApplyToCharacter(custom);
-    }
-    public void MainCharacterSetting(CharacterData cd, int index)
-    {
-        var custom = fireTruckCharacterList[index].GetComponent<CharacterCustomization>();
-        var customInfo = cd.setupModel;
-        customInfo.ApplyToCharacter(custom);
-    }
+    //        var customInfo = GameData.userData.characterList[i].setupModel;
+    //        customInfo.ApplyToCharacter(custom);
+    //        uicha.Init(i);
+    //    }
+    //}
+    //public void MainCharacterSetting(CharacterData cd)
+    //{
+        //var custom = MainCharacterUi.GetComponent<CharacterCustomization>();
+        //var customInfo = cd.setupModel;
+        //customInfo.ApplyToCharacter(custom);
+    //}
+    //public void MainCharacterSetting(CharacterData cd, int index)
+    //{
+    //    var custom = fireTruckCharacterList[index].GetComponent<CharacterCustomization>();
+    //    var customInfo = cd.setupModel;
+    //    customInfo.ApplyToCharacter(custom);
+    //}
     bool tuto;
     public void NextTutorial(int index)
     {

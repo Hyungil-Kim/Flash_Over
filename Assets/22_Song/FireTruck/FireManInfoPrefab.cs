@@ -39,13 +39,13 @@ public class FireManInfoPrefab : MonoBehaviour, IDropHandler
         if (cd != null)
         {
             var model = cd.setupModel;
-            var custom = UIOnOff.instance.uiCharacterList[index].GetComponent<CharacterCustomization>();
-            var uicha = UIOnOff.instance.uiCharacterList[index].GetComponent<UICharacter>();
+            //var custom = UIOnOff.instance.uiCharacterList[index].GetComponent<CharacterCustomization>();
+            //var uicha = UIOnOff.instance.uiCharacterList[index].GetComponent<UICharacter>();
 
             //var customInfo = GameData.userData.characterList[index].setupModel;
             //customInfo.ApplyToCharacter(custom);
             //uicha.Init(index);
-            UIOnOff.instance.MainCharacterSetting(cd, index);
+            //UIOnOff.instance.MainCharacterSetting(cd, index);
             //icon.texture = Resources.Load<RenderTexture>($"Icon/MainIcon {index+1}");
             icon.sprite = cd.portrait;
 

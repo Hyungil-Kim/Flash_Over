@@ -79,10 +79,10 @@ public class CharacterInfoList : MonoBehaviour
             chaButton.button.onClick.AddListener(() =>UIOnOff.instance.NextTutorial((int)type));
             chaList[index].SetActive(true);
             
-            var uiChaList = UIOnOff.instance.uiCharacterList;
-            var model = uiChaList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
-            sortUserCharacter[index].setupModel.ApplyToCharacter(model);
-            uiChaList[i].GetComponent<UICharacter>().Init(i);
+            //var uiChaList = UIOnOff.instance.uiCharacterList;
+            //var model = uiChaList[i].GetComponent<AdvancedPeopleSystem.CharacterCustomization>();
+            //sortUserCharacter[index].setupModel.ApplyToCharacter(model);
+            //uiChaList[i].GetComponent<UICharacter>().Init(i);
 
             //chaList[0].transform.SetParent(UIOnOff.instance.tutorial.transform);
         }

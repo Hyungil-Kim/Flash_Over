@@ -148,7 +148,7 @@ public class CharacterInfoStat : MonoBehaviour
         //info.text = $"{curCharacter.characterClass}\n{curCharacter.characterGrade}  {curCharacter.characterName}";
 
         chaname.text = $"{curCharacter.characterName}";
-        UIOnOff.instance.MainCharacterSetting(curCharacter);
+        //UIOnOff.instance.MainCharacterSetting(curCharacter);
         icon.sprite = curCharacter.portrait;
 
         //var statSB = new StringBuilder();
