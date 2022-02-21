@@ -185,7 +185,7 @@ public class UIOnOff : MonoBehaviour
             case "FireTruck":
                 if (!GameData.userData.FireTruckTuto)
                 {
-                    tutorialPlays[5].gameObject.SetActive(true);
+                    //tutorialPlays[5].gameObject.SetActive(true);
                 }
                 break;
             default:
