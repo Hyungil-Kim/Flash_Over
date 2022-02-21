@@ -3,17 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 public class LoadUI : MonoBehaviour
 {
     public GameObject slotUI;
     public GameObject option;
     public Button continueButton;
+
     public void Start()
     {
         //if (MySaveLoadSystem.CheckSaveFile())
+        if (continueButton != null)
+        {
+            continueButton.interactable = MySaveLoadSystem<UserData>.CheckSaveFile(SaveDataType.PlayerData);
+        }
     }
-
-    public void NewGame()
+    public void OnEnable()
+    {
+        
+        //continueButton.interactable = MySaveLoadSystem<UserData>.CheckSaveFile(SaveDataType.PlayerData);
+    }
+    
+	public void NewGame()
     {
         SceneManager.LoadScene("BattleTutorial");
     }

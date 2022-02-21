@@ -91,9 +91,6 @@ public class BetweenPlaying : MonoBehaviour
 		falsePanel.SetActive(true);
 		yield return new WaitForSeconds(2f);
 		falsePanel.SetActive(false);
-
-		yield return new WaitForSeconds(1.5f);
-
 		SceneManager.LoadScene("EndScene");
 	}
 	public void FalsePanelVoid()
