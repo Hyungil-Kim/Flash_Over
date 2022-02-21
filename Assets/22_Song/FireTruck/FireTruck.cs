@@ -96,6 +96,12 @@ public class FireTruck : MonoBehaviour
         //characterInfoList.gameObject.SetActive(true);
         daewonList.SetActive(true);
     }
+    public void OffInfoList()
+    {
+        firemanCharacter.gameObject.SetActive(true);
+        //characterInfoList.gameObject.SetActive(true);
+        daewonList.SetActive(false);
+    }
     //public void OnChaIcon(CharacterData cd)
     //{
     //    for (int i = 0; i < GameData.userData.maxFireMan; i++)

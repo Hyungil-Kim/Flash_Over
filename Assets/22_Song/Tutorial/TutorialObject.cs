@@ -16,6 +16,8 @@ public class TutorialObject : MonoBehaviour
 
     public GameObject textBox;
     public GameObject hideEmpty;
+
+    public GameObject dontTouch;
     private void OnEnable()
     {
         if(needHide)
@@ -26,6 +28,8 @@ public class TutorialObject : MonoBehaviour
         textBox.SetActive(true);
         if(hideEmpty != null)
         hideEmpty.SetActive(true);
+        if(dontTouch != null)
+        dontTouch.SetActive(true);
     }
     private void OnDisable()
     {
@@ -33,6 +37,8 @@ public class TutorialObject : MonoBehaviour
         textBox.SetActive(false);
         if(hideEmpty != null)
         hideEmpty.SetActive(false);
+        if(dontTouch != null)
+        dontTouch.SetActive(false);
     }
     public void HideObj()
     {
