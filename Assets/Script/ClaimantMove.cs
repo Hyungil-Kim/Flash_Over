@@ -23,8 +23,8 @@ public class ClaimantMove
 	}
 	public void EndMove(Claimant claimant)
 	{
-		claimant.SetState(ClaimantState.End);
 		claimant.moveEnd = true;
+		claimant.SetState(ClaimantState.End);
 	}
 	public IEnumerator MoveToPlayer(Claimant claimant, Player targetPlayer, int playerIndex)
 	{

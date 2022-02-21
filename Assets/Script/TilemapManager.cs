@@ -176,7 +176,7 @@ public class TilemapManager : MonoBehaviour
 				else if (defender.tag == "Claimant")
 				{
 					defender.GetComponent<Claimant>().hp -= iDamage;
-					defender.GetComponent<Claimant>().num = Random.Range(1, 4);
+					defender.GetComponent<Claimant>().num = Random.Range(2, 4);
 					defender.GetComponent<Claimant>().CheckClaimantHp();
 				}
 				else if (defender.tag == "Obstacle")
