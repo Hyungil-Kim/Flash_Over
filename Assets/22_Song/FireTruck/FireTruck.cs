@@ -139,6 +139,7 @@ public class FireTruck : MonoBehaviour
             {
                 var keyNumber = outFireMan.FirstOrDefault((x) => x.Value == curcharacter).Key;
                 outFireMan.Remove(keyNumber);
+                fireManList[keyNumber].GetComponent<FireManInfoPrefab>().Init(null);
             }
             outFireMan.Add(curIndex, curcharacter);
 

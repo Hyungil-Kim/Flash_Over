@@ -15,11 +15,11 @@ MonoBehaviour:
   m_PixelRect:
     serializedVersion: 2
     x: 8
-    y: 57
+    y: 64
     width: 1904
     height: 975
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Simulator
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 140
+  controlID: 132
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 141
+  controlID: 133
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 52
+  controlID: 103
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 53
+  controlID: 104
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -374,8 +374,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 8
-    y: 436
+    x: -32000
+    y: -31621
     width: 1079
     height: 555
   m_ViewDataDictionary: {fileID: 0}
@@ -408,8 +408,8 @@ MonoBehaviour:
     pluginStates:
     - '{}'
     - '{}'
-    scale: 24
-    fitToScreenEnabled: 0
+    scale: 33
+    fitToScreenEnabled: 1
     rotationDegree: 270
     highlightSafeAreaEnabled: 0
     friendlyName: Samsung Galaxy Note20 Ultra 5G
@@ -435,8 +435,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 8
-    y: 87
+    x: -32000
+    y: -31970
     width: 1079
     height: 328
   m_ViewDataDictionary: {fileID: 0}
@@ -502,7 +502,7 @@ MonoBehaviour:
       containerId: overlay-toolbar__top
       floating: 0
       collapsed: 0
-      displayed: 1
+      displayed: 0
       snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -695,9 +695,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 27.259169, y: -0.058872376, z: -21.410805}
+    m_Target: {x: 25.763144, y: 1.3519392, z: -21.601437}
     speed: 2
-    m_Value: {x: 27.259169, y: -0.058872376, z: -21.410805}
+    m_Value: {x: 25.763144, y: 1.3519392, z: -21.601437}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -736,7 +736,7 @@ MonoBehaviour:
       m_Fade:
         m_Target: 0
         speed: 2
-        m_Value: 1
+        m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -744,13 +744,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.025504103, y: -0.7723315, z: 0.6339476, w: -0.031071128}
+    m_Target: {x: 0.0011419895, y: -0.998264, z: -0.055150606, w: -0.02067575}
     speed: 2
-    m_Value: {x: -0.02930729, y: -0.77213067, z: 0.6337828, w: -0.03570451}
+    m_Value: {x: 0.0011419887, y: -0.9982633, z: -0.055150565, w: -0.020675736}
   m_Size:
-    m_Target: 0.8811837
+    m_Target: 1.6486839
     speed: 2
-    m_Value: 0.843238
+    m_Value: 1.6486839
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -795,8 +795,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1088
-    y: 87
+    x: -30920
+    y: -31970
     width: 202
     height: 529
   m_ViewDataDictionary: {fileID: 0}
@@ -808,7 +808,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 9e01faff9a5efaffbeacfaff5aa2fbffe8b1fbfffe29fcff1aa2fcff301afdff5023fdff349cfdff2cb4fdff4a32feff78abfeff602fffff0a99ffff14fbffff08860000748a0000e68c0000ca910000b0920000f8a6000038a700000ead0000b8af000090b00000de9c0200a6a40200
+      m_ExpandedIDs: 14fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -852,8 +852,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1292
-    y: 87
+    x: -30716
+    y: -31970
     width: 164
     height: 529
   m_ViewDataDictionary: {fileID: 0}
@@ -915,7 +915,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000e8b9000014ba00001eba00003cba000096ba0000b8ba0000beba000072c30000662901007429010080290100f6290100022a01005c2a0100d42a0100d82a0100042d0100062d0100082d01000a2d01000c2d01000e2d0100102d0100122d0100142d0100162d01001a2d01001c2d01001e2d0100202d0100222d0100242d0100262d0100282d01002a2d01002c2d01002e2d0100302d0100322d0100342d0100362d0100382d01003a2d01003c2d01003e2d0100402d0100422d0100442d0100462d0100482d01004a2d01004c2d01004e2d0100502d0100522d0100542d0100562d0100582d01005a2d01005c2d01005e2d0100602d0100622d0100642d0100662d0100682d01006a2d01006c2d01006e2d0100702d0100722d0100742d0100762d0100782d01007a2d01007c2d01007e2d0100802d0100822d0100842d0100862d0100882d01008a2d01008c2d01008e2d0100902d0100922d0100942d0100962d0100982d01009a2d01009c2d01009e2d0100a02d0100a22d0100a42d0100a62d0100a82d0100b02d0100b22d0100b42d0100b62d0100602e0100
+    m_ExpandedIDs: ffffffff00000000e8b9000014ba00001eba00003cba000096ba0000b8ba0000beba000072c30000662901007429010080290100f6290100022a01005c2a0100d42a0100d82a0100042d0100062d0100082d01000a2d01000c2d01000e2d0100102d0100122d0100142d0100162d0100182d01001a2d01001c2d01001e2d0100202d0100222d0100242d0100262d0100282d01002a2d01002c2d01002e2d0100302d0100322d0100342d0100362d0100382d01003a2d01003c2d01003e2d0100402d0100422d0100442d0100462d0100482d01004a2d01004c2d01004e2d0100502d0100522d0100542d0100562d0100582d01005a2d01005c2d01005e2d0100602d0100622d0100642d0100662d0100682d01006a2d01006c2d01006e2d0100702d0100722d0100742d0100762d0100782d01007a2d01007c2d01007e2d0100802d0100822d0100842d0100862d0100882d01008a2d01008c2d01008e2d0100902d0100922d0100942d0100962d0100982d01009a2d01009c2d01009e2d0100a02d0100a22d0100a42d0100a62d0100a82d0100aa2d0100ac2d0100ae2d0100b02d0100b22d0100b42d0100b62d0100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -991,8 +991,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1088
-    y: 637
+    x: -30920
+    y: -31420
     width: 368
     height: 354
   m_ViewDataDictionary: {fileID: 0}
@@ -1047,8 +1047,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1458
-    y: 87
+    x: -30550
+    y: -31970
     width: 453
     height: 904
   m_ViewDataDictionary: {fileID: 0}
