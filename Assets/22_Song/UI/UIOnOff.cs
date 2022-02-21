@@ -12,6 +12,7 @@ using UnityEngine.InputSystem.EnhancedTouch;
 using AdvancedPeopleSystem;
 public class UIOnOff : MonoBehaviour
 {
+    public GameObject menupanel;
     public GameObject tutorial;
     public TutorialPlay[] tutorialPlays;
     public GameObject worldmapTuto;
@@ -354,5 +355,10 @@ public class UIOnOff : MonoBehaviour
     {
         //int index = (int)type;
         tutorialPlays[index].moveNext = true;
+    }
+
+    public void OnMenu()
+    {
+        menupanel.SetActive(true);
     }
 }

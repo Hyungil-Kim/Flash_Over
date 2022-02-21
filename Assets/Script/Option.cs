@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 
 public class Option : MonoBehaviour
 {
+	public GameObject backGround;
 	public GameObject soundPanel;
 	public GameObject creditPanel;
 	public GameObject qaPanel;
@@ -56,7 +57,7 @@ public class Option : MonoBehaviour
 	}
 	public void OnClickEndOption()
 	{
-		gameObject.SetActive(false);
+		backGround.SetActive(false);
 
 	}
 	public void OnclickCreditButton()

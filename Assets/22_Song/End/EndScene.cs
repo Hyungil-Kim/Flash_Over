@@ -7,6 +7,8 @@ public class EndScene : MonoBehaviour
     public UICharacter[] endCharacters;
     public EndUI endUI;
     public int turnCount;
+    public int stageGold;
+    public int saveClaimant;
     public string stageName;
     public bool tutorial;
     private AudioController audio;
@@ -22,19 +24,29 @@ public class EndScene : MonoBehaviour
                 }
             }
         }
+
         GameData.userData.AddExp(GameData.userData.stageExp);
         GameData.userData.gold += GameData.userData.stageGold;
+        stageGold = GameData.userData.stageGold;
         GameData.userData.StageClear();
         resultSound();
     }
     private void Start()
     {
         var count = 0;
+        foreach (var claimants in Turn.claimants)
+        {
+            if (claimants.hp > 0)
+            {
+                saveClaimant++;
+            }
+
+        }
         if (GameData.userData.fireManList != null)
         {
             foreach (var character in GameData.userData.fireManList)
             {
-                character.Value.EndStage(Turn.turnCount);
+                character.Value.EndStage(Turn.turnCount, saveClaimant);
                 endCharacters[count].Init(character.Value, count);
                 count++;
             }

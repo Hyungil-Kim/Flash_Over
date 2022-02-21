@@ -1122,11 +1122,11 @@ public class CharacterData
         StartCheckingCharacteristic();
         StartStatInit();
     }
-    public void EndStage(int turn )
+    public void EndStage(int turn, int saveClaimant )
     {
         isSelected = false;
         tiredScore += turn;
-        saveClaimantCount += 1;
+        saveClaimantCount += saveClaimant;
         clearStageCount += 1;
         EndCheckingCharacteristic();
         foreach (var characteristic in addCharacteristics)

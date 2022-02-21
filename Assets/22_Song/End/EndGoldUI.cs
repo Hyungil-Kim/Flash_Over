@@ -11,16 +11,14 @@ public class EndGoldUI : MonoBehaviour
     public TextMeshProUGUI saveClaimant;
     public TextMeshProUGUI turnGold;
 
-    public int testGold = 900;
-
     public GameObject detailInfo;
 
     public void Start()
     {
         var manager = GetComponentInParent<EndUI>().manager;
-        gold.text = $"보상 : {testGold}";
-        clearGold.text = $"클리어 보상 : {500}";
-        saveClaimant.text = $"구조한 사람의 수 : {3} => {300}";
+        gold.text = $"보상 : {manager.stageGold + manager.saveClaimant * 100 + 100}";
+        clearGold.text = $"클리어 보상 : {manager.stageGold}";
+        saveClaimant.text = $"구조한 사람의 수 : {manager.saveClaimant} => {manager.saveClaimant * 100}";
         turnGold.text = $"클리어한 턴 수 : {manager.turnCount} => {100}";
     }
     public void Detail(bool onoff)
