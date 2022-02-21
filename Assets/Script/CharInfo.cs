@@ -31,7 +31,8 @@ public class CharInfo : MonoBehaviour
 	{
 		if (targetPlayer != null)
 		{
-			name.text = targetPlayer.name;
+			name.text = targetPlayer.cd.characterName;
+			image.sprite = targetPlayer.cd.portrait;
 			moveNum.text = targetPlayer.cd.totalStats.move.ToString();
 			hpSlider.value = (float)targetPlayer.cd.hp / (float)targetPlayer.cd.maxhp;
 			breathSlider.value = (float)targetPlayer.cd.oxygen / (float)targetPlayer.cd.maxoxygen;

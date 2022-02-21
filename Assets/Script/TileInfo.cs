@@ -46,6 +46,17 @@ public class TileInfo : MonoBehaviour
 		gameManager.uIManager.battleUiManager.AllButtonOff();
 		gameManager.uIManager.battleUiManager.AllButtonOff();
 		on = true;
+		if(gameManager.targetTile != null)
+		{
+			foreach(var elem in gameManager.targetTile.fillList)
+			{
+				if(elem.tag == "Player")
+				{
+					changePlayerInfo.interactable = true;
+					break;
+				}
+			}
+		}
 	}
 	public void OnDisable()
 	{
@@ -67,6 +78,7 @@ public class TileInfo : MonoBehaviour
 					break;
 			}
 		}
+		changePlayerInfo.interactable = false;
 	}
 	public void UpdateTileInfo()
 	{

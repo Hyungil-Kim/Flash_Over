@@ -27,7 +27,7 @@ public class BattleUiManager : MonoBehaviour
 	public Button selectNextPlayer;
 
 	public UseItemManager useItemManager;
-
+	public bool rescueOn;
 	public Door findDoor;
 	// Start is called before the first frame update
 
@@ -144,6 +144,10 @@ public class BattleUiManager : MonoBehaviour
 		if (gameManager.targetPlayer.handFull)
 			return;
 		var playerTile = gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.gameObject);
+		if(gameManager.tutorial)
+		{
+			rescueOn = true;
+		}
 		gameManager.tilemapManager.ShowFloodFillRange(playerTile, gameManager.setMoveColor, 1);
 		gameManager.readyPlayerAction = false;
 		gameManager.pickup = true;
