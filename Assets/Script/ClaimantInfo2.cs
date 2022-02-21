@@ -15,6 +15,10 @@ public class ClaimantInfo2 : MonoBehaviour
 	{
 		gameManager = GameManager.instance;
 	}
+	public void Update()
+	{
+		UpdateClaimantInfo();
+	}
 	public void UpdateClaimantInfo()
 	{
 		if(gameManager.target.tag == "Claimant")

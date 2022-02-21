@@ -80,6 +80,10 @@ public class TileInfo : MonoBehaviour
 		}
 		changePlayerInfo.interactable = false;
 	}
+	public void Update()
+	{
+		UpdateTileInfo();
+	}
 	public void UpdateTileInfo()
 	{
 		if (gameManager.targetTile != null)
