@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
     {
 		if (!gameManager.isStart)
 		{
-            var offset = new Vector3(0, 6, -3);
+            var offset = new Vector3(0, 6, -1.5f);
             var pos = Turn.players[0].transform.position + offset;
             gameManager.mousePos = pos;
             gameManager.prevPos = pos;

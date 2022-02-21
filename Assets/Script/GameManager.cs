@@ -208,6 +208,10 @@ public class GameManager : MonoBehaviour
 		{
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
 			int layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("Exit") | 1 << LayerMask.NameToLayer("Obstacle"));
+			if(tutorial)
+			{
+				layerMask = layerMask | (1 << LayerMask.NameToLayer("Green"));
+			}
 			layerMask = ~layerMask;
 
 			RaycastHit[] hits;
@@ -343,6 +347,10 @@ public class GameManager : MonoBehaviour
 				{
 					layerMask = (1 << LayerMask.NameToLayer("GroundPanel") | 1 << LayerMask.NameToLayer("Fade") | 1 << LayerMask.NameToLayer("Obstacle") | 1 << LayerMask.NameToLayer("Door"));
 				}
+			}
+			if (tutorial)
+			{
+				layerMask = layerMask | (1 << LayerMask.NameToLayer("Green"));
 			}
 			layerMask = ~layerMask;
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, float.PositiveInfinity, layerMask))

@@ -64,7 +64,7 @@ public class Tutorial : MonoBehaviour
 	}
 	public void StartTutorial()
 	{
-		var offset = new Vector3(0, 6, -3);
+		var offset = new Vector3(0, 6, -1.5f);
 		var pos = Turn.players[0].transform.position + offset;
 		gameManager.mousePos = pos;
 		gameManager.prevPos = pos;
@@ -377,6 +377,7 @@ public class Tutorial : MonoBehaviour
 				else if (player.curStateName == PlayerState.Action)
 				{
 					marker.SetActive(false);
+					tutorialUiManager.turto7_Text.SetActive(false);
 					gameManager.uIManager.battleUiManager.moveButton.interactable = false;
 					gameManager.uIManager.battleUiManager.attackButton.interactable = true;
 					gameManager.uIManager.battleUiManager.weapon2Button.interactable = false;
@@ -385,7 +386,6 @@ public class Tutorial : MonoBehaviour
 				}
 				else if(player.curStateName == PlayerState.End)
 				{
-					tutorialUiManager.turto7_Text.SetActive(false);
 					tutorialUiManager.turto7_Text2.SetActive(true);
 					while (tutorialUiManager.turto7_Text2.activeSelf )
 					{
@@ -425,6 +425,8 @@ public class Tutorial : MonoBehaviour
 				}
 				else if (player.curStateName == PlayerState.Move)
 				{
+					var vector3 = new Vector3(17.5f, 6f, -14.3f);
+					Camera.main.transform.position = vector3;
 					tutorialUiManager.tuto_add1.SetActive(true);
 					if (gameManager.tilemapManager.ReturnTile(gameManager.targetPlayer.moveHelper.gameObject) == gameManager.tilemapManager.ReturnTile(new Vector3(17.5f, 0, -12.5f)))
 					{
@@ -466,6 +468,7 @@ public class Tutorial : MonoBehaviour
 					{
 						tutorialUiManager.turto8_Text.SetActive(false);
 						tutorialUiManager.turto8_Text2.SetActive(true);
+						yield return new WaitForSeconds(1.5f);
 						yield return 0;
 					}
 				}
@@ -484,6 +487,7 @@ public class Tutorial : MonoBehaviour
 				if (player.curStateName == PlayerState.Idle)
 				{
 					gameManager.ChangeTargetPlayer(player.gameObject);
+					gameManager.tilemapManager.ResetFloodFill();
 					player.SetState(PlayerState.Action);
 				}
 				else if (player.curStateName == PlayerState.Action)
@@ -491,11 +495,16 @@ public class Tutorial : MonoBehaviour
 					tutorialUiManager.turto9_Text.SetActive(false);
 					tutorialUiManager.turto9_Text2.SetActive(true);
 					gameManager.uIManager.battleUiManager.rescueButton.interactable = true;
+					if(gameManager.uIManager.battleUiManager.rescueOn)
+					{
+						tutorialUiManager.turto9_Text2.SetActive(false);
+						gameManager.uIManager.battleUiManager.rescueButton.interactable = false;
+						tutorialUiManager.turto9_Text3.SetActive(true);
+					}
 				}
 				else if (player.curStateName == PlayerState.End)
 				{
-					tutorialUiManager.turto9_Text2.SetActive(false);
-					tutorialUiManager.turto9_Text3.SetActive(true);
+					tutorialUiManager.turto9_Text3.SetActive(false);
 					yield return new WaitForSeconds(1f);
 
 					AllTile.OnDestroy();
