@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterInfo : MonoBehaviour
-{
+{   
     public CharacterInfoInventory inventory;
     public CharacterInfoStat chaStatPanal;
     public CharacterInfoList chaListPanal;
