@@ -127,6 +127,7 @@ public static class Turn
 						fire.CheckFireHp();
 						break;
 					}
+					Debug.Log(fires.Count);
 				}
 				else
 				{
@@ -181,6 +182,12 @@ public static class Turn
 							{
 								claimant.moveEnd = false;
 								claimant.ClaimantAct();
+
+								//claimant.oxygentank -= 1;
+								//if (claimant.oxygentank <= 0)
+								//{
+								//	claimant.ap = claimant.data.lung;
+								//}
 
 								yield return new WaitUntil(() => claimant.moveEnd == true);
 							}
