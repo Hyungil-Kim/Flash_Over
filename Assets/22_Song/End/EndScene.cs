@@ -33,6 +33,7 @@ public class EndScene : MonoBehaviour
     }
     private void Start()
     {
+        audio = Camera.main.GetComponent<AudioController>();
         var count = 0;
         foreach (var claimants in Turn.claimants)
         {
